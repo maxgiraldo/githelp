@@ -4,7 +4,7 @@ var GitHubStrategy = require('passport-github').Strategy;
 var passport = require('passport');
 var mongoose = require('mongoose');
 // Specific mongoose models defined here
-
+var User = mongoose.model('User');
 
 
 passport.serializeUser(function(user, done) {
