@@ -1,0 +1,7 @@
+{
+    "db": "mongodb://localhost/githelp-travis",
+    "port": 3001,
+    "app": {
+        "name": "githelp - Creating Simple Monetization Routes For Open Source Contributors - Test on travis"
+    }
+}

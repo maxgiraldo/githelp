@@ -1,0 +1,6 @@
+{
+    "db": "mongodb://localhost/githelp",
+    "app": {
+        "name": "githelp - Creating Simple Monetization Routes For Open Source Contributors"
+    }
+}

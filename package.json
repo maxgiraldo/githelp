@@ -1,0 +1,48 @@
+{
+  "name": "githelp",
+  "description": "Creating Simple Monetization Routes For Open Source Contributors",
+  "version": "0.0.1",
+  "private": false,
+  "author": "Ji Ho Koo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maxgiraldo/githelp.git"
+  },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.2.x"
+  },
+  "scripts": {
+    "start": "node node_modules/grunt-cli/bin/grunt",
+    "test": "node node_modules/grunt-cli/bin/grunt test"
+  },
+  "dependencies": {
+    "express": "latest",
+    "jade": "latest",
+    "mongoose": "latest",
+    "connect-mongo": "latest",
+    "connect-flash": "latest",
+    "underscore": "latest",
+    "async": "latest",
+    "view-helpers": "latest",
+    "forever": "latest",
+    "grunt": "latest",
+    "grunt-cli": "latest",
+    "balanced-official": "~1.0.6",
+    "request": "~2.34.0",
+    "sockjs": "~0.3.8",
+    "bluebird": "~1.1.1"
+  },
+  "devDependencies": {
+    "supertest": "latest",
+    "should": "latest",
+    "grunt-contrib-compass": "~0.5.0",
+    "grunt-contrib-watch": "latest",
+    "grunt-contrib-jshint": "latest",
+    "grunt-nodemon": "latest",
+    "grunt-concurrent": "latest",
+    "grunt-mocha-test": "latest",
+    "load-grunt-tasks": "~0.1.0",
+    "time-grunt": "~0.1.1"
+  }
+}
