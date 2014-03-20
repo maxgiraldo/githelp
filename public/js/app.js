@@ -9,7 +9,8 @@ window.app = angular.module('githelp',
   ]);
 
 angular.module('githelp.controllers',
-  ['githelp.controllers.index'
+  ['githelp.controllers.index',
+  'githelp.controllers.navbar'
   ]);
 
 angular.module('githelp.services',
