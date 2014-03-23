@@ -7683,13 +7683,31 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   text-transform: uppercase;
 }
 
-/* line 59, ../../app/styles/app.scss */
+/* line 60, ../../app/styles/app.scss */
+#custom-navbar {
+  border-style: solid;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+/* line 68, ../../app/styles/app.scss */
 .avatar {
   width: 30px;
   height: 30px;
+  border-radius: 5px;
+  margin-top: 0%;
+  margin-right: 5%;
 }
 
-/* line 64, ../../app/styles/app.scss */
+/* line 76, ../../app/styles/app.scss */
+.avatar :before {
+  margin-left: 0px;
+  padding-left: 0px;
+}
+
+/* line 82, ../../app/styles/app.scss */
 .logo {
   cursor: pointer;
   display: inline-block;
@@ -7700,21 +7718,21 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   vertical-align: top;
 }
 
-/* line 76, ../../app/styles/app.scss */
+/* line 94, ../../app/styles/app.scss */
 .navbar-nav > li > a {
   padding-top: 15px;
   padding-bottom: 15px;
   padding-left: 90px;
 }
 
-/* line 82, ../../app/styles/app.scss */
+/* line 100, ../../app/styles/app.scss */
 .navbar-right a {
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B';
   font-weight: 500;
   font-style: normal;
 }
 
-/* line 88, ../../app/styles/app.scss */
+/* line 106, ../../app/styles/app.scss */
 .navbar-right {
   cursor: pointer;
   display: inline-block;
@@ -7730,7 +7748,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-right: 37px;
 }
 
-/* line 103, ../../app/styles/app.scss */
+/* line 121, ../../app/styles/app.scss */
 .main-nav-links {
   display: inline-block;
   float: right;
@@ -7738,7 +7756,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   vertical-align: top;
 }
 
-/* line 110, ../../app/styles/app.scss */
+/* line 128, ../../app/styles/app.scss */
 .navbar {
   position: relative;
   min-height: 50px;
@@ -7746,25 +7764,25 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   border: 1px solid transparent;
 }
 
-/* line 117, ../../app/styles/app.scss */
+/* line 135, ../../app/styles/app.scss */
 .navbar-default {
   background-color: #ffffff;
   border-color: #ffffff;
 }
 
-/* line 122, ../../app/styles/app.scss */
+/* line 140, ../../app/styles/app.scss */
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
   border-color: #fff;
   border: none;
 }
 
-/* line 128, ../../app/styles/app.scss */
+/* line 146, ../../app/styles/app.scss */
 #search-bar {
   width: 250px;
   border-radius: 0;
 }
 
-/* line 133, ../../app/styles/app.scss */
+/* line 151, ../../app/styles/app.scss */
 .search-bg {
   padding-top: 70px;
   background-color: #f9f9f9;
@@ -7772,7 +7790,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   height: 180px;
 }
 
-/* line 141, ../../app/styles/app.scss */
+/* line 159, ../../app/styles/app.scss */
 .form-control {
   display: block;
   width: 100%;
@@ -7793,12 +7811,12 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
-/* line 161, ../../app/styles/app.scss */
+/* line 179, ../../app/styles/app.scss */
 .form-control:hover {
   border: 1px solid #a2a2a2;
 }
 
-/* line 165, ../../app/styles/app.scss */
+/* line 183, ../../app/styles/app.scss */
 .form-control:focus {
   -webkit-box-shadow: 0px 0px 1px #77cc33;
   -moz-box-shadow: 0px 0px 1px #77cc33;
@@ -7806,23 +7824,23 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   border: 1px solid #77cc33;
 }
 
-/* line 172, ../../app/styles/app.scss */
+/* line 190, ../../app/styles/app.scss */
 .form-control::-webkit-input-placeholder {
   color: #b3babe;
 }
 
-/* line 175, ../../app/styles/app.scss */
+/* line 193, ../../app/styles/app.scss */
 .form-control::-moz-placeholder {
   color: #b3babe;
 }
 
-/* line 178, ../../app/styles/app.scss */
+/* line 196, ../../app/styles/app.scss */
 .form-control:-moz-placeholder {
   /* Older versions of Firefox */
   color: #b3babe;
 }
 
-/* line 181, ../../app/styles/app.scss */
+/* line 199, ../../app/styles/app.scss */
 .form-control:-ms-input-placeholder {
   color: #b3babe;
 }

@@ -56,10 +56,28 @@ color: inherit;
 }
 
 //// Navigation
+
+#custom-navbar {
+  border-style: solid;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
 .avatar {
   width: 30px;
   height: 30px;
+  border-radius: 5px;
+  margin-top: 0%;
+  margin-right: 5%;
 }
+
+.avatar :before {
+  margin-left: 0px;
+  padding-left: 0px;
+}
+
 
 .logo {
   cursor: pointer;
