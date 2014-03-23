@@ -31,7 +31,9 @@
     "balanced-official": "~1.0.6",
     "request": "~2.34.0",
     "sockjs": "~0.3.8",
-    "bluebird": "~1.1.1"
+    "bluebird": "~1.1.1",
+    "passport": "~0.2.0",
+    "passport-github": "~0.1.5"
   },
   "devDependencies": {
     "supertest": "latest",
