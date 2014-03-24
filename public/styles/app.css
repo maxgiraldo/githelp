@@ -7938,11 +7938,8 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   border: 0;
 }
 
-/* line 278, ../../app/styles/app.scss */
+/* line 285, ../../app/styles/app.scss */
 #editor {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  width: 500px;
 }
