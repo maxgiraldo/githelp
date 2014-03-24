@@ -1,0 +1,22 @@
+<section data-ng-controller="IndexController">
+  <div class="container profile">
+    <div>
+      <img class='avatar-lg' src='{{global.user.github.avatar_url}}'
+    </div>
+    <div class='profile-name-info'>
+      <h1 class='headline full-name'>{{global.user.fullName}}</h1>
+      <h2 class='username'><a href="http://www.github.com/{{global.user.userName}}">{{global.user.userName}}</a></h2>
+    </div>
+    <div class='call-button headline'>
+      <p>Set up a call</p>
+    </div>
+    <p class='caps-sub-header'>{{global.user.github.public_repos}} repositories</p>
+    <!-- <div ng-repeat="repo in repos"> -->
+    <div>
+      <ul class='repo-links'>
+        <li><a href="#">repo.name</a></li>
+        <li><a href="#">repo.name</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
