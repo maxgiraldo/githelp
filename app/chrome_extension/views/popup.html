@@ -6,7 +6,15 @@
 <body>
 <h1>HELLO!</h1>
 
+
+
 <div data-ng-controller="PopupController">
+
+<form data-ng-submit="searchUser()">
+<input type="text" data-ng-model="queryInput">
+<button type="submit">Search</button>
+</form>
+
 <div ng-show="form">
   <button  data-ng-click="showForm()">Schedule an Appointment</button>
 </div>
