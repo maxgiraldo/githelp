@@ -22,7 +22,7 @@
     "mongoose": "latest",
     "connect-mongo": "latest",
     "connect-flash": "latest",
-    "underscore": "latest",
+    "underscore": "~1.6.0",
     "async": "latest",
     "view-helpers": "latest",
     "forever": "latest",
@@ -31,7 +31,8 @@
     "balanced-official": "~1.0.6",
     "request": "~2.34.0",
     "sockjs": "~0.3.8",
-    "bluebird": "~1.1.1"
+    "bluebird": "~1.1.1",
+    "github": "~0.1.14"
   },
   "devDependencies": {
     "supertest": "latest",
