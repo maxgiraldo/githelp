@@ -4,8 +4,21 @@
     <a href="/#!/{{global.user.userName}}">View your profile</a>
   </div>
   <div class='search-bg'>
-    <div class="container form-group">
-      <input type="email" class="form-control" id="search-bar" placeholder="Search username/repo">
-    </div>
+    <form class="container form-group" ng-submit="query()">
+      <input type="text" class="form-control" id="search-bar" name="query" ng-model="form.queryInput" placeholder="Search username/repo">
+      <input type="submit" class="btn btn-success" value="Git it on">
+    </form>
   </div>
+
+  <div>
+    <h3>Results</h3>
+    <li ng-repeat="result in results | limitTo: 10">
+      Name: {{result.name}}<br />
+      Full Name: {{result.full_name}}<br />
+      Url: {{result.html_url}}<br />
+      ID: {{result.id}}<br />
+    </li>
+  </div>
+
+
 </section>

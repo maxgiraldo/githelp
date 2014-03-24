@@ -76,6 +76,7 @@ module.exports = function(app) {
   app.post('/appointment', appointments.create);
 
   app.get('/', index.render);
+  app.post('/query', index.results);
 
   app.get('/signin', users.signin);
   app.get('/signup', users.signup);
