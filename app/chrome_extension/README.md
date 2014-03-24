@@ -103,12 +103,33 @@ chrome.runtime.onConnectExternal.addListener(function callback){
 }
 
 
+XML:
+new XMLHttpRequest()
+We can use this to communicate with servers as well. XML allows for custom headers so it is capable of making post requests
+
+
+ANGULARJS
+
+Two things you need to get started:
+-http://code.angularjs.org/1.2.9/angular.min.js
+-http://code.jquery.com/jquery-1.8.2.min.js
+<!-- make sure you save these into the correct directory and require them in your main html file -->
+
+We can use AngularJS with our chrome extension. AngularJS by itself is fully functional, a google chrome extension doesn't run on its own server, but we can make an extension communicate with external web pages. So a google chrome extension can definitely augment the web app. It just has to send and listen for messages to and fro from the main app. We can even use XML to make requests.
+
+What is great is that we can still use $routeProvider or $stateProvider to have a fully functional view. Whenever we need to store data, we can communicate with the external app.
+
+One thing to note is that at the root of the app (if you are using data-ng-app) you must also include data-ng-csp. CSP stands for (Control Security Policy). However, this fucks a few things up, so make sure you save the page from this link (http://code.angularjs.org/snapshot/angular-csp.css). With that, everything should be working fine.
+
 
 MAIN
 1. Content Scripts (Run JavaScript code in the context of web pages) - http://developer.chrome.com/extensions/content_scripts
 2. Cross-Origin XHR (Use XMLHttpRequest to send and receive data from remote servers) - http://developer.chrome.com/extensions/xhr
 3. Message Passing (Communicate from a content script to its parent extension and vice versa) - http://developer.chrome.com/extensions/messaging
 
+Note: Content Scripts are a interesting topics. We can use run any scripts we want in websites with matching URL's
+This is how we can add buttons to web pages for people who have downloaded our extension.
+This is also how we can do cool things like the extension for google hangouts
 
 
 DISTRIBUTION
