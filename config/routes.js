@@ -58,7 +58,7 @@ module.exports = function(app) {
   //Routes to App Controllers here
   var index = require('../app/controllers/index');
   var users = require('../app/controllers/users');
-  var sessions = require('../app/controllers/sessions');
+  var appointments = require('../app/controllers/appointments');
 
   // passport routes
   // this requests to github login with clientId and clientSecret
@@ -73,7 +73,7 @@ module.exports = function(app) {
     passport.authenticate('github', {failureRedirect: '/login'}),
     users.authCallback);
 
-  app.post('/sessions', sessions.create);
+  app.post('/appointment', appointments.create);
 
   app.get('/', index.render);
 
