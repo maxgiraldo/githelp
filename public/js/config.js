@@ -8,6 +8,10 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
             url:'/',
             templateUrl: 'views/index.html'
         })
+        .state('profile', {
+          url: '/profile',
+          templateUrl: 'views/profile.html'
+        });
     }
 ]);
 

@@ -5,7 +5,7 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 body {
   background: #fff;
   margin: 24px 0;
-  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', Helvetica, Arial, sans-serif;
+  font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-weight: 400;
   font-style: normal;
   font-size: 100%;
@@ -13,6 +13,21 @@ body {
   margin: 0;
   padding: 0;
   border: 0;
+}
+
+h1 {
+  font-size: 17px;
+  line-height: 1;
+  color: inherit;
+}
+a {
+  color: #008cdd;
+  &:hover {
+    text-decoration: none;
+  }
+}
+ul {
+  list-style-type: none;
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -25,12 +40,9 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 // Homepage Main Content
 .jumbotron h1 {
-font-size: 17px;
-}
-
-.jumbotron h1 {
-line-height: 1;
-color: inherit;
+  font-size: 17px;
+  line-height: 1;
+  color: inherit;
 }
 
 .jumbotron {
@@ -56,10 +68,8 @@ color: inherit;
 }
 
 //// Navigation
-
 #custom-navbar {
-  border-style: solid;
-  margin-top: 10px;
+  margin-top: 20px;
   margin-bottom: 0px;
   padding-top: 0px;
   padding-bottom: 0px;
@@ -161,7 +171,7 @@ color: inherit;
   width: 100%;
   height: 34px;
   padding: 6px 12px;
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande",sans-serif;
   font-size: 14px;
   line-height: 1.42857;
   color: #000;
@@ -181,9 +191,9 @@ color: inherit;
 }
 
 .form-control:focus {
-  -webkit-box-shadow: 0px 0px 1px #77cc33;
-  -moz-box-shadow: 0px 0px 1px #77cc33;
-  box-shadow: 0px 0px 1px #77cc33;
+  -webkit-box-shadow: 0px 0px 0px #77cc33;
+  -moz-box-shadow: 0px 0px 0px #77cc33;
+  box-shadow: 0px 0px 0px #77cc33;
   border: 1px solid #77cc33;
 }
 
@@ -198,5 +208,67 @@ color: inherit;
 }
 .form-control:-ms-input-placeholder {
   color: #b3babe;
+}
+
+// Profile page
+.profile {
+  padding-top: 48px;
+  text-align: center;
+  // background-color: #d7d7d7;
+  width: 350px;
+}
+.avatar-lg {
+  border-radius: 60px;
+  width: 110px;
+  height: 110px;
+}
+.profile-name-info {
+  color: #000;
+}
+.full-name {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+.username {
+  font-size: 16px;
+  font-weight: 400;
+  color: #008cdd;
+  letter-spacing: 0;
+  margin-top: 5px;
+}
+.call-button {
+  width: 100%;
+  height: 45px;
+  border-radius: 3px;
+  background-color: #77cc33;
+  cursor: pointer;
+  margin-top: 25px;
+}
+.call-button:hover {
+  background-color: #6ab72c;
+}
+.headline p {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 13px 0;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+.caps-sub-header {
+  color: #8e8e8e;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 20px;
+}
+
+.repo-links {
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+  border: 0;
 }
 
