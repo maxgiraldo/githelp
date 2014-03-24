@@ -1,0 +1,13 @@
+<!-- <a href="/instances/{{ instanceId }}">{{instance.name}}</a> -->
+<section data-ng-controller="IndexController">
+  <div class="container jumbotron">
+    <h1 class='headline'>Session with [name of person]</h1>
+    <div id="editor">console.log('hello, world')</div>
+  </div>
+</section>
+
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.getSession().setMode("ace/mode/javascript");
+</script>
