@@ -19,7 +19,8 @@ exports.render = function(req, res) {
 exports.results = function(req, res) {
   console.log('BODY', req.body);
   // var data = search.userStats(req.body.queryInput);
-  search.query(req.body.queryInput).then(function(results) {
+  search.query(req.body.queryInput, false, false).then(function(results) {
+    console.log(results);
   //   var firstRepoUrl = results.items[0].full_name;
   //   var urlObj = search.extractUserAndRepo(firstRepoUrl);
   //   console.log('RESULTS ', firstRepo);
@@ -30,7 +31,13 @@ exports.results = function(req, res) {
 
   // feeling lucky? get topContribs by first repo returned
 
-    res.json(results.items);
+    res.json(results.items); // for general query results
+
+    // res.json(results.coreTeam); // for repoBool true & want coreTeam
+    // res.json(results.otherTop); // for repoBool true & want otherTop
+
+    // res.json(results); // for repoBool true & want otherTop
+
   });
 
 
