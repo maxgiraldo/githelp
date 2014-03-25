@@ -1,11 +1,12 @@
 <section data-ng-controller="UserController" data-ng-init="findOne()">
   <div class="container profile">
     <div>
-      <img class='avatar-lg' src='{{global.user.github.avatar_url}}'
+      <img class='avatar-lg' src='{{global.user.github.avatar_url}}'>
     </div>
     <div class='profile-name-info'>
       <h1 class='headline full-name'>{{global.user.fullName}}</h1>
-      <h2 class='username'><a href="http://www.github.com/{{global.user.userName}}">{{global.user.userName}}</a></h2>
+      <h2 class='username'><a href="http://www.github.com/{{global.user.userName}}">github: {{global.user.userName}}</a></h2>
+      <h2 data-ng-show="githubStats.blog" class="username"><a href="{{githubStats.blog}}">personal website</a></h2>
       <h3>$120/min</h3>
     </div>
     <div class='call-button headline'>
@@ -14,12 +15,18 @@
     <p class='caps-sub-header'>{{global.user.github.public_repos}} repositories</p>
     <!-- <div ng-repeat="repo in repos"> -->
     <div>
+      <h2>own repositories</h2>
       <ul class='repo-links'>
-        <li><a href="#">repo.name</a></li>
-        <li><a href="#">repo.name</a></li>
+        <li data-ng-repeat="repo in repoList" data-ng-show="!repo.fork"><a href="repo.html_url">{{repo.name}}</a></li>
       </ul>
     </div>
+    <div>
+      <p class='caps-sub-header'>Number of Gists: {{global.user.github.public_gists}}</p>
+      <p class='caps-sub-header'>Email: {{global.user.email}}</p>
+      <p class='caps-sub-header'>Followers: {{global.user.github.followers}}</p>
+    </div>
   </div>
+
 </section>
 
 
@@ -32,3 +39,6 @@ i need the number of open source contributions
 i need number of starts and number of followers
 
  -->
+
+
+ <!-- user code climate -->

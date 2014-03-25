@@ -99,34 +99,18 @@ var getUserRepos = function(username) {
 exports.userStats = function(username) {
   var deferred = Q.defer();
   console.log('IN USER STATS');
-  var searchObj = { url: 'https://api.github.com/users/' + username, headers: { 'User-Agent': 'wainetam' }, auth: basicAuth };
-  request(searchObj, function(err, response, userData) {
-    console.log('IN USER STATS post REQUEST ', userData.email);
+  var searchObj = { url: 'https://api.github.com/users/' + username + '/repos', headers: { 'User-Agent': 'wainetam' }, auth: basicAuth };
+  request(searchObj, function(err, response, repoList) {
     if(err && response.statusCode !== 200) {
       console.log('Request error.');
       deferred.reject(err);
     }
-    userData = JSON.parse(userData);
-    console.log('SOLE USER ', userData);
-    console.log('USER EMAIL ', userData.email);
-    console.log('USER BLOG ', userData.blog);
-    console.log('USER FOLLOWER COUNT ', userData.followers);
-    console.log('USER REPO COUNT ', userData.public_repos);
-    console.log('USER GIST COUNT ', userData.public_gists);
+    repoList = JSON.parse(repoList);
 
-    var userObj = {
-      email: userData.email || '',
-      blog: userData.blog,
-      followers: userData.followers,
-      repos: userData.public_repos,
-      gists: userData.public_gists
-    };
-    deferred.resolve(userObj);
+    deferred.resolve(repoList);
   });
   return deferred.promise;
 };
-
-exports.userStats('dhh');
 
 // github.user.get(user, function(err, data) {
 //     if(err) { console.log(err); }

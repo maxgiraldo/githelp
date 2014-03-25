@@ -1,5 +1,6 @@
 // Module dependencies here
 var request = require('request');
+var search = require('../search');
 var mongoose = require('mongoose');
 // Specific mongoose models defined here
 var User = mongoose.model('User');
@@ -30,3 +31,10 @@ exports.signout = function(req, res) {
   res.redirect('/');
 };
 
+exports.profile = function(req, res){
+  console.log("hello")
+  var userName = req.params.userName;
+  search.userStats(userName).then(function(data){
+    res.jsonp({repoList: data});
+  })
+}
