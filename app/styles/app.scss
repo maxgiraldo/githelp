@@ -277,15 +277,23 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 // Session
-// #editor {
+.session-header {
+  margin-top: 0;
+}
+
+#editor {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+// .ace-editor {
+//   height: 400px;
 //   position: absolute;
 //   top: 0;
 //   right: 0;
 //   bottom: 0;
-//   left: 0;
+//   left: 0l
 // }
-#editor {
-  position: absolute;
-  width: 500px;
-
-}
