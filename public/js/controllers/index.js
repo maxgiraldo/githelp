@@ -10,10 +10,11 @@ angular.module('githelp.controllers.index', [])
       $scope.query = function() {
         if($scope.form.queryInput) {
           console.log($scope.form);
-            $http.post('/query', $scope.form).success(function(results) {
+          $http.post('/query', $scope.form).success(function(response) {
             // $location.path('/');
-            console.log('RESULTS ',results);
-            $scope.results = results;
+            console.log('RESULTS ',response);
+            $scope.githubResults = response.githubResults;
+            $scope.githelpResults = response.githelpResults;
             $state.go('main.search')
           });
         }

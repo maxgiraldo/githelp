@@ -5,10 +5,22 @@
       </form>
     </div>
 
-<div class='container'>
+<div class='container col-md-4' data-ng-show="githelpResults.length > 0">
   <br>
-  <h3>Results</h3>
-  <li ng-repeat="result in results | limitTo: 10">
+  <h3>githelp results</h3>
+  <li ng-repeat="user in githelpResults | limitTo: 10">
+    Name: {{user.fullName}}<br />
+    Url: {{user.github.html_url}}<br />
+    ID: {{user.userName}}<br />
+    Email: {{user.email}}<br />
+  </li>
+</div>
+
+
+<div class='container col-md-4' data-ng-show="githubResults.length > 0">
+  <br>
+  <h3>github results</h3>
+  <li ng-repeat="result in githubResults | limitTo: 10">
     Name: {{result.name}}<br />
     Full Name: {{result.full_name}}<br />
     Url: {{result.html_url}}<br />

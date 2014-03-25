@@ -45,7 +45,15 @@ passport.use(new GitHubStrategy({
           return done(err, u);
         });
       } else{
-        return done(err, user);
+        user.fullName = profile.displayName;
+        user.userName = profile._json.login;
+        user.email = profile._json.email;
+        user.githubId = profile.id;
+        user.github = profile._json;
+        user.accessToken = accessToken;
+        user.save(function(err){
+          return done(err, user);
+        })
       }
     });
   }
