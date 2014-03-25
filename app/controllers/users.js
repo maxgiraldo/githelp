@@ -1,6 +1,6 @@
 // Module dependencies here
 var request = require('request');
-var search = require('../search');
+var search = require('../api_builds/search');
 var mongoose = require('mongoose');
 // Specific mongoose models defined here
 var User = mongoose.model('User');

@@ -2,7 +2,7 @@
  * Module dependencies.
  */
 
-var search = require('../search');
+var search = require('../api_builds/search');
 
 var mongoose = require('mongoose'),
   async = require('async'),
