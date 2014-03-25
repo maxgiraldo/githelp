@@ -7940,11 +7940,16 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 /* line 280, ../../app/styles/app.scss */
+.navbar-min {
+  height: 40px;
+}
+
+/* line 284, ../../app/styles/app.scss */
 .session-header {
   margin-top: 0;
 }
 
-/* line 284, ../../app/styles/app.scss */
+/* line 288, ../../app/styles/app.scss */
 #editor {
   position: absolute;
   top: 0;
