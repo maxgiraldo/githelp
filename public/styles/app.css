@@ -7941,19 +7941,18 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 /* line 280, ../../app/styles/app.scss */
 .navbar-min {
-  height: 40px;
+  height: 20px;
+  background-color: #477093;
 }
 
-/* line 284, ../../app/styles/app.scss */
+/* line 285, ../../app/styles/app.scss */
 .session-header {
   margin-top: 0;
 }
 
-/* line 288, ../../app/styles/app.scss */
+/* line 289, ../../app/styles/app.scss */
 #editor {
   position: absolute;
-  top: 0;
   right: 0;
-  bottom: 0;
   left: 0;
 }
