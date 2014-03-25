@@ -1,6 +1,6 @@
 angular.module('githelp.controllers.index', [])
-  .controller('IndexController', ['$scope', 'Global', '$http',
-    function ($scope, Global, $http) {
+  .controller('IndexController', ['$scope', '$state', 'Global', '$http',
+    function ($scope, $state, Global, $http) {
       $scope.global = Global;
 
       $scope.form = {
@@ -14,7 +14,7 @@ angular.module('githelp.controllers.index', [])
             // $location.path('/');
             console.log('RESULTS ',results);
             $scope.results = results;
-
+            $state.go('main.search')
           });
         }
       };
