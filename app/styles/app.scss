@@ -45,6 +45,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-size: 17px;
   line-height: 1;
   color: inherit;
+  text-align: center;
 }
 
 .jumbotron {
@@ -249,11 +250,12 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .call-button:hover {
   background-color: #6ab72c;
 }
+
 .headline p {
   color: #fff;
   font-size: 15px;
   font-weight: 500;
-  padding: 13px 0;
+  padding: 14px 0;
   letter-spacing: 0.1em;
   cursor: pointer;
 }

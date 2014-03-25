@@ -7678,21 +7678,22 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-size: 17px;
   line-height: 1;
   color: inherit;
+  text-align: center;
 }
 
-/* line 50, ../../app/styles/app.scss */
+/* line 51, ../../app/styles/app.scss */
 .jumbotron {
   background: #fff;
 }
 
-/* line 57, ../../app/styles/app.scss */
+/* line 58, ../../app/styles/app.scss */
 .container.search-bg {
   margin: 0;
   padding: 0;
   border: 0;
 }
 
-/* line 65, ../../app/styles/app.scss */
+/* line 66, ../../app/styles/app.scss */
 .headline {
   font-style: normal;
   line-height: normal;
@@ -7700,7 +7701,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   text-transform: uppercase;
 }
 
-/* line 73, ../../app/styles/app.scss */
+/* line 74, ../../app/styles/app.scss */
 #custom-navbar {
   margin-top: 20px;
   margin-bottom: 0px;
@@ -7708,7 +7709,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   padding-bottom: 0px;
 }
 
-/* line 80, ../../app/styles/app.scss */
+/* line 81, ../../app/styles/app.scss */
 .avatar {
   width: 30px;
   height: 30px;
@@ -7717,13 +7718,13 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-right: 5%;
 }
 
-/* line 88, ../../app/styles/app.scss */
+/* line 89, ../../app/styles/app.scss */
 .avatar :before {
   margin-left: 0px;
   padding-left: 0px;
 }
 
-/* line 94, ../../app/styles/app.scss */
+/* line 95, ../../app/styles/app.scss */
 .logo {
   cursor: pointer;
   display: inline-block;
@@ -7734,21 +7735,21 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   vertical-align: top;
 }
 
-/* line 106, ../../app/styles/app.scss */
+/* line 107, ../../app/styles/app.scss */
 .navbar-nav > li > a {
   padding-top: 15px;
   padding-bottom: 15px;
   padding-left: 90px;
 }
 
-/* line 112, ../../app/styles/app.scss */
+/* line 113, ../../app/styles/app.scss */
 .navbar-right a {
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B';
   font-weight: 500;
   font-style: normal;
 }
 
-/* line 118, ../../app/styles/app.scss */
+/* line 119, ../../app/styles/app.scss */
 .navbar-right {
   cursor: pointer;
   display: inline-block;
@@ -7764,7 +7765,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-right: 37px;
 }
 
-/* line 133, ../../app/styles/app.scss */
+/* line 134, ../../app/styles/app.scss */
 .main-nav-links {
   display: inline-block;
   float: right;
@@ -7772,7 +7773,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   vertical-align: top;
 }
 
-/* line 140, ../../app/styles/app.scss */
+/* line 141, ../../app/styles/app.scss */
 .navbar {
   position: relative;
   min-height: 50px;
@@ -7780,25 +7781,25 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   border: 1px solid transparent;
 }
 
-/* line 147, ../../app/styles/app.scss */
+/* line 148, ../../app/styles/app.scss */
 .navbar-default {
   background-color: #ffffff;
   border-color: #ffffff;
 }
 
-/* line 152, ../../app/styles/app.scss */
+/* line 153, ../../app/styles/app.scss */
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
   border-color: #fff;
   border: none;
 }
 
-/* line 158, ../../app/styles/app.scss */
+/* line 159, ../../app/styles/app.scss */
 #search-bar {
   width: 250px;
   border-radius: 0;
 }
 
-/* line 163, ../../app/styles/app.scss */
+/* line 164, ../../app/styles/app.scss */
 .search-bg {
   padding-top: 70px;
   background-color: #f9f9f9;
@@ -7806,7 +7807,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   height: 180px;
 }
 
-/* line 171, ../../app/styles/app.scss */
+/* line 172, ../../app/styles/app.scss */
 .form-control {
   display: block;
   width: 100%;
@@ -7827,12 +7828,12 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
-/* line 191, ../../app/styles/app.scss */
+/* line 192, ../../app/styles/app.scss */
 .form-control:hover {
   border: 1px solid #a2a2a2;
 }
 
-/* line 195, ../../app/styles/app.scss */
+/* line 196, ../../app/styles/app.scss */
 .form-control:focus {
   -webkit-box-shadow: 0px 0px 0px #77cc33;
   -moz-box-shadow: 0px 0px 0px #77cc33;
@@ -7840,53 +7841,53 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   border: 1px solid #77cc33;
 }
 
-/* line 202, ../../app/styles/app.scss */
+/* line 203, ../../app/styles/app.scss */
 .form-control::-webkit-input-placeholder {
   color: #b3babe;
 }
 
-/* line 205, ../../app/styles/app.scss */
+/* line 206, ../../app/styles/app.scss */
 .form-control::-moz-placeholder {
   color: #b3babe;
 }
 
-/* line 208, ../../app/styles/app.scss */
+/* line 209, ../../app/styles/app.scss */
 .form-control:-moz-placeholder {
   /* Older versions of Firefox */
   color: #b3babe;
 }
 
-/* line 211, ../../app/styles/app.scss */
+/* line 212, ../../app/styles/app.scss */
 .form-control:-ms-input-placeholder {
   color: #b3babe;
 }
 
-/* line 216, ../../app/styles/app.scss */
+/* line 217, ../../app/styles/app.scss */
 .profile {
   padding-top: 48px;
   text-align: center;
   width: 350px;
 }
 
-/* line 222, ../../app/styles/app.scss */
+/* line 223, ../../app/styles/app.scss */
 .avatar-lg {
   border-radius: 60px;
   width: 110px;
   height: 110px;
 }
 
-/* line 227, ../../app/styles/app.scss */
+/* line 228, ../../app/styles/app.scss */
 .profile-name-info {
   color: #000;
 }
 
-/* line 230, ../../app/styles/app.scss */
+/* line 231, ../../app/styles/app.scss */
 .full-name {
   font-size: 20px;
   margin-bottom: 5px;
 }
 
-/* line 234, ../../app/styles/app.scss */
+/* line 235, ../../app/styles/app.scss */
 .username {
   font-size: 16px;
   font-weight: 400;
@@ -7895,7 +7896,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-top: 5px;
 }
 
-/* line 241, ../../app/styles/app.scss */
+/* line 242, ../../app/styles/app.scss */
 .call-button {
   width: 100%;
   height: 45px;
@@ -7905,22 +7906,22 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-top: 25px;
 }
 
-/* line 249, ../../app/styles/app.scss */
+/* line 250, ../../app/styles/app.scss */
 .call-button:hover {
   background-color: #6ab72c;
 }
 
-/* line 252, ../../app/styles/app.scss */
+/* line 254, ../../app/styles/app.scss */
 .headline p {
   color: #fff;
   font-size: 15px;
   font-weight: 500;
-  padding: 13px 0;
+  padding: 14px 0;
   letter-spacing: 0.1em;
   cursor: pointer;
 }
 
-/* line 261, ../../app/styles/app.scss */
+/* line 263, ../../app/styles/app.scss */
 .caps-sub-header {
   color: #8e8e8e;
   font-size: 14px;
@@ -7930,7 +7931,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-top: 20px;
 }
 
-/* line 270, ../../app/styles/app.scss */
+/* line 272, ../../app/styles/app.scss */
 .repo-links {
   font-size: 14px;
   padding: 0;
@@ -7938,7 +7939,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   border: 0;
 }
 
-/* line 285, ../../app/styles/app.scss */
+/* line 287, ../../app/styles/app.scss */
 #editor {
   position: absolute;
   width: 500px;
