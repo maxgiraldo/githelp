@@ -267,7 +267,7 @@ exports.query = function(queryString, repoBoolean, userBoolean) { // repo and us
     }
     console.log('query output ', data);
 
-    var urlObj = processRepoUrl('http://github.com/rails/rails'); // dummy variable for now
+    var urlObj = exports.processRepoUrl('http://github.com/rails/rails'); // dummy variable for now
     console.log('URLOBJ', urlObj);
 
     // if specific repo query

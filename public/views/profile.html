@@ -5,17 +5,16 @@
     </div>
     <div class='profile-name-info'>
       <h1 class='headline full-name'>{{global.user.fullName}}</h1>
-      <h2 class='username'><a href="http://www.github.com/{{global.user.userName}}">github: {{global.user.userName}}</a></h2>
-      <h2 data-ng-show="githubStats.blog" class="username"><a href="{{githubStats.blog}}">personal website</a></h2>
+      <h2 class='username'><a href="http://www.github.com/{{global.user.userName}}"><i class="fa fa-github"></i> {{global.user.userName}}</a></h2>
+      <h2 class="username"><a href="http://www.{{global.user.github.blog}}"><i class="fa fa-link"></i> {{global.user.github.blog}}</a></h2>
       <h3>$120/min</h3>
     </div>
     <div class='call-button headline'>
       <p>Set up a call</p>
     </div>
-    <p class='caps-sub-header'>{{global.user.github.public_repos}} repositories</p>
+    <p class='caps-sub-header'>{{global.user.github.public_repos}} public repositories</p>
     <!-- <div ng-repeat="repo in repos"> -->
     <div>
-      <h2>own repositories</h2>
       <ul class='repo-links'>
         <li data-ng-repeat="repo in repoList" data-ng-show="!repo.fork"><a href="repo.html_url">{{repo.name}}</a></li>
       </ul>

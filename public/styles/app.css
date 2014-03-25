@@ -7939,8 +7939,21 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   border: 0;
 }
 
-/* line 287, ../../app/styles/app.scss */
+/* line 280, ../../app/styles/app.scss */
+.navbar-min {
+  height: 40px;
+}
+
+/* line 284, ../../app/styles/app.scss */
+.session-header {
+  margin-top: 0;
+}
+
+/* line 288, ../../app/styles/app.scss */
 #editor {
   position: absolute;
-  width: 500px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
