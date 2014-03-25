@@ -1,16 +1,29 @@
 angular.module('githelp.controllers.user', [])
-  .controller('UserController', ['$scope', 'Global', 'User',
-    function ($scope, Global) {
+  .controller('UserController', ['$scope', '$stateParams', 'Global', 'User',
+    function ($scope, $stateParams, Global, User) {
     $scope.global = Global;
 
 
-    $scope.find = function(){
+    $scope.findOne = function(){
       User.get({
-        userName: $stateParams.username
+        userName: $stateParams.userName
         // look for the github.login and then get the githubId sequence
-      }, function(user){
-        console.log(user)
+      }, function(response){
+        $scope.repoList = response.repoList;
       })
     }
   }
 ]);
+
+
+//   for userStats, you can call search.userStats(username)
+// returns a userObj
+
+
+// var userObj = {
+//       email: userData.email || '',
+//       blog: userData.blog,
+//       followers: userData.followers,
+//       repos: userData.public_repos,
+//       gists: userData.public_gists
+//     };

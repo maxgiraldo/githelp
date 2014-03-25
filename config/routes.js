@@ -36,7 +36,7 @@ passport.use(new GitHubStrategy({
         var u = new User({
           fullName: profile.displayName,
           userName: profile._json.login,
-          email: profile.email,
+          email: profile._json.email,
           githubId: profile.id,
           github: profile._json,
           accessToken: accessToken
@@ -77,6 +77,8 @@ module.exports = function(app) {
 
   app.get('/', index.render);
   app.post('/query', index.results);
+
+  app.get('/user/:userName', users.profile);
 
   app.get('/signin', users.signin);
   app.get('/signup', users.signup);

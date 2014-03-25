@@ -9,7 +9,7 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'views/index.html'
         })
         .state('profile', {
-          url: '/:username',
+          url: '/:userName',
           templateUrl: 'views/profile.html'
         })
         .state('session', {

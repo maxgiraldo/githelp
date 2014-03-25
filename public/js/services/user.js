@@ -1,8 +1,8 @@
 angular.module('githelp.services.user', []).factory('User', ['$resource',
     function($resource) {
-        return $resource('user/:userId',
+        return $resource('user/:userName',
         {
-          userId: '@_id'
+          userName: '@userName'
         }, {
           update: {
             method: 'PUT'
