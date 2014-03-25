@@ -12,7 +12,7 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
           url: '/:username',
           templateUrl: 'views/profile.html'
         })
-        .state('main.session', {
+        .state('session', {
           url: '/session',
           templateUrl: 'views/session.html'
         });

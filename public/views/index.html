@@ -1,6 +1,7 @@
 <section data-ng-controller="IndexController">
 	<div class="container jumbotron">
     <h1 class='headline'>Get support from open source contributors</h1>
+    <a href="/#!/{{global.user.userName}}" data-ng-show="global.authenticated">View your profile</a>
   </div>
   <div class='search-bg'>
     <form class="container form-group" ng-submit="query()">
