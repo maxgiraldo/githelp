@@ -8,6 +8,13 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
             url:'/',
             templateUrl: 'views/index.html'
         })
+          .state('main.search', {
+            views: {
+              'search':{
+                templateUrl: 'views/search.html'
+              }
+            }
+          })
         .state('profile', {
           url: '/:userName',
           templateUrl: 'views/profile.html'
