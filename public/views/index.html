@@ -1,4 +1,5 @@
 <section data-ng-controller="IndexController">
+<<<<<<< HEAD
   <div ui-view="search">
   	<div class="container jumbotron">
       <h1 class='headline'>Get support from open source contributors</h1>
@@ -10,5 +11,27 @@
         <input type="submit" class="btn btn-success" value="Git it on">
       </form>
     </div>
+=======
+	<div class="container jumbotron">
+    <h1 class='headline'>Get support from open source contributors</h1>
+    <section>
+</section>
+  </div>
+  <div class='search-bg'>
+    <form class="container form-group" ng-submit="query()">
+      <input type="text" class="form-control" id="search-bar" name="query" ng-model="form.queryInput" placeholder="Search username/repo">
+      <input type="submit" class="btn btn-success" value="Search">
+    </form>
+  </div>
+  <div class='container'>
+    <br>
+    <h3>Results</h3>
+    <li ng-repeat="result in results | limitTo: 10">
+      Name: {{result.name}}<br />
+      Full Name: {{result.full_name}}<br />
+      Url: {{result.html_url}}<br />
+      ID: {{result.id}}<br />
+    </li>
+>>>>>>> 82bc78a588649768dce4896125ba24f7e0c71ed4
   </div>
 </section>
