@@ -279,6 +279,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 // Session
 .navbar-min {
   height: 20px;
+  background-color: #477093;
 }
 
 .session-header {
@@ -287,9 +288,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 #editor {
   position: absolute;
-  top: 0;
   right: 0;
-  bottom: 0;
   left: 0;
 }
 

@@ -83,4 +83,8 @@ module.exports = function(app) {
   app.get('/signin', users.signin);
   app.get('/signup', users.signup);
   app.get('/signout', users.signout);
+
+  app.get('/session', function(req, res) {
+    res.render('session');
+  })
 };
