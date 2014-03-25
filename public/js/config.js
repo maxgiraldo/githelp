@@ -19,10 +19,6 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
           url: '/:userName',
           templateUrl: 'views/profile.html'
         })
-        .state('session', {
-          url: '/session',
-          templateUrl: 'views/session.html'
-        });
     }
 ]);
 
