@@ -35,6 +35,13 @@ exports.profile = function(req, res){
   console.log("hello")
   var userName = req.params.userName;
   search.userStats(userName).then(function(data){
-    res.jsonp({repoList: data});
+    User.findOne({userName: req.params.userName}, function(err, user){
+      var response = {
+        repoList: data,
+        user: user
+      };
+      console.log(user);
+      res.jsonp(response);
+    })
   })
 }

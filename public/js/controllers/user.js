@@ -10,6 +10,7 @@ angular.module('githelp.controllers.user', [])
         // look for the github.login and then get the githubId sequence
       }, function(response){
         $scope.repoList = response.repoList;
+        $scope.user = response.user
       })
     }
   }

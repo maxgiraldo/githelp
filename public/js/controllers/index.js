@@ -19,5 +19,10 @@ angular.module('githelp.controllers.index', [])
           });
         }
       };
-  }
+
+      $scope.userProfile = function(username){
+
+        $location.path('/'+username)
+      }
+    }
 ]);
