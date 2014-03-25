@@ -167,12 +167,19 @@ var findOtherTop = function(contributorsArr, thresholdObj) { // threshold: {foll
 
 // ** Repo info
 
-var processRepoUrl = function(repoUrl) { // wainetam/myRepo
+exports.processRepoUrl = function(repoUrl) { // github.com/wainetam/myRepo
   var user = repoUrl.match(/github.com\/(.+)\/.+/)[1];
   var repo = repoUrl.match(/github.com\/.+\/(.+)/)[1];
   return {
     user: user,
     repo: repo
+  };
+};
+
+exports.processUserUrl = function(userUrl) { // github.com/wainetam
+  var user = userUrl.match(/github.com\/(.+)/)[1];
+  return {
+    user: user
   };
 };
 
@@ -189,7 +196,7 @@ var Repo = function(author, repo) {
 exports.repoStats = function(repoUrl) {  // rails/rails
   var deferred = Q.defer();
 
-  var obj = processRepoUrl(repoUrl);
+  var obj = exports.processRepoUrl(repoUrl);
 
   github.repos.get(obj, function(err, data) {
     if(err) {

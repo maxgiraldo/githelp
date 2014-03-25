@@ -1,18 +1,45 @@
 var cheerio = require('cheerio'),
-    zombie = require('zombie');
+    request = require('request'),
+    search = require('./search');
 
-var url = 'https://github.com/dhh';
+var url = "https://github.com/dhh";
 
-var zombieCrawl = function(url) {
-  zombie.visit(url, function (err, browser, status) {
+exports.getTopContribs = function(url) {
 
-    console.log(browser.html());
+  var page = request(url, function(err, response, body) { // request takes an object w parameters: method, uri
+    if(err && response.statusCode !== 200) {
+      console.log('Request error.');
+    }
 
-    $ = cheerio.load(browser.html());
-    var contribItems = $('.repo-list-item');
-    // var price = browser.document.getElementById('priceblock_ourprice').innerHTML;
-    console.log('contribItems ', contribItems);
+    $ = cheerio.load(response.body);
+    console.log(response.body);
+
+    var username = search.processUserUrl(url).user;
+    // var username = 'dhh';
+    var topContribs = [];
+
+    var linkObj = $('.repo-list-item');
+    var hrefs = [];
+
+    for(var i = 0; i < linkObj.length; i++) {
+      hrefs.push(linkObj[i].attribs.href);
+    }
+
+    hrefs.forEach(function(href) {
+      var regex = new RegExp(username);
+      console.log('HREF MATCH ', href.match(regex));
+      console.log('REGEX', regex);
+      if(href.match(regex) === null) {
+        console.log('topContribs ', topContribs);
+        topContribs.push(href);
+      }
+    });
+
+    console.log('hrefs ', hrefs);
+    console.log('topContribs ', topContribs);
+    return topContribs;
+
   });
 };
 
-zombieCrawl(url);
+exports.getTopContribs(url); // returns array of topContributed Repos
