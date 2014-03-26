@@ -12,11 +12,17 @@
     <div class='call-button headline'>
       <p>Set up a call</p>
     </div>
-    <p class='caps-sub-header'>{{user.github.public_repos}} public repositories</p>
+    <p data-ng-show="repoList.length > 0" class='caps-sub-header'>{{user.github.public_repos}} public repositories</p>
     <!-- <div ng-repeat="repo in repos"> -->
     <div>
       <ul class='repo-links'>
         <li data-ng-repeat="repo in repoList" data-ng-show="!repo.fork"><a href="repo.html_url">{{repo.name}}</a></li>
+      </ul>
+    </div>
+    <p data-ng-show="conList.length > 0" class='caps-sub-header'>top {{conList.length}} repositories contributed to</p>
+    <div>
+      <ul class='repo-links'>
+        <li data-ng-repeat="repo in conList"><a href="https://github.com{{repo}}">{{repoName(repo)}}</a></li>
       </ul>
     </div>
     <div>
@@ -25,7 +31,6 @@
       <p class='caps-sub-header'>Followers: {{user.github.followers}}</p>
     </div>
   </div>
-
 </section>
 
 

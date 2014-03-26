@@ -1,12 +1,15 @@
 var cheerio = require('cheerio'),
     request = require('request'),
-    search = require('./search');
+    search = require('./search'),
+    Q = require('q');
 
 var url = "https://github.com/dhh";
 
 exports.getTopContribs = function(url) {
 
-  var page = request(url, function(err, response, body) { // request takes an object w parameters: method, uri
+  var deferred = Q.defer();
+
+  request(url, function(err, response, body) { // request takes an object w parameters: method, uri
     if(err && response.statusCode !== 200) {
       console.log('Request error.');
     }
@@ -37,9 +40,10 @@ exports.getTopContribs = function(url) {
 
     console.log('hrefs ', hrefs);
     console.log('topContribs ', topContribs);
-    return topContribs;
-
+    deferred.resolve(topContribs);
   });
+
+  return deferred.promise;
 };
 
-exports.getTopContribs(url); // returns array of topContributed Repos
+// exports.getTopContribs(url); // returns array of topContributed Repos

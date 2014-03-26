@@ -3,15 +3,20 @@ angular.module('githelp.controllers.user', [])
     function ($scope, $stateParams, Global, User) {
     $scope.global = Global;
 
-
     $scope.findOne = function(){
       User.get({
         userName: $stateParams.userName
         // look for the github.login and then get the githubId sequence
       }, function(response){
         $scope.repoList = response.repoList;
-        $scope.user = response.user
+
+        $scope.user = response.user;
+        $scope.conList = response.conList;
       })
+    }
+    $scope.repoName = function(url){
+      console.log(url)
+      return url.replace(/\/.*\//, "");
     }
   }
 ]);
