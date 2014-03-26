@@ -11,4 +11,29 @@
       </form>
     </div>
   </div>
+
+  <div>
+    <form class="container form-group" ng-submit="createCard()">
+    <div>
+      <label>Name on Card</label>
+      <input type="text" id="cc-name" autocomplete="off" ng-model="cc.name" placeholder="John Doe" />
+    </div>
+    <div>
+      <label>Card Number</label>
+      <input type="text" id="cc-number" autocomplete="off" ng-model="cc.number" placeholder="4111111111111111" maxlength="16" />
+    </div>
+    <div>
+      <label>Expiration</label>
+      <input type="text" id="cc-ex-month" autocomplete="off" ng-model="cc.expiration_month" placeholder="01" maxlength="2" />
+      <input type="text" id="cc-ex-year" autocomplete="off" ng-model="cc.expiration_year" placeholder="2013" maxlength="4" />
+    </div>
+    <div>
+      <label>Security Code (CVV)</label>
+      <input type="text" id="ex-csc" autocomplete="off" ng-model="cc.cvv" placeholder="453" maxlength="4" />
+    </div>
+    <input type="submit" class="btn btn-success" value="Submit" id="cc-submit">
+    </form>
+    Submitted CC: {{ccComplete}}
+  </div>
+
 </section>

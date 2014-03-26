@@ -66,6 +66,7 @@ module.exports = function(app) {
   //Routes to App Controllers here
   var index = require('../app/controllers/index');
   var users = require('../app/controllers/users');
+  var payments = require('../app/controllers/payments');
   var appointments = require('../app/controllers/appointments');
 
   // passport routes
@@ -85,6 +86,8 @@ module.exports = function(app) {
 
   app.get('/', index.render);
   app.post('/query', index.results);
+
+  app.post('/create', payments.createCard);
 
   app.get('/user/:userName', users.profile);
 

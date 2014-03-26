@@ -4,6 +4,7 @@ var cheerio = require('cheerio'),
 
 var url = "https://github.com/dhh";
 
+// returns array of topContributed Repos
 exports.getTopContribs = function(url) {
 
   var page = request(url, function(err, response, body) { // request takes an object w parameters: method, uri
@@ -42,4 +43,4 @@ exports.getTopContribs = function(url) {
   });
 };
 
-exports.getTopContribs(url); // returns array of topContributed Repos
+// exports.getTopContribs(url);

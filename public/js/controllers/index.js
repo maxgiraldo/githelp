@@ -5,7 +5,22 @@ angular.module('githelp.controllers.index', [])
 
       $scope.form = {
         queryInput: ""
-      }
+      };
+
+      $scope.cc = {
+        name: "",
+        number: "",
+        expiration_month: "",
+        expiration_year: "",
+        cvv: ""
+      };
+
+      $scope.createCard = function() {
+        $http.post('/create', $scope.cc).success(function(response) {
+          console.log('CREATE CARD SUCCESS', response);
+          $scope.ccComplete = response;
+        });
+      };
 
       $scope.query = function() {
         if($scope.form.queryInput) {

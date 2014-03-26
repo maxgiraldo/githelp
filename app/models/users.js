@@ -9,12 +9,12 @@ var UserSchema = new Schema({
   github: {},
   accessToken: String,
   // the below is the user id for balanced
-  balancedId: String,
+  balancedUser: String,
   // the below is the id for the tokenized card associated with balanced customer
-  balancedToken: String,
+  balancedCard: String,
   paymentsMade: [{type: Schema.ObjectId,
                 ref: 'Payment'}],
-  paymentsRecieved: [{type: Schema.ObjectId,
+  paymentsReceived: [{type: Schema.ObjectId,
                 ref: 'Payment'}]
 });
 
