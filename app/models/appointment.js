@@ -19,7 +19,8 @@ var AppointmentSchema = new Schema({
   },
   duration: String,
   topic: String,
-  message: String
+  message: String,
+  editor: []
 });
 
 mongoose.model('Appointment', AppointmentSchema);

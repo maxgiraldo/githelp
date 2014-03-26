@@ -11,7 +11,8 @@ window.app = angular.module('githelp',
 angular.module('githelp.controllers',
   ['githelp.controllers.index',
   'githelp.controllers.navbar',
-  'githelp.controllers.user'
+  'githelp.controllers.user',
+  'githelp.controllers.appointment'
   ]);
 
 angular.module('githelp.services',
