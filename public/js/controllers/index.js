@@ -15,10 +15,24 @@ angular.module('githelp.controllers.index', [])
         cvv: ""
       };
 
+      $scope.ba = {
+        name: "",
+        routing_number: "",
+        account_type: "",
+        account_number: ""
+      };
+
       $scope.createCard = function() {
-        $http.post('/create', $scope.cc).success(function(response) {
+        $http.post('/create/cc', $scope.cc).success(function(response) {
           console.log('CREATE CARD SUCCESS', response);
           $scope.ccComplete = response;
+        });
+      };
+
+      $scope.createBankAcct = function() {
+        $http.post('/create/ba', $scope.ba).success(function(response) {
+          console.log('CREATE BANK SUCCESS', response);
+          $scope.baComplete = response;
         });
       };
 

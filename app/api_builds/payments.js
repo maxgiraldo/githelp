@@ -11,12 +11,15 @@ var cardFormObj = {
   'number': '4111111111111111',
   'expiration_year': '2016',
   'expiration_month': '12',
-  'cvv': '123'
-  // ,
-  // 'address': {
-    // 'line1': '965 Mission St',
-    // 'postal_code': '94103'
-  // }
+  'cvv': '123',
+  'address': {
+    'line1': '965 Mission St',
+    'line2': '',
+    'city': '',
+    'state': '',
+    // 'country_code': '',
+    'postal_code': '94103' // need to add address and postal code for card.avs_postal_match === 'yes'
+  }
 };
 
 var bankFormObj = {
@@ -26,32 +29,24 @@ var bankFormObj = {
   'account_number': '9900000001'
 };
 
-exports.createCreditCard = function(cardFormObj) {
-  var deferred = Q.defer();
+exports.createCard = function(cardFormObj) {
   balanced.marketplace.cards.create(cardFormObj)
   .then(function(card) {
-    deferred.resolve(card);
     console.log('CARD ', card.toJSON());
   }, function(err) {
-    deferred.reject(err);
     console.log(err);
   });
-  return deferred.promise;
 };
 
-// exports.createCreditCard(cardFormObj);
+exports.createCard(cardFormObj);
 
 exports.createBankAccount = function(bankFormObj) {
-  var deferred = Q.defer();
   balanced.marketplace.bank_accounts.create(bankFormObj)
   .then(function(account) {
-    deferred.resolve(account);
     console.log('ACCOUNT ', account.toJSON());
   }, function(err) {
-    deferred.resolve(err);
     console.log(err);
   });
-  return deferred.promise;
 };
 
 // exports.createBankAccount(bankFormObj);
@@ -71,20 +66,78 @@ var associateCardToCustomer = function(cardObj, customerObj) {
   return deferred.promise;
 };
 
-var debitCard = function(cardObj, customerObj) {
-  associateCardToCustomer(cardObj, customerObj).debit({
-      'amount': 5000,
-      'appears_on_statement_as': 'githelp.co',
-      'description': 'githelp.co'
-    }).then(function (debit) {
-        // save the result of the debit
-      console.log('debit', debit.toJSON());
-      // console.log('card', debit._api.objects);
-    }, function (err) {
-        // record the error message
-      console.log(err);
-    });
+// var debitCard = function(amount, cardObj, customerObj) { // amount in cents
+//   associateCardToCustomer(cardObj, customerObj).debit({
+//       'amount': amount,
+//       'appears_on_statement_as': 'githelp.co',
+//       'description': 'githelp.co'
+//     }).then(function (debit) {
+//         // save the result of the debit
+//       console.log('debit', debit.toJSON());
+//       // console.log('card', debit._api.objects);
+//     }, function (err) {
+//         // record the error message
+//       console.log(err);
+//     });
+// };
+
+exports.debitCard = function(amount, description, cardObj) {
+  balanced.get(cardObj.href).debit({
+    'amount': amount,
+    'appears_on_statement_as': 'githelp.co',
+    'description': description
+  }).then(function(debit) {
+    console.log('debit', debit.toJSON());
+  }, function(err) {
+    console.log(err);
+  });
 };
+
+exports.updateCard = function(currentCardObj, updatedCardObj) {
+  var updatedParams = ""; // dummyVar for now
+  balanced.get(currentCardObj.href).then(function(card) {
+    console.log('Updated card:', card);
+    card.address = {}; // dummy for now
+    card.save();
+  });
+};
+
+exports.deleteCard = function(cardObj) {
+  balanced.get(cardObj.href).unstore().then(function(card) {
+    console.log('Deleted card:', card);
+  });
+};
+
+exports.updateBankAcct = function(bankObj, updatedBankObj) {
+  var updatedParams = ""; // dummyVar for now
+  balanced.get(bankObj.href).then(function(bankAcct) {
+    console.log('Deleted bank acct:', bankAcct);
+    bankAcct.address = {};
+    bankAcct.save();
+  });
+};
+
+
+// initiates verification process for bank account
+exports.verifyBankAcct = function(bankObj) {
+  balanced.get(bankObj.href).verify().then(function(status) {
+    console.log('Status of acct to be verified:', status);
+  });
+};
+
+// confirm verification process
+exports.confirmBankAcct = function(amt1, amt2, bankObj) {
+  balanced.get(bankObj.href).confirm(amt1, amt2).then(function(status) {
+    console.log('Status of acct to be confirmed:', status);
+  });
+};
+
+exports.deleteBankAcct = function(bankObj) {
+  balanced.get(bankObj.href).unstore().then(function(bankAcct) {
+    console.log('Deleted bank acct:', bankAcct);
+  });
+};
+
 
 var customerObj = balanced.marketplace.customers.create({
   'uri': '/customers',
@@ -98,7 +151,20 @@ var customerObj = balanced.marketplace.customers.create({
   }
 });
 
-balanced.marketplace.cards.create(cardFormObj).associate_to_customer(customerObj).debit({
+balanced.marketplace.customers.create({
+    'name': 'Henry Ford',
+    'dob_year': 1985,
+    'dob_month': 7,
+    'address': {
+      'postal_code': '48120' // need to add address and DOB for customer.merchant_status='underwritten'
+    }
+  }).then(function(customer) {
+    console.log('CUSTOMER', customer.toJSON());
+  }, function(err) {
+    console.log(err);
+  });
+
+balanced.marketplace.cards.create(cardFormObj).debit({
     'amount': 5000,
     'appears_on_statement_as': 'githelp.co',
     'description': 'githelp.co'
@@ -108,8 +174,8 @@ balanced.marketplace.cards.create(cardFormObj).associate_to_customer(customerObj
     console.log(err);
   });
 
-var creditBankAccount = function(bankObj) {
-  balanced.get(bankObj.href).credit(5000).then(function(credit) {
+var creditBankAccount = function(amount, bankObj) { // amount in cents
+  balanced.get(bankObj.href).credit(amount).then(function(credit) {
     console.log(credit);
   },
   function(err) {
@@ -127,5 +193,7 @@ balanced.marketplace.bank_accounts.create(bankFormObj).credit({
   function(err) {
     console.log(err);
   });
+
+
 
 

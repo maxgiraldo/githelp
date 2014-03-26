@@ -87,7 +87,8 @@ module.exports = function(app) {
   app.get('/', index.render);
   app.post('/query', index.results);
 
-  app.post('/create', payments.createCard);
+  app.post('/create/cc', payments.createCard);
+  app.post('/create/ba', payments.createBankAcct);
 
   app.get('/user/:userName', users.profile);
 

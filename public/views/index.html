@@ -36,4 +36,28 @@
     Updated DB data: {{ccComplete}}
   </div>
 
+  <div>
+    <form class="container form-group" ng-submit="createBankAcct()">
+  <div>
+    <label>Account Holder's Name</label>
+    <input type="text" id="ba-name" autocomplete="off" ng-model="ba.name" placeholder="John Doe" />
+  </div>
+  <div>
+    <label>Routing Number</label>
+    <input type="text" id="ba-routing" autocomplete="off" ng-model="ba.routing_number" placeholder="322271627" />
+  </div>
+  <div>
+    <label>Account Type</label>
+    <input type="text" id="ba-type" autocomplete="off" ng-model="ba.account_type" placeholder="Checking" />
+  </div>
+  <div>
+    <label>Account Number</label>
+    <input type="text" id="ba-number" autocomplete="off" ng-model="ba.account_number" placeholder="9900000000" />
+  </div>
+  <input type="submit" class="btn btn-success" value="Submit" id="ba-submit">
+</form>
+    Updated DB data: {{baComplete}}
+  </div>
+
+
 </section>

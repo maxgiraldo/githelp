@@ -12,6 +12,8 @@ var UserSchema = new Schema({
   balancedUser: String,
   // the below is the id for the tokenized card associated with balanced customer
   balancedCard: String,
+  // below is the id for the tokenized acct if the customer is a merchant
+  balancedBank: String,
   paymentsMade: [{type: Schema.ObjectId,
                 ref: 'Payment'}],
   paymentsReceived: [{type: Schema.ObjectId,
