@@ -15,10 +15,14 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
               }
             }
           })
+        .state('session', {
+          url: '/session',
+          templateUrl: 'views/session.html'
+        })
         .state('profile', {
           url: '/:userName',
           templateUrl: 'views/profile.html'
-        })
+        });
     }
 ]);
 
