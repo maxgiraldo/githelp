@@ -37,7 +37,8 @@
     "passport-github": "~0.1.5",
     "q": "~1.0.1",
     "zombie": "~2.0.0-alpha31",
-    "cheerio": "~0.13.1"
+    "cheerio": "~0.13.1",
+    "socket.io": "latest"
   },
   "devDependencies": {
     "supertest": "latest",

@@ -1,14 +1,22 @@
 <!-- <a href="/instances/{{ instanceId }}">{{instance.name}}</a> -->
-<section data-ng-controller="IndexController">
+<section data-ng-controller="AppointmentController">
   <div class="container jumbotron">
     <h1 class='headline session-header'>Session with [name of person]</h1>
-    <div id="editor">console.log('hello, world')</div>
   </div>
+  <div id="editor">console.log('hello, world')</div>
   <!-- <div class='ace-editor' ui-ace>Ace here</div> -->
 </section>
 
 <script>
-    var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/monokai");
-    editor.getSession().setMode("ace/mode/javascript");
+  var socket = io.connect('http://localhost');
+  // // var sessionId = null;
+
+  var editor = ace.edit("editor");
+  editor.setTheme("ace/theme/monokai");
+  editor.getSession().setMode("ace/mode/javascript");
+
+  // editor.on("change", function(e) {
+  //   socket.emit('textEditorChange', { change: e });
+  // });
+
 </script>
