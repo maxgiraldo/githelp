@@ -49,21 +49,21 @@ var server = app.listen(port);
 console.log('Express app started on port ' + port);
 
 // Socket.io
-var io = require('socket.io').listen(server);
+// var io = require('socket.io').listen(server);
 
 // GLOBAL.sockets = {};
 
-// Socket.io Communication
-io.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-});
+// // Socket.io Communication
+// io.sockets.on('connection', function (socket) {
+//   socket.emit('news', { hello: 'world' });
+//   socket.on('textEditorChange', function (dataAboutChangeInTextEditor) {
+//     console.log(dataAboutChangeInTextEditor);
+//   });
+// });
 
-  // socket.on('userChange', function(data) {
-  //   socket.emit('userChange', { userChange: data });
-  // });
+//   socket.on('userChange', function(data) {
+//     socket.emit('userChange', { userChange: data });
+//   });
 
 
 

@@ -3,20 +3,62 @@
   <div class="container jumbotron">
     <h1 class='headline session-header'>Session with [name of person]</h1>
   </div>
-  <div id="editor">console.log('hello, world')</div>
-  <!-- <div class='ace-editor' ui-ace>Ace here</div> -->
+  <div id="opentokVideos" style="..."></div>
+  <div id="firepad-container"></div>
 </section>
 
 <script>
-  var socket = io.connect('http://localhost');
+  //// Initialize TokBox
+      a = new TBStart('44708602', 'opentokVideos');
+      a.startVideo();
+
+  //// Initialize Firebase.
+
+    // window.onload = function() {
+
+      //// Initialize Firebase.
+      var firepadRef = new Firebase('https://githelp.firebaseio.com/');
+      // TODO: Replace above line with:
+      // var ref = new Firebase('<YOUR FIREBASE URL>');
+
+      //// Create ACE
+      var editor = ace.edit("firepad-container");
+      editor.setTheme("ace/theme/monokai");
+      var session = editor.getSession();
+      session.setUseWrapMode(true);
+      session.setUseWorker(false);
+      session.setMode("ace/mode/javascript");
+
+      //// Create Firepad.
+      var firepad = Firepad.fromACE(firepadRef, editor);
+
+      //// Initialize contents.
+      firepad.on('ready', function() {
+        if (firepad.isHistoryEmpty()) {
+          firepad.setText('// JavaScript Editing with Firepad!\nfunction go() {\n  var message = "Hello, world.";\n  console.log(message);\n}');
+        }
+      });
+    // };
+
+  // var socket = io.connect('http://localhost');
   // // var sessionId = null;
 
-  var editor = ace.edit("editor");
-  editor.setTheme("ace/theme/monokai");
-  editor.getSession().setMode("ace/mode/javascript");
+  // var editor = ace.edit("editor");
+  // editor.setTheme("ace/theme/monokai");
+  // editor.getSession().setMode("ace/mode/javascript");
 
-  // editor.on("change", function(e) {
-  //   socket.emit('textEditorChange', { change: e });
+  // Use #setValue to restore the text editor from server on page reload
+
+  // outputText();
+  // editor.on('change', function(e) {
+      // socket.emit('textEditorChange', { 'dataAboutChangeInTextEditor': e });
+    // if (e.data.text === ' ') {
+
+    // } else if (e.data.text === '') {
+    //   editor.splitLine();
+    // } else {
+    //   console.log('hehe');
+    // }
   // });
 
 </script>
