@@ -56,8 +56,8 @@ var io = require('socket.io').listen(server);
 // Socket.io Communication
 io.sockets.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
+  socket.on('textEditorChange', function (dataAboutChangeInTextEditor) {
+    console.log(dataAboutChangeInTextEditor);
   });
 });
 
