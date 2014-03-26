@@ -1,56 +1,59 @@
-<html data-ng-app="chrome" data-ng-csp>
+<html data-ng-app="githelpExtension" data-ng-csp>
 <head>
   <title></title>
   <link rel="stylesheet" type="text/css" href="../Redirecting.css">
 </head>
 <body>
-<h1>HELLO!</h1>
+  <h1>HELLO!</h1>
 
 
 
-<div data-ng-controller="PopupController">
+  <div data-ng-controller="PopupController">
 
-<form data-ng-submit="searchUser()">
-<input type="text" data-ng-model="queryInput">
-<button type="submit">Search</button>
-</form>
+    <form data-ng-submit="searchUser()">
+      <input type="text" data-ng-model="queryInput">
+      <button type="submit">Search</button>
+    </form>
 
-<div ng-show="form">
-  <button  data-ng-click="showForm()">Schedule an Appointment</button>
-</div>
-<button data-ng-click="showForm()" ng-hide="form"></button>
-<div ng-hide="form">
-  <h1>githelp quick!</h1>
-  <form  data-ng-submit="submitForm()" >
-    <label>
-      Length of Session:
-    </label>
-    <input type="radio" ng-model="duration" value="30"> 30 Minutes
-    <input type="radio" ng-model="duration" value="60"> 1 Hour
-    <input type="radio" ng-model="duration" value="90"> 1 Hour and 30 Minutes
-    <input type="radio" ng-model="duration" value="120">
-    2 Hours
-    <input type="radio" ng-model="duration" value="180">
-    3 Hours
-    <label>
-      Topic:
-    </label>
-    <input data-ng-model="topic" type="text">
-    <label>
-      Message:
-    </label>
-    <textarea data-ng-model="message" type="text"></textarea>
-    <button type="submit">Make an appointment!</button>
-  </form>
-</div>
+    <div ng-show="form">
+      <button  data-ng-click="showForm()">Schedule an Appointment</button>
+    </div>
+    <button data-ng-click="showForm()" ng-hide="form"></button>
+    <div ng-hide="form">
+      <h1>githelp quick!</h1>
+      <form  data-ng-submit="submitForm()" >
+        <label>
+          Length of Session:
+        </label>
+
+        {{messages}}
+        {{message}}
+        <input type="radio" ng-model="duration" value="30"> 30 Minutes
+        <input type="radio" ng-model="duration" value="60"> 1 Hour
+        <input type="radio" ng-model="duration" value="90"> 1 Hour and 30 Minutes
+        <input type="radio" ng-model="duration" value="120">
+        2 Hours
+        <input type="radio" ng-model="duration" value="180">
+        3 Hours
+        <label>
+          Topic:
+        </label>
+        <input data-ng-model="topic" type="text">
+        <label>
+          Message:
+        </label>
+        <textarea data-ng-model="message" type="text"></textarea>
+        <button type="submit">Make an appointment!</button>
+      </form>
+    </div>
 
 
-<!-- <script type="text/javascript" src="/scripts/popup.js"></script> -->
+  <!-- <script type="text/javascript" src="/scripts/popup.js"></script> -->
 
-</div>
-<script type="text/javascript" src="/scripts/angular.min.js"></script>
-<script type="text/javascript" src="/scripts/jquery-1.8.2.min.js"></script>
-<script type="text/javascript" src="/scripts/app.js"></script>
-<script type="text/javascript" src="/scripts/chromeControllers/popup.js"></script>
+  </div>
+  <script type="text/javascript" src="/scripts/angular.min.js"></script>
+  <script type="text/javascript" src="/scripts/jquery-1.8.2.min.js"></script>
+  <script type="text/javascript" src="/scripts/app.js"></script>
+  <script type="text/javascript" src="/scripts/chromeControllers/popup.js"></script>
 </body>
 </html>

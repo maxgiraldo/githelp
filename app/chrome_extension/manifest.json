@@ -5,29 +5,33 @@
   "description": "githelp in your browser",
   "version": "1.0",
 
-  "permissions": [
-    "pageCapture",
-    "https://*.github.com/*",
-    "http://192.168.1.178:3000/*"
-  ],
+
 
   // "background": {
   //   "scripts": ["background.js"],
   //   "persistent": false
   // },
 
-  "externally_connectable": {
-    "matches": ["http://localhost:3000/*"]
+"browser_action": {
+    "default_icon": "/images/logo.png",
+    "default_popup": "/views/popup.html"
   },
 
 
-  "content_scripts": [
+  "background": {
+    "scripts": ["/scripts/eventPage.js"],
+    "persistent": false
+  },
+
+"content_scripts": [
     {
-      "matches": ["http://www.github.com/*"],
-      "js": ["/scripts/search.js"]
+      "matches": ["*://github.com/*"],
+      "js": ["/scripts/search.js"],
+      "run_at": "document_start"
     }
   ],
-  // this wil trigger when we reach a page that
+
+  // this will trigger when we reach a page that
   // matches the string within the matches array
   // what we can do with the content_scripts is detect
   // for a github page, then fire a script
@@ -37,11 +41,22 @@
 
   "devtools_page": "/views/devtools.html",
 
-  "browser_action": {
-    "default_icon": "/images/logo.png",
-    "default_popup": "/views/popup.html"
-  },
 
-  "author": "Ji Ho Koo"
+  "content_security_policy": "script-src 'unsafe-eval'; object-src 'self'",
+
+  "author": "Ji Ho Koo",
+
+"permissions": [
+    "unlimitedStorage",
+    "contextMenus",
+    "cookies",
+    "notifications",
+    "tabs",
+    "storage",
+    "pageCapture",
+    "*://github.com/*",
+    "http://localhost:3000/*"
+  ]
+
 
 }

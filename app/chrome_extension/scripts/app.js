@@ -1,4 +1,4 @@
-var chrome = angular.module('chrome', [
+var githelpExtension = angular.module('githelpExtension', [
   // 'ngCookies',
   // 'ngResource',
   // 'ui.bootstrap',
