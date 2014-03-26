@@ -21,6 +21,7 @@ exports.createCard = function(req, res) {
     User.findOneAndUpdate({ userName: userName }, { balancedCard: card.id }, {}, function(err, user) {
       if(err) { console.log(err); }
       console.log('Updated creditcard info to: ', user);
+      res.jsonp(user);
     });
   }, function(err) {
     console.log(err);
