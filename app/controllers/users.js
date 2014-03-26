@@ -1,9 +1,11 @@
 // Module dependencies here
 var request = require('request');
 var search = require('../api_builds/search');
+var scraper = require('../api_builds/scraper');
 var mongoose = require('mongoose');
 // Specific mongoose models defined here
 var User = mongoose.model('User');
+var Q = require('q');
 
 exports.signin = function(req, res){
   res.render('signin');
@@ -35,13 +37,17 @@ exports.profile = function(req, res){
   console.log("hello")
   var userName = req.params.userName;
   search.userStats(userName).then(function(data){
-    User.findOne({userName: req.params.userName}, function(err, user){
-      var response = {
-        repoList: data,
-        user: user
-      };
-      console.log(user);
-      res.jsonp(response);
+    scraper.getTopContribs('https://github.com/'+userName).then(function(contribs){
+      console.log(contribs);
+      User.findOne({userName: req.params.userName}, function(err, user){
+        var response = {
+          repoList: data,
+          conList: contribs,
+          user: user
+        };
+        console.log(user);
+        res.jsonp(response);
+      })
     })
   })
 }
