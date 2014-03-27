@@ -19,7 +19,9 @@ var UserSchema = new Schema({
                 ref: 'Payment'}],
   paymentsReceived: [{type: Schema.ObjectId,
                 ref: 'Payment'}],
-  refreshToken: String
+  refreshToken: String,
+  chatrooms: [{type: Schema.ObjectId,
+              ref: 'Chatroom'}]
 });
 
 mongoose.model('User', UserSchema);
