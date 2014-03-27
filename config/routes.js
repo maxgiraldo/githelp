@@ -132,6 +132,7 @@ module.exports = function(app) {
 
   app.get('/', index.render);
 
+
   app.post('/query', index.results);
   app.post('/create/cc', payments.createCard);
   app.post('/create/ba', payments.createBankAcct);
