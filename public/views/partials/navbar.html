@@ -3,8 +3,8 @@
     <a class="navbar-brand" href="#"><img class='logo' src='/images/logo.png'></a>
   </div>
     <ul class="nav navbar-nav navbar-right" id="custom-navbar">
-      <li ><a href="#">Programmers</a></li>
-      <li ><a href="#">Repos</a></li>
+      <li><a href="/#!/appointments" data-ng-show="global.authenticated">Appointments</a></li>
+      <li><a href="/#!/inbox" data-ng-show="global.authenticated">Inbox</a></li>
       <li data-ng-hide="global.authenticated"><a href="/signin">Sign in</a></li>
       <li class="dropdown" data-ng-show="global.authenticated" >
         <a href="#" class="pull-left dropdown-toggle" data-toggle="dropdown"><img class='pull-left avatar' src='{{global.user.github.avatar_url}}'>{{global.user.fullName}}<b class="caret"></b></a>
