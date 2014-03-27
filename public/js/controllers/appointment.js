@@ -8,11 +8,16 @@ angular.module('githelp.controllers.appointment', [])
   var apiKey = '44709512';
   var token = 'T1==cGFydG5lcl9pZD00NDcwOTUxMiZzZGtfdmVyc2lvbj10YnJ1YnktdGJyYi12MC45MS4yMDExLTAyLTE3JnNpZz0yMjMyMzk4MzMwYzljNzI3MDc0MzQ2ZGY0NmJiYjEyYzM3YTEwODViOnJvbGU9cHVibGlzaGVyJnNlc3Npb25faWQ9Ml9NWDQwTkRjd09UVXhNbjUtVjJWa0lFMWhjaUF5TmlBeE9Eb3hNRG93TkNCUVJGUWdNakF4Tkg0d0xqSTBOems1TVRJMmZnJmNyZWF0ZV90aW1lPTEzOTU4ODI2MzAmbm9uY2U9MC45NTcyNzQxNDI1NTUxMjI2JmV4cGlyZV90aW1lPTEzOTg0NzQ1MDAmY29ubmVjdGlvbl9kYXRhPQ==';
 
+  var defaultWidth = 264;
+  var defaultWidthSm = 132;
+  var defaultHeight = 198;
+  var defaultHeightSm = 99;
+
   // var publisher = TB.initPublisher(apiKey, 'opentokVideos');
   var session = TB.initSession(sessionId);
   var publisher = TB.initPublisher(apiKey,
                                  "videos",
-                                 {width:100, height:100});
+                                 {width:defaultWidth, height:defaultHeight});
   // var subscriber = session.subscribe(stream,
   //                                  "videos",
   //                                  {width:100, height:100});
@@ -22,7 +27,7 @@ angular.module('githelp.controllers.appointment', [])
         for (var i = 0; i < streams.length; i++) {
           var stream = streams[i];
           if (stream.connection.connectionId != session.connection.connectionId) {
-              session.subscribe(stream, 'videos2', {width:100, height:100});
+              session.subscribe(stream, 'videos2', {width:defaultWidth, height:defaultHeight});
           }
         }
       }  // These functions rely on ^ subscribeToStreams
