@@ -29,7 +29,7 @@ angular.module('githelp.controllers.messages', [])
 
       $scope.findMessages = function(){
         Message.get({
-          chatroomId: $stateParams.chatroomId;
+          chatroomId: $stateParams.chatroomId
           // this shouldn't be stateParams
         },
           function(chatroom){
