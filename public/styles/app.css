@@ -7629,9 +7629,15 @@ td.visible-print {
     display: none !important;
   }
 }
+/* line 4, ../../app/styles/app.scss */
+html {
+  height: 100%;
+}
+
 /* line 8, ../../app/styles/app.scss */
 body {
   background: #fff;
+  height: 100%;
   margin: 24px 0;
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-weight: 400;
@@ -7643,28 +7649,28 @@ body {
   border: 0;
 }
 
-/* line 26, ../../app/styles/app.scss */
+/* line 27, ../../app/styles/app.scss */
 h1 {
   font-size: 17px;
   line-height: 1;
   color: inherit;
 }
 
-/* line 32, ../../app/styles/app.scss */
+/* line 33, ../../app/styles/app.scss */
 a {
   color: #008cdd;
 }
-/* line 34, ../../app/styles/app.scss */
+/* line 35, ../../app/styles/app.scss */
 a:hover {
   text-decoration: none;
 }
 
-/* line 39, ../../app/styles/app.scss */
+/* line 40, ../../app/styles/app.scss */
 ul {
   list-style-type: none;
 }
 
-/* line 43, ../../app/styles/app.scss */
+/* line 44, ../../app/styles/app.scss */
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B';
   font-weight: 500;
@@ -7673,7 +7679,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   color: inherit;
 }
 
-/* line 52, ../../app/styles/app.scss */
+/* line 53, ../../app/styles/app.scss */
 .jumbotron h1 {
   font-size: 17px;
   line-height: 1;
@@ -7681,19 +7687,19 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   text-align: center;
 }
 
-/* line 59, ../../app/styles/app.scss */
+/* line 60, ../../app/styles/app.scss */
 .jumbotron {
   background: #fff;
 }
 
-/* line 66, ../../app/styles/app.scss */
+/* line 67, ../../app/styles/app.scss */
 .container.search-bg {
   margin: 0;
   padding: 0;
   border: 0;
 }
 
-/* line 74, ../../app/styles/app.scss */
+/* line 75, ../../app/styles/app.scss */
 .headline {
   font-style: normal;
   line-height: normal;
@@ -7701,7 +7707,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   text-transform: uppercase;
 }
 
-/* line 82, ../../app/styles/app.scss */
+/* line 83, ../../app/styles/app.scss */
 #custom-navbar {
   margin-top: 20px;
   margin-bottom: 0px;
@@ -7709,22 +7715,22 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   padding-bottom: 0px;
 }
 
-/* line 89, ../../app/styles/app.scss */
+/* line 90, ../../app/styles/app.scss */
 .avatar {
   width: 30px;
   height: 30px;
-  border-radius: 5px;
+  border-radius: 60px;
   margin-top: 0%;
   margin-right: 5%;
 }
 
-/* line 97, ../../app/styles/app.scss */
+/* line 98, ../../app/styles/app.scss */
 .avatar :before {
   margin-left: 0px;
   padding-left: 0px;
 }
 
-/* line 103, ../../app/styles/app.scss */
+/* line 104, ../../app/styles/app.scss */
 .logo {
   cursor: pointer;
   display: inline-block;
@@ -7735,21 +7741,21 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   vertical-align: top;
 }
 
-/* line 115, ../../app/styles/app.scss */
+/* line 116, ../../app/styles/app.scss */
 .navbar-nav > li > a {
   padding-top: 15px;
   padding-bottom: 15px;
   padding-left: 90px;
 }
 
-/* line 121, ../../app/styles/app.scss */
+/* line 122, ../../app/styles/app.scss */
 .navbar-right a {
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B';
   font-weight: 500;
   font-style: normal;
 }
 
-/* line 127, ../../app/styles/app.scss */
+/* line 128, ../../app/styles/app.scss */
 .navbar-right {
   cursor: pointer;
   display: inline-block;
@@ -7765,7 +7771,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-right: 37px;
 }
 
-/* line 142, ../../app/styles/app.scss */
+/* line 143, ../../app/styles/app.scss */
 .main-nav-links {
   display: inline-block;
   float: right;
@@ -7773,7 +7779,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   vertical-align: top;
 }
 
-/* line 149, ../../app/styles/app.scss */
+/* line 150, ../../app/styles/app.scss */
 .navbar {
   position: relative;
   min-height: 50px;
@@ -7781,25 +7787,25 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   border: 1px solid transparent;
 }
 
-/* line 156, ../../app/styles/app.scss */
+/* line 157, ../../app/styles/app.scss */
 .navbar-default {
   background-color: #ffffff;
   border-color: #ffffff;
 }
 
-/* line 161, ../../app/styles/app.scss */
+/* line 162, ../../app/styles/app.scss */
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
   border-color: #fff;
   border: none;
 }
 
-/* line 167, ../../app/styles/app.scss */
+/* line 168, ../../app/styles/app.scss */
 #search-bar {
   width: 250px;
   border-radius: 0;
 }
 
-/* line 172, ../../app/styles/app.scss */
+/* line 173, ../../app/styles/app.scss */
 .search-bg {
   padding-top: 70px;
   background-color: #f9f9f9;
@@ -7807,7 +7813,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   height: 180px;
 }
 
-/* line 180, ../../app/styles/app.scss */
+/* line 181, ../../app/styles/app.scss */
 .form-control {
   display: block;
   width: 100%;
@@ -7828,12 +7834,12 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
-/* line 200, ../../app/styles/app.scss */
+/* line 201, ../../app/styles/app.scss */
 .form-control:hover {
   border: 1px solid #a2a2a2;
 }
 
-/* line 204, ../../app/styles/app.scss */
+/* line 205, ../../app/styles/app.scss */
 .form-control:focus {
   -webkit-box-shadow: 0px 0px 0px #77cc33;
   -moz-box-shadow: 0px 0px 0px #77cc33;
@@ -7841,53 +7847,53 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   border: 1px solid #77cc33;
 }
 
-/* line 211, ../../app/styles/app.scss */
+/* line 212, ../../app/styles/app.scss */
 .form-control::-webkit-input-placeholder {
   color: #b3babe;
 }
 
-/* line 214, ../../app/styles/app.scss */
+/* line 215, ../../app/styles/app.scss */
 .form-control::-moz-placeholder {
   color: #b3babe;
 }
 
-/* line 217, ../../app/styles/app.scss */
+/* line 218, ../../app/styles/app.scss */
 .form-control:-moz-placeholder {
   /* Older versions of Firefox */
   color: #b3babe;
 }
 
-/* line 220, ../../app/styles/app.scss */
+/* line 221, ../../app/styles/app.scss */
 .form-control:-ms-input-placeholder {
   color: #b3babe;
 }
 
-/* line 225, ../../app/styles/app.scss */
+/* line 226, ../../app/styles/app.scss */
 .profile {
   padding-top: 48px;
   text-align: center;
   width: 350px;
 }
 
-/* line 231, ../../app/styles/app.scss */
+/* line 232, ../../app/styles/app.scss */
 .avatar-lg {
   border-radius: 60px;
   width: 110px;
   height: 110px;
 }
 
-/* line 236, ../../app/styles/app.scss */
+/* line 237, ../../app/styles/app.scss */
 .profile-name-info {
   color: #000;
 }
 
-/* line 239, ../../app/styles/app.scss */
+/* line 240, ../../app/styles/app.scss */
 .full-name {
   font-size: 20px;
   margin-bottom: 5px;
 }
 
-/* line 243, ../../app/styles/app.scss */
+/* line 244, ../../app/styles/app.scss */
 .username {
   font-size: 16px;
   font-weight: 400;
@@ -7896,7 +7902,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-top: 5px;
 }
 
-/* line 250, ../../app/styles/app.scss */
+/* line 251, ../../app/styles/app.scss */
 .call-button {
   width: 100%;
   height: 45px;
@@ -7906,12 +7912,12 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-top: 25px;
 }
 
-/* line 258, ../../app/styles/app.scss */
+/* line 259, ../../app/styles/app.scss */
 .call-button:hover {
   background-color: #6ab72c;
 }
 
-/* line 262, ../../app/styles/app.scss */
+/* line 263, ../../app/styles/app.scss */
 .headline p {
   color: #fff;
   font-size: 15px;
@@ -7921,7 +7927,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   cursor: pointer;
 }
 
-/* line 271, ../../app/styles/app.scss */
+/* line 272, ../../app/styles/app.scss */
 .caps-sub-header {
   color: #8e8e8e;
   font-size: 14px;
@@ -7931,7 +7937,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-top: 20px;
 }
 
-/* line 280, ../../app/styles/app.scss */
+/* line 281, ../../app/styles/app.scss */
 .repo-links {
   font-size: 14px;
   padding: 0;
@@ -7939,18 +7945,18 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   border: 0;
 }
 
-/* line 288, ../../app/styles/app.scss */
+/* line 289, ../../app/styles/app.scss */
 .navbar-min {
   height: 20px;
   background-color: #eff6dc;
 }
 
-/* line 293, ../../app/styles/app.scss */
+/* line 294, ../../app/styles/app.scss */
 .session-header {
   margin-top: 0;
 }
 
-/* line 297, ../../app/styles/app.scss */
+/* line 298, ../../app/styles/app.scss */
 #editor {
   position: absolute;
   top: 0;
@@ -7960,15 +7966,29 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 /* line 315, ../../app/styles/app.scss */
-#firepad-container {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
+.video-container {
+  width: 1024px;
+  background-color: #f9f9f9;
 }
 
 /* line 319, ../../app/styles/app.scss */
+#videos {
+  width: 100px;
+  height: 100px;
+}
+
+/* line 328, ../../app/styles/app.scss */
+#firepad-container {
+  width: 1024px;
+  height: 700px;
+  position: relative;
+  margin: auto;
+  -moz-box-shadow: 0 30px 25px 1px #333;
+  -webkit-box-shadow: 0 30px 25px 1px #333;
+  box-shadow: 0 30px 25px 1px #333;
+}
+
+/* line 340, ../../app/styles/app.scss */
 .firepad {
   /*Default height for a firepad.*/
   position: absolute;
@@ -7976,13 +7996,13 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   width: 100%;
 }
 
-/* line 331, ../../app/styles/app.scss */
+/* line 352, ../../app/styles/app.scss */
 .firepad {
   text-align: left;
   line-height: normal;
 }
 
-/* line 336, ../../app/styles/app.scss */
+/* line 357, ../../app/styles/app.scss */
 .firepad .CodeMirror {
   /* Use width / height of the firepad wrapper element. */
   position: absolute;
@@ -7993,13 +8013,13 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   bottom: 0;
 }
 
-/* line 346, ../../app/styles/app.scss */
+/* line 367, ../../app/styles/app.scss */
 .firepad-richtext .CodeMirror {
   font-family: Verdana, sans-serif;
   font-size: 14px;
 }
 
-/* line 351, ../../app/styles/app.scss */
+/* line 372, ../../app/styles/app.scss */
 .firepad-with-toolbar .CodeMirror {
   /* Leave room for toolbar and add some padding on the left. */
   top: 70px;
@@ -8007,83 +8027,83 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 /** Styles for all of the rich-text formatting we support. */
-/* line 358, ../../app/styles/app.scss */
+/* line 379, ../../app/styles/app.scss */
 .firepad-b {
   font-weight: bold;
 }
 
-/* line 359, ../../app/styles/app.scss */
+/* line 380, ../../app/styles/app.scss */
 .firepad-i {
   font-style: italic;
 }
 
-/* line 360, ../../app/styles/app.scss */
+/* line 381, ../../app/styles/app.scss */
 .firepad-u {
   text-decoration: underline;
 }
 
-/* line 361, ../../app/styles/app.scss */
+/* line 382, ../../app/styles/app.scss */
 .firepad-s {
   text-decoration: line-through;
 }
 
-/* line 362, ../../app/styles/app.scss */
+/* line 383, ../../app/styles/app.scss */
 .firepad-u.firepad-s {
   text-decoration: underline line-through;
 }
 
-/* line 364, ../../app/styles/app.scss */
+/* line 385, ../../app/styles/app.scss */
 .firepad-f-arial {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* line 365, ../../app/styles/app.scss */
+/* line 386, ../../app/styles/app.scss */
 .firepad-f-comic-sans-ms {
   font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
-/* line 366, ../../app/styles/app.scss */
+/* line 387, ../../app/styles/app.scss */
 .firepad-f-courier-new {
   font-family: "Courier New", Courier, monospace;
 }
 
-/* line 367, ../../app/styles/app.scss */
+/* line 388, ../../app/styles/app.scss */
 .firepad-f-impact {
   font-family: Impact, Charcoal, sans-serif;
 }
 
-/* line 368, ../../app/styles/app.scss */
+/* line 389, ../../app/styles/app.scss */
 .firepad-f-times-new-roman {
   font-family: "Times New Roman", Times, serif;
 }
 
-/* line 369, ../../app/styles/app.scss */
+/* line 390, ../../app/styles/app.scss */
 .firepad-f-verdana {
   font-family: Verdana, Geneva, sans-serif;
 }
 
-/* line 371, ../../app/styles/app.scss */
+/* line 392, ../../app/styles/app.scss */
 .firepad-la-left {
   text-align: left;
 }
 
-/* line 372, ../../app/styles/app.scss */
+/* line 393, ../../app/styles/app.scss */
 .firepad-la-center {
   text-align: center;
 }
 
-/* line 373, ../../app/styles/app.scss */
+/* line 394, ../../app/styles/app.scss */
 .firepad-la-right {
   text-align: right;
 }
 
 /** Line Styles */
-/* line 376, ../../app/styles/app.scss */
+/* line 397, ../../app/styles/app.scss */
 pre.firepad-lt-o, pre.firepad-lt-u, pre.firepad-lt-t, pre.firepad-lt-tc {
   margin-left: 40px;
 }
 
-/* line 380, ../../app/styles/app.scss */
+/* line 401, ../../app/styles/app.scss */
 .firepad-list-left {
   display: inline-block;
   margin-left: -40px;
@@ -8092,14 +8112,14 @@ pre.firepad-lt-o, pre.firepad-lt-u, pre.firepad-lt-t, pre.firepad-lt-tc {
   text-align: right;
 }
 
-/* line 388, ../../app/styles/app.scss */
+/* line 409, ../../app/styles/app.scss */
 .firepad-todo-left {
   display: inline-block;
   margin-left: -20px;
   width: 20px;
 }
 
-/* line 394, ../../app/styles/app.scss */
+/* line 415, ../../app/styles/app.scss */
 .firepad-toolbar {
   position: absolute;
   top: 20px;
@@ -8115,13 +8135,13 @@ pre.firepad-lt-o, pre.firepad-lt-u, pre.firepad-lt-t, pre.firepad-lt-tc {
   user-select: none;
 }
 
-/* line 410, ../../app/styles/app.scss */
+/* line 431, ../../app/styles/app.scss */
 .firepad-btn-group {
   margin: 0 5px;
   display: inline-block;
 }
 
-/* line 415, ../../app/styles/app.scss */
+/* line 436, ../../app/styles/app.scss */
 a.firepad-btn, a.firepad-btn:visited, a.firepad-btn:active {
   font-family: "Arial" sans-serif;
   cursor: pointer;
@@ -8137,7 +8157,7 @@ a.firepad-btn, a.firepad-btn:visited, a.firepad-btn:active {
   color: #9c9c9c;
 }
 
-/* line 430, ../../app/styles/app.scss */
+/* line 451, ../../app/styles/app.scss */
 a.firepad-btn:hover {
   color: #fff;
   background-color: #ffbf86;
@@ -8145,14 +8165,14 @@ a.firepad-btn:hover {
   text-decoration: none;
 }
 
-/* line 437, ../../app/styles/app.scss */
+/* line 458, ../../app/styles/app.scss */
 a.firepad-btn:active {
   -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-/* line 443, ../../app/styles/app.scss */
+/* line 464, ../../app/styles/app.scss */
 .firepad-btn-group > .firepad-btn {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -8160,7 +8180,7 @@ a.firepad-btn:active {
   margin-left: -1px;
 }
 
-/* line 451, ../../app/styles/app.scss */
+/* line 472, ../../app/styles/app.scss */
 .firepad-btn-group > .firepad-btn:first-child {
   border-bottom-left-radius: 6px;
   border-top-left-radius: 6px;
@@ -8171,7 +8191,7 @@ a.firepad-btn:active {
   margin-left: 0px;
 }
 
-/* line 461, ../../app/styles/app.scss */
+/* line 482, ../../app/styles/app.scss */
 .firepad-btn-group > .firepad-btn:last-child {
   border-bottom-right-radius: 6px;
   border-top-right-radius: 6px;
@@ -8181,12 +8201,12 @@ a.firepad-btn:active {
   -moz-border-radius-topright: 6px;
 }
 
-/* line 470, ../../app/styles/app.scss */
+/* line 491, ../../app/styles/app.scss */
 .firepad-dropdown {
   position: relative;
 }
 
-/* line 474, ../../app/styles/app.scss */
+/* line 495, ../../app/styles/app.scss */
 .firepad-dropdown-menu {
   position: absolute;
   top: 100%;
@@ -8213,7 +8233,7 @@ a.firepad-btn:active {
   background-clip: padding-box;
 }
 
-/* line 500, ../../app/styles/app.scss */
+/* line 521, ../../app/styles/app.scss */
 .firepad-dropdown-menu a {
   text-align: left;
   display: block;
@@ -8225,20 +8245,20 @@ a.firepad-btn:active {
   white-space: nowrap;
 }
 
-/* line 511, ../../app/styles/app.scss */
+/* line 532, ../../app/styles/app.scss */
 .firepad-dropdown-menu a:hover {
   color: #fff;
   text-decoration: none;
   background-color: #ffbf86;
 }
 
-/* line 517, ../../app/styles/app.scss */
+/* line 538, ../../app/styles/app.scss */
 .firepad-color-dropdown-item {
   height: 25px;
   width: 25px;
 }
 
-/* line 522, ../../app/styles/app.scss */
+/* line 543, ../../app/styles/app.scss */
 .firepad-dialog {
   position: absolute;
   left: 0px;
@@ -8248,7 +8268,7 @@ a.firepad-btn:active {
   z-index: 1000;
 }
 
-/* line 531, ../../app/styles/app.scss */
+/* line 552, ../../app/styles/app.scss */
 .firepad-dialog-div {
   position: relative;
   width: 520px;
@@ -8259,7 +8279,7 @@ a.firepad-btn:active {
   padding: 15px;
 }
 
-/* line 541, ../../app/styles/app.scss */
+/* line 562, ../../app/styles/app.scss */
 .firepad-dialog-input {
   width: 500px;
   display: block;
@@ -8292,7 +8312,7 @@ a.firepad-btn:active {
   font-style: normal;
 }
 
-/* line 573, ../../app/styles/app.scss */
+/* line 594, ../../app/styles/app.scss */
 .firepad-tb-bold, .firepad-tb-italic, .firepad-tb-underline, .firepad-tb-strikethrough, .firepad-tb-list, .firepad-tb-list-2, .firepad-tb-numbered-list, .firepad-tb-paragraph-left, .firepad-tb-paragraph-center, .firepad-tb-paragraph-right, .firepad-tb-paragraph-justify, .firepad-tb-menu, .firepad-tb-link, .firepad-tb-undo, .firepad-tb-redo, .firepad-tb-box-add, .firepad-tb-box-remove, .firepad-tb-print, .firepad-tb-indent-decrease, .firepad-tb-indent-increase, .firepad-tb-insert-image, .firepad-tb-bubble {
   font-family: 'firepad';
   speak: none;
@@ -8304,112 +8324,112 @@ a.firepad-btn:active {
   -webkit-font-smoothing: antialiased;
 }
 
-/* line 583, ../../app/styles/app.scss */
+/* line 604, ../../app/styles/app.scss */
 .firepad-tb-bold:before {
   content: "\e000";
 }
 
-/* line 586, ../../app/styles/app.scss */
+/* line 607, ../../app/styles/app.scss */
 .firepad-tb-italic:before {
   content: "\e001";
 }
 
-/* line 589, ../../app/styles/app.scss */
+/* line 610, ../../app/styles/app.scss */
 .firepad-tb-underline:before {
   content: "\e002";
 }
 
-/* line 592, ../../app/styles/app.scss */
+/* line 613, ../../app/styles/app.scss */
 .firepad-tb-strikethrough:before {
   content: "\e003";
 }
 
-/* line 595, ../../app/styles/app.scss */
+/* line 616, ../../app/styles/app.scss */
 .firepad-tb-list:before {
   content: "\e004";
 }
 
-/* line 598, ../../app/styles/app.scss */
+/* line 619, ../../app/styles/app.scss */
 .firepad-tb-list-2:before {
   content: "\e005";
 }
 
-/* line 601, ../../app/styles/app.scss */
+/* line 622, ../../app/styles/app.scss */
 .firepad-tb-numbered-list:before {
   content: "\e006";
 }
 
-/* line 604, ../../app/styles/app.scss */
+/* line 625, ../../app/styles/app.scss */
 .firepad-tb-paragraph-left:before {
   content: "\e007";
 }
 
-/* line 607, ../../app/styles/app.scss */
+/* line 628, ../../app/styles/app.scss */
 .firepad-tb-paragraph-center:before {
   content: "\e008";
 }
 
-/* line 610, ../../app/styles/app.scss */
+/* line 631, ../../app/styles/app.scss */
 .firepad-tb-paragraph-right:before {
   content: "\e009";
 }
 
-/* line 613, ../../app/styles/app.scss */
+/* line 634, ../../app/styles/app.scss */
 .firepad-tb-paragraph-justify:before {
   content: "\e00a";
 }
 
-/* line 616, ../../app/styles/app.scss */
+/* line 637, ../../app/styles/app.scss */
 .firepad-tb-menu:before {
   content: "\e00b";
 }
 
-/* line 619, ../../app/styles/app.scss */
+/* line 640, ../../app/styles/app.scss */
 .firepad-tb-link:before {
   content: "\e00c";
 }
 
-/* line 622, ../../app/styles/app.scss */
+/* line 643, ../../app/styles/app.scss */
 .firepad-tb-undo:before {
   content: "\e00d";
 }
 
-/* line 625, ../../app/styles/app.scss */
+/* line 646, ../../app/styles/app.scss */
 .firepad-tb-redo:before {
   content: "\e00e";
 }
 
-/* line 628, ../../app/styles/app.scss */
+/* line 649, ../../app/styles/app.scss */
 .firepad-tb-box-add:before {
   content: "\e010";
 }
 
-/* line 631, ../../app/styles/app.scss */
+/* line 652, ../../app/styles/app.scss */
 .firepad-tb-box-remove:before {
   content: "\e011";
 }
 
-/* line 634, ../../app/styles/app.scss */
+/* line 655, ../../app/styles/app.scss */
 .firepad-tb-print:before {
   content: "\e012";
 }
 
-/* line 637, ../../app/styles/app.scss */
+/* line 658, ../../app/styles/app.scss */
 .firepad-tb-indent-decrease:before {
   content: "\e013";
 }
 
-/* line 640, ../../app/styles/app.scss */
+/* line 661, ../../app/styles/app.scss */
 .firepad-tb-indent-increase:before {
   content: "\e014";
 }
 
-/* line 643, ../../app/styles/app.scss */
+/* line 664, ../../app/styles/app.scss */
 .firepad-tb-insert-image:before {
   content: "\e015";
 }
 
-/* line 646, ../../app/styles/app.scss */
+/* line 667, ../../app/styles/app.scss */
 .firepad-tb-bubble:before {
   content: "\e00f";
 }

@@ -1,90 +1,13 @@
 <!-- <a href="/instances/{{ instanceId }}">{{instance.name}}</a> -->
 <section data-ng-controller="AppointmentController">
   <div class="container jumbotron">
-    <h1 class='headline session-header'>Session with [name of person]</h1>
+    <!-- <h1 class='headline session-header'>Session with [name of other party member]</h1> -->
+    <!-- <a href="" ng-click='startVideoChat()'><i class="fa fa-video-camera"></i></a> -->
+    <div class='container video-container'>
+      <div id='videos'></div>
+    </div>
   </div>
-  <div id="opentokVideos" style="..."></div>
-  <div id='videos'></div>
+  <!-- <div id="opentokVideos" style="..."></div> -->
   <div id="firepad-container"></div>
 </section>
 
-<script>
-
-  //// Functions
-      function sessionConnectedHandler (event) {
-        var publisher = TB.initPublisher('44708602', 'opentokVideos');
-        subscribeToStreams(event.streams);
-        session.publish(publisher);
-      }
-
-      function subscribeToStreams(streams) {
-          for (var i = 0; i < streams.length; i++) {
-              var stream = streams[i];
-              if (stream.connection.connectionId != session.connection.connectionId) {
-                  session.subscribe(stream);
-              }
-          }
-      }
-
-      function streamCreatedHandler(event) {
-        subscribeToStreams(event.streams);
-      }
-
-  //// Initialize Video Chat Session
-      var session = TB.initSession("2_MX40NDcwODYwMn5-V2VkIE1hciAyNiAxMjoyMDoxOSBQRFQgMjAxNH4wLjM0NjU1MTQyfg");
-
-      session.addEventListener("sessionConnected", sessionConnectedHandler);
-      session.addEventListener("streamCreated", streamCreatedHandler);
-
-      session.connect('44708602', 'T1==cGFydG5lcl9pZD00NDcwODYwMiZzZGtfdmVyc2lvbj10YnJ1YnktdGJyYi12MC45MS4yMDExLTAyLTE3JnNpZz1jMjA4MTc0MGYxMzc1ZjE1M2E4ZDAxNmQ5YWYzZGQyZjlkYzQ4NWEwOnJvbGU9c3Vic2NyaWJlciZzZXNzaW9uX2lkPTJfTVg0ME5EY3dPRFl3TW41LVYyVmtJRTFoY2lBeU5pQXhNam95TURveE9TQlFSRlFnTWpBeE5INHdMak0wTmpVMU1UUXlmZyZjcmVhdGVfdGltZT0xMzk1ODYxNjI2Jm5vbmNlPTAuNjc2NjQzOTI1OTg1OTk3NSZleHBpcmVfdGltZT0xMzk1ODgzMjE0JmNvbm5lY3Rpb25fZGF0YT0=');
-      // a = new TBStart('44708602', 'opentokVideos');
-      // a.startVideo();
-
-  //// Initialize Firebase.
-    // window.onload = function() {
-      //// Initialize Firebase.
-      var firepadRef = new Firebase('https://githelp.firebaseio.com/');
-      // TODO: Replace above line with:
-      // var ref = new Firebase('<YOUR FIREBASE URL>');
-
-      //// Create ACE
-      var editor = ace.edit("firepad-container");
-      editor.setTheme("ace/theme/monokai");
-      var session = editor.getSession();
-      session.setUseWrapMode(true);
-      session.setUseWorker(false);
-      session.setMode("ace/mode/javascript");
-
-      //// Create Firepad.
-      var firepad = Firepad.fromACE(firepadRef, editor);
-
-      //// Initialize contents.
-      firepad.on('ready', function() {
-        if (firepad.isHistoryEmpty()) {
-          firepad.setText('// JavaScript Editing with Firepad!\nfunction go() {\n  var message = "Hello, world.";\n  console.log(message);\n}');
-        }
-      });
-    // };
-
-  // var socket = io.connect('http://localhost');
-  // // var sessionId = null;
-
-  // var editor = ace.edit("editor");
-  // editor.setTheme("ace/theme/monokai");
-  // editor.getSession().setMode("ace/mode/javascript");
-
-  // Use #setValue to restore the text editor from server on page reload
-
-  // outputText();
-  // editor.on('change', function(e) {
-      // socket.emit('textEditorChange', { 'dataAboutChangeInTextEditor': e });
-    // if (e.data.text === ' ') {
-
-    // } else if (e.data.text === '') {
-    //   editor.splitLine();
-    // } else {
-    //   console.log('hehe');
-    // }
-  // });
-
-</script>
