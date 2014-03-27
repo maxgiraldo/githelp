@@ -12,42 +12,33 @@ auth.setCredentials({
 
 console.log('AUTH', auth);
 
-googleapis
+exports.createEvent = function(maxAttendees, endDate, startDate, attendees, done){
+  googleapis
   .discover('calendar', 'v3')
   .execute(function(err, client) {
     console.log('CLIENT', client);
     var params = {
       calendarId: 'wainetam@gmail.com',
-      maxAttendees: 2,
-      sendNotifications: true,
+      maxAttendees: maxAttendees
     };
     var body = {
         "end": {
-          "date": "2014-03-28"
+          "date": endDate
         },
         "start": {
-          "date": "2014-03-28"
+          "date": startDate
+        },
+        "attendees": attendees,
+        "creator": {
+          email: 'wainetam@gmail.com',
+          displayName: 'githelp.co'
         }
       }
     var req = client.calendar.events.insert(params, body).withAuthClient(auth);
     console.log("REQ", req);
     req.execute(function (err, response) {
-      console.log('RESPONSE', response.htmlLink);
+      console.log('RESPONSE', response);
+      done(response);
     });
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}

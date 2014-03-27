@@ -1,0 +1,24 @@
+<div data-ng-controller="UserController" data-ng-init="findOne()">
+  <div>
+    <span data-ng-repeat="chatroom in chatrooms"><a>chatroom.title</a></span>
+  </div>
+  <div>
+    <form>
+      <label>Members</label>
+      <input>
+      <button type="submit">New Chats</button>
+    </form>
+  </div>
+</div>
+
+
+
+  <!-- <div>
+    <h1>Messages</h1>
+    <p data-ng-repeat="message in Messages"></p>
+  </div>
+  <form data-ng-submit="createMessage()">
+    <label>Message</label>
+    <textarea data-ng-model="content"></textarea>
+    <button type="submit">Send</button>
+  </form> -->
