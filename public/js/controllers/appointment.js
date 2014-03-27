@@ -13,28 +13,25 @@ angular.module('githelp.controllers.appointment', [])
   var publisher = TB.initPublisher(apiKey,
                                  "videos",
                                  {width:100, height:100});
-  var subscriber = session.subscribe(stream,
-                                   "videos",
-                                   {width:100, height:100});
+  // var subscriber = session.subscribe(stream,
+  //                                  "videos",
+  //                                  {width:100, height:100});
 
       // Event Listeners: enable the OpenTok controller to send events to JavaScript functions
       var subscribeToStreams = function(streams) {
         for (var i = 0; i < streams.length; i++) {
           var stream = streams[i];
           if (stream.connection.connectionId != session.connection.connectionId) {
-              console.log('user connected', streams);
-              session.subscribe(stream);
+              session.subscribe(stream, 'videos2', {width:100, height:100});
           }
         }
       }  // These functions rely on ^ subscribeToStreams
           var sessionConnectedHandler = function(event) {
-            console.log('sessionConnectedHandler!!!!', event);
             subscribeToStreams(event.streams);
             session.publish(publisher);
           }
 
           var streamCreatedHandler = function(event) {
-            console.log('streamCreatedHandler!!!!!!!!', event);
             subscribeToStreams(event.streams);
           }
 
