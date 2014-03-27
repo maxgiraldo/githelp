@@ -6,6 +6,7 @@ var UserSchema = new Schema({
   userName: String,
   email: String,
   githubId: String,
+  googleId: String,
   github: {},
   accessToken: String,
   // the below is the user id for balanced
@@ -17,7 +18,8 @@ var UserSchema = new Schema({
   paymentsMade: [{type: Schema.ObjectId,
                 ref: 'Payment'}],
   paymentsReceived: [{type: Schema.ObjectId,
-                ref: 'Payment'}]
+                ref: 'Payment'}],
+  refreshToken: String
 });
 
 mongoose.model('User', UserSchema);
