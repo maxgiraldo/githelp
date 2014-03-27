@@ -39,7 +39,8 @@
     "zombie": "~2.0.0-alpha31",
     "cheerio": "~0.13.1",
     "socket.io": "~0.9.16",
-    "googleapis": "~0.7.0"
+    "googleapis": "~0.7.0",
+    "passport-google-oauth": "~0.1.5"
   },
   "devDependencies": {
     "supertest": "latest",

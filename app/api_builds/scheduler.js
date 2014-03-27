@@ -8,6 +8,8 @@ auth.setCredentials({
   refresh_token: '1/HqxOQubnC4KRuSMTPt3y-zOwc8wIZMBEuJoF5hsQpX0'
 });
 
+
+
 console.log('AUTH', auth);
 
 googleapis
@@ -30,13 +32,9 @@ googleapis
     var req = client.calendar.events.insert(params, body).withAuthClient(auth);
     console.log("REQ", req);
     req.execute(function (err, response) {
-      console.log('RESPONSE', response);
+      console.log('RESPONSE', response.htmlLink);
     });
   });
-
-
-
-
 
 
 
