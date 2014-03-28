@@ -17,7 +17,12 @@ var AppointmentSchema = new Schema({
   date: {
     type: Date
   },
-  duration: String,
+  time: {
+    type: Date
+  },
+  duration: {
+    type: Number, required: true
+  },
   topic: String,
   message: String,
   editor: []

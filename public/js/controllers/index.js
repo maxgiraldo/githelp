@@ -29,12 +29,6 @@ angular.module('githelp.controllers.index', [])
         });
       };
 
-      $scope.createAppointment = function() {
-        $http.post('/create/appointment', $scope.appt).success(function(response) {
-          console.log('BOOKING SUCCESS', response);
-          $scope.apptComplete = response;
-        });
-      };
 
       $scope.createBankAcct = function() {
         $http.post('/create/ba', $scope.ba).success(function(response) {
@@ -60,16 +54,32 @@ angular.module('githelp.controllers.index', [])
 
         $location.path('/'+username);
       };
+
+      $scope.appt = {
+        duration: "15",
+        dt: "",
+        time: ""
+      };
+
+      $scope.createAppointment = function() {
+        $http.post('/create/appointment', $scope.appt).success(function(response) {
+          $scope.apptComplete = response;
+          console.log('BOOKING', response);
+          console.log($scope.appt.time);
+        });
+      };
     }
+
 ])
   .controller('TimepickerCtrl', ['$scope', '$state', 'Global',
     function($scope, $state, Global) {
-      $scope.mytime = new Date();
+      $scope.appt.time = new Date();
       $scope.hstep = 1;
       $scope.mstep = 30;
 
       $scope.ismeridian = true;
     }
+
 ])
 
   .config(function (datepickerConfig, datepickerPopupConfig) {
@@ -78,7 +88,7 @@ angular.module('githelp.controllers.index', [])
   }).controller('DatepickerCtrl', ['$scope', '$state', 'Global',
     function($scope, $state, Global) {
       $scope.today = function() {
-        $scope.dt = new Date();
+        $scope.appt.dt = new Date();
       };
 
       $scope.today();
