@@ -5,7 +5,7 @@ var passport = require('passport');
 var mongoose = require('mongoose');
 // Specific mongoose models defined here
 var User = mongoose.model('User');
-
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -59,8 +59,36 @@ passport.use(new GitHubStrategy({
   }
 ));
 
+passport.use(new GoogleStrategy({
+    clientID: "700936463795-3ettb8q7r93i281rp9mrtt8qd6q3k4uv.apps.googleusercontent.com",
+    clientSecret: "5TfB_7aHC6mL9SyPHQNtMPBM",
+    callbackURL: "http://localhost:3000/auth/google/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    User.findOne({ googleId: profile.id }, function (err, user) {
+    if(err) return err;
+      if(!user){
+        var u = new User({
+          fullName: profile.displayName,
+          email: profile.emails[0],
+          accessToken: accessToken,
+          googleId: profile.id,
+          google: profile._json,
+          refreshToken: refreshToken
+        });
+        u.save(function(err){
+          return done(err, u);
+        });
+      } else{
+          return done(err, user);
+      }
+    });
+  }
+));
 
 
+// accessToken: "ya29.1.AADtN_XoNSuOQFfitJXEgSam8bCayvisuhvjQmvNpLwjS8vYR0STH0aNPqdZLShx92gk", googleId: "111493934185373214286"
+// refreshToken:
 module.exports = function(app) {
 
   //Routes to App Controllers here
@@ -68,7 +96,7 @@ module.exports = function(app) {
   var users = require('../app/controllers/users');
   var payments = require('../app/controllers/payments');
   var appointments = require('../app/controllers/appointments');
-
+  var messages = require('../app/controllers/messages');
   // passport routes
   // this requests to github login with clientId and clientSecret
   app.get('/auth/github',
@@ -82,12 +110,39 @@ module.exports = function(app) {
     passport.authenticate('github', {failureRedirect: '/login'}),
     users.authCallback);
 
+
+
+  app.get('/auth/google',
+    passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile',
+                                            'https://www.googleapis.com/auth/userinfo.email',
+                                            'https://www.googleapis.com/auth/calendar'] }),
+    users.signin);
+
+
+  app.get('/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/login' }),
+    function(req, res) {
+      // Successful authentication, redirect home.
+      res.redirect('/');
+    });
+
+  app.get('/chatroom', messages.findAllChatroom);
+
+  app.post('/chatroom', messages.createChatroom);
+
+  app.get('/message', messages.messageByChatroom);
+
+
+  app.post('/message', messages.createMessage);
+
   app.post('/appointment', appointments.create);
 
   app.get('/', index.render);
-  app.post('/query', index.results);
 
+
+  app.post('/query', index.results);
   app.post('/create/cc', payments.createCard);
+  app.post('/create/appointment', appointments.create);
   app.post('/create/ba', payments.createBankAcct);
 
   app.get('/user/:userName', users.profile);

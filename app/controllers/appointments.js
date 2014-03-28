@@ -5,8 +5,8 @@ var mongoose = require('mongoose');
 var Appointment = mongoose.model('Appointment');
 
 exports.create = function(req, res){
-  console.log(req);
-  var newAppointment = new Appointment({duration: "thirty"});
+  console.log('APPT REQ', req.body);
+  var newAppointment = new Appointment({duration: req.body.duration, date: req.body.dt, message: req.body.message, time: req.body.time});
   newAppointment.save();
   res.send(200);
 }

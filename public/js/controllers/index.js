@@ -29,6 +29,7 @@ angular.module('githelp.controllers.index', [])
         });
       };
 
+
       $scope.createBankAcct = function() {
         $http.post('/create/ba', $scope.ba).success(function(response) {
           console.log('CREATE BANK SUCCESS', response);
@@ -44,14 +45,84 @@ angular.module('githelp.controllers.index', [])
             console.log('RESULTS ',response);
             $scope.githubResults = response.githubResults;
             $scope.githelpResults = response.githelpResults;
-            $state.go('main.search')
+            $state.go('main.search');
           });
         }
       };
 
       $scope.userProfile = function(username){
 
-        $location.path('/'+username)
-      }
+        $location.path('/'+username);
+      };
+
+      $scope.appt = {
+        duration: "15",
+        dt: "",
+        time: ""
+      };
+
+      $scope.createAppointment = function() {
+        $http.post('/create/appointment', $scope.appt).success(function(response) {
+          $scope.apptComplete = response;
+          console.log('BOOKING', response);
+          console.log($scope.appt.time);
+        });
+      };
+    }
+
+])
+  .controller('TimepickerCtrl', ['$scope', '$state', 'Global',
+    function($scope, $state, Global) {
+      $scope.appt.time = new Date();
+      $scope.hstep = 1;
+      $scope.mstep = 30;
+
+      $scope.ismeridian = true;
+    }
+
+])
+
+  .config(function (datepickerConfig, datepickerPopupConfig) {
+    datepickerConfig.showWeeks = false;
+    datepickerPopupConfig.showButtonBar = false;
+  }).controller('DatepickerCtrl', ['$scope', '$state', 'Global',
+    function($scope, $state, Global) {
+      $scope.today = function() {
+        $scope.appt.dt = new Date();
+      };
+
+      $scope.today();
+
+      // Disable weekend selection
+      $scope.disabled = function(date, mode) {
+        return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+      };
+
+      $scope.open = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.opened = true;
+      };
+
+      $scope.dateOptions = {
+        'year-format': "'yy'",
+        'starting-day': 1
+      };
+
+      $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'];
+      $scope.format = $scope.formats[2];
     }
 ]);
+
+
+
+
+
+
+
+
+
+
+
+
+
