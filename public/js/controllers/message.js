@@ -6,7 +6,7 @@ angular.module('githelp.controllers.messages', [])
     '$stateParams',
     'Global',
     'Message',
-    function($scope, $location, $state, Global, Message){
+    function($scope, $location, $state, $stateParams, Global, Message){
       $scope.global = Global;
 
       $scope.messagesByUser = {};

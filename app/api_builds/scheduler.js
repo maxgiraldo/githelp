@@ -10,7 +10,7 @@ auth.setCredentials({
 
 
 
-console.log('AUTH', auth);
+// console.log('AUTH', auth);
 
 exports.createEvent = function(maxAttendees, endDate, startDate, attendees, done){
   googleapis

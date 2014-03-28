@@ -1,6 +1,6 @@
 angular.module('githelp.controllers.user', [])
-  .controller('UserController', ['$scope', '$stateParams', 'Global', 'User',
-    function ($scope, $stateParams, Global, User) {
+  .controller('UserController', ['$scope', '$stateParams', 'Global', 'User', 'Chatroom',
+    function ($scope, $stateParams, Global, User, Chatroom) {
     $scope.global = Global;
 
     $scope.findOne = function(){

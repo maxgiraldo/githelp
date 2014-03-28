@@ -31,7 +31,7 @@ exports.getTopContribs = function(url) {
 
     hrefs.forEach(function(href) {
       var regex = new RegExp(username);
-      console.log('HREF MATCH ', href.match(regex));
+      consoled.log('HREF MATCH ', href.match(regex));
       console.log('REGEX', regex);
       if(href.match(regex) === null) {
         console.log('topContribs ', topContribs);
