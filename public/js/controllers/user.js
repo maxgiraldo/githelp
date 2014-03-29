@@ -38,7 +38,7 @@ angular.module('githelp.controllers.user', [])
       newInbox.$save(function(inbox){
         $state.go('inbox.individual', {'inboxId': inbox._id});
         // figure how to go to specific inboxId
-      })
+      });
     };
     // real time make inboxes populate on the side in real time
     // when we inject a child state, that tempalte will
@@ -51,8 +51,14 @@ angular.module('githelp.controllers.user', [])
     // };
 
     $scope.repoName = function(url){
-      console.log(url);
-      return url.replace(/\/.*\//, "");
+      // console.log(url);
+      // return url.replace(/\/.*\//, "");
+      return url.split('/')[2];
+    };
+
+    $scope.repoAuthor = function(url){
+      // console.log('repoAuthor', url.split('/')[0]);
+      return url.split('/')[1];
     };
 
     $scope.showForm = false;

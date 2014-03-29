@@ -41,7 +41,7 @@
     <!-- User's top contributions -->
     <div>
       <ul class='repo-links'>
-        <li data-ng-repeat="repo in conList"><a href="/#!/{{userName}}/repos/{{repoName(repo)}}">{{repoName(repo)}}</a></li>
+        <li data-ng-repeat="repo in conList"><a href="/#!/{{repoAuthor(repo)}}/repos/{{repoName(repo)}}">{{repoName(repo)}}</a></li>
       </ul>
     </div>
     <div>
