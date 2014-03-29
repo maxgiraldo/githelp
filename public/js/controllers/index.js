@@ -56,20 +56,6 @@ angular.module('githelp.controllers.index', [])
 
         $location.path('/'+username);
       };
-
-      $scope.appt = {
-        duration: "15",
-        dt: "",
-        time: ""
-      };
-
-      $scope.createAppointment = function() {
-        $http.post('/create/appointment', $scope.appt).success(function(response) {
-          $scope.apptComplete = response;
-          console.log('BOOKING', response);
-          console.log($scope.appt.time);
-        });
-      };
     }
 ])
 

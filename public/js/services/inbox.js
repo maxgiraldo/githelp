@@ -1,7 +1,7 @@
 angular.module('githelp.services.inboxes', [])
   .factory('Inbox', ['$resource', function($resource){
       return $resource('inbox/:inboxId',{
-        inoxId: '@_id'
+        inboxId: '@_id'
       }, {
           update: {
             method: 'PUT'

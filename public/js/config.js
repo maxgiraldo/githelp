@@ -37,7 +37,7 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'views/booking.html'
           })
           .state('profile.repo', {
-            url: '/:repoName',
+            url: '/repos/:repoName',
             templateUrl: 'views/profile.repos.html'
           });
 

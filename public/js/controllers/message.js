@@ -17,7 +17,7 @@ angular.module('githelp.controllers.messages', [])
       $scope.createMessage = function(){
         var newMessage = new Message({
           content: $scope.content,
-          chatroomId: $stateParams.chatroomId
+          chatroomId: $stateParams.inboxId
           // somehow find the chatroomId
         });
         $scope.content = '';
@@ -32,11 +32,11 @@ angular.module('githelp.controllers.messages', [])
       };
 
       sock.onmessage = function(e) {
-        $scope.currentChatroomId = $stateParams.chatroomId;
-        if($scope.messagesByChatroom[$stateParams.chatroomId] instanceof Array){
-          $scope.messagesByChatroom[$stateParams.chatroomId].push(JSON.parse(e.data));
+        $scope.currentChatroomId = $stateParams.inboxId;
+        if($scope.messagesByChatroom[$stateParams.inboxId] instanceof Array){
+          $scope.messagesByChatroom[$stateParams.inboxId].push(JSON.parse(e.data));
         } else{
-          $scope.messagesByChatroom[$stateParams.chatroomId] = [JSON.parse(e.data)];
+          $scope.messagesByChatroom[$stateParams.inboxId] = [JSON.parse(e.data)];
         }
         $scope.$apply();
       };
@@ -55,14 +55,14 @@ angular.module('githelp.controllers.messages', [])
         },
           function(chatroom){
             console.log('we in the find messages');
-            $scope.currentChatroomId = $stateParams.chatroomId;
+            $scope.currentChatroomId = $stateParams.inboxId;
             // messages and members populated
             $scope.chatroom = chatroom;
             console.log(chatroom);
-            $scope.membersByChatroom[$stateParams.chatroomId] = chatroom.members;
-            $scope.messagesByChatroom[$stateParams.chatroomId] = chatroom.messages;
+            $scope.membersByChatroom[$stateParams.inboxId] = chatroom.members;
+            $scope.messagesByChatroom[$stateParams.inboxId] = chatroom.messages;
             console.log('hello');
-            console.log($scope.membersByChatroom[$stateParams.chatroomId]);
+            console.log($scope.membersByChatroom[$stateParams.inboxId]);
         })
       };
     }
