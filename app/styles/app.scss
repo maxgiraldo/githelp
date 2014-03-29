@@ -355,6 +355,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .video-container {
   float: left;
 }
+#session-container {
+  padding-top: 0;
+  padding-bottom: 0;
+}
 #videos {
   width: 100px;
   height: 100px;
@@ -367,7 +371,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 #firepad-container {
   // position: absolute; left: 0; top: 0; bottom: 0; right: 0;
   width: 1024px;
-  height: 700px;
+  height: 800px;
   position: relative;
   margin: auto;
   // background-color: #fff;

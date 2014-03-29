@@ -4,7 +4,7 @@ angular.module('githelp.controllers.user', [])
     $scope.global = Global;
 
     $scope.members = [];
-
+    $scope.userName = $stateParams.userName;
     $scope.findOne = function(){
       var start = new Date().getTime()
       User.get({

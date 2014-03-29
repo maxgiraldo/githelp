@@ -20,7 +20,7 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
           templateUrl: 'views/booking.html'
         })
         .state('session', {
-          url: '/sessionId',
+          url: '/session/sessionId',
           templateUrl: 'views/session.html'
         })
         .state('inbox', {
@@ -32,13 +32,13 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'views/partials/chatwindow.html'
             // chatroomId will be available in stateparams
           })
-        .state('repos', {
-          url: '/repos/:repoName',
-          templateUrl: 'views/repos.html'
-        })
         .state('profile', {
           url: '/:userName',
           templateUrl: 'views/profile.html'
+        })
+          .state('profile.repo', {
+          url: '/:repoName',
+          templateUrl: 'views/profile.repos.html'
         });
 
     }
