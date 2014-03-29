@@ -15,7 +15,8 @@ angular.module('githelp.controllers',
   'githelp.controllers.user',
   'githelp.controllers.appointment',
   'githelp.controllers.messages',
-  'githelp.controllers.booking'
+  'githelp.controllers.booking',
+  'githelp.controllers.repos'
   ]);
 
 angular.module('githelp.services',

@@ -39,7 +39,8 @@ angular.module('githelp.controllers.appointment', [])
     if ($scope.timerId) { clearInterval($scope.timerId)};
     $scope.totalAmount = $scope.merchantPrice * ($scope.totalSeconds / 60.0);
     $scope.$apply();
-    alert('inserting' + $scope.totalAmount + 'into your bank account.');
+    $scope.amountToCharge = $scope.totalAmount;
+    alert('inserting' + $scope.amountToCharge + 'into your bank account.');
   }
 
   // VIDEO CHAT
