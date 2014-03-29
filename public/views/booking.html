@@ -1,15 +1,16 @@
-<form class="container form-group" ng-submit="createCard()">
-  <!-- submitBooking() -->
+<!-- Functions & Scope in IndexController -->
+
+<form class="container form-group" ng-submit="createAppointment()">
   <div class="container">
     <h2>Provide Call Information</h2>
     <div>
       <label>Message to Merchant</label>
-      <input type="textarea" id="message" ng-model="booking.message" placeholder="John Doe" />
+      <textarea id="message" ng-model="appt.message" placeholder="Message"/></textarea>
     </div>
     <div>
       <label>Set Estimated Length</label>
-        <select name="length">
-          <option value="15" selected>15 minutes</option>
+        <select name="duration" ng-model="appt.duration">
+          <option value="15">15 minutes</option>
           <option value="30">30 minutes</option>
           <option value="60">60 minutes</option>
         </select>
@@ -18,32 +19,22 @@
 
   <div class="container">
     <h2>Suggest Open Times For Your Call</h2>
-    <div>
-    </div>
-  </div>
+    <div class="row col-md-12">
+      <div data-ng-controller="DatepickerCtrl" class="row col-md-5" >
+        <p class="input-group">
+          <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="appt.dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+          <span class="input-group-btn">
+            <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+      </div>
 
-  <div class="container">
-    <h2>Payment Details</h2>
-    <div class="container">
-      <div>
-        <label>Name on Card</label>
-        <input type="text" id="cc-name" autocomplete="off" ng-model="cc.name" placeholder="John Doe" />
-      </div>
-      <div>
-        <label>Card Number</label>
-        <input type="text" id="cc-number" autocomplete="off" ng-model="cc.number" placeholder="4111111111111111" maxlength="16" />
-      </div>
-      <div>
-        <label>Expiration</label>
-        <input type="text" id="cc-ex-month" autocomplete="off" ng-model="cc.expiration_month" placeholder="01" maxlength="2" />
-        <input type="text" id="cc-ex-year" autocomplete="off" ng-model="cc.expiration_year" placeholder="2013" maxlength="4" />
-      </div>
-      <div>
-        <label>Security Code (CVV)</label>
-        <input type="text" id="ex-csc" autocomplete="off" ng-model="cc.cvv" placeholder="453" maxlength="4" />
-      </div>
-      Updated DB data: {{ccComplete}}
+      <div class="row col-md-1" ></div>
+
+      <div data-ng-controller="TimepickerCtrl" ng-model="appt.time" class="row col-md-5">
+        <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
     </div>
   </div>
-  <input type="submit" class="btn btn-success" value="Submit" id="cc-submit">
+  <input type="submit" class="btn btn-success" value="Book Now" id="appt-submit">
+  <p> You won't be billed until the end of your call.</p>
 </form>
