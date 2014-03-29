@@ -223,7 +223,7 @@ exports.repoStats = function(repoUrl) {  // rails/rails
 // repoStats('https://www.github.com/rails/rails');
 
 
-var getContributors = function(author, repo) {
+exports.getContributors = function(author, repo) {
   var deferred = Q.defer();
   var repoQ = new Repo(author, repo);
 

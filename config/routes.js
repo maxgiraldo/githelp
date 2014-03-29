@@ -141,6 +141,7 @@ module.exports = function(app) {
 
   app.get('/user', users.findAll);
   app.get('/user/:userName', users.profile);
+  app.get('/user/:repoName', users.repoData);
   app.put('/user', users.edit);
 
   app.post('/query', index.results);

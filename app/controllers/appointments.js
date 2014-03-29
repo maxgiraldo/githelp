@@ -24,6 +24,7 @@ exports.create = function(req, res) {
   });
 
   newAppointment.save();
+  // send out email
   res.send(200);
 };
 

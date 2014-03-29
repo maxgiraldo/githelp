@@ -16,12 +16,10 @@
       <h1>This user does not yet have an account</h1>
     </div>
 
-    <!-- User's public repos -->
-    <p data-ng-show="repoList.length > 0" class='caps-sub-header'>top contributors</p>
-    <!-- <div ng-repeat="repo in repos"> -->
+    <p data-ng-show="coreTeam.length > 0" class='caps-sub-header'>Core Team</p>
     <div>
       <ul class='repo-links'>
-        <li data-ng-repeat="repo in repoList" data-ng-show="!repo.fork"><a href="/#!/{{user.userName}}/{{repo.name}}">{{repo.name}}</a></li>
+        <li data-ng-repeat="user in coreTeam" data-ng-show="!repo.fork">{{user}}<a href="/#!/{{user.userName}}/{{repo.name}}">{{repo.name}}</a></li>
       </ul>
     </div>
   </div>

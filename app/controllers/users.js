@@ -125,7 +125,15 @@ exports.findAll = function(req, res){
   })
 };
 
+/**
+ * Repo
+ */
 
+exports.repoData = function(req, res) {
+  search.getContributors(req.params.userName, req.params.repoName).then(function(contributorsObj) {
+    res.jsonp(contributorsObj);
+  });
+};
 
 
 
