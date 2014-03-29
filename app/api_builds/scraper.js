@@ -3,8 +3,6 @@ var cheerio = require('cheerio'),
     search = require('./search'),
     Q = require('q');
 
-var url = "https://github.com/dhh";
-
 // returns array of topContributed Repos
 exports.getTopContribs = function(url) {
 
@@ -16,7 +14,7 @@ exports.getTopContribs = function(url) {
     }
 
     $ = cheerio.load(response.body);
-    console.log(response.body);
+
 
     var username = search.processUserUrl(url).user;
     // var username = 'dhh';
@@ -31,16 +29,16 @@ exports.getTopContribs = function(url) {
 
     hrefs.forEach(function(href) {
       var regex = new RegExp(username);
-      console.log('HREF MATCH ', href.match(regex));
-      console.log('REGEX', regex);
+
+
       if(href.match(regex) === null) {
-        console.log('topContribs ', topContribs);
+
         topContribs.push(href);
       }
     });
 
-    console.log('hrefs ', hrefs);
-    console.log('topContribs ', topContribs);
+
+
     deferred.resolve(topContribs);
   });
 

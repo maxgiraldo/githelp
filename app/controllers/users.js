@@ -42,20 +42,29 @@ exports.profile = function(req, res){
   var userName = req.params.userName;
   async.parallel({
     one: function(callback){
+      var start = new Date().getTime();
       scraper.getTopContribs('https://github.com/'+userName).then(function(contribs){
         console.log('one')
+        var end = new Date().getTime();
+        console.log(start - end);
         callback(null, contribs);
       })
     },
     two: function(callback){
+      var start = new Date().getTime();
       search.userStats(userName).then(function(data){
         console.log('two')
+        var end = new Date().getTime();
+        console.log(start - end);
         callback(null, data);
       })
     },
     three: function(callback){
+      var start = new Date().getTime();
       User.findOne({userName: req.params.userName}, function(err, user){
         console.log('three')
+        var end = new Date().getTime();
+        console.log(start - end);
         callback(null, user);
       })
     }

@@ -16,7 +16,7 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
             }
           })
         .state('booking', {
-          url: '/:merchantName/booking',
+          url: '/:userName/booking',
           templateUrl: 'views/booking.html'
         })
         .state('session', {
@@ -45,8 +45,10 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
 ]);
 
 //Setting HTML5 Location Mode
-window.app.config(['$locationProvider',
-    function($locationProvider) {
+window.app.config(['$locationProvider', 'datepickerConfig', 'datepickerPopupConfig',
+    function($locationProvider, datepickerConfig, datepickerPopupConfig) {
         $locationProvider.hashPrefix("!");
+        datepickerConfig.showWeeks = false;
+        datepickerPopupConfig.showButtonBar = false;
     }
 ]);
