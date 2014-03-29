@@ -98,7 +98,7 @@ var getUserRepos = function(username) {
 
 exports.userStats = function(username) {
   var deferred = Q.defer();
-  console.log('IN USER STATS');
+  // console.log('IN USER STATS');
   var searchObj = { url: 'https://api.github.com/users/' + username + '/repos', headers: { 'User-Agent': 'wainetam' }, auth: basicAuth };
   request(searchObj, function(err, response, repoList) {
     if(err && response.statusCode !== 200) {
@@ -131,35 +131,35 @@ var topContributors = function(contributorsArr, threshold) { //threshold in perc
   contributorsArr.forEach(function(user) {
     totalContributions = totalContributions + user.contributions;
   });
-  console.log('total contributions of top 100 ', totalContributions);
+  // console.log('total contributions of top 100 ', totalContributions);
 
   contributorsArr.forEach(function(user) {
     if(user.contributions/totalContributions > threshold/100 )
     topContributors.push(user);
   });
-  console.log('len of topContribs', topContributors.length);
+  // console.log('len of topContribs', topContributors.length);
   return topContributors;
 };
 
 var findOtherTop = function(contributorsArr, thresholdObj) { // threshold: {followers: 500, repos: 100, gists: 100}
   var deferred = Q.defer();
   async.map(contributorsArr, function(user, callback) {
-    console.log('IN MAP USER ', user);
-    console.log('IN MAP USER LOGIN ', user.login);
+    // console.log('IN MAP USER ', user);
+    // console.log('IN MAP USER LOGIN ', user.login);
     exports.userStats(user.login).then(function(userObj) {
-      console.log('IN MAP ', userObj);
+      // console.log('IN MAP ', userObj);
       callback(null, userObj);
     });
   }, function(err, userObjArr) {
     if(err) { deferred.reject(err); }
-    console.log('IN FINDOTHERTOP ', userObjArr);
+    // console.log('IN FINDOTHERTOP ', userObjArr);
     var otherTop = [];
     userObjArr.forEach(function(user) {
       if(user.followers > thresholdObj.followers || user.repos > thresholdObj.repos || user.gists > thresholdObj.gists ) {
         otherTop.push(user);
       }
     });
-    console.log('OTHERTOP RESULTS', otherTop);
+    // console.log('OTHERTOP RESULTS', otherTop);
     deferred.resolve(otherTop);
   });
   return deferred.promise;
@@ -213,7 +213,7 @@ exports.repoStats = function(repoUrl) {  // rails/rails
       forks: data.forks
     };
 
-    console.log('SOLE REPO OBJ ', repoObj);
+    // console.log('SOLE REPO OBJ ', repoObj);
 
     deferred.resolve(repoObj);
   });
@@ -230,18 +230,18 @@ var getContributors = function(author, repo) {
   github.repos.getContributors(repoQ, function(err, users) {
     if(err) { console.log(err); }
     // console.log('twbs contributors ', data[50]);
-    console.log('USERS ', users);
+    // console.log('USERS ', users);
     var coreTeam = topContributors(users, 1);
-    console.log('CORE ', coreTeam); // of top 100 users, returns those w/ at least 1% of the total contribs of top 100
+    // console.log('CORE ', coreTeam); // of top 100 users, returns those w/ at least 1% of the total contribs of top 100
 
     var otherTop = findOtherTop(users, {followers: 500, repos: 100, gists: 100});
     findOtherTop(users, {followers: 500, repos: 100, gists: 100}).then(function(otherTop) {
-      console.log('OTHERTOP ', otherTop);
+      // console.log('OTHERTOP ', otherTop);
       var contributorsObj = {
         coreTeam: coreTeam,
         otherTop: otherTop
       };
-      console.log('CONTRIBUTORS OBJ', contributorsObj);
+      // console.log('CONTRIBUTORS OBJ', contributorsObj);
       deferred.resolve(contributorsObj);
     });
   });
@@ -302,7 +302,7 @@ exports.query = function(queryString) { // repo and userBool are optional params
       console.log(err);
       deferred.reject(err);
     }
-    console.log('repo query output ', repoData);
+    // console.log('repo query output ', repoData);
 
     var repoList = repoData.items.map(function(repo) {
       return {
@@ -316,7 +316,7 @@ exports.query = function(queryString) { // repo and userBool are optional params
         console.log(err);
         deferred.reject(err);
       }
-      console.log('user query output ', userData);
+      // console.log('user query output ', userData);
 
       var userList = userData.items.map(function(user) {
         return {
@@ -330,7 +330,7 @@ exports.query = function(queryString) { // repo and userBool are optional params
         userData: userData.items   // could also be userList
       };
 
-      console.log('QUERY OBJ', data);
+      // console.log('QUERY OBJ', data);
 
       deferred.resolve(data);
     });
@@ -339,7 +339,7 @@ exports.query = function(queryString) { // repo and userBool are optional params
 };
 
 
-exports.query('TJ Holowaychuk');
+// exports.query('TJ Holowaychuk');
 
 
 

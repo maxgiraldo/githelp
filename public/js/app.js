@@ -15,7 +15,9 @@ angular.module('githelp.controllers',
   'githelp.controllers.user',
   'githelp.controllers.appointment',
   'githelp.controllers.messages',
-  'githelp.controllers.booking'
+  'githelp.controllers.booking',
+  'githelp.controllers.datePicker',
+  'githelp.controllers.timePicker'
   ]);
 
 angular.module('githelp.services',

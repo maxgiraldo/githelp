@@ -6,10 +6,13 @@ angular.module('githelp.controllers.user', [])
     $scope.members = [];
 
     $scope.findOne = function(){
+      var start = new Date().getTime()
       User.get({
         userName: $stateParams.userName
         // look for the github.login and then get the githubId sequence
       }, function(response){
+        var end = new Date().getTime()
+        console.log(start - end);
         $scope.repoList = response.repoList;
 
         $scope.user = response.user;
