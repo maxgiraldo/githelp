@@ -7,10 +7,25 @@
       <h1 class='headline full-name'>{{user.fullName}}</h1>
       <h2 class='username'><a href="http://www.github.com/{{user.userName}}"><i class="fa fa-github"></i> {{user.userName}}</a></h2>
       <h2 data-ng-show = "user.github.blog" class="username"><a href="http://www.{{user.github.blog}}"><i class="fa fa-link"></i> {{user.github.blog}}</a></h2>
-      <h3>$120/min</h3>
+      <h3>{{user.ppm}}</h3>
+      <span>Max: make a nice looking box for the edit snippet that shows up when you click on edit</span>
+      <button data-ng-click="editForm()" data-ng-show="user">Edit</button>
+      <div data-ng-show="showForm">
+        <form data-ng-submit="submitEdit()">
+          <label>Price Per Minute</label>
+          <input type="text" data-ng-model="ppm">
+          <span>don't forget to add price per hour to show user</span>
+          <label>Self Intro:</label>
+          <textarea type="text" data-ng-model="intro"></textarea>
+          <div data-ng-include data-src="'views/partials/creditcard.html'"></div>
+        </form>
+      </div>
     </div>
-    <div class='call-button headline'>
+    <div data-ng-show="user" class='call-button headline'>
       <p>Set up a call</p>
+    </div>
+    <div data-ng-hide="user">
+      <h1>This user does not yet have an account</h1>
     </div>
     <p data-ng-show="repoList.length > 0" class='caps-sub-header'>{{user.github.public_repos}} public repositories</p>
     <!-- <div ng-repeat="repo in repos"> -->

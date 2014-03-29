@@ -21,8 +21,9 @@ var UserSchema = new Schema({
   paymentsReceived: [{type: Schema.ObjectId,
                 ref: 'Payment'}],
   refreshToken: String,
-  chatrooms: [{type: Schema.ObjectId,
-              ref: 'Chatroom'}]
+  // price per minute
+  ppm: String,
+  intro: String
 });
 
 

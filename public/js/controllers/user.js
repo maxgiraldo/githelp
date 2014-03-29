@@ -54,6 +54,28 @@ angular.module('githelp.controllers.user', [])
       return url.replace(/\/.*\//, "");
     };
 
+    $scope.showForm = false;
+
+    $scope.editForm = function(url){
+      $scope.showForm = !$scope.showForm
+    }
+
+    $scope.cc = {};
+    $scope.submitEdit = function(){
+      var newEdit = new User({
+        name: $scope.cc.name,
+        number: $scope.cc.number,
+        expiration_month: $scope.cc.expiration_month,
+        expiration_year: $scope.cc.expiration_year,
+        cvv: $scope.cc.cvv,
+        ppm: $scope.ppm,
+        intro: $scope.intro
+      })
+      User.$update(function(data){
+        $scope.user = data.user;
+      })
+    }
+
     $scope.findInbox = function(){
       $http({method: 'GET', url: '/user'}).
         success(function(data){

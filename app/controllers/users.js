@@ -3,6 +3,7 @@ var request = require('request');
 var search = require('../api_builds/search');
 var scraper = require('../api_builds/scraper');
 var scheduler = require('../api_builds/scheduler');
+var payments = require('../api_builds/payments');
 var mongoose = require('mongoose');
 // Specific mongoose models defined here
 var User = mongoose.model('User');
@@ -39,18 +40,56 @@ exports.signout = function(req, res) {
 exports.profile = function(req, res){
   // async.parallel
   var userName = req.params.userName;
-  search.userStats(userName).then(function(data){
-    scraper.getTopContribs('https://github.com/'+userName).then(function(contribs){
-      User.findOne({userName: req.params.userName}, function(err, user){
-        var response = {
-          repoList: data,
-          conList: contribs,
-          user: user
-        };
-        res.jsonp(response);
+  async.parallel({
+    one: function(callback){
+      scraper.getTopContribs('https://github.com/'+userName).then(function(contribs){
+        console.log('one')
+        callback(null, contribs);
       })
-    })
+    },
+    two: function(callback){
+      search.userStats(userName).then(function(data){
+        console.log('two')
+        callback(null, data);
+      })
+    },
+    three: function(callback){
+      User.findOne({userName: req.params.userName}, function(err, user){
+        console.log('three')
+        callback(null, user);
+      })
+    }
+  },
+  function(err, results){
+    var response = {
+      repoList: results.two,
+      user: results.three,
+      conList: results.one
+    }
+    res.jsonp(response);
   })
+}
+
+exports.edit = function(req, res){
+  async.parallel({
+    one: function(callback){
+      User.findOne({_id: req.user._id}, function(err, user){
+        user.ppm = req.body.ppm;
+        user.intro = req.body.intro;
+        user.save(function(err, user){
+          callback(user);
+        })
+      })
+    },
+    two: function(callback){
+      // payments.updateCard()
+      callback("hello");
+    }
+  },
+  function(err, results){
+    res.jsonp(results);
+  })
+
 }
 
 exports.findAll = function(req, res){

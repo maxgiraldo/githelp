@@ -131,22 +131,24 @@ module.exports = function(app) {
   app.post('/chatroom', messages.createChatroom);
 
   app.get('/message', messages.messageByChatroom);
-
-
   app.post('/message', messages.createMessage);
+
+
 
   app.post('/appointment', appointments.create);
 
   app.get('/', index.render);
 
   app.get('/user', users.findAll);
+  app.get('/user/:userName', users.profile);
+  app.put('/user', users.edit);
 
   app.post('/query', index.results);
   app.post('/create/cc', payments.createCard);
   app.post('/create/appointment', appointments.create);
   app.post('/create/ba', payments.createBankAcct);
 
-  app.get('/user/:userName', users.profile);
+
 
   app.get('/signin', users.signin);
   app.get('/signup', users.signup);
