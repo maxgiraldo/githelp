@@ -1,6 +1,6 @@
 <!-- Functions & Scope in IndexController -->
 
-<div data-ng-controller="DatepickerController" >
+<div data-ng-controller="DatepickerCtrl" >
   <form class="container form-group" ng-submit="createAppointment()">
     <div class="container">
       <h2>Provide Call Information</h2>
@@ -23,7 +23,7 @@
       <div class="row col-md-12">
         <div class="row col-md-5" >
           <p class="input-group">
-            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="appt.dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="appt.dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
             <span class="input-group-btn">
               <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 
@@ -34,7 +34,7 @@
 
         <div class="row col-md-1" ></div>
 
-        <div data-ng-controller="TimepickerController" ng-model="appt.time" class="row col-md-5">
+        <div data-ng-controller="TimepickerCtrl" ng-model="appt.time" class="row col-md-5">
           <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
       </div>
     </div>

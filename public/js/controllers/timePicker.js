@@ -1,5 +1,5 @@
 angular.module('githelp.controllers.timePicker', [])
-  .controller('TimepickerController', ['$scope', '$state', 'Global',
+  .controller('TimepickerCtrl', ['$scope', '$state', 'Global',
     function($scope, $state, Global) {
       $scope.appt.time = new Date();
       $scope.hstep = 1;
