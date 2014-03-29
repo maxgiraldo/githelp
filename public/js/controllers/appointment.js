@@ -13,7 +13,7 @@ angular.module('githelp.controllers.appointment', [])
   $scope.minutes      = 0;
   $scope.hours        = 0;
 
-  // Merchant Price
+  // Set Default Merchant Price
   $scope.merchantPrice = 2.50;
   $scope.totalAmount = 0;
 
@@ -33,7 +33,7 @@ angular.module('githelp.controllers.appointment', [])
       $scope.totalAmount = $scope.merchantPrice * ($scope.totalSeconds / 60.0);
       $scope.$apply();
     }, 1000);
-  }
+  };
 
   $scope.stopTimer = function() {
     if ($scope.timerId) { clearInterval($scope.timerId)};
@@ -57,9 +57,6 @@ angular.module('githelp.controllers.appointment', [])
   var publisher = TB.initPublisher(apiKey,
                                  "videos",
                                  {width:defaultWidth, height:defaultHeight});
-  // var subscriber = session.subscribe(stream,
-  //                                  "videos",
-  //                                  {width:100, height:100});
 
       // Event Listeners: enable the OpenTok controller to send events to JavaScript functions
       var subscribeToStreams = function(streams) {
@@ -82,19 +79,12 @@ angular.module('githelp.controllers.appointment', [])
       session.addEventListener("sessionConnected", sessionConnectedHandler);
 
       // Initialize Video Chat Session
-      // $scope.startVideoChat = function() {
         session.connect(apiKey, token);
-      // }
-
 
       // Watch for streams that are added to the session
       session.addEventListener("streamCreated", streamCreatedHandler);
 
-      // a = new TBStart('44708602', 'opentokVideos');
-      // a.startVideo();
-
   //// FIREPAD
-    // window.onload = function() {
       //// Initialize Firebase.
       setTimeout(function() {
         var firepadRef = new Firebase('https://githelp.firebaseio.com/');
