@@ -10,18 +10,23 @@ var AppointmentSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User'
   },
-  payment:{
+  payment: {
     type: Schema.ObjectId,
     ref: 'Payment'
   },
   date: {
     type: Date
   },
-  time: {
-    type: Date
+  time: { // in UTC
+    type: String
   },
   duration: {
-    type: Number, required: true
+    type: Number,
+    required: true
+  },
+  confirmed: { // by merchant
+    type: String,
+    default: false
   },
   topic: String,
   message: String,

@@ -1,5 +1,6 @@
 var googleapis = require('googleapis'),
-    request = require('request');
+    request = require('request'),
+    moment = require('moment');
 
 var auth = new googleapis.OAuth2Client();
 
@@ -12,7 +13,7 @@ auth.setCredentials({
 
 // console.log('AUTH', auth);
 
-exports.createEvent = function(maxAttendees, endDate, startDate, attendees, done){
+exports.createCalEvent = function(maxAttendees, endDate, startDate, attendees, done){
   googleapis
   .discover('calendar', 'v3')
   .execute(function(err, client) {
@@ -41,4 +42,16 @@ exports.createEvent = function(maxAttendees, endDate, startDate, attendees, done
       done(response);
     });
   });
-}
+};
+
+exports.sendConfirm = function() {
+
+};
+
+exports.convertJStoUnixTime = function(jsDateObj) {
+  return jsDateObj.getTime()/1000;
+};
+
+exports.convertUnixToGoogTime = function(jsDateObj) {
+  // return convertJStoUnixTime(jsDateObj)
+};
