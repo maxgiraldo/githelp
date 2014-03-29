@@ -32,7 +32,7 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
           url: '/:userName',
           templateUrl: 'views/profile.html'
         })
-          .state('booking', {
+          .state('profile.booking', {
             url: '/booking',
             templateUrl: 'views/booking.html'
           })

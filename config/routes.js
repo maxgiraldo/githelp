@@ -146,6 +146,8 @@ module.exports = function(app) {
   app.post('/query', index.results);
   app.post('/create/cc', payments.createCard);
   app.post('/create/appointment', appointments.create);
+  app.get('/email', appointments.sendEmail);
+
   app.post('/create/ba', payments.createBankAcct);
 
 

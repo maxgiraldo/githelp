@@ -1,5 +1,5 @@
 {
-  "name": "issuemarket",
+  "name": "githelp",
   "version": "0.0.1",
   "dependencies": {
     "jquery": "~1.9.1",
@@ -12,7 +12,8 @@
     "json3": "~3.2.4",
     "angular-ui-ace": "~0.1.0",
     "angular-ui-select2": "~0.0.5",
-    "select2": "~3.4.6"
+    "select2": "~3.4.6",
+    "nodemailer": "latest"
   },
   "exportsOverride": {
     "bootstrap": {
