@@ -19,8 +19,8 @@ angular.module('githelp.controllers.messages', [])
           content: $scope.content,
           chatroomId: $stateParams.chatroomId
           // somehow find the chatroomId
-        })
-        $scope.content = ''
+        });
+        $scope.content = '';
 
         newMessage.$save(function(message){
           sock.send(JSON.stringify(message));
@@ -54,11 +54,11 @@ angular.module('githelp.controllers.messages', [])
           // this shouldn't be stateParams
         },
           function(chatroom){
-            console.log('we in the find messages')
+            console.log('we in the find messages');
             $scope.currentChatroomId = $stateParams.chatroomId;
             // messages and members populated
-            $scope.chatroom = chatroom
-            console.log(chatroom)
+            $scope.chatroom = chatroom;
+            console.log(chatroom);
             $scope.membersByChatroom[$stateParams.chatroomId] = chatroom.members;
             $scope.messagesByChatroom[$stateParams.chatroomId] = chatroom.messages;
             console.log('hello');

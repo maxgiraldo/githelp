@@ -15,10 +15,6 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
               }
             }
           })
-        .state('booking', {
-          url: '/:userName/booking',
-          templateUrl: 'views/booking.html'
-        })
         .state('session', {
           url: '/session/sessionId',
           templateUrl: 'views/session.html'
@@ -36,10 +32,14 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
           url: '/:userName',
           templateUrl: 'views/profile.html'
         })
+          .state('booking', {
+            url: '/booking',
+            templateUrl: 'views/booking.html'
+          })
           .state('profile.repo', {
-          url: '/:repoName',
-          templateUrl: 'views/profile.repos.html'
-        });
+            url: '/:repoName',
+            templateUrl: 'views/profile.repos.html'
+          });
 
     }
 ]);
