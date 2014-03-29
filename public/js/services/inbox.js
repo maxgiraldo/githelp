@@ -6,6 +6,6 @@ angular.module('githelp.services.inboxes', [])
           update: {
             method: 'PUT'
           }
-        })
+        });
       }
-    ]);
+  ]);
