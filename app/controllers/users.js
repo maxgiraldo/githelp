@@ -69,7 +69,7 @@ exports.findAll = function(req, res){
   function(err, results){
     var objectString = JSON.stringify({
       'allUsers': results.one,
-      'chatrooms': results.two
+      'inboxes': results.two
     })
     var response = []
     response[0] = objectString

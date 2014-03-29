@@ -1,6 +1,6 @@
 angular.module('githelp.controllers.user', [])
-  .controller('UserController', ['$scope', '$state', '$http', '$stateParams', 'Global', 'User', 'Chatroom',
-    function ($scope, $state, $http, $stateParams, Global, User, Chatroom) {
+  .controller('UserController', ['$scope', '$state', '$http', '$stateParams', 'Global', 'User', 'Inbox',
+    function ($scope, $state, $http, $stateParams, Global, User, Inbox) {
     $scope.global = Global;
 
     $scope.members = [];
@@ -14,41 +14,40 @@ angular.module('githelp.controllers.user', [])
 
         $scope.user = response.user;
         $scope.conList = response.conList;
-        $scope.chatrooms = response.user.chatrooms;
       })
       // make this aynchronous
     }
 
-    $scope.findAllChatroom = function(){
-      Chatroom.query(function(response){
-        $scope.chatrooms = response.chatrooms;
-      })
-    };
+    // $scope.findAllInboxes = function(){
+    //   Inbox.query(function(response){
+    //     $scope.inboxes = response.inboxes;
+    //   })
+    // };
 
-    $scope.findAllUsers = function(){
-      User.query(function(response){
-        $scope.users = response.users;
-      })
-    };
+    // $scope.findAllUsers = function(){
+    //   User.query(function(response){
+    //     $scope.users = response.users;
+    //   })
+    // };
 
-    $scope.createChatroom = function(){
-      var newChatroom = new Chatroom({
+    $scope.createInbox = function(){
+      var newInbox = new Inbox({
         members: this.members
       });
-      newChatroom.$save(function(chatroom){
-        $state.go('inbox.individual', {'chatroomId': chatroom._id});
-        // figure how to go to specific chatroomId
+      newInbox.$save(function(inbox){
+        $state.go('inbox.individual', {'inboxId': inbox._id});
+        // figure how to go to specific inboxId
       })
     };
-    // real time make chatrooms populate on the side in real time
+    // real time make inboxes populate on the side in real time
     // when we inject a child state, that tempalte will
     // have data-ng-controller="MessageController"
     // which will do data-ng-init="findMessages(the id of the state)"
 
-    $scope.toChatroom = function(chatroomId){
-      $state.go(chatroom.individual);
-      // figure how to go to specific chatroomId
-    };
+    // $scope.toInbox = function(inboxId){
+    //   $state.go('inbox.individual', {'inboxId': inboxId});
+    //   // figure how to go to specific inboxId
+    // };
 
     $scope.repoName = function(url){
       console.log(url);
@@ -60,7 +59,7 @@ angular.module('githelp.controllers.user', [])
         success(function(data){
           var response = JSON.parse(data[0]);
           $scope.allUsers = response.allUsers
-          $scope.userChatrooms = response.chatrooms
+          $scope.userInboxes = response.inboxes
         })
     };
   }

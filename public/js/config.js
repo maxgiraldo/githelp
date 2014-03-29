@@ -24,11 +24,11 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
           templateUrl: 'views/session.html'
         })
         .state('inbox', {
-          url: '/chatroom',
+          url: '/inbox',
           templateUrl: 'views/inbox.html'
         })
           .state('inbox.individual', {
-            url: '/:chatroomId',
+            url: '/:inboxId',
             templateUrl: 'views/partials/chatwindow.html'
             // chatroomId will be available in stateparams
           })

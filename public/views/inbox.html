@@ -1,11 +1,11 @@
 <div class="col-md-10" data-ng-controller="UserController" data-ng-init="findInbox()">
   <div>
     <h3>Chatrooms</h3>
-    <span data-ng-repeat="chatroom in userChatrooms"><a href="/#!/chatroom/{{chatroom._id}}">{{chatroom.title}}<br></a></span>
+    <span data-ng-repeat="inbox in userInboxes"><a href="/#!/inbox/{{inbox._id}}">{{inbox.title}}<br></a></span>
   </div>
   <div class="col-md-10" data-ui-view>
     <div class="col-md-10">
-      <form class="col-md-10" data-ng-submit="createChatroom()">
+      <form class="col-md-10" data-ng-submit="createInbox()">
         <label>Members</label>
         <div class="col-md-8">
           <select data-ng-model="members" data-ui-select2="{}" placeholder="Enter a friends name, username, or email!" multiple>
