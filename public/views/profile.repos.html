@@ -1,4 +1,28 @@
 <section data-ng-controller="ReposController">
-  <h1>{{userName}}</h1>
-  <h2>{{repoName}}</h2>
+<div class="container profile">
+    <div>
+      <!-- <img class='avatar-lg' src='{{user.github.avatar_url}}'> -->
+      <!-- <p>user's profile img obtained by crawling github</p> -->
+    </div>
+    <div class='profile-name-info'>
+      <h1 class='headline full-name'>{{repoName}}</h1>
+      <h2 class='username'><a href="http://www.github.com/{{user.userName}}/{{repoName}}"><i class="fa fa-github"></i> {{user.userName}}/{{repoName}}</a></h2>
+    </div>
+    <!-- <div data-ng-show="user" class='call-button headline'>
+      <p>Set up a call with author</p>
+    </div> -->
+
+    <div data-ng-hide="user">
+      <h1>This user does not yet have an account</h1>
+    </div>
+
+    <!-- User's public repos -->
+    <p data-ng-show="repoList.length > 0" class='caps-sub-header'>top contributors</p>
+    <!-- <div ng-repeat="repo in repos"> -->
+    <div>
+      <ul class='repo-links'>
+        <li data-ng-repeat="repo in repoList" data-ng-show="!repo.fork"><a href="/#!/{{user.userName}}/{{repo.name}}">{{repo.name}}</a></li>
+      </ul>
+    </div>
+  </div>
 </section>
