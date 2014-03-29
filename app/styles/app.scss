@@ -314,11 +314,12 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 // Call Info Box
 #callInfoBox {
+  z-index: 4;
   // background-color: #eef1f6;
   width: 264px;
   height: 198px;
   float: right;
-  margin-right: 35px;
+  margin-right: 5%;
   text-align: center;
 }
 // Session Info Div
@@ -380,7 +381,8 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   position: absolute;
   // height: auto;
   height: 500px;
-  width: 100%
+  width: 1024px;
+  margin-left: 22%;
   // left: 0;
   // top: 0;
   // bottom: 0;
