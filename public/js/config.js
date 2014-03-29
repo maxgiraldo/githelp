@@ -15,8 +15,12 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
               }
             }
           })
+        .state('booking', {
+          url: '/:merchantName/booking',
+          templateUrl: 'views/booking.html'
+        })
         .state('session', {
-          url: '/session',
+          url: '/sessionId',
           templateUrl: 'views/session.html'
         })
         .state('profile', {
