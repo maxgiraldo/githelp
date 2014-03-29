@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var Q = require('q');
 
 var UserSchema = new Schema({
   fullName: String,
@@ -23,5 +24,23 @@ var UserSchema = new Schema({
   chatrooms: [{type: Schema.ObjectId,
               ref: 'Chatroom'}]
 });
+
+
+UserSchema.statics.title = function(membersArray){
+  var membersName = [];
+  var deferred = Q.defer();
+  var i = 0;
+  var self = this;
+  membersArray.forEach(function(member){
+    i++
+    self.findOne({_id: member}).populate('members').exec(function(err, member){
+      membersName.push(member.fullName);
+      if(membersArray.length === i){
+        deferred.resolve(membersName.join(", "))
+      }
+    })
+  })
+  return deferred.promise;
+}
 
 mongoose.model('User', UserSchema);

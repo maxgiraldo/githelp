@@ -1,24 +1,19 @@
-<div data-ng-controller="UserController" data-ng-init="findOne()">
+<div class="col-md-10" data-ng-controller="UserController" data-ng-init="findInbox()">
   <div>
-    <span data-ng-repeat="chatroom in chatrooms"><a>chatroom.title</a></span>
+    <h3>Chatrooms</h3>
+    <span data-ng-repeat="chatroom in userChatrooms"><a href="/#!/chatroom/{{chatroom._id}}">{{chatroom.title}}<br></a></span>
   </div>
-  <div>
-    <form>
-      <label>Members</label>
-      <input>
-      <button type="submit">New Chats</button>
-    </form>
+  <div class="col-md-10" data-ui-view>
+    <div class="col-md-10">
+      <form class="col-md-10" data-ng-submit="createChatroom()">
+        <label>Members</label>
+        <div class="col-md-8">
+          <select data-ng-model="members" data-ui-select2="{}" placeholder="Enter a friends name, username, or email!" multiple>
+            <option value="{{user._id}}" data-ng-repeat="user in allUsers" data-ng-show="user._id != global.user._id">{{user.fullName}}</option>
+          </select>
+        </div>
+        <button type="submit">New Chats</button>
+      </form>
+    </div>
   </div>
 </div>
-
-
-
-  <!-- <div>
-    <h1>Messages</h1>
-    <p data-ng-repeat="message in Messages"></p>
-  </div>
-  <form data-ng-submit="createMessage()">
-    <label>Message</label>
-    <textarea data-ng-model="content"></textarea>
-    <button type="submit">Send</button>
-  </form> -->

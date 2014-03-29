@@ -4,6 +4,7 @@ window.app = angular.module('githelp',
   'ui.bootstrap',
   'ui.route',
   'ui.router',
+  'ui.select2',
   'githelp.controllers',
   'githelp.services'
   ]);
