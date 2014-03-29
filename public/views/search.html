@@ -1,33 +1,30 @@
 <div class='search-bg'>
-      <form class="container form-group" ng-submit="query()">
-        <input type="text" class="form-control" id="search-bar" name="query" ng-model="form.queryInput" placeholder="Search username/repo">
-        <input type="submit" class="btn btn-success" value="Git it on">
-      </form>
-    </div>
-
-<div class='container col-md-4' data-ng-show="userResults.length > 0">
-  <br>
-  <h3>user results</h3>
-  <li ng-repeat="user in userResults | limitTo: 10">
-    <!-- Name: {{user.fullName}}<br /> -->
-    login: {{user.login}}<br />
-    Url: {{user.html_url}}<br />
-    <!-- ID: {{user.userName}}<br /> -->
-    <!-- Email: {{user.email}}<br /> -->
-    <a href="/#!/{{user.login}}" class="btn btn-primary btn-large"><i class="icon-white icon-heart"></i>Profile</a>
-  </li>
+  <form class="container form-group" ng-submit="query()">
+    <input type="text" class="form-control" id="search-bar" name="query" ng-model="form.queryInput" placeholder="Search username/repo">
+    <input type="submit" class="btn btn-success" value="Git it on">
+  </form>
 </div>
 
+<div class='container'>
+  <div class='col-md-4' data-ng-show="userResults.length > 0">
+    <br>
+    <h1 class="headline full-name ng-binding">Users</h1>
+    <ul class='searchUl' ng-repeat="user in userResults | limitTo: 10">
+      <li><a href="/#!/{{user.login}}">{{user.login}}</a></li>
+    </ul>
+  </div>
 
-<div class='container col-md-4' data-ng-show="repoResults.length > 0">
-  <br>
-  <h3>repo results</h3>
-  <li ng-repeat="repo in repoResults | limitTo: 10">
-    <!-- Name: {{repo.name}}<br /> -->
-    Full Name: {{repo.full_name}}<br />
-    Url: {{repo.html_url}}<br />
-    <!-- ID: {{repo.id}}<br /> -->
-  </li>
+
+  <div class='col-md-4' data-ng-show="repoResults.length > 0">
+    <br>
+    <h1 class="headline full-name ng-binding">Repositories</h1>
+    <ul class='searchUl' ng-repeat="repo in repoResults | limitTo: 10">
+      <!-- Name: {{repo.name}}<br /> -->
+      <li><a href="/#!/{{repo.full_name}}">{{repo.full_name}}</a></li>
+      <!-- ID: {{repo.id}}<br /> -->
+    </ul>
+  </div>
+
 </div>
 
     <!-- allow for search here too -->

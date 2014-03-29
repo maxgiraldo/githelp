@@ -15,7 +15,6 @@ exports.createChatroom = function(req, res){
           chatroom: chatroom
         });
       } else {
-        console
         res.jsonp(chatroom);
       }
     });
@@ -76,9 +75,9 @@ exports.messageByChatroom = function(req, res){
 
 
         res.jsonp(chatroom);
-      })
+      });
     }
-  })
+  });
 };
 
 exports.findAllChatroom = function(req, res){

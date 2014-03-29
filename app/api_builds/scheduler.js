@@ -1,6 +1,6 @@
 var googleapis = require('googleapis'),
     request = require('request'),
-    moment = require('moment');
+    moment = require('moment')
 
 var auth = new googleapis.OAuth2Client();
 

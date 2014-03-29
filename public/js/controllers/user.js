@@ -5,21 +5,19 @@ angular.module('githelp.controllers.user', [])
 
     $scope.members = [];
     $scope.userName = $stateParams.userName;
+
     $scope.findOne = function(){
-      var start = new Date().getTime()
       User.get({
         userName: $stateParams.userName
         // look for the github.login and then get the githubId sequence
       }, function(response){
-        var end = new Date().getTime()
-        console.log(start - end);
         $scope.repoList = response.repoList;
 
         $scope.user = response.user;
         $scope.conList = response.conList;
       })
       // make this aynchronous
-    }
+    };
 
     // $scope.findAllInboxes = function(){
     //   Inbox.query(function(response){
@@ -60,8 +58,13 @@ angular.module('githelp.controllers.user', [])
     $scope.showForm = false;
 
     $scope.editForm = function(url){
-      $scope.showForm = !$scope.showForm
-    }
+      $scope.showForm = !$scope.showForm;
+    };
+
+    $scope.setAppointment = function(){
+      $state.go('profile.booking');
+    };
+
 
     $scope.cc = {};
     $scope.submitEdit = function(){
@@ -77,28 +80,15 @@ angular.module('githelp.controllers.user', [])
       User.$update(function(data){
         $scope.user = data.user;
       })
-    }
+    };
 
     $scope.findInbox = function(){
       $http({method: 'GET', url: '/user'}).
         success(function(data){
           var response = JSON.parse(data[0]);
-          $scope.allUsers = response.allUsers
-          $scope.userInboxes = response.inboxes
+          $scope.allUsers = response.allUsers;
+          $scope.userInboxes = response.inboxes;
         })
     };
   }
 ]);
-
-
-//   for userStats, you can call search.userStats(username)
-// returns a userObj
-
-
-// var userObj = {
-//       email: userData.email || '',
-//       blog: userData.blog,
-//       followers: userData.followers,
-//       repos: userData.public_repos,
-//       gists: userData.public_gists
-//     };

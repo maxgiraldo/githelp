@@ -44,29 +44,29 @@ exports.profile = function(req, res){
     one: function(callback){
       var start = new Date().getTime();
       scraper.getTopContribs('https://github.com/'+userName).then(function(contribs){
-        console.log('one')
+        console.log('one');
         var end = new Date().getTime();
         console.log(start - end);
         callback(null, contribs);
-      })
+      });
     },
     two: function(callback){
       var start = new Date().getTime();
       search.userStats(userName).then(function(data){
-        console.log('two')
+        console.log('two');
         var end = new Date().getTime();
         console.log(start - end);
         callback(null, data);
-      })
+      });
     },
     three: function(callback){
       var start = new Date().getTime();
       User.findOne({userName: req.params.userName}, function(err, user){
-        console.log('three')
+        console.log('three');
         var end = new Date().getTime();
         console.log(start - end);
         callback(null, user);
-      })
+      });
     }
   },
   function(err, results){
@@ -74,10 +74,10 @@ exports.profile = function(req, res){
       repoList: results.two,
       user: results.three,
       conList: results.one
-    }
+    };
     res.jsonp(response);
-  })
-}
+  });
+};
 
 exports.edit = function(req, res){
   async.parallel({
@@ -97,9 +97,8 @@ exports.edit = function(req, res){
   },
   function(err, results){
     res.jsonp(results);
-  })
-
-}
+  });
+};
 
 exports.findAll = function(req, res){
   async.parallel({
@@ -118,11 +117,11 @@ exports.findAll = function(req, res){
     var objectString = JSON.stringify({
       'allUsers': results.one,
       'inboxes': results.two
-    })
-    var response = []
-    response[0] = objectString
+    });
+    var response = [];
+    response[0] = objectString;
     res.jsonp(response);
-  })
+  });
 };
 
 /**

@@ -126,9 +126,9 @@ module.exports = function(app) {
       res.redirect('/');
     });
 
-  app.get('/chatroom', messages.findAllChatroom);
+  app.get('/inbox', messages.findAllChatroom);
 
-  app.post('/chatroom', messages.createChatroom);
+  app.post('/inbox', messages.createChatroom);
 
   app.get('/message', messages.messageByChatroom);
   app.post('/message', messages.createMessage);
@@ -141,7 +141,7 @@ module.exports = function(app) {
 
   app.get('/user', users.findAll);
   app.get('/user/:userName', users.profile);
-  app.get('/user/:repoName', users.repoData);
+  app.get('/user/:userName/:repoName', users.repoData);
   app.put('/user', users.edit);
 
   app.post('/query', index.results);
