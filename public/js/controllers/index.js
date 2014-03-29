@@ -43,8 +43,10 @@ angular.module('githelp.controllers.index', [])
           $http.post('/query', $scope.form).success(function(response) {
             // $location.path('/');
             console.log('RESULTS ',response);
-            $scope.githubResults = response.githubResults;
-            $scope.githelpResults = response.githelpResults;
+            $scope.userResults = response.userResults;
+            $scope.repoResults = response.repoResults;
+            // $scope.githubResults = response.githubResults;
+            // $scope.githelpResults = response.githelpResults;
             $state.go('main.search');
           });
         }

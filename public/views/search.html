@@ -5,27 +5,28 @@
       </form>
     </div>
 
-<div class='container col-md-4' data-ng-show="githelpResults.length > 0">
+<div class='container col-md-4' data-ng-show="userResults.length > 0">
   <br>
-  <h3>githelp results</h3>
-  <li ng-repeat="user in githelpResults | limitTo: 10">
-    Name: {{user.fullName}}<br />
-    Url: {{user.github.html_url}}<br />
-    ID: {{user.userName}}<br />
-    Email: {{user.email}}<br />
-    <a href="/#!/{{user.userName}}" class="btn btn-primary btn-large"><i class="icon-white icon-heart"></i>Profile</a>
+  <h3>user results</h3>
+  <li ng-repeat="user in userResults | limitTo: 10">
+    <!-- Name: {{user.fullName}}<br /> -->
+    login: {{user.login}}<br />
+    Url: {{user.html_url}}<br />
+    <!-- ID: {{user.userName}}<br /> -->
+    <!-- Email: {{user.email}}<br /> -->
+    <a href="/#!/{{user.login}}" class="btn btn-primary btn-large"><i class="icon-white icon-heart"></i>Profile</a>
   </li>
 </div>
 
 
-<div class='container col-md-4' data-ng-show="githubResults.length > 0">
+<div class='container col-md-4' data-ng-show="repoResults.length > 0">
   <br>
-  <h3>github results</h3>
-  <li ng-repeat="result in githubResults | limitTo: 10">
-    Name: {{result.name}}<br />
-    Full Name: {{result.full_name}}<br />
-    Url: {{result.html_url}}<br />
-    ID: {{result.id}}<br />
+  <h3>repo results</h3>
+  <li ng-repeat="repo in repoResults | limitTo: 10">
+    <!-- Name: {{repo.name}}<br /> -->
+    Full Name: {{repo.full_name}}<br />
+    Url: {{repo.html_url}}<br />
+    <!-- ID: {{repo.id}}<br /> -->
   </li>
 </div>
 

@@ -21,7 +21,7 @@ exports.results = function(req, res) {
   console.log('BODY', req.body);
   // var data = search.userStats(req.body.queryInput);
   search.query(req.body.queryInput, false, false).then(function(results) {
-    console.log("hey ji ho was here")
+    console.log("hey ji ho was here");
     console.log(results);
   //   var firstRepoUrl = results.items[0].full_name;
   //   var urlObj = search.extractUserAndRepo(firstRepoUrl);
@@ -40,15 +40,22 @@ exports.results = function(req, res) {
 
     // res.json(results); // for repoBool true & want otherTop
 
-    User.find({userName: req.body.queryInput}, function(err, users){
-      var response = {
-        githubResults: results.items,
-        githelpResults: users
-      };
-      res.jsonp(response);
-    })
+    var response = {
+      userResults: results.userData,
+      repoResults: results.repoData
+    };
 
-  })
+    res.jsonp(response);
+
+    // User.find({userName: req.body.queryInput}, function(err, users){
+    //   var response = {
+    //     githubResults: results.items,
+    //     githelpResults: users
+    //   };
+    //   res.jsonp(response);
+    // })
+
+  });
 
 
 

@@ -255,51 +255,92 @@ var Query = function(query) {
   // 'order': optional
 };
 
-exports.query = function(queryString, repoBoolean, userBoolean) { // repo and userBool are optional params and can't be both true
+// exports.query = function(queryString, repoBoolean, userBoolean) { // repo and userBool are optional params and can't be both true
+//   var deferred = Q.defer();
+//   var query = new Query(queryString); // search string
+
+//   // returns general query
+//   github.search.repos(query, function(err, data) { // repos
+//     if(err) {
+//       console.log(err);
+//       deferred.reject(err);
+//     }
+//     console.log('query output ', data);
+
+//     var urlObj = exports.processRepoUrl('http://github.com/rails/rails'); // dummy variable for now
+//     console.log('URLOBJ', urlObj);
+
+//     // if specific repo query
+
+//     if(repoBoolean) {
+//       getContributors(urlObj.user, urlObj.repo).then(function(contributorsObj) {
+//         deferred.resolve(contributorsObj);
+//       });
+//     }
+//     // if specific user query
+
+//     else if(userBoolean) {
+//       exports.userStats(urlObj.user).then(function(userObj) {
+//         deferred.resolve(userObj);
+//       });
+//     }
+
+//     else {
+//       deferred.resolve(data);
+//     }
+//   });
+//   return deferred.promise;
+// };
+
+exports.query = function(queryString) { // repo and userBool are optional params and can't be both true
   var deferred = Q.defer();
   var query = new Query(queryString); // search string
 
   // returns general query
-  github.search.repos(query, function(err, data) { // repos
+  github.search.repos(query, function(err, repoData) { // repos
     if(err) {
       console.log(err);
       deferred.reject(err);
     }
-    console.log('query output ', data);
+    console.log('repo query output ', repoData);
 
-    var urlObj = exports.processRepoUrl('http://github.com/rails/rails'); // dummy variable for now
-    console.log('URLOBJ', urlObj);
+    var repoList = repoData.items.map(function(repo) {
+      return {
+        full_name: repo.full_name,
+        html_url: repo.html_url
+      };
+    });
 
-    // if specific repo query
+    github.search.users(query, function(err, userData) { // repos
+      if(err) {
+        console.log(err);
+        deferred.reject(err);
+      }
+      console.log('user query output ', userData);
 
-    if(repoBoolean) {
-      getContributors(urlObj.user, urlObj.repo).then(function(contributorsObj) {
-        deferred.resolve(contributorsObj);
+      var userList = userData.items.map(function(user) {
+        return {
+          login: user.login,
+          html_url: user.html_url
+        };
       });
-    }
-    // if specific user query
 
-    else if(userBoolean) {
-      exports.userStats(urlObj.user).then(function(userObj) {
-        deferred.resolve(userObj);
-      });
-    }
+      var data = {
+        repoData: repoData.items,  // could also be repoList
+        userData: userData.items   // could also be userList
+      };
 
-    else {
+      console.log('QUERY OBJ', data);
+
       deferred.resolve(data);
-    }
+    });
   });
   return deferred.promise;
 };
 
 
-// github.repos.getContributors(repo, function(err, data) {
-//     if(err) { console.log(err); }
-//     console.log('twbs contributors ', data);
-// });
+exports.query('TJ Holowaychuk');
 
 
-// top contribs & other top
-// avail times & prices
-// repos in order of pop
-// other repos they are contribs
+
+
