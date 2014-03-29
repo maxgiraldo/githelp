@@ -1,6 +1,6 @@
 angular.module('githelp.controllers.datePicker', [])
-  .controller('DatepickerController', ['$scope', '$state', 'Global',
-    function($scope, $state, Global) {
+  .controller('DatepickerCtrl', ['$scope', '$http', '$state', 'Global',
+    function($scope, $http, $state, Global) {
 
       $scope.appt = {
         duration: "15",
@@ -13,6 +13,7 @@ angular.module('githelp.controllers.datePicker', [])
           $scope.apptComplete = response;
           console.log('BOOKING', response);
           console.log($scope.appt.time);
+          $location.path('/inbox');
         });
       };
 
@@ -23,10 +24,10 @@ angular.module('githelp.controllers.datePicker', [])
 
       $scope.today();
 
-      // Disable weekend selection
-      $scope.disabled = function(date, mode) {
-        return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-      };
+      // // Disable weekend selection
+      // $scope.disabled = function(date, mode) {
+      //   return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+      // };
 
       $scope.open = function($event) {
         $event.preventDefault();
