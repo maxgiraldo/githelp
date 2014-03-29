@@ -1,0 +1,18 @@
+<div data-ng-controller="MessageController" data-ng-init="findMessages()">
+  <h3>ChatWindow</h3>
+  <div>
+    <div data-ng-repeat="message in messagesByChatroom[currentChatroomId] | orderBy:'-created':true">
+      <span>{{message.sender.fullName}}:</span>
+      <span>{{message.content}}</span><br>
+      <span>{{message.created | date: 'medium'}}</span>
+    </div>
+    <form data-ng-submit="createMessage()">
+      <label>Content</label>
+      <input data-ng-model="content" required>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+
+  <h3>Members</h3>
+  <span data-ng-repeat="member in membersByChatroom[currentChatroomId]" data-ng-show="member._id !== global.user._id">{{member.fullName}}<br></span>
+</div>

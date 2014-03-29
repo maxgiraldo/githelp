@@ -6,7 +6,9 @@ var scheduler = require('../api_builds/scheduler');
 var mongoose = require('mongoose');
 // Specific mongoose models defined here
 var User = mongoose.model('User');
+var Chatroom = mongoose.model('Chatroom');
 var Q = require('q');
+var async = require('async');
 
 exports.signin = function(req, res){
   res.render('signin');
@@ -35,20 +37,47 @@ exports.signout = function(req, res) {
 };
 
 exports.profile = function(req, res){
-  console.log("hello")
+  // async.parallel
   var userName = req.params.userName;
   search.userStats(userName).then(function(data){
     scraper.getTopContribs('https://github.com/'+userName).then(function(contribs){
-      console.log(contribs);
       User.findOne({userName: req.params.userName}, function(err, user){
         var response = {
           repoList: data,
           conList: contribs,
           user: user
         };
-        console.log(user);
         res.jsonp(response);
       })
     })
   })
 }
+
+exports.findAll = function(req, res){
+  async.parallel({
+    one: function(callback){
+      User.find(function(err, users){
+        callback(null, users);
+      });
+    },
+    two: function(callback){
+      Chatroom.find({members: req.user._id}).exec(function(err, chatrooms){
+        callback(null, chatrooms);
+      });
+    }
+  },
+  function(err, results){
+    var objectString = JSON.stringify({
+      'allUsers': results.one,
+      'chatrooms': results.two
+    })
+    var response = []
+    response[0] = objectString
+    res.jsonp(response);
+  })
+};
+
+
+
+
+

@@ -1,7 +1,9 @@
 angular.module('githelp.controllers.user', [])
-  .controller('UserController', ['$scope', '$stateParams', 'Global', 'User', 'Chatroom',
-    function ($scope, $stateParams, Global, User, Chatroom) {
+  .controller('UserController', ['$scope', '$state', '$http', '$stateParams', 'Global', 'User', 'Chatroom',
+    function ($scope, $state, $http, $stateParams, Global, User, Chatroom) {
     $scope.global = Global;
+
+    $scope.members = [];
 
     $scope.findOne = function(){
       User.get({
@@ -17,14 +19,24 @@ angular.module('githelp.controllers.user', [])
       // make this aynchronous
     }
 
-    $scope.createChatroom = function(){
-      var member = $scope.members.push($scope.global.user.userName);
-      var newChatroom = new Chatroom({
-        members: $scope.members,
-        title: $scope.members.join(", ")
+    $scope.findAllChatroom = function(){
+      Chatroom.query(function(response){
+        $scope.chatrooms = response.chatrooms;
       })
+    };
+
+    $scope.findAllUsers = function(){
+      User.query(function(response){
+        $scope.users = response.users;
+      })
+    };
+
+    $scope.createChatroom = function(){
+      var newChatroom = new Chatroom({
+        members: this.members
+      });
       newChatroom.$save(function(chatroom){
-        $state.go(chatroom.individual);
+        $state.go('inbox.individual', {'chatroomId': chatroom._id});
         // figure how to go to specific chatroomId
       })
     };
@@ -39,8 +51,17 @@ angular.module('githelp.controllers.user', [])
     };
 
     $scope.repoName = function(url){
-      console.log(url)
+      console.log(url);
       return url.replace(/\/.*\//, "");
+    };
+
+    $scope.findInbox = function(){
+      $http({method: 'GET', url: '/user'}).
+        success(function(data){
+          var response = JSON.parse(data[0]);
+          $scope.allUsers = response.allUsers
+          $scope.userChatrooms = response.chatrooms
+        })
     };
   }
 ]);

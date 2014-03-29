@@ -3,10 +3,49 @@ angular.module('githelp.controllers.appointment', [])
     function ($scope, $state, Global, $http) {
       // $scope.global = Global;
 
+  // TIMER
+  // Initialize timer variables
+  $scope.timerId      = 0;
+  $scope.totalSeconds = 0;
+  $scope.totalMinutes = 0;
+  $scope.totalHours   = 0;
+  $scope.seconds      = 0;
+  $scope.minutes      = 0;
+  $scope.hours        = 0;
+
+  // Set Default Merchant Price
+  $scope.merchantPrice = 2.50;
+  $scope.totalAmount = 0;
+
+  $scope.startTimer = function() {
+    $scope.timerId = setInterval(function() {
+      $scope.seconds++;
+      $scope.totalSeconds++;
+      if ($scope.seconds === 60) {
+        $scope.totalMinutes++;
+        $scope.minutes++;
+        $scope.seconds = 0;
+      } else if ($scope.minutes === 60) {
+        $scope.hours++;
+        $scope.totalHours++;
+        $scope.minutes = 0;
+      }
+      $scope.totalAmount = $scope.merchantPrice * ($scope.totalSeconds / 60.0);
+      $scope.$apply();
+    }, 1000);
+  };
+
+  $scope.stopTimer = function() {
+    if ($scope.timerId) { clearInterval($scope.timerId)};
+    $scope.totalAmount = $scope.merchantPrice * ($scope.totalSeconds / 60.0);
+    $scope.$apply();
+    alert('inserting' + $scope.totalAmount + 'into your bank account.');
+  }
+
   // VIDEO CHAT
-  var sessionId = "2_MX40NDcwOTUxMn5-V2VkIE1hciAyNiAxODoxMDowNCBQRFQgMjAxNH4wLjI0Nzk5MTI2fg";
+  var sessionId = "1_MX40NDcwOTUxMn5-VGh1IE1hciAyNyAxMzozODo1MiBQRFQgMjAxNH4wLjI3MjEwNDc0fg";
   var apiKey = '44709512';
-  var token = 'T1==cGFydG5lcl9pZD00NDcwOTUxMiZzZGtfdmVyc2lvbj10YnJ1YnktdGJyYi12MC45MS4yMDExLTAyLTE3JnNpZz0yMjMyMzk4MzMwYzljNzI3MDc0MzQ2ZGY0NmJiYjEyYzM3YTEwODViOnJvbGU9cHVibGlzaGVyJnNlc3Npb25faWQ9Ml9NWDQwTkRjd09UVXhNbjUtVjJWa0lFMWhjaUF5TmlBeE9Eb3hNRG93TkNCUVJGUWdNakF4Tkg0d0xqSTBOems1TVRJMmZnJmNyZWF0ZV90aW1lPTEzOTU4ODI2MzAmbm9uY2U9MC45NTcyNzQxNDI1NTUxMjI2JmV4cGlyZV90aW1lPTEzOTg0NzQ1MDAmY29ubmVjdGlvbl9kYXRhPQ==';
+  var token = 'T1==cGFydG5lcl9pZD00NDcwOTUxMiZzZGtfdmVyc2lvbj10YnJ1YnktdGJyYi12MC45MS4yMDExLTAyLTE3JnNpZz0xZWFjNmU3MzgwZjY3YjQ5Njk2NzM0N2NmNGVhNTQwNDg3MzZiOTUzOnJvbGU9cHVibGlzaGVyJnNlc3Npb25faWQ9MV9NWDQwTkRjd09UVXhNbjUtVkdoMUlFMWhjaUF5TnlBeE16b3pPRG8xTWlCUVJGUWdNakF4Tkg0d0xqSTNNakV3TkRjMGZnJmNyZWF0ZV90aW1lPTEzOTU5NTI4MDcmbm9uY2U9MC44NzAzNTM1MDAzOTY4NTkzJmV4cGlyZV90aW1lPTEzOTg1NDQ3MjImY29ubmVjdGlvbl9kYXRhPQ==';
 
   var defaultWidth = 264;
   var defaultWidthSm = 132;
@@ -18,9 +57,6 @@ angular.module('githelp.controllers.appointment', [])
   var publisher = TB.initPublisher(apiKey,
                                  "videos",
                                  {width:defaultWidth, height:defaultHeight});
-  // var subscriber = session.subscribe(stream,
-  //                                  "videos",
-  //                                  {width:100, height:100});
 
       // Event Listeners: enable the OpenTok controller to send events to JavaScript functions
       var subscribeToStreams = function(streams) {
@@ -43,19 +79,12 @@ angular.module('githelp.controllers.appointment', [])
       session.addEventListener("sessionConnected", sessionConnectedHandler);
 
       // Initialize Video Chat Session
-      // $scope.startVideoChat = function() {
         session.connect(apiKey, token);
-      // }
-
 
       // Watch for streams that are added to the session
       session.addEventListener("streamCreated", streamCreatedHandler);
 
-      // a = new TBStart('44708602', 'opentokVideos');
-      // a.startVideo();
-
   //// FIREPAD
-    // window.onload = function() {
       //// Initialize Firebase.
       setTimeout(function() {
         var firepadRef = new Firebase('https://githelp.firebaseio.com/');

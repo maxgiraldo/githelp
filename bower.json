@@ -10,7 +10,9 @@
     "angular-bootstrap": "~0.4.0",
     "angular-ui-utils": "0.0.4",
     "json3": "~3.2.4",
-    "angular-ui-ace": "~0.1.0"
+    "angular-ui-ace": "~0.1.0",
+    "angular-ui-select2": "~0.0.5",
+    "select2": "~3.4.6"
   },
   "exportsOverride": {
     "bootstrap": {
@@ -21,5 +23,8 @@
     "angular-ui-utils": {
       "modules": "modules/route/route.js"
     }
+  },
+  "resolutions": {
+    "angular": ">=1.2.0"
   }
 }

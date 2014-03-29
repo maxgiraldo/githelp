@@ -1,6 +1,19 @@
 <!-- <a href="/instances/{{ instanceId }}">{{instance.name}}</a> -->
 <section data-ng-controller="AppointmentController">
+  <a href="" style='font-size: 30px' ng-click='startTimer()'>start call</a>
   <div class="container jumbotron">
+     <div id='callInfoBox'>
+    <i id='clock' class="fa fa-clock-o"></i>
+    <h2 id='timer'>{{hours}}:{{minutes}}:{{seconds}}</h2>
+    <h3 class='total-container'>Total
+      <span id='total-amount'>
+        {{totalAmount | currency:"$"}}
+      </span>
+    </h3>
+    <div class='end-session headline'>
+      <p class='button-txt' ng-click='stopTimer()'>End session</p>
+    </div>
+  </div>
     <!-- <h1 class='headline session-header'>Session with [name of other party member]</h1> -->
     <!-- <a href="" ng-click='startVideoChat()'><i class="fa fa-video-camera"></i></a> -->
     <!-- <div class='call-button headline session-confirm'>Start Session</div> -->
@@ -14,4 +27,3 @@
     </ul>
   </div>
 </section>
-

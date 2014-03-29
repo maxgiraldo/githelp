@@ -15,7 +15,14 @@ exports.create = function(req, res) {
 
   console.log('APPT TIME', time);
   console.log('APPT DATE', date);
-  var newAppointment = new Appointment({duration: duration, date: date, message: message, time: time});
+
+  var newAppointment = new Appointment({
+    duration: req.body.duration,
+    date: req.body.dt,
+    message: req.body.message,
+    time: req.body.time
+  });
+
   newAppointment.save();
   res.send(200);
 };

@@ -15,14 +15,28 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
               }
             }
           })
+        .state('booking', {
+          url: '/:merchantName/booking',
+          templateUrl: 'views/booking.html'
+        })
         .state('session', {
-          url: '/session',
+          url: '/sessionId',
           templateUrl: 'views/session.html'
         })
+        .state('inbox', {
+          url: '/chatroom',
+          templateUrl: 'views/inbox.html'
+        })
+          .state('inbox.individual', {
+            url: '/:chatroomId',
+            templateUrl: 'views/partials/chatwindow.html'
+            // chatroomId will be available in stateparams
+          })
         .state('profile', {
           url: '/:userName',
           templateUrl: 'views/profile.html'
         });
+
     }
 ]);
 
