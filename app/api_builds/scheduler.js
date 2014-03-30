@@ -49,7 +49,7 @@ exports.sendEventInvite = function(apptObj, done){
           "start": {
             // "date": startDate, //yyyy-mm-dd date optional if have dateTime
             "dateTime": startTime,
-            "timeZone": "America/New_York"
+            "timeZone": "America/New_York" // optional
           },
           "attendees": attendees, // array of objects with email as key
           "creator": {
@@ -59,11 +59,9 @@ exports.sendEventInvite = function(apptObj, done){
           "source": {
             title: 'Event details on githelp.co',
             url: 'http://www.google.com' // add link to githelp session_id; needs to be live link
-          }
-          // ,
-          // "summary": topic || "", // TITLE
-          // "description": '' // description body in event
-          // add TIMEZONE to start/end?
+          },
+          "summary": topic || "", // TITLE
+          "description": "" // description body in event
         };
       var req = client.calendar.events.insert(params, body).withAuthClient(auth);
       console.log("REQ", req);
