@@ -4,6 +4,12 @@
     <!-- Side chat with list of all conversations -->
     <div class='side-chat-bar'>
       <h1 class='headline headline-small'>Conversations</h1>
+      <form class="col-md-10" data-ng-submit="createInbox()">
+          <div class="col-md-8">
+            <input data-ng-model="member" typeahead="user.fullName for user in allUsers | filter:$viewValue" data-ng-show="user._id != global.user._id" typeahead-on-select="onSelect($item, $model, $label)">
+          </div>
+        <button type="submit">Send a message</button>
+      </form>
       <div ng-repeat='inbox in userInboxes'>
         <div class='chat-head side-bar' ng-click='toInbox(inbox._id)'>
           <img class='avatar-large-chat' src="{{findOtherUser(inbox).github.avatar_url}}"/>
@@ -13,7 +19,7 @@
     </div> <!-- SIDE CHAT BAR -->
 
     <!-- Main chat box -->
-    <div class='main-chat' >
+    <div id='main-chat' >
       <div class='chat-window' >
         <div class='chat-bubble' data-ng-repeat="message in messagesByChatroom[currentChatroomId] | orderBy:'-created':true">
           <img class='avatar-chat' src="{{message.sender.github.avatar_url}}"/>
@@ -53,3 +59,7 @@
   <h3>Members</h3>
   <span data-ng-repeat="member in membersByChatroom[currentChatroomId]" data-ng-show="member._id !== global.user._id">{{member.fullName}}<br></span> -->
 </div>
+
+<script type="text/javascript">
+  $('#main-chat')[0].scrollTop = $('#main-chat')[0].scrollHeight;
+</script>

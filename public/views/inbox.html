@@ -14,14 +14,16 @@
     <div data-ng-hide="userInboxes" class='container'>
       <p>You have not started any conversations!</p>
     </div>
-  </div>
-  <form class="col-md-10" data-ng-submit="createInbox()">
+
+    <form class="col-md-10" data-ng-submit="createInbox()">
     <label>Members</label>
     <div class="col-md-8">
       <input data-ng-model="member" typeahead="user.fullName for user in allUsers | filter:$viewValue" data-ng-show="user._id != global.user._id" typeahead-on-select="onSelect($item, $model, $label)">
     </div>
     <button type="submit">New Chats</button>
   </form>
+
+  </div>
 </div>
 
   <!-- <div>
