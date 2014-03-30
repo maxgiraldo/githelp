@@ -104,6 +104,8 @@ angular.module('githelp.controllers.user', [])
           var response = JSON.parse(data[0]);
           $scope.allUsers = response.allUsers;
           $scope.userInboxes = response.inboxes;
+          $scope.merchants = response.merchantAppointments;
+          $scope.customers = response.customerAppointments;
         })
     };
   }
