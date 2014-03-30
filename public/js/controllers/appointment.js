@@ -18,7 +18,7 @@ angular.module('githelp.controllers.appointment', [])
   $scope.totalAmount = 0;
 
   $scope.confirmAppointment = function(){
-    $http.({method: "POST", url: "appointments/"+appointmentId})
+    $http({method: "POST", url: "appointments/"+appointmentId})
       .success(function(data){
         console.log("hello")
       })
