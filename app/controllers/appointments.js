@@ -24,13 +24,13 @@ exports.create = function(req, res) {
   // var date = req.body.dt;
   var date = moment.utc(req.body.dt, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
   var message = req.body.message;
-  var time = moment.utc(req.body.time, 'YYYY-MM-DD HH:mm').format('HH:mm');
+  // var time = moment.utc(req.body.time, 'YYYY-MM-DD HH:mm').format('HH:mm');
+  var time = req.body.time;
 
   console.log('APPT TIME', time);
   console.log('APPT DATE', date);
 
   var customer = req.user;
-
   var newAppointment = new Appointment({
     duration: duration,
     date: date,
@@ -43,9 +43,10 @@ exports.create = function(req, res) {
   User.findOne({userName: merchant}, function(err, user){
     newAppointment.merchant = user._id;
     newAppointment.save();
+    var ppm = user.ppm;
     // send out email
-    var htmlBody = mailer.composeHtmlBody(newAppointment, merchant);
-    mailer.sendEmail(htmlBody, user.email, customer.email);
+    var htmlBody = mailer.composeHtmlBody(newAppointment, customer.userName, ppm);
+    mailer.sendEmail(htmlBody, user.email); //user.email
     res.jsonp(newAppointment);
     // res.send(200);
 

@@ -18,7 +18,7 @@ var AppointmentSchema = new Schema({
     type: Date
   },
   time: { // in UTC
-    type: String
+    type: Date
   },
   duration: {
     type: Number,
