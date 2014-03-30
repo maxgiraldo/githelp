@@ -61,10 +61,6 @@ angular.module('githelp.controllers.user', [])
       $scope.showForm = !$scope.showForm;
     };
 
-    $scope.setAppointment = function(){
-      $state.go('booking', {userName: $stateParams.userName});
-    };
-
 
     $scope.toRepo = function(repoName){
       $state.go('profile.repo', {'repoName': repoName});
