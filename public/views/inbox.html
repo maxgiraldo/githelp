@@ -16,9 +16,7 @@
   <form class="col-md-10" data-ng-submit="createInbox()">
     <label>Members</label>
     <div class="col-md-8">
-      <select data-ng-model="members" data-ui-select2="{}" placeholder="Enter a friends name, username, or email!" multiple>
-        <option value="{{user._id}}" data-ng-repeat="user in allUsers" data-ng-show="user._id != global.user._id">{{user.fullName}}</option>
-      </select>
+      <input data-ng-model="member" typeahead="user.fullName for user in allUsers | filter:$viewValue" data-ng-show="user._id != global.user._id" typeahead-on-select="selectMatch($item)">
     </div>
     <button type="submit">New Chats</button>
   </form>
