@@ -39,8 +39,11 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
           .state('profile.repo', {
             url: '/repos/:repoName',
             templateUrl: 'views/profile.repos.html'
+          })
+          .state('profile.confirm', {
+            url: '/confirm/:appointmentId',
+            templateUrl: 'views/confirm.html'
           });
-
     }
 ]);
 

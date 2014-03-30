@@ -127,6 +127,8 @@ module.exports = function(app) {
       res.redirect('/');
     });
 
+  app.post('/appointment', appointments.confirm)
+  app.get('/appointments/:appointmentId', appointments.toSession);
   app.get('/inbox', messages.findAllChatroom);
   app.post('/inbox', messages.createChatroom);
   app.get('/message', messages.messageByChatroom);

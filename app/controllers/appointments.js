@@ -50,7 +50,7 @@ exports.create = function(req, res) {
     });
     var ppm = user.ppm;
     // send out email
-    var htmlBody = mailer.composeHtmlBody(newAppointment, customer.userName, ppm);
+    var htmlBody = mailer.composeHtmlBody(newAppointment, customer.userName, merchant, ppm);
     mailer.sendEmail(htmlBody, user.email); //user.email
     res.jsonp(newAppointment);
     // res.send(200);
@@ -81,15 +81,32 @@ var sendMessage = function(appointmentId, message, user){
   });
 };
 
+exports.toSession = function(req, res){
+  Appointment.findOne({_id: req.params.appointmentId}).populate('merchant').populate('customer').exec(function(err, appointment){
+    res.render('session', {appointment: appointment});
+    // session.jade already created, have to design
+  });
+};
+
+exports.confirmPage = function(req, res){
+  res.render('confirm', {appointmentId: req.params.appointmentId});
+};
 
 exports.confirm = function(req, res) {
   // var id = "id of appointment";
-  Appointment.findById(id, function(err, appt) {
+  Appointment.findById(req.body.appointmentId, function(err, appt) {
     appt.confirmed = true;
     appt.save();
      // Once confirmed, send out confirmation
-    // scheduler.sendConfirm() function TBD
+    scheduler.sendEventInvite(apptObj);
   });
   res.send(200);
 };
+
+// Appointment.findById('5337a57d876c5027bdc5c00c', function(err, appt) {
+//   appt.confirmed = true;
+//   appt.save();
+//    // Once confirmed, send out confirmation
+//   scheduler.sendEventInvite(appt);
+// });
 

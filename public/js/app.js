@@ -25,6 +25,7 @@ angular.module('githelp.services',
   ['githelp.services.global',
   'githelp.services.user',
   'githelp.services.messages',
-  'githelp.services.inboxes'
+  'githelp.services.inboxes',
+  'githelp.services.appointments'
   ]);
 

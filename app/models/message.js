@@ -16,7 +16,6 @@ MessageSchema.statics.load = function(id, cb) {
     }).populate('sender').exec(cb);
 };
 
-
 var afterIterate = function(array, callback){
   var newArray = [];
   array.forEach(function(){
