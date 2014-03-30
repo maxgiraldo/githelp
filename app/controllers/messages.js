@@ -72,8 +72,6 @@ exports.messageByChatroom = function(req, res){
 
       Message.multipleLoad(chatroom.messages).then(function(messages){
         chatroom.messages = messages;
-
-
         res.jsonp(chatroom);
       });
     }

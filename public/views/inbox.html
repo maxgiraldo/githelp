@@ -1,5 +1,20 @@
-<div class="col-md-10" data-ng-controller="UserController" data-ng-init="findInbox()">
-  <div>
+<div data-ng-controller="UserController" data-ng-init="findInbox()">
+
+  <!-- Merchants -->
+  <div class="container" ui-view>
+    <div class='center-elements' ng-repeat='inbox in userInboxes'>
+      <div class='chat-head' ng-click='toInbox(inbox._id)'>
+        <span class="label label-default">1</span>
+        <img class='avatar-large-chat' style='float: left' src="{{findOtherUser(inbox).github.avatar_url}}"/>
+        <h1 class='headline full-name'>{{findOtherUser(inbox).userName}}</h1>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+  <!-- <div>
     <h3>Chatrooms</h3>
     <span data-ng-repeat="inbox in userInboxes"><a href="/#!/inbox/{{inbox._id}}">{{inbox.title}}<br></a></span>
   </div>
@@ -15,5 +30,5 @@
         <button type="submit">New Chats</button>
       </form>
     </div>
-  </div>
+  </div> -->
 </div>
