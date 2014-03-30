@@ -50,7 +50,7 @@ exports.create = function(req, res) {
     });
     var ppm = user.ppm;
     // send out email
-    var htmlBody = mailer.composeHtmlBody(newAppointment, customer.userName, ppm);
+    var htmlBody = mailer.composeHtmlBody(newAppointment, customer.userName, merchant, ppm);
     mailer.sendEmail(htmlBody, user.email); //user.email
     res.jsonp(newAppointment);
     // res.send(200);
