@@ -11,6 +11,16 @@ var Chatroom = mongoose.model('Chatroom');
 var Q = require('q');
 var async = require('async');
 
+exports.updatePpm = function(req, res) {
+  var ppm = req.query.ppm;
+  var _id = req.query._id;
+  User.findById(_id, function(err, user) {
+    user.ppm = ppm;
+    user.save();
+  });
+  res.send(200);
+}
+
 exports.signin = function(req, res){
   res.render('signin');
 };

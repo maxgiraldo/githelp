@@ -19,6 +19,12 @@ angular.module('githelp.controllers.user', [])
       // make this aynchronous
     };
 
+    // Edit price-per-minute
+    $scope.inputShown = false;
+    $scope.setPpm = function() {
+      $scope.inputShown = true;
+    };
+
     // $scope.findAllInboxes = function(){
     //   Inbox.query(function(response){
     //     $scope.inboxes = response.inboxes;
@@ -70,18 +76,26 @@ angular.module('githelp.controllers.user', [])
 
     $scope.cc = {};
     $scope.submitEdit = function(){
-      var newEdit = new User({
-        name: $scope.cc.name,
-        number: $scope.cc.number,
-        expiration_month: $scope.cc.expiration_month,
-        expiration_year: $scope.cc.expiration_year,
-        cvv: $scope.cc.cvv,
-        ppm: $scope.ppm,
-        intro: $scope.intro
-      })
-      User.$update(function(data){
-        $scope.user = data.user;
-      })
+      $http({
+        method: 'POST',
+        url: '/updatePpm',
+        params: {
+          _id: $scope.user._id,
+          ppm: $scope.user.ppm
+        }
+      });
+      // var newEdit = new User({
+      //   // name: $scope.cc.name,
+      //   // number: $scope.cc.number,
+      //   // expiration_month: $scope.cc.expiration_month,
+      //   // expiration_year: $scope.cc.expiration_year,
+      //   // cvv: $scope.cc.cvv,
+      //   ppm: $scope.user.ppm
+      //   // intro: $scope.intro
+      // })
+      // User.$update(function(data){
+      //   $scope.user = data.user;
+      // });
     };
 
     $scope.findInbox = function(){

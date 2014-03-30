@@ -22,7 +22,7 @@ var UserSchema = new Schema({
                 ref: 'Payment'}],
   refreshToken: String,
   // price per minute
-  ppm: String,
+  ppm: { type: String, default: '2.00' },
   intro: String
 });
 
