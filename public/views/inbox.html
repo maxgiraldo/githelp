@@ -1,62 +1,17 @@
 <div data-ng-controller="UserController" data-ng-init="findInbox()">
-  <!-- List of merchants/users who want to chat -->
-<!-- <div class="container">
-  <div class='center-elements'>
-    <div class='chat-head'>
-    <span class="label label-default">1</span>
-    <img class='avatar-large-chat' src="https://avatars0.githubusercontent.com/u/2741?s=400"/>
-    <h1 class='headline full-name'>DHH</h1>
-  </div>
-  <div class='chat-head'>
-    <img class='avatar-large-chat' src="{{global.user.github.avatar_url}}"/>
-    <h1 class='headline full-name'>Maximilian Giraldo</h1>
-  </div>
-  <div class='chat-head'>
-    <img class='avatar-large-chat' src="https://avatars0.githubusercontent.com/u/4708868?s=400"/>
-    <h1 class='headline full-name'>Waine Tam</h1>
-  </div>
-  </div>
-</div> -->
 
-  <!-- Chat -->
-  <div class='container'>
-    <!-- Side chat with list of all conversations -->
-    <div class='side-chat-bar'>
-      <h1 class='headline headline-small'>Conversations</h1>
-      <div class='chat-head side-bar'>
-        <img class='avatar-large-chat' src="https://avatars0.githubusercontent.com/u/4708868?s=400"/>
-        <h1 class='headline full-name full-name-sm '>Waine Tam</h1>
+  <!-- Merchants -->
+  <div class="container" ui-view>
+    <div class='center-elements' ng-repeat='inbox in userInboxes'>
+      <div class='chat-head' ng-click='toInbox(inbox._id)'>
+        <span class="label label-default">1</span>
+        <img class='avatar-large-chat' style='float: left' src="{{findOtherUser(inbox).github.avatar_url}}"/>
+        <h1 class='headline full-name'>{{findOtherUser(inbox).userName}}</h1>
       </div>
-      <div class='chat-head side-bar'>
-        <img class='avatar-large-chat' src="https://avatars0.githubusercontent.com/u/4708868?s=400"/>
-        <h1 class='headline full-name full-name-sm'>Waine Tam</h1>
-      </div>
-    </div> <!-- SIDE CHAT BAR -->
-
-    <!-- Main chat box -->
-    <div class='main-chat'>
-      <div class='chat-window'>
-        <div class='chat-bubble'>
-          <img class='avatar-chat' src="{{global.user.github.avatar_url}}"/>
-          <div class='chat-text'>
-            <p>Hi! I was hoping we could chat about a problem I was having with your module. I tried including it inside of my package.json but when I run NPM install, my app crashes, and I get an error saying that I suck and that I should quit programming. Can I haz help?</p>
-          </div>
-        </div>
-        <br>
-        <div class='chat-bubble'>
-          <img class='avatar-chat' src="https://avatars0.githubusercontent.com/u/2741?s=400"/>
-          <div class='chat-text'>
-            <p>Sure. I'll just need a gazillion bitcoin.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class='chat-type-message'>
-        <input type="text" class="form-control" id="chat-input" placeholder="Type your message">
-        <input type="submit" id='submit-message' class="btn btn-success" value="Send">
-      </div>
-    </div> <!-- MAIN CHAT -->
+    </div>
   </div>
+
+
 </div>
 
   <!-- <div>
