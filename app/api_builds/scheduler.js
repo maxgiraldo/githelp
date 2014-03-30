@@ -55,7 +55,7 @@ exports.sendEventInvite = function(apptObj, done){
             title: 'Event details on githelp.co',
             url: 'http://www.google.com' // add link to githelp session_id
           },
-          "summary": topic,
+          "summary": topic, // TITLE
           "description": '' // description body in event
         }
       var req = client.calendar.events.insert(params, body).withAuthClient(auth);

@@ -50,6 +50,7 @@ exports.attendeesEmail = function(apptObj) {
 
 exports.composeHtmlBody = function(apptObj, fromUserName, ppm) {
   var estIncome = (apptObj.duration * ppm).toFixed(2);
+  console.log('id', apptObj._id);
   var date = moment.utc(apptObj.date).format('MMMM Do YYYY'); // don't need add'l format string bc ISO format
   // console.log('DATE in email', date);
   var time = moment.utc(apptObj.time).local().format('HH:mm a');
@@ -62,7 +63,7 @@ exports.composeHtmlBody = function(apptObj, fromUserName, ppm) {
   "<li>Rate per minute: $" + ppm + "</li>" +
   "<li>Estimated income: $" + estIncome + "</li>" +
   "</ul></div><br />" +
-  "<a href='http://localhost:3000/appointments/' + apptObj._id>Manage Request</a>";
+  "<a href='http://192.168.1.174:3000/appointments/" + apptObj._id + "/confirm'>Manage Request</a>";
 
   return html;
 };
