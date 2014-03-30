@@ -1,5 +1,7 @@
 // Module dependencies here
 var request = require('request');
+var Q = require('q');
+var async = require('async');
 var search = require('../api_builds/search');
 var scraper = require('../api_builds/scraper');
 var scheduler = require('../api_builds/scheduler');
@@ -8,8 +10,7 @@ var mongoose = require('mongoose');
 // Specific mongoose models defined here
 var User = mongoose.model('User');
 var Chatroom = mongoose.model('Chatroom');
-var Q = require('q');
-var async = require('async');
+var Appointment = mongoose.model('Appointment');
 
 exports.updatePpm = function(req, res) {
   var ppm = req.query.ppm;
@@ -121,12 +122,23 @@ exports.findAll = function(req, res){
       Chatroom.find({members: req.user._id}).exec(function(err, chatrooms){
         callback(null, chatrooms);
       });
+    },
+    three: function(callback){
+      Appointment.find({merchant: req.user._id}).populate('merchant').exec(function(err, appointments){
+        callback(null, appointments);
+      });
+    },
+    four: function(callback){
+      Appointment.find({customer: req.user._id}).populate('customer').exec(function(err, appointments){
+        callback(null, appointments);
+      });
     }
-  },
-  function(err, results){
+  }, function(err, results){
     var objectString = JSON.stringify({
       'allUsers': results.one,
-      'inboxes': results.two
+      'inboxes': results.two,
+      'merchantAppointments': results.three,
+      'customerAppointments': results.four
     });
     var response = [];
     response[0] = objectString;
