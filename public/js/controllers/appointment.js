@@ -1,6 +1,6 @@
 angular.module('githelp.controllers.appointment', [])
   .controller('AppointmentController', ['$scope', '$state', '$stateParams', '$location',  'Global', '$http', 'Appointment',
-    function ($scope, $state, $stateParams, $location, Global, $http, 'Appointment') {
+    function ($scope, $state, $stateParams, $location, Global, $http, Appointment) {
       // $scope.global = Global;
 
   // TIMER

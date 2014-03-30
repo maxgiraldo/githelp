@@ -7,21 +7,24 @@ var googleapis = require('googleapis'),
 var auth = new googleapis.OAuth2Client();
 
 auth.setCredentials({
-  access_token: 'ya29.1.AADtN_WwyQ0HoLKd4qi7CLVD1cVpDMTP4MMsqKXNIcV6nt8eZcAqUpt_sR2Mvc-msC7Vgg',
-  refresh_token: '1/ps2RpwRSLOyegnHQ7YgNJOM2mHpxnRIS476a2hmNseM'
+  access_token: 'ya29.1.AADtN_Ua4u91cZmk2xxMqjwwrsMy0wc53uVWCr8Vl0xBdJL8WEOnzQyCuUdzVcQ6ORMjYw',
+  refresh_token: '1/avW6alyUFB41zUsFCabHcg1dAzQWzozEPmPHqbH_gz4'
 });
 
 // console.log('AUTH', auth);
 
 exports.sendEventInvite = function(apptObj, done){
-  var startTime = apptObj.time;
-  var endTime = moment(startTime).add('minutes', apptObj.duration).toDate();
-  var startDate = moment(apptObj.date).format('YYYY-MM-DD');
-  var endDate = moment(apptObj.date).format('YYYY-MM-DD');
+  var startTime = moment.utc(apptObj.time).toISOString();
+  console.log('startTime', startTime);
+  var endTime = moment.utc(apptObj.time).add('minutes', apptObj.duration).toISOString();
+  // var endTime = moment(startTime).add('minutes', apptObj.duration).toDate();
+  // var startDate = moment(apptObj.date).format('YYYY-MM-DD');
+  // var endDate = moment(apptObj.date).format('YYYY-MM-DD');
+  console.log('endTime', endTime);
   var topic = apptObj.topic;
 
   mailer.attendeesEmail(apptObj).then(function(users) { // add a .fail case later
-    console.log('attendees', users);
+    console.log('attendees', users[0].email, users[1].email);
     var attendees = [
       {'email': users[0].email},
       {'email': users[1].email}
@@ -39,12 +42,14 @@ exports.sendEventInvite = function(apptObj, done){
       };
       var body = {
           "end": {
-            "date": endDate, //yyyy-mm-dd
-            "dateTime": endTime
+            // "date": endDate, //yyyy-mm-dd
+            "dateTime": endTime,
+            "timeZone": "America/New_York" // optional
           },
           "start": {
-            "date": startDate, //yyyy-mm-dd
-            "dateTime": startTime
+            // "date": startDate, //yyyy-mm-dd date optional if have dateTime
+            "dateTime": startTime,
+            "timeZone": "America/New_York"
           },
           "attendees": attendees, // array of objects with email as key
           "creator": {
@@ -53,11 +58,13 @@ exports.sendEventInvite = function(apptObj, done){
           },
           "source": {
             title: 'Event details on githelp.co',
-            url: 'http://www.google.com' // add link to githelp session_id
-          },
-          "summary": topic, // TITLE
-          "description": '' // description body in event
-        }
+            url: 'http://www.google.com' // add link to githelp session_id; needs to be live link
+          }
+          // ,
+          // "summary": topic || "", // TITLE
+          // "description": '' // description body in event
+          // add TIMEZONE to start/end?
+        };
       var req = client.calendar.events.insert(params, body).withAuthClient(auth);
       console.log("REQ", req);
       req.execute(function (err, response) {
