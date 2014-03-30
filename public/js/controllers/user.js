@@ -19,6 +19,15 @@ angular.module('githelp.controllers.user', [])
       // make this aynchronous
     };
 
+    $scope.onSelect = function ($item, $model, $label) {
+      $scope.$item = $item;
+      $scope.$model = $model;
+      $scope.$label = $label;
+      console.log($item)
+      console.log($model)
+      console.log($label)
+    };
+
     // Edit price-per-minute
     $scope.inputShown = false;
     $scope.setPpm = function() {
@@ -38,10 +47,14 @@ angular.module('githelp.controllers.user', [])
     // };
 
     $scope.createInbox = function(){
+      console.log($scope.$item);
       var newInbox = new Inbox({
-        members: this.members
+        members: [$scope.$item._id]
       });
+
+      this.member = ''
       newInbox.$save(function(inbox){
+        $scope.userInboxes.push(inbox);
         $state.go('inbox.individual', {'inboxId': inbox._id});
         // figure how to go to specific inboxId
       })
