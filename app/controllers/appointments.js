@@ -88,7 +88,7 @@ exports.toSession = function(req, res){
 }
 
 exports.confirmPage = function(req, res){
-  res.render('/confirm', {appointmentId: req.params.appointmentId})
+  res.render('confirm', {appointmentId: req.params.appointmentId})
 };
 
 exports.confirm = function(req, res) {
