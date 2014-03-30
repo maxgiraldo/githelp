@@ -27,13 +27,13 @@ exports.create = function(req, res) {
   // var date = req.body.dt;
   var date = moment.utc(req.body.dt, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
   var message = req.body.message;
-  var time = moment.utc(req.body.time, 'YYYY-MM-DD HH:mm').format('HH:mm');
+  // var time = moment.utc(req.body.time, 'YYYY-MM-DD HH:mm').format('HH:mm');
+  var time = req.body.time;
 
   console.log('APPT TIME', time);
   console.log('APPT DATE', date);
 
   var customer = req.user;
-
   var newAppointment = new Appointment({
     duration: duration,
     date: date,
@@ -48,9 +48,10 @@ exports.create = function(req, res) {
     newAppointment.save(function(err){
       sendMessage(newAppointment._id, newAppointment.message, req.user);
     });
+    var ppm = user.ppm;
     // send out email
-    var htmlBody = mailer.composeHtmlBody(newAppointment, merchant);
-    mailer.sendEmail(htmlBody, user.email, customer.email);
+    var htmlBody = mailer.composeHtmlBody(newAppointment, customer.userName, ppm);
+    mailer.sendEmail(htmlBody, user.email); //user.email
     res.jsonp(newAppointment);
     // res.send(200);
 
@@ -58,7 +59,7 @@ exports.create = function(req, res) {
 };
 
 var sendMessage = function(appointmentId, message, user){
-  console.log(appointmentId)
+  console.log(appointmentId);
   Appointment.findOne({_id: appointmentId}, function(err, appointment){
     console.log(appointment);
     User.find({ $or: [{_id: appointment.merchant},{_id: appointment.customer}]}, function(err, users){
@@ -67,18 +68,18 @@ var sendMessage = function(appointmentId, message, user){
         if(chatroom){
           var newChatroom = new Chatroom({title: "test"});
           newChatroom.members = [users[0]._id, users[1]._id];
-          newChatroom.messages = [alert._id]
+          newChatroom.messages = [alert._id];
           alert.save();
           newChatroom.save();
         } else{
           chatroom.messages.push(alert._id);
           alert.save();
         }
-        return "hello"
-      })
-    })
-  })
-}
+        return "hello";
+      });
+    });
+  });
+};
 
 
 exports.confirm = function(req, res) {
