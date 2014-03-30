@@ -16,11 +16,34 @@ var smtpTransport = nodemailer.createTransport("SMTP",{
   }
 });
 
-exports.ppmData = function(apptObj) {
-  // apptObj.populate;
+// exports.merchantData = function(apptObj) {
+//   // apptObj.populate;
+//   var deferred = Q.defer();
+//   apptObj.merchant.populate('email').exec(function(err, merchEmail) {
+//     deferred.resolve(merchEmail);
+//   });
+//   return deferred.promise;
+// };
+
+// exports.customerData = function(apptObj) {
+//   // apptObj.populate;
+//   var deferred = Q.defer();
+//   apptObj.customer.populate('email').exec(function(err, cusEmail) {
+//     deferred.resolve(cusEmail);
+//   });
+//   return deferred.promise;
+// };
+
+exports.attendeesEmail = function(apptObj) {
   var deferred = Q.defer();
-  apptObj.merchant.populate('ppm').exec(function(err, ppm) {
-    deferred.resolve(ppm);
+  // console.log('custObj', apptObj.customer);
+  User.find({$or: [{_id: apptObj.customer},{_id: apptObj.merchant}]}, function(err, users) {
+    if(err) {
+      console.log(err);
+      deferred.reject(err);
+    }
+    // console.log('users', users);
+    deferred.resolve(users);
   });
   return deferred.promise;
 };

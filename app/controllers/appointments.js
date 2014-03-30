@@ -59,8 +59,15 @@ exports.confirm = function(req, res) {
     appt.confirmed = true;
     appt.save();
      // Once confirmed, send out confirmation
-    // scheduler.sendConfirm() function TBD
+    scheduler.sendEventInvite(apptObj);
   });
   res.send(200);
 };
+
+// Appointment.findById('5337a57d876c5027bdc5c00c', function(err, appt) {
+//   appt.confirmed = true;
+//   appt.save();
+//    // Once confirmed, send out confirmation
+//   scheduler.sendEventInvite(appt);
+// });
 
