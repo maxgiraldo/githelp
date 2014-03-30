@@ -94,7 +94,7 @@ exports.confirmPage = function(req, res){
 
 exports.confirm = function(req, res) {
   // var id = "id of appointment";
-  Appointment.findById(req.params.id, function(err, appt) {
+  Appointment.findById(req.body.appointmentId, function(err, appt) {
     appt.confirmed = true;
     appt.save();
      // Once confirmed, send out confirmation
