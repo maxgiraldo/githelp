@@ -67,7 +67,7 @@ var sendMessage = function(appointmentId, message, user){
     User.find({ $or: [{_id: appointment.merchant},{_id: appointment.customer}]}, function(err, users){
       var alert = new Message({sender: user._id, content: message});
       Chatroom.findOne({ $and: [{members: users[0]._id}, {members: users[1]._id}]}, function(err, chatroom){
-        if(chatroom){
+        if(!chatroom){
           var newChatroom = new Chatroom({title: "test"});
           newChatroom.members = [users[0]._id, users[1]._id];
           newChatroom.messages = [alert._id];

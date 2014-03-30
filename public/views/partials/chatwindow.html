@@ -1,5 +1,42 @@
 <div data-ng-controller="MessageController" data-ng-init="findMessages()">
-  <h3>ChatWindow</h3>
+  <!-- Chat -->
+  <div class='container' ui-view>
+    <!-- Side chat with list of all conversations -->
+    <div class='side-chat-bar'>
+      <h1 class='headline headline-small'>Conversations</h1>
+      <div ng-repeat='inbox in userInboxes'>
+        <div class='chat-head side-bar' ng-click='toInbox(inbox._id)'>
+          <img class='avatar-large-chat' src="{{findOtherUser(inbox).github.avatar_url}}"/>
+          <h1 class='headline full-name full-name-sm '>{{findOtherUser(inbox).fullName}}</h1>
+        </div>
+      </div>
+    </div> <!-- SIDE CHAT BAR -->
+
+    <!-- Main chat box -->
+    <div class='main-chat' >
+      <div class='chat-window' >
+        <div class='chat-bubble' data-ng-repeat="message in messagesByChatroom[currentChatroomId] | orderBy:'-created':true">
+          <img class='avatar-chat' src="{{message.sender.github.avatar_url}}"/>
+          <div class='chat-text'>
+            <p>{{message.content}}</p>
+          </div>
+          <br>
+          <br>
+          <br>
+          <br>
+        </div>
+      </div>
+
+      <div class='chat-type-message'>
+        <form data-ng-submit="createMessage()">
+          <input data-ng-model="content" type="text" class="form-control" id="chat-input" placeholder="Type your message">
+          <input type="submit" id='submit-message' class="btn btn-success" value="Send">
+        </form>
+      </div>
+    </div> <!-- MAIN CHAT -->
+  </div>
+</div>
+ <!--  <h3>ChatWindow</h3>
   <div>
     <div data-ng-repeat="message in messagesByChatroom[currentChatroomId] | orderBy:'-created':true">
       <span>{{message.sender.fullName}}:</span>
@@ -14,5 +51,5 @@
   </div>
 
   <h3>Members</h3>
-  <span data-ng-repeat="member in membersByChatroom[currentChatroomId]" data-ng-show="member._id !== global.user._id">{{member.fullName}}<br></span>
+  <span data-ng-repeat="member in membersByChatroom[currentChatroomId]" data-ng-show="member._id !== global.user._id">{{member.fullName}}<br></span> -->
 </div>

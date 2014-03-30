@@ -119,17 +119,17 @@ exports.findAll = function(req, res){
       });
     },
     two: function(callback){
-      Chatroom.find({members: req.user._id}).exec(function(err, chatrooms){
+      Chatroom.find({members: req.user._id}).populate('members').exec(function(err, chatrooms){
         callback(null, chatrooms);
       });
     },
     three: function(callback){
-      Appointment.find({merchant: req.user._id}).populate('merchant').exec(function(err, appointments){
+      Appointment.find({merchant: req.user._id}).populate('merchant').populate('customer').exec(function(err, appointments){
         callback(null, appointments);
       });
     },
     four: function(callback){
-      Appointment.find({customer: req.user._id}).populate('customer').exec(function(err, appointments){
+      Appointment.find({customer: req.user._id}).populate('customer').populate('merchant').exec(function(err, appointments){
         callback(null, appointments);
       });
     }

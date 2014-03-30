@@ -14,9 +14,10 @@ angular.module('githelp.controllers.messages', [])
       $scope.messagesByChatroom = {};
       $scope.membersByChatroom = {};
 
+
       $scope.createMessage = function(){
         var newMessage = new Message({
-          content: $scope.content,
+          content: this.content,
           chatroomId: $stateParams.inboxId
           // somehow find the chatroomId
         });

@@ -51,10 +51,10 @@ angular.module('githelp.controllers.user', [])
     // have data-ng-controller="MessageController"
     // which will do data-ng-init="findMessages(the id of the state)"
 
-    // $scope.toInbox = function(inboxId){
-    //   $state.go('inbox.individual', {'inboxId': inboxId});
-    //   // figure how to go to specific inboxId
-    // };
+    $scope.toInbox = function(inboxId){
+      $state.go('inbox.individual', {'inboxId': inboxId});
+      // figure how to go to specific inboxId
+    };
 
     $scope.repoName = function(url){
       return url.split('/')[2];
@@ -98,14 +98,27 @@ angular.module('githelp.controllers.user', [])
       // });
     };
 
+    $scope.findOtherUser = function(inbox) {
+      $scope.otherUser = $scope.global.user._id;
+      if($scope.otherUser === inbox.members[0]){
+        $scope.otherUser = inbox.members[1];
+      } else{
+        $scope.otherUser = inbox.members[0];
+      }
+      return $scope.otherUser;
+    };
+
     $scope.findInbox = function(){
       $http({method: 'GET', url: '/user'}).
         success(function(data){
           var response = JSON.parse(data[0]);
           $scope.allUsers = response.allUsers;
           $scope.userInboxes = response.inboxes;
+          console.log($scope.userInboxes);
           $scope.merchants = response.merchantAppointments;
+          console.log($scope.merchants);
           $scope.customers = response.customerAppointments;
+          console.log($scope.customers);
         })
     };
   }
