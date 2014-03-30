@@ -1,6 +1,6 @@
 angular.module('githelp.controllers.datePicker', [])
-  .controller('DatepickerCtrl', ['$scope', '$http', '$state', 'Global',
-    function($scope, $http, $state, $stateParams, Global) {
+  .controller('DatepickerCtrl', ['$scope', '$http', '$location', '$state', 'Global',
+    function($scope, $http, $location, $state, $stateParams, Global) {
 
       $scope.appt = {
         duration: "15",
