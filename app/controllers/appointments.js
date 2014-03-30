@@ -24,21 +24,23 @@ var getEmailByUser = function(username) {
 exports.create = function(req, res) {
   var duration = req.body.duration;
   var merchant = req.body.merchant; // merchant username
-  // var date = req.body.dt;
-  var date = moment.utc(req.body.dt, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
+  var date = req.body.dt;
+  // var date = moment.utc(req.body.dt, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
   var message = req.body.message;
-  // var time = moment.utc(req.body.time, 'YYYY-MM-DD HH:mm').format('HH:mm');
-  var time = req.body.time;
+  var time = moment.utc(req.body.time, 'YYYY-MM-DD HH:mm').format('HH:mm'); // just extract time
+  // var time = req.body.time;
 
   console.log('APPT TIME', time);
   console.log('APPT DATE', date);
+  var timeObj = moment.utc(date + " " + time, "YYYY-MM-DD HH:mm").toDate();
+  console.log('TIME OBJ', timeObj); // in UTC
 
   var customer = req.user;
   var newAppointment = new Appointment({
     duration: duration,
-    date: date,
+    date: timeObj, // utc TimeObj
     message: message,
-    time: time,
+    time: timeObj,
     customer: customer._id
     // merchant: merchant // needs objectId here
   });
@@ -96,9 +98,9 @@ exports.confirm = function(req, res) {
   // var id = "id of appointment";
   Appointment.findById(req.body.appointmentId, function(err, appt) {
     appt.confirmed = true;
+    scheduler.sendEventInvite(appt);
     appt.save();
      // Once confirmed, send out confirmation
-    scheduler.sendEventInvite(apptObj);
   });
   res.send(200);
 };

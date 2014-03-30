@@ -63,12 +63,12 @@ exports.composeHtmlBody = function(apptObj, fromUserName, toUserName, ppm) {
   var appointmentId = apptObj._id;
   var date = moment.utc(apptObj.date).format('MMMM Do YYYY'); // don't need add'l format string bc ISO format
   // console.log('DATE in email', date);
-  var time = moment.utc(apptObj.time).local().format('HH:mm a');
+  var time = moment.utc(apptObj.time).local().format('h:mm A');
   var duration = apptObj.duration + " minutes";
   var html = "<b>You've received a request from " + fromUserName + " for githelp!</b>" +
   "<br /><div><ul>" +
   "<li>Date: " + date + "</li>" +
-  "<li>Time: " + time + " (EST)</li>" +
+  "<li>Time: " + time + " (ET)</li>" +
   "<li>Requested call length: " + duration + "</li>" +
   "<li>Rate per minute: $" + ppm + "</li>" +
   "<li>Estimated income: $" + estIncome + "</li>" +
