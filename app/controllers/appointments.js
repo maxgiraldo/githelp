@@ -81,6 +81,11 @@ var sendMessage = function(appointmentId, message, user){
   });
 };
 
+exports.toSession = function(req, res){
+  Appointment.findOne({_id: req.params.appointmentId}, function(err, appointment){
+    res.render('sessionPage', {appointment});
+  })
+}
 
 exports.confirm = function(req, res) {
   // var id = "id of appointment";
