@@ -28,16 +28,16 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'views/partials/chatwindow.html'
             // chatroomId will be available in stateparams
           })
+        .state('booking', {
+          url: '/:userName/booking',
+          templateUrl: 'views/booking.html'
+        })
         .state('profile', {
           url: '/:userName',
           templateUrl: 'views/profile.html'
         })
-          .state('profile.booking', {
-            url: '/booking',
-            templateUrl: 'views/booking.html'
-          })
           .state('profile.repo', {
-            url: '/repos/:repoName',
+            url: '/:repoName',
             templateUrl: 'views/profile.repos.html'
           });
 

@@ -33,7 +33,7 @@
     <!-- <div ng-repeat="repo in repos"> -->
     <div>
       <ul class='repo-links'>
-        <li data-ng-repeat="repo in repoList" data-ng-show="!repo.fork"><a href="/#!/{{userName}}/repos/{{repo.name}}">{{repo.name}}</a></li>
+        <li data-ng-repeat="repo in repoList" data-ng-show="!repo.fork" data-ng-click="toRepo(repo.name)"><a>{{repo.name}}</a></li>
       </ul>
     </div>
     <p data-ng-show="conList.length > 0" class='caps-sub-header'>top {{conList.length}} repositories contributed to</p>
@@ -41,7 +41,7 @@
     <!-- User's top contributions -->
     <div>
       <ul class='repo-links'>
-        <li data-ng-repeat="repo in conList"><a href="/#!/{{userName}}/repos/{{repoName(repo)}}">{{repoName(repo)}}</a></li>
+        <li data-ng-repeat="repo in conList" data-ng-click="toRepo(repo.name)"><a>{{repoName(repo)}}</a></li>
       </ul>
     </div>
     <div>

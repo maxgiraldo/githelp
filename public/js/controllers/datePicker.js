@@ -1,12 +1,15 @@
 angular.module('githelp.controllers.datePicker', [])
   .controller('DatepickerCtrl', ['$scope', '$http', '$state', 'Global',
-    function($scope, $http, $state, Global) {
+    function($scope, $http, $state, $stateParams, Global) {
 
       $scope.appt = {
         duration: "15",
         dt: "",
-        time: ""
+        time: "",
+
       };
+
+      console.log($stateParams.userName)
 
       $scope.createAppointment = function() {
         $http.post('/create/appointment', $scope.appt).success(function(response) {
