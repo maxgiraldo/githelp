@@ -25,7 +25,7 @@ var AppointmentSchema = new Schema({
     required: true
   },
   confirmed: { // by merchant
-    type: String,
+    type: Boolean,
     default: false
   },
   topic: String,
