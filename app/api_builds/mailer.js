@@ -14,8 +14,33 @@ var smtpTransport = nodemailer.createTransport("SMTP",{
     }
 });
 
-exports.composeHtmlBody = function(apptObj) {
-  var html = "<b>You've received a request for githelp!</b>";
+var merchantData = function(apptObj) {
+  apptObj.populate
+}
+
+exports.composeHtmlBody = function(apptObj, toUser, fromUser) {
+  var html = "<b>You've received a request from XXXX for githelp!</b>";
+
+  //  +
+
+  // "<div>
+  //   <ul>
+  //     <li>Rate per minute:
+  //     <li>Requested call length:
+  //     <li>Estimate income:
+  //   </ul>
+  // </div>
+  // <div>
+  //   Time:
+  // </div>
+
+  // 'Requested call length: ' + apptObj.duration
+  // 'Date: ' + apptObj.date
+  // 'Time: ' + apptObj.time
+
+
+
+  // "<a href='http://localhost:3000/appointments/' + appointment._id>Manage Request</a>";
 
 
 
@@ -26,7 +51,7 @@ exports.sendEmail = function(htmlBody, toEmail) {
   var mailOptions = {
     from: "Githelp ✔ <gitsomehelp@gmail.com>", // sender address
     to: toEmail, // list of receivers
-    subject: "You have received a request for githelp!", // Subject line
+    subject: "githelp Request!", // Subject line
     // text: "Hello world ✔", // plaintext body
     html: htmlBody // html body
   };

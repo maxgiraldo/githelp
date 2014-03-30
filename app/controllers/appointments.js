@@ -20,7 +20,7 @@ var getEmailByUser = function(username) {
 
 exports.create = function(req, res) {
   var duration = req.body.duration;
-  var merchant = req.body.merchant;
+  var merchant = req.body.merchant; // merchant username
   // var date = req.body.dt;
   var date = moment.utc(req.body.dt, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD');
   var message = req.body.message;
@@ -44,8 +44,8 @@ exports.create = function(req, res) {
     newAppointment.merchant = user._id;
     newAppointment.save();
     // send out email
-    var htmlBody = mailer.composeHtmlBody(newAppointment);
-    mailer.sendEmail(htmlBody, customer.email);
+    var htmlBody = mailer.composeHtmlBody(newAppointment, merchant);
+    mailer.sendEmail(htmlBody, user.email, customer.email);
     res.jsonp(newAppointment);
     // res.send(200);
 
