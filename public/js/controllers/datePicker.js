@@ -6,6 +6,7 @@ angular.module('githelp.controllers.datePicker', [])
         duration: "15",
         dt: "",
         time: "",
+        message: "",
         merchant: window.location.hash.replace(/..\//, "").replace(/\/.*$/, "")
       };
 

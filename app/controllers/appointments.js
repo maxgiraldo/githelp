@@ -8,6 +8,9 @@ var moment = require('moment');
 // Specific mongoose models defined here
 var Appointment = mongoose.model('Appointment');
 var User = mongoose.model('User');
+var Message = mongoose.model('Message');
+var Chatroom = mongoose.model('Chatroom');
+
 
 var getEmailByUser = function(username) {
   var deferred = Q.defer();
@@ -42,7 +45,9 @@ exports.create = function(req, res) {
 
   User.findOne({userName: merchant}, function(err, user){
     newAppointment.merchant = user._id;
-    newAppointment.save();
+    newAppointment.save(function(err){
+      sendMessage(newAppointment._id, newAppointment.message, req.user);
+    });
     // send out email
     var htmlBody = mailer.composeHtmlBody(newAppointment, merchant);
     mailer.sendEmail(htmlBody, user.email, customer.email);
@@ -51,6 +56,30 @@ exports.create = function(req, res) {
 
   });
 };
+
+var sendMessage = function(appointmentId, message, user){
+  console.log(appointmentId)
+  Appointment.findOne({_id: appointmentId}, function(err, appointment){
+    console.log(appointment);
+    User.find({ $or: [{_id: appointment.merchant},{_id: appointment.customer}]}, function(err, users){
+      var alert = new Message({sender: user._id, content: message});
+      Chatroom.findOne({ $and: [{members: users[0]._id}, {members: users[1]._id}]}, function(err, chatroom){
+        if(chatroom){
+          var newChatroom = new Chatroom({title: "test"});
+          newChatroom.members = [users[0]._id, users[1]._id];
+          newChatroom.messages = [alert._id]
+          alert.save();
+          newChatroom.save();
+        } else{
+          chatroom.messages.push(alert._id);
+          alert.save();
+        }
+        return "hello"
+      })
+    })
+  })
+}
+
 
 exports.confirm = function(req, res) {
   // var id = "id of appointment";

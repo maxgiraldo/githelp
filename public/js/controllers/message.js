@@ -46,6 +46,15 @@ angular.module('githelp.controllers.messages', [])
       };
 
 
+      // $scope.findMerchants = function(){
+
+      // }
+
+      // $scope.findCustomer = function(){
+
+      // }
+
+
 // make this real time
 
       $scope.findMessages = function(){
