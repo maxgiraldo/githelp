@@ -82,18 +82,19 @@ var sendMessage = function(appointmentId, message, user){
 };
 
 exports.toSession = function(req, res){
-  Appointment.findOne({_id: req.params.appointmentId}, function(err, appointment){
-    res.render('sessionPage', {appointment: appointment});
-  })
-}
+  Appointment.findOne({_id: req.params.appointmentId}).populate('merchant').populate('customer').exec(function(err, appointment){
+    res.render('session', {appointment: appointment});
+    // session.jade already created, have to design
+  });
+};
 
 exports.confirmPage = function(req, res){
-  res.render('confirm', {appointmentId: req.params.appointmentId})
+  res.render('confirm', {appointmentId: req.params.appointmentId});
 };
 
 exports.confirm = function(req, res) {
   // var id = "id of appointment";
-  Appointment.findById(id, function(err, appt) {
+  Appointment.findById(req.params.id, function(err, appt) {
     appt.confirmed = true;
     appt.save();
      // Once confirmed, send out confirmation
