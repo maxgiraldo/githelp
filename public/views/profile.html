@@ -1,27 +1,29 @@
 <section data-ng-controller="UserController" data-ng-init="findOne()" ui-view>
+
   <div class="container profile">
     <div>
       <img class='avatar-lg' src='{{user.github.avatar_url}}'>
     </div>
+
     <div class='profile-name-info'>
       <h1 class='headline full-name'>{{user.fullName}}</h1>
       <h2 class='username'><a href="http://www.github.com/{{user.userName}}"><i class="fa fa-github"></i> {{user.userName}}</a></h2>
       <h2 data-ng-show = "user.github.blog" class="username"><a href="http://www.{{user.github.blog}}"><i class="fa fa-link"></i> {{user.github.blog}}</a></h2>
-      <h3>{{user.ppm}}</h3>
-      <span>Max: make a nice looking box for the edit snippet that shows up when you click on edit</span>
-      <button data-ng-click="editForm()" data-ng-show="user">Edit</button>
+      <h4>{{user.ppm || 2.00 | currency:"$"}}/minute<span ng-hide='user._id !== global.user._id'><a class='username' href="#" ng-click='editForm()' ng-show='user'><i id='edit' class="fa fa-pencil"></i></a></span></h4>
+
       <div data-ng-show="showForm">
-        <form data-ng-submit="submitEdit()">
-          <label>Price Per Minute</label>
-          <input type="text" data-ng-model="ppm">
-          <span>don't forget to add price per hour to show user</span>
-          <label>Self Intro:</label>
+        <form ng-submit='submitEdit()'>
+          <!-- <label>$</label> -->
+          <input class='form-control' type="text" data-ng-model="user.ppm">
+          <!-- <label>Self Intro:</label>
           <textarea type="text" data-ng-model="intro"></textarea>
-          <div data-ng-include data-src="'views/partials/creditcard.html'"></div>
+          <div data-ng-include data-src="'views/partials/creditcard.html'"></div> -->
+          <input type="submit" value='submit' ng-click='editForm()'/>
         </form>
       </div>
     </div>
-    <div data-ng-click="setAppointment()" data-ng-show="user" class='call-button headline'>
+
+    <div data-ng-click="setAppointment()" data-ng-show="user && user._id !== global.user._id" class='call-button headline'>
       <p>Set up a call</p>
     </div>
     <div data-ng-hide="user">

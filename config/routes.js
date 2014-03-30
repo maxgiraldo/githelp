@@ -97,6 +97,7 @@ module.exports = function(app) {
   var payments = require('../app/controllers/payments');
   var appointments = require('../app/controllers/appointments');
   var messages = require('../app/controllers/messages');
+
   // passport routes
   // this requests to github login with clientId and clientSecret
   app.get('/auth/github',
@@ -127,13 +128,11 @@ module.exports = function(app) {
     });
 
   app.get('/inbox', messages.findAllChatroom);
-
   app.post('/inbox', messages.createChatroom);
-
   app.get('/message', messages.messageByChatroom);
   app.post('/message', messages.createMessage);
 
-
+  app.post('/updatePpm', users.updatePpm);
 
   app.post('/appointment', appointments.create);
 
