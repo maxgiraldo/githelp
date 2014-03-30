@@ -63,7 +63,7 @@ exports.composeHtmlBody = function(apptObj, fromUserName, ppm) {
   "<li>Rate per minute: $" + ppm + "</li>" +
   "<li>Estimated income: $" + estIncome + "</li>" +
   "</ul></div><br />" +
-  "<a href='http://192.168.1.174:3000/appointments/" + apptObj._id + "/confirm'>Manage Request</a>";
+  "<a href='http://192.168.1.174:3000/#!/jihokoo/confirm'>Manage Request</a>";
 
   return html;
 };
