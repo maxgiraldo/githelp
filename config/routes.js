@@ -128,10 +128,7 @@ module.exports = function(app) {
     });
 
 
-  app.post('/appointments/:appointmentId', appointments.confirm);
   app.get('/appointments/:appointmentId', appointments.toSession);
-  app.get('/appointments/:appointmentId/confirm', appointments.confirmPage);
-
   app.get('/inbox', messages.findAllChatroom);
   app.post('/inbox', messages.createChatroom);
   app.get('/message', messages.messageByChatroom);
