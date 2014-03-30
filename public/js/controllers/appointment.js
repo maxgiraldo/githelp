@@ -1,6 +1,6 @@
 angular.module('githelp.controllers.appointment', [])
-  .controller('AppointmentController', ['$scope', '$state', 'Global', '$http',
-    function ($scope, $state, Global, $http) {
+  .controller('AppointmentController', ['$scope', '$state', '$location',  'Global', '$http',
+    function ($scope, $state, $location, Global, $http) {
       // $scope.global = Global;
 
   // TIMER
@@ -16,6 +16,13 @@ angular.module('githelp.controllers.appointment', [])
   // Set Default Merchant Price
   $scope.merchantPrice = 2.50;
   $scope.totalAmount = 0;
+
+  $scope.confirmAppointment = function(){
+    $http.({method: "POST", url: "appointments/"+appointmentId})
+      .success(function(data){
+        console.log("hello")
+      })
+  }
 
   $scope.startTimer = function() {
     $scope.timerId = setInterval(function() {
