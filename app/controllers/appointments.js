@@ -4,8 +4,7 @@ var mongoose = require('mongoose');
 var scheduler = require('../api_builds/scheduler');
 // Specific mongoose models defined here
 var Appointment = mongoose.model('Appointment');
-var moment = require('moment');
-var nodemailer = require("nodemailer");
+var User = mongoose.model('User');
 
 exports.create = function(req, res) {
   var duration = req.body.duration;
@@ -21,12 +20,16 @@ exports.create = function(req, res) {
     duration: req.body.duration,
     date: req.body.dt,
     message: req.body.message,
-    time: req.body.time
+    time: req.body.time,
+    customer: req.user._id
   });
 
-  newAppointment.save();
-  // send out email
-  res.send(200);
+  User.findOne({userName: req.body.merchant}, function(err, user){
+    newAppointment.merchant = user._id;
+    newAppointment.save();
+    // send out email
+    res.jsonp(newAppointment);
+  })
 };
 
 exports.confirm = function(req, res) {

@@ -6,10 +6,8 @@ angular.module('githelp.controllers.datePicker', [])
         duration: "15",
         dt: "",
         time: "",
-
+        merchant: window.location.hash.replace(/..\//, "").replace(/\/.*$/, "")
       };
-
-      console.log($stateParams.userName)
 
       $scope.createAppointment = function() {
         $http.post('/create/appointment', $scope.appt).success(function(response) {

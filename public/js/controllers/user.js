@@ -65,7 +65,7 @@ angular.module('githelp.controllers.user', [])
     }
 
     $scope.setAppointment = function(){
-      $state.go('profile.booking');
+      $state.go('profile.booking', {'userName': $stateParams.userName});
     }
 
     $scope.cc = {};
