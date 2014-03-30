@@ -51,10 +51,8 @@ angular.module('githelp.controllers.user', [])
     // };
 
     $scope.repoName = function(url){
-      console.log(url);
-      return url.replace(/\/.*\//, "");
-    };
-
+      return url.split('/')[2];
+    }
     $scope.showForm = false;
 
     $scope.editForm = function(url){
@@ -62,10 +60,13 @@ angular.module('githelp.controllers.user', [])
     };
 
 
-    $scope.toRepo = function(repoName){
-      $state.go('profile.repo', {'repoName': repoName});
+    $scope.repoAuthor = function(url){
+      return url.split('/')[1];
     }
 
+    $scope.setAppointment = function(){
+      $state.go('profile.booking');
+    }
 
     $scope.cc = {};
     $scope.submitEdit = function(){
