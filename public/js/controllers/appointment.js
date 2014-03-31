@@ -76,7 +76,7 @@ angular.module('githelp.controllers.appointment', [])
 
     var transaction = {
       amount: $scope.amountToCharge,
-      appointmentId: req.params.appointmentId // contains merchant and customer info
+      appointmentId: $stateParams.appointmentId // contains merchant and customer info
     };
 
     $http.post('/payments/charge', transaction).success(function(response) { // run payments.debitCard
