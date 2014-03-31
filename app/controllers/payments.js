@@ -70,7 +70,7 @@ exports.debitCard = function(req, res) {
 // var userName = 'wainetam'; // placeholder for now
 
 exports.createCard = function(req, res) {
-  console.log('RES', res);
+  console.log('in createCard');
   var ccObj = req.body;
   // var userName = 'req.params.userName' // need userName to find in DB; assume to be in params for now
   console.log('CC', ccObj);
