@@ -60,7 +60,7 @@ angular.module('githelp.controllers.appointment', [])
   };
 
   appointmentSock.onclose = function() {
-    alert('sockjs close');
+    if ($scope.timerId) { clearInterval($scope.timerId)};
     $scope.totalAmount = $scope.merchantPrice * ($scope.totalSeconds / 60.0);
     $scope.amountToCharge = $filter('currency')($scope.totalAmount, '$');
     $scope.$apply();
@@ -69,24 +69,22 @@ angular.module('githelp.controllers.appointment', [])
 
 
   $scope.stopTimer = function() {
-    if ($scope.timerId) { clearInterval($scope.timerId)};
+
     appointmentSock.close();
 
-    alert('inserting' + $scope.amountToCharge + 'into your bank account.');
 
     var txDescription = '';
     console.log('amt to charge', $scope.amountToCharge);
 
     var transaction = {
       amount: $scope.amountToCharge,
-      appointmentId: $stateParams.appointmentId // contains merchant and customer info
+      appointmentId: $stateParams.sessionId // contains merchant and customer info
     };
 
     $http.post('/payments/charge', transaction).success(function(response) { // run payments.debitCard
       console.log(response);
       $scope.txComplete = response;
     });
-  };
   };
   // VIDEO CHAT
   var sessionId = "2_MX40NDcwOTUxMn5-V2VkIE1hciAyNiAxODoxMDowNCBQRFQgMjAxNH4wLjI0Nzk5MTI2fg";
