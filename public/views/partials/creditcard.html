@@ -1,27 +1,25 @@
 <!-- Functions & Scope in IndexController -->
 
 <!-- CREDIT CARD FORM -->
-
-  <div>
+<div class='container profile' style='padding-top: 10px'>
     <form class="container form-group" ng-submit="createCard()">
+        <input class='form-control' style='width:300px' type="text" id="cc-name" autocomplete="off" ng-model="cc.name" placeholder="Full name (as seen on card)">
+        <br>
       <div>
-        <label>Name on Card</label>
-        <input type="text" id="cc-name" autocomplete="off" ng-model="cc.name" placeholder="John Doe" />
+        <input type="text" class='form-control' style='width:300px' id="cc-number" autocomplete="off" ng-model="cc.number" placeholder="Credit card number" maxlength="16" />
       </div>
+      <br>
       <div>
-        <label>Card Number</label>
-        <input type="text" id="cc-number" autocomplete="off" ng-model="cc.number" placeholder="4111111111111111" maxlength="16" />
+        <input type="text" class='form-control' style='width:300px' id="cc-ex-month" autocomplete="off" ng-model="cc.expiration_month" placeholder="Month of expiration e.g. 05" maxlength="2" />
+        <br>
+        <input type="text" class='form-control' style='width:300px' id="cc-ex-year" autocomplete="off" ng-model="cc.expiration_year" placeholder="Year of expiration e.g. 2017" maxlength="4" />
       </div>
+      <br>
       <div>
-        <label>Expiration</label>
-        <input type="text" id="cc-ex-month" autocomplete="off" ng-model="cc.expiration_month" placeholder="01" maxlength="2" />
-        <input type="text" id="cc-ex-year" autocomplete="off" ng-model="cc.expiration_year" placeholder="2013" maxlength="4" />
+        <input type="text" class='form-control' style='width:300px' id="ex-csc" autocomplete="off" ng-model="cc.cvv" placeholder="Security Code (CVV) e.g., 453" maxlength="4" />
       </div>
-      <div>
-        <label>Security Code (CVV)</label>
-        <input type="text" id="ex-csc" autocomplete="off" ng-model="cc.cvv" placeholder="453" maxlength="4" />
-      </div>
-      <input type="submit" class="btn btn-success" value="Submit" id="cc-submit">
+      <br>
+      <input style='margin-right: 850px' type="submit" class="btn btn-success" value="Submit" id="cc-submit">
     </form>
     Updated DB data: {{ccComplete}}
-  </div>
+</div>
