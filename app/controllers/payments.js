@@ -61,6 +61,7 @@ exports.debitCard = function(req, res) {
         "and you will earn $" + (amount * 0.9 / 100.0).toFixed(2) +
         ". Thank you for using githelp!";
         mailer.sendEmail(htmlBodyMerch, merchant.email, 'Earnings from your completed githelp session');
+        res.send(200);
       });
     });
   });

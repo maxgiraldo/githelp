@@ -5,8 +5,8 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
 
         $stateProvider
         .state('main', {
-            url:'/',
-            templateUrl: 'views/index.html'
+          url:'/',
+          templateUrl: 'views/index.html'
         })
           .state('main.search', {
             views: {
@@ -15,6 +15,10 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
               }
             }
           })
+        .state('appointments', {
+          url: '/appointments',
+          templateUrl: 'views/appointments.html'
+        })
         .state('session', {
           url: '/session/:sessionId',
           templateUrl: 'views/session.html'
@@ -41,7 +45,7 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'views/profile.repos.html'
           })
           .state('profile.confirm', {
-            url: '/confirm/:appointmentId',
+            url: '/confirm/:sessionId',
             templateUrl: 'views/confirm.html'
           });
     }

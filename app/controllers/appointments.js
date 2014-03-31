@@ -116,9 +116,9 @@ var sendMessage = function(appointmentId, message, user){
 var sendReminder = function(apptObject){
   return function(){
     setTimeout(function(){
-      console.log((moment(apptObject.time).subtract(moment(Date.now)).subtract('minutes', 1)).unix());
+      // console.log('moment', (moment(apptObject.time).subtract(moment(Date.now)).subtract('minutes', 1)).unix());
       startSession();
-    }, 10000);
+    }, (moment(apptObject.time).subtract(moment(Date.now)).subtract('minutes', 1)).unix()*1000);
   }()
 }
 
@@ -145,7 +145,8 @@ exports.confirm = function(req, res) {
   Appointment.findById(req.body.appointmentId, function(err, appt) {
     appt.confirmed = true;
     scheduler.sendEventInvite(appt);
-    startSession(appt);
+    // startSession(appt);
+    sendReminder(appt);
     appt.save();
      // Once confirmed, send out confirmation
   });
@@ -159,12 +160,14 @@ var startSession = function(apptObject){
 };
 
 exports.endSession = function(req, res) { // untested as of 3/30 bc no new sessions created w new model
+  console.log('endsession func');
   Appointment.findById(req.body.appointmentId, function(err, appt) {
     if(err) {console.log(err);}
     console.log('APPT edited', appt);
     appt.completionTime = req.body.duration; // in minutes
     appt.totalCost = req.body.amount; // in cents
     appt.save();
+    res.send(200);
   });
 };
 

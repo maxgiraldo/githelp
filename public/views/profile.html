@@ -4,12 +4,11 @@
     <div>
       <img class='avatar-lg' src='{{user.github.avatar_url}}'>
     </div>
-
     <div class='profile-name-info'>
       <h1 class='headline full-name'>{{user.fullName}}</h1>
       <h2 class='username'><a href="http://www.github.com/{{user.userName}}"><i class="fa fa-github"></i> {{user.userName}}</a></h2>
       <h2 data-ng-show = "user.github.blog" class="username"><a href="http://www.{{user.github.blog}}"><i class="fa fa-link"></i> {{user.github.blog}}</a></h2>
-      <h4>{{user.ppm || 2.00 | currency:"$"}}/minute<span ng-hide='user._id !== global.user._id'><a class='username' href="#" ng-click='editForm()' ng-show='user'><i id='edit' class="fa fa-pencil"></i></a></span></h4>
+      <h4 class='price'>{{user.ppm || 2.00 | currency:"$"}}/minute<span ng-hide='user._id !== global.user._id'><a class='username' href="#" ng-click='editForm()' ng-show='user'><i id='edit' class="fa fa-pencil"></i></a></span></h4>
 
       <div data-ng-show="showForm">
         <form ng-submit='submitEdit()'>
@@ -31,7 +30,7 @@
     </div>
 
     <!-- User's public repos -->
-    <p data-ng-show="repoList.length > 0" class='caps-sub-header'>{{user.github.public_repos}} public repositories</p>
+    <p data-ng-show="repoList.length > 0" class='caps-sub-header'>{{user.github.public_repos.length}} public repositories</p>
     <!-- <div ng-repeat="repo in repos"> -->
     <div>
       <ul class='repo-links'>
