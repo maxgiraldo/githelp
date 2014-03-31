@@ -53,19 +53,42 @@ exports.debitCard = function(req, res) {
         " lasted " + duration + " minutes " +
         "and you will be charged $" + (amount / 100.0).toFixed(2) +
         ". Thank you for using githelp!";
-        mailer.sendEmail(htmlBodyCust, customer.email, 'Cost of completed githelp session');
+
+        var toCustOptions = {
+          to: customer.email,
+          subject: 'Cost of completed githelp session',
+          html: htmlBodyCust
+        };
+
+        mailer.email(toCustOptions, function(){
+          console.log("hello");
+        });
+        // mailer.sendEmail(htmlBodyCust, customer.email, 'Cost of completed githelp session');
 
         // email to merchant of completed tx
         var htmlBodyMerch = "Your call with " + customer.userName +
         " lasted " + duration + " minutes " +
         "and you will earn $" + (amount * 0.9 / 100.0).toFixed(2) +
         ". Thank you for using githelp!";
-        mailer.sendEmail(htmlBodyMerch, merchant.email, 'Earnings from your completed githelp session');
+
+        var toMerchOptions = {
+          to: merchant.email,
+          subject: 'Earnings from your completed githelp session',
+          html: htmlBodyMerch
+        };
+        mailer.email(toMerchOptions, function(){
+          console.log("hello");
+        });
+        // mailer.sendEmail(htmlBodyMerch, merchant.email, 'Earnings from your completed githelp session');
         res.send(200);
       });
     });
   });
 };
+
+// to: options.to, // comma separated list of receivers
+//      subject: options.subject, // Subject line
+//      html: options.html // plaintext body
 
 // var userName = 'wainetam'; // placeholder for now
 

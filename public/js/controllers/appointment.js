@@ -1,8 +1,8 @@
 // This works
 
 angular.module('githelp.controllers.appointment', [])
-  .controller('AppointmentController', ['$scope', '$state', 'Global', '$http', 'Appointment', '$stateParams', '$filter',
-    function ($scope, $state, Global, $http, Appointment, $stateParams, $filter) {
+  .controller('AppointmentController', ['$scope', '$state', '$location', 'Global', '$http', 'Appointment', '$stateParams', '$filter',
+    function ($scope, $state, $location, Global, $http, Appointment, $stateParams, $filter) {
       $scope.global = Global;
 
   var appointmentId = $stateParams.sessionId;

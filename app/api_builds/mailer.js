@@ -5,7 +5,7 @@ var appDir = path.dirname(require.main.filename);
 var swig = require('swig');
 
 
-var email = function(options, done){
+exports.email = function(options, done){
   var smtpTransport = nodemailer.createTransport("SMTP",{
     service: "Gmail",
     auth: {
@@ -38,7 +38,7 @@ var sendTemplateMail = function (emailTemplate, emailData, done) {
   var html;
   if (html = tpl(emailData)) {
     emailData.html = html;
-    email(emailData, done);
+    exports.email(emailData, done);
   }
 };
 

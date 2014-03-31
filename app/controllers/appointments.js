@@ -98,7 +98,10 @@ var sendReminder = function(appt, done){
 
 var startSession = function(appt){
   configReminderOpt(appt, function(options){
+    console.log("this is the startSession function", options)
     mailer.sendReminderEmail(options, function(err, response){
+      console.log("hello");
+      console.log("askldjflaksdjfkljads;ljflasdjflkadsfj;asd;lf;dsjfkdsjfasf")
       console.log(err, response);
     });
   });
