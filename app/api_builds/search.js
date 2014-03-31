@@ -309,7 +309,9 @@ exports.query = function(queryString) { // repo and userBool are optional params
     var repoList = repoData.items.map(function(repo) {
       return {
         full_name: repo.full_name,
-        html_url: repo.html_url
+        html_url: repo.html_url,
+        owner: repo.owner.login,
+        repo_name_only: repo.name
       };
     });
 

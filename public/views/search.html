@@ -20,7 +20,8 @@
     <h1 class="headline full-name ng-binding">Repositories</h1>
     <ul class='searchUl' ng-repeat="repo in repoResults | limitTo: 10">
       <!-- Name: {{repo.name}}<br /> -->
-      <li><a href="/#!/{{repo.full_name}}">{{repo.full_name}}</a></li>
+      <!-- <li><a href="/#!/{{repo.full_name}}">{{repo.full_name}}</a></li> -->
+      <li><a href="/#!/{{repo.owner.login}}/repos/{{repo.name}}">{{repo.full_name}}</a></li>
       <!-- ID: {{repo.id}}<br /> -->
     </ul>
   </div>

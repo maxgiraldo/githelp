@@ -88,9 +88,11 @@ angular.module('githelp.controllers.appointment', [])
       $http.post('/charge', transactionObj).success(function(response) { // run payments.debitCard
         console.log(response);
         // $scope.txComplete = response;
-        $http.post('/session/end', transactionObj).success(function(response) { // edit appt model
-          console.log(response);
-        });
+        var transactionObj = transactionObj;
+        // $http.post('/session/end', transactionObj).success(function(response) { // edit appt model
+        //   console.log('completed apptment edit');
+        //   console.log(response);
+        // });
       });
     };
     // VIDEO CHAT
