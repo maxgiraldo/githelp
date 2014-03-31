@@ -69,7 +69,22 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   padding: 0;
   border: 0;
 }
-
+.confirm-btn {
+  width: 300px;
+  height: 45px;
+  border-radius: 3px;
+  background-color: #77cc33;
+  cursor: pointer;
+  margin-top: 25px;
+}
+.confirm-btn:hover {
+  width: 300px;
+  height: 45px;
+  border-radius: 3px;
+  background-color: #67b22b;
+  cursor: pointer;
+  margin-top: 25px;
+}
 //// Type
 // Main type on page, e.g. h1 tags
 .headline {
