@@ -1,27 +1,29 @@
 <div data-ng-controller="UserController" data-ng-init="findInbox()">
 
-  <!-- Merchants -->
-  <div data-ng-show="userInboxes" class="container" ui-view>
-    <div class='center-elements' ng-repeat='inbox in userInboxes'>
-      <div class='chat-head' ng-click='toInbox(inbox._id)'>
-        <span class="label label-default">1</span>
-        <img class='avatar-large-chat' style='float: left' src="{{findOtherUser(inbox).github.avatar_url}}"/>
-        <h1 class='headline full-name'>{{findOtherUser(inbox).userName}}</h1>
+  <div data-ui-view>
+    <!-- Merchants -->
+    <div class="container">
+      <div class='center-elements' ng-repeat='inbox in userInboxes'>
+        <div class='chat-head' ng-click='toInbox(inbox._id)'>
+          <span class="label label-default">1</span>
+          <img class='avatar-large-chat' style='float: left' src="{{findOtherUser(inbox).github.avatar_url}}"/>
+          <h1 class='headline full-name'>{{findOtherUser(inbox).userName}}</h1>
+        </div>
       </div>
     </div>
-  </div>
-  <div data-ng-hide="userInboxes" class='container'>
-    <p>You have not started any conversations!</p>
-  </div>
-  <form class="col-md-10" data-ng-submit="createInbox()">
+    <div data-ng-hide="userInboxes" class='container'>
+      <p>You have not started any conversations!</p>
+    </div>
+
+    <form class="col-md-10" data-ng-submit="createInbox()">
     <label>Members</label>
     <div class="col-md-8">
-      <select data-ng-model="members" data-ui-select2="{}" placeholder="Enter a friends name, username, or email!" multiple>
-        <option value="{{user._id}}" data-ng-repeat="user in allUsers" data-ng-show="user._id != global.user._id">{{user.fullName}}</option>
-      </select>
+      <input data-ng-model="member" typeahead="user.fullName for user in allUsers | filter:$viewValue" data-ng-show="user._id != global.user._id" typeahead-on-select="onSelect($item, $model, $label)">
     </div>
     <button type="submit">New Chats</button>
   </form>
+
+  </div>
 </div>
 
   <!-- <div>

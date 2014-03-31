@@ -15,7 +15,9 @@ exports.createChatroom = function(req, res){
           chatroom: chatroom
         });
       } else {
-        res.jsonp(chatroom);
+        Chatroom.findOne({_id: chatroom._id}).populate('members').exec(function(err, chatroom){
+          res.jsonp(chatroom);
+        })
       }
     });
   });
@@ -30,7 +32,6 @@ exports.createMessage = function(req, res){
         message: message
       });
     } else {
-
       //need to get chatroom somehow
       Chatroom.findOne({_id: req.body.chatroomId}, function(err, chatroom){
         Message.load(message._id, function(err, message){
