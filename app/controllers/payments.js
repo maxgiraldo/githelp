@@ -49,7 +49,7 @@ exports.debitCard = function(req, res) {
   });
 };
 
-var userName = 'wainetam'; // placeholder for now
+// var userName = 'wainetam'; // placeholder for now
 
 exports.createCard = function(req, res) {
   console.log('RES', res);
