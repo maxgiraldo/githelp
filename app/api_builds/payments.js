@@ -38,7 +38,7 @@ exports.createCard = function(cardFormObj) {
   });
 };
 
-exports.createCard(cardFormObj);
+// exports.createCard(cardFormObj);
 
 exports.createBankAccount = function(bankFormObj) {
   balanced.marketplace.bank_accounts.create(bankFormObj)
@@ -49,7 +49,7 @@ exports.createBankAccount = function(bankFormObj) {
   });
 };
 
-exports.createBankAccount(bankFormObj);
+// exports.createBankAccount(bankFormObj);
 
 // 965 Mission St  94103 AVS street matches
 
@@ -66,37 +66,42 @@ var associateCardToCustomer = function(cardObj, customerObj) {
   return deferred.promise;
 };
 
-var debitCard = function(amount, cardObj, customerObj) { // amount in cents
-  associateCardToCustomer(cardObj, customerObj).debit({
-      'amount': amount,
-      'appears_on_statement_as': 'githelp.co',
-      'description': 'githelp.co'
-    }).then(function (debit) {
-        // save the result of the debit
-      // console.log('debit', debit.toJSON());
-      // console.log('card', debit._api.objects);
-    }, function (err) {
-        // record the error message
-      // console.log(err);
-    });
-};
+// var debitCard = function(amount, cardObj, customerObj) { // amount in cents
+//   associateCardToCustomer(cardObj, customerObj).debit({
+//       'amount': amount,
+//       'appears_on_statement_as': 'githelp.co',
+//       'description': 'githelp.co'
+//     }).then(function (debit) {
+//         // save the result of the debit
+//       // console.log('debit', debit.toJSON());
+//       // console.log('card', debit._api.objects);
+//     }, function (err) {
+//         // record the error message
+//       // console.log(err);
+//     });
+// };
 
 var cardUri = function(cardToken) {
-  return '/cards/' + cardToken;
+  var uri = '/cards/' + cardToken;
+  console.log('cardToken ', cardToken);
+  console.log('uri ', uri);
+  return uri;
 };
 
 var bankUri = function(bankToken) {
-  return '/bank_accounts/' + bankToken;
+  var uri = '/bank_accounts/' + bankToken;
+  return uri;
 };
 
 exports.debitCard = function(amount, description, cardToken) {
-  var cardUri = cardUri(cardToken);
-  balanced.get(cardUri).debit({
+  var cardUriStr = cardUri(cardToken);
+  balanced.get(cardUriStr).debit({
     'amount': amount,
     'appears_on_statement_as': 'githelp.co',
     'description': description
   }).then(function(debit) {
     console.log('debit completed', debit.toJSON());
+
   }, function(err) {
     console.log(err);
   });
@@ -160,48 +165,48 @@ var customerObj = balanced.marketplace.customers.create({
   }
 });
 
-balanced.marketplace.customers.create({
-    'name': 'Henry Ford',
-    'dob_year': 1985,
-    'dob_month': 7,
-    'address': {
-      'postal_code': '48120' // need to add address and DOB for customer.merchant_status='underwritten'
-    }
-  }).then(function(customer) {
-    // console.log('CUSTOMER', customer.toJSON());
-  }, function(err) {
-    // console.log(err);
-  });
+// balanced.marketplace.customers.create({
+//     'name': 'Henry Ford',
+//     'dob_year': 1985,
+//     'dob_month': 7,
+//     'address': {
+//       'postal_code': '48120' // need to add address and DOB for customer.merchant_status='underwritten'
+//     }
+//   }).then(function(customer) {
+//     // console.log('CUSTOMER', customer.toJSON());
+//   }, function(err) {
+//     // console.log(err);
+//   });
 
-balanced.marketplace.cards.create(cardFormObj).debit({
-    'amount': 5000,
-    'appears_on_statement_as': 'githelp.co',
-    'description': 'githelp.co'
-  }).then(function(debit) {
-    // console.log('debit', debit.toJSON());
-  }, function(err) {
-    // console.log(err);
-  });
+// balanced.marketplace.cards.create(cardFormObj).debit({
+//     'amount': 5000,
+//     'appears_on_statement_as': 'githelp.co',
+//     'description': 'githelp.co'
+//   }).then(function(debit) {
+//     // console.log('debit', debit.toJSON());
+//   }, function(err) {
+//     // console.log(err);
+//   });
 
-var creditBankAccount = function(amount, bankObj) { // amount in cents
-  balanced.get(bankObj.href).credit(amount).then(function(credit) {
-    // console.log(credit);
-  },
-  function(err) {
-    // console.log(err);
-  });
-};
+// var creditBankAccount = function(amount, bankObj) { // amount in cents
+//   balanced.get(bankObj.href).credit(amount).then(function(credit) {
+//     // console.log(credit);
+//   },
+//   function(err) {
+//     // console.log(err);
+//   });
+// };
 
-balanced.marketplace.bank_accounts.create(bankFormObj).credit({
-    'amount': 5000,
-    'appears_on_statement_as': 'githelp.co',
-    'description': 'githelp.co'
-  }).then(function(credit) {
-    // console.log('CREDIT TO BANK ACCT', credit.toJSON());
-  },
-  function(err) {
-    // console.log(err);
-  });
+// balanced.marketplace.bank_accounts.create(bankFormObj).credit({
+//     'amount': 5000,
+//     'appears_on_statement_as': 'githelp.co',
+//     'description': 'githelp.co'
+//   }).then(function(credit) {
+//     // console.log('CREDIT TO BANK ACCT', credit.toJSON());
+//   },
+//   function(err) {
+//     // console.log(err);
+//   });
 
 
 

@@ -53,7 +53,7 @@ exports.create = function(req, res) {
     var ppm = user.ppm;
     // send out email
     var htmlBody = mailer.composeHtmlBody(newAppointment, customer.userName, merchant, ppm);
-    mailer.sendEmail(htmlBody, user.email); //user.email
+    mailer.sendEmail(htmlBody, user.email, "githelp Request!"); //user.email
     res.jsonp(newAppointment);
     // res.send(200);
 
@@ -128,10 +128,18 @@ exports.confirm = function(req, res) {
 }
 
 
-// Appointment.findById('5337a57d876c5027bdc5c00c', function(err, appt) {
-//   appt.confirmed = true;
-//   appt.save();
-//    // Once confirmed, send out confirmation
-//   scheduler.sendEventInvite(appt);
-// });
+exports.startSession = function(req, res){
+  var html = "<a href='http://192.168.1.174:3000/#!/session/"+"5338ae556ea2b600005f68ec"+"'>Click to go to session</a>"
+  mailer.sendEmail(html, 'jihokoo@gmail.com, wainetam@gmail.com', 'Your unique link for upcoming githelp session');
+};
+
+exports.endSession = function(req, res) { // untested as of 3/30 bc no new sessions created w new model
+  Appointment.findById(req.body.appointmentId, function(err, appt) {
+    if(err) {console.log(err);}
+    console.log('APPT edited', appt);
+    appt.completionTime = req.body.duration; // in minutes
+    appt.totalCost = req.body.amount; // in cents
+    appt.save();
+  });
+};
 

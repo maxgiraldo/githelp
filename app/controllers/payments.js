@@ -33,17 +33,34 @@ balanced.configure('ak-test-1dsNimzLa65kRDXzRzGgLQ5Gqoi8sIwCU'); // test API key
 // sending amount, description, and appointmentId
 
 exports.debitCard = function(req, res) {
-  console.log('req', req);
-  var amount = req.body.amount;
+  // console.log('req', req);
+  var amount = req.body.amount; // cents earned
   console.log('AMOUNT ', amount); // needs to be in cents
-  var appointmentId = req.body.appointmentId;
-
-  Appointment.findById(appointmentId, function(err, apptObj) {
+  var sessionId = req.body.sessionId;
+  console.log('sessionId', sessionId);
+  var duration = req.body.duration; // length of call
+  Appointment.findById(sessionId, function(err, apptObj) {
     User.findById(apptObj.customer, function(err, customer) {
       User.findById(apptObj.merchant, function(err, merchant) {
+        console.log('customer', customer.email);
+        console.log('merchant', merchant.email);
         var description = "Payment for githelp from " + merchant.userName;
-        var cardToken = customer.balancedCard; // fetch card obj with customer token;
-        payments.debitCard(amount, description, cardToken); // write callbacks
+        var cardToken = customer.balancedUser; // fetch card obj with customer token;
+        payments.debitCard(amount, description, cardToken); // callbacks in payments.debitCard
+
+        // email to customer completed tx
+        var htmlBodyCust = "Your call with " + merchant.userName +
+        " lasted " + duration + " minutes " +
+        "and you will be charged $" + (amount / 100.0).toFixed(2) +
+        ". Thank you for using githelp!";
+        mailer.sendEmail(htmlBodyCust, customer.email, 'Cost of completed githelp session');
+
+        // email to merchant of completed tx
+        var htmlBodyMerch = "Your call with " + customer.userName +
+        " lasted " + duration + " minutes " +
+        "and you will earn $" + (amount * 0.9 / 100.0).toFixed(2) +
+        ". Thank you for using githelp!";
+        mailer.sendEmail(htmlBodyMerch, merchant.email, 'Earnings from your completed githelp session');
       });
     });
   });

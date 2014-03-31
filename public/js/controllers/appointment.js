@@ -1,13 +1,15 @@
 // This works
 
 angular.module('githelp.controllers.appointment', [])
-  .controller('AppointmentController', ['$scope', '$state', 'Global', '$http', 'Appointment', '$filter',
-    function ($scope, $state, Global, $http, Appointment, $filter) {
+  .controller('AppointmentController', ['$scope', '$state', 'Global', '$http', 'Appointment', '$stateParams', '$filter',
+    function ($scope, $state, Global, $http, Appointment, $stateParams, $filter) {
       // $scope.global = Global;
+
+  var appointmentId = $stateParams.sessionId;
 
   $scope.confirmAppointment = function(){
     var newAppointment = new Appointment({
-      appointmentId: $stateParams.appointmentId
+      appointmentId: appointmentId
     });
     newAppointment.$save(function(data){
       console.log("we confirmed the appointment!")
@@ -30,6 +32,7 @@ angular.module('githelp.controllers.appointment', [])
   $scope.merchantPrice = 2.50;
 
   $scope.totalAmount = 0;
+
   $scope.timerOn = false;
 
   $scope.startTimer = function() {
@@ -62,28 +65,31 @@ angular.module('githelp.controllers.appointment', [])
   appointmentSock.onclose = function() {
     if ($scope.timerId) { clearInterval($scope.timerId)};
     $scope.totalAmount = $scope.merchantPrice * ($scope.totalSeconds / 60.0);
-    $scope.amountToCharge = $filter('currency')($scope.totalAmount, '$');
+    console.log($scope.totalAmount, $scope.totalSeconds, $scope.merchantPrice);
+    // $scope.amountToCharge = $filter('currency')($scope.totalAmount, '$');
+    // console.log('$scopeamounttocharge', $scope.amountToCharge);
     $scope.$apply();
   };
 
-
-
   $scope.stopTimer = function() {
-
     appointmentSock.close();
 
+    console.log('amt to charge', $scope.totalAmount);
+    alert('inserting' + $scope.totalAmount + 'into your bank account.');
 
-    var txDescription = '';
-    console.log('amt to charge', $scope.amountToCharge);
-
-    var transaction = {
-      amount: $scope.amountToCharge,
-      appointmentId: $stateParams.sessionId // contains merchant and customer info
+    var transactionObj = {
+      amount: ($scope.totalAmount * 100).toFixed(0), // amount needs to be in cents and no decimals
+      duration: ($scope.totalSeconds / 60.0).toFixed(0), // duration in minutes
+      // sessionId: '5338ae556ea2b600005f68ec'
+      sessionId: appointmentId // contains merchant and customer info
     };
 
-    $http.post('/payments/charge', transaction).success(function(response) { // run payments.debitCard
+    $http.post('/charge', transactionObj).success(function(response) { // run payments.debitCard
       console.log(response);
-      $scope.txComplete = response;
+      // $scope.txComplete = response;
+      $http.post('/session/end', transactionObj).success(function(response) { // edit appt model
+        console.log(response);
+      });
     });
   };
   // VIDEO CHAT
