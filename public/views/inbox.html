@@ -1,6 +1,8 @@
 <section data-ng-controller="UserController" data-ng-init="findInbox()" >
   <section data-ng-show="global.authenticated">
+
       <div data-ui-view>
+
         <!-- Merchants -->
         <div class="container">
           <div class='center-elements' ng-repeat='inbox in userInboxes'>
@@ -11,10 +13,10 @@
             </div>
           </div>
         </div>
+
         <div data-ng-hide="userInboxes" class='container'>
           <p>You have not started any conversations!</p>
         </div>
-
         <form class="col-md-10" data-ng-submit="createInbox()">
           <label>Members</label>
           <div class="col-md-8">
