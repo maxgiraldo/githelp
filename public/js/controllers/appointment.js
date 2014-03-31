@@ -1,8 +1,8 @@
 // This works
 
 angular.module('githelp.controllers.appointment', [])
-  .controller('AppointmentController', ['$scope', '$state', '$stateParams', 'Global', '$http', 'Appointment',
-    function ($scope, $state, $stateParams, Global, $http, Appointment) {
+  .controller('AppointmentController', ['$scope', '$state', 'Global', '$http', 'Appointment', '$filter',
+    function ($scope, $state, Global, $http, Appointment, $filter) {
       // $scope.global = Global;
 
   $scope.confirmAppointment = function(){
@@ -28,6 +28,7 @@ angular.module('githelp.controllers.appointment', [])
 
   // Set Default Merchant Price
   $scope.merchantPrice = 2.50;
+
   $scope.totalAmount = 0;
   $scope.timerOn = false;
 
@@ -67,10 +68,10 @@ angular.module('githelp.controllers.appointment', [])
   $scope.stopTimer = function() {
     if ($scope.timerId) { clearInterval($scope.timerId)};
     $scope.totalAmount = $scope.merchantPrice * ($scope.totalSeconds / 60.0);
+    $scope.amountToCharge = $filter('currency')($scope.totalAmount, '$');
     $scope.$apply();
-    $scope.amountToCharge = $scope.totalAmount;
     alert('inserting' + $scope.amountToCharge + 'into your bank account.');
-
+  }
     var txDescription = '';
     console.log('amt to charge', $scope.amountToCharge);
 
