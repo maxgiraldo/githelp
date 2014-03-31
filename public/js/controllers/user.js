@@ -15,6 +15,7 @@ angular.module('githelp.controllers.user', [])
 
         $scope.user = response.user;
         $scope.conList = response.conList;
+        console.log('user', $scope.user)
       })
       // make this aynchronous
     };

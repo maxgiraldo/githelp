@@ -99,12 +99,14 @@ var getUserRepos = function(username) {
 exports.userStats = function(username) {
   var deferred = Q.defer();
   // console.log('IN USER STATS');
-  var searchObj = { url: 'https://api.github.com/users/' + username + '/repos', headers: { 'User-Agent': 'wainetam' }, auth: basicAuth };
+  var searchObj = { url: 'https://api.github.com/users/' + username + '/repos' + '?per_page=100', headers: { 'User-Agent': 'wainetam' }, auth: basicAuth };
   request(searchObj, function(err, response, repoList) {
     if(err && response.statusCode !== 200) {
       console.log('Request error.');
       deferred.reject(err);
     }
+    console.log('repoList', repoList);
+    console.log('repoList count', repoList.length);
     repoList = JSON.parse(repoList);
 
     deferred.resolve(repoList);
@@ -194,7 +196,7 @@ var Repo = function(author, repo) {
   this.user = author; // author
   this.repo = repo;
   this.page = 1; // optional; page number of results to fetch
-  this.per_page = 100; // optional; 30 is default
+  this.per_page = 50; // optional; 30 is default
 };
 //
 // var repo = new Repo('twbs', 'bootstrap'); // user, repo name
