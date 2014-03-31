@@ -227,12 +227,68 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   color: #b3babe;
 }
 
+// Appointments page
+.appointment-box {
+  // background-color: #f5ff87;
+  float: left;
+  width: 700px;
+}
+.appointment-box .appt {
+  float: left;
+}
+.appointment-box .appointment-details {
+  margin-top: 0;
+  text-transform: uppercase;
+  color: #b5b3ab;
+  font-size: 16px;
+}
+.appointment-box .appointment-text-info {
+  // background-color: #b59e71;
+  padding-left: 130px;
+  text-align: left;
+  margin-top: 30px;
+}
+.status {
+  width: 100%;
+  height: 40px;
+  background-color: #9fa295;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+.status-confirmed {
+  background-color: #77cc33;
+}
+.status-denied {
+  background-color: #e65b5e;
+}
+.status-pending {
+  background-color: #f0f4e2;
+}
+.alert-type {
+  padding-top: 12px;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  color: #86897e;
+}
+.center-appointment {
+  margin-left: 200px;
+  margin-right: 200px;
+  text-align: center;
+}
 // Profile page
 .profile {
   padding-top: 48px;
   text-align: center;
   // background-color: #d7d7d7;
   width: 350px;
+}
+.bold-description {
+  color: #000;
+}
+.price {
+  margin-top: 16px;
 }
 .avatar-lg {
   border-radius: 60px;
@@ -354,7 +410,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 h1.full-name {
   margin-top: 10px;
-  font-size: 14px;
 }
 .chat-window {
   margin-left: auto;

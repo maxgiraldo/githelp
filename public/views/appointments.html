@@ -1,34 +1,24 @@
 <section data-ng-controller="UserController" data-ng-init="findOne()">
-  <div class="container profile">
-    <div>
-      <img class='avatar-lg' src='{{user.github.avatar_url}}'>
-    </div>
-    <div class='profile-name-info'>
-      <h1 class='headline full-name'>{{user.fullName}}</h1>
-      <h2 class='username'><a href="http://www.github.com/{{user.userName}}"><i class="fa fa-github"></i> {{user.userName}}</a></h2>
-      <h2 data-ng-show = "user.github.blog" class="username"><a href="http://www.{{user.github.blog}}"><i class="fa fa-link"></i> {{user.github.blog}}</a></h2>
-      <h3>$120/min</h3>
-    </div>
-    <div class='call-button headline'>
-      <p>Set up a call</p>
-    </div>
-    <p data-ng-show="repoList.length > 0" class='caps-sub-header'>{{user.github.public_repos}} public repositories</p>
-    <!-- <div ng-repeat="repo in repos"> -->
-    <div>
-      <ul class='repo-links'>
-        <li data-ng-repeat="repo in repoList" data-ng-show="!repo.fork"><a href="repo.html_url">{{repo.name}}</a></li>
-      </ul>
-    </div>
-    <p data-ng-show="conList.length > 0" class='caps-sub-header'>top {{conList.length}} repositories contributed to</p>
-    <div>
-      <ul class='repo-links'>
-        <li data-ng-repeat="repo in conList"><a href="https://github.com{{repo}}">{{repoName(repo)}}</a></li>
-      </ul>
-    </div>
-    <div>
-      <p class='caps-sub-header'>Number of Gists: {{user.github.public_gists}}</p>
-      <p data-ng-show="user.email" class='caps-sub-header'>Email: {{user.email}}</p>
-      <p class='caps-sub-header'>Followers: {{user.github.followers}}</p>
+  <div class="container">
+    <div class='center-appointment'>
+      <h1 class='headline'>Appointments</h1>
+
+      <div class='appointment-box'>
+        <div class='status status-pending'>
+          <h1 class='alert-type'>Status: awaiting approval</h1>
+        </div>
+
+        <img class='avatar-lg appt' src='https://avatars3.githubusercontent.com/u/2614565?s=400'>
+        <div class='appointment-text-info'>
+          <h1 class='headline full-name'>Ji Ho Koo</h1>
+          <p class='appointment-details'>
+            Rate <span class='bold-description'>$2.00</span>
+             Req. call length <span class='bold-description'> 15 min</span>
+             Est. total <span class='bold-description'> $30.00</span>
+          </p>
+        </div>
+      </div>
     </div>
   </div>
+
 </section>
