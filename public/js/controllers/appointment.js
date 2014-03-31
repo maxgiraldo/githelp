@@ -71,7 +71,7 @@ angular.module('githelp.controllers.appointment', [])
     $scope.amountToCharge = $filter('currency')($scope.totalAmount, '$');
     $scope.$apply();
     alert('inserting' + $scope.amountToCharge + 'into your bank account.');
-  }
+
     var txDescription = '';
     console.log('amt to charge', $scope.amountToCharge);
 
