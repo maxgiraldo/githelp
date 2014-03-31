@@ -78,11 +78,11 @@ exports.composeHtmlBody = function(apptObj, fromUserName, toUserName, ppm) {
   return html;
 };
 
-exports.sendEmail = function(htmlBody, toEmail) {
+exports.sendEmail = function(htmlBody, toEmail, subject) {
   var mailOptions = {
     from: "Githelp ✔ <gitsomehelp@gmail.com>", // sender address
-    to: toEmail, // list of receivers
-    subject: "githelp Request!", // Subject line
+    to: toEmail, // comma separated list of receivers 'wainetam@gmail.com, jihokoo@gmail.com'
+    subject: subject, // Subject line
     // text: "Hello world ✔", // plaintext body
     html: htmlBody // html body
   };

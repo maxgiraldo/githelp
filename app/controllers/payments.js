@@ -34,11 +34,11 @@ balanced.configure('ak-test-1dsNimzLa65kRDXzRzGgLQ5Gqoi8sIwCU'); // test API key
 
 exports.debitCard = function(req, res) {
   // console.log('req', req);
-  var amount = req.body.amount;
+  var amount = req.body.amount; // cents earned
   console.log('AMOUNT ', amount); // needs to be in cents
   var sessionId = req.body.sessionId;
   console.log('sessionId', sessionId);
-
+  var duration = req.body.duration; // length of call
   Appointment.findById(sessionId, function(err, apptObj) {
     User.findById(apptObj.customer, function(err, customer) {
       User.findById(apptObj.merchant, function(err, merchant) {
@@ -46,7 +46,13 @@ exports.debitCard = function(req, res) {
         console.log('merchant', merchant.email);
         var description = "Payment for githelp from " + merchant.userName;
         var cardToken = customer.balancedUser; // fetch card obj with customer token;
-        payments.debitCard(amount, description, cardToken); // write callbacks
+        payments.debitCard(amount, description, cardToken); // callbacks in payments.debitCard
+
+        var htmlBody = "Your call with " + merchant.userName +
+        " lasted " + duration + " minutes " +
+        "and you will be charged $" + (amount/100).toFixed(2) +
+        ". Thank you for using githelp!";
+        mailer.sendEmail(htmlBody, customer.email, 'Cost of completed githelp session');
       });
     });
   });

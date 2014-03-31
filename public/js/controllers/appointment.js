@@ -80,7 +80,7 @@ angular.module('githelp.controllers.appointment', [])
 
     var transactionObj = {
       amount: ($scope.totalAmount * 100).toFixed(0), // amount needs to be in cents and no decimals
-      // amount: 15,
+      duration: ($scope.totalSeconds / 60.0).toFixed(0), // duration in minutes
       // sessionId: '5338ae556ea2b600005f68ec'
       sessionId: appointmentId // contains merchant and customer info
     };
