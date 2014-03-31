@@ -30,6 +30,8 @@ var AppointmentSchema = new Schema({
   },
   topic: String,
   message: String,
+  totalCost: Number, // to customer
+  completionTime: Number, // in minutes
   editor: []
 });
 

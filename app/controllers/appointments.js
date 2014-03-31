@@ -83,6 +83,23 @@ var sendMessage = function(appointmentId, message, user){
   });
 };
 
+
+var sendReminder = function(apptObject){
+  return function(){
+    setTimeout(function(){
+      // console.log('moment', (moment(apptObject.time).subtract(moment(Date.now)).subtract('minutes', 1)).unix());
+      startSession();
+    }, (moment(apptObject.time).subtract(moment(Date.now)).subtract('minutes', 1)).unix()*1000);
+  }()
+}
+
+// (moment(apptObject.time).subtract(moment(Date.now)).subtract('minutes', 1)).unix()
+
+
+
+// should queue a bunch of requests and fire them off when their time is up
+
+
 exports.toSession = function(req, res){
   Appointment.findOne({_id: req.params.appointmentId}).populate('merchant').populate('customer').exec(function(err, appointment){
     res.render('session', {appointment: appointment});
@@ -99,20 +116,29 @@ exports.confirm = function(req, res) {
   Appointment.findById(req.body.appointmentId, function(err, appt) {
     appt.confirmed = true;
     scheduler.sendEventInvite(appt);
+    // startSession(appt);
+    sendReminder(appt);
     appt.save();
      // Once confirmed, send out confirmation
   });
   res.send(200);
-};
+}
 
-exports.startSession = function(req, res){
-  var html = "<a href='http://192.168.1.174:3000/#!/session/"+"5338ae556ea2b600005f68ec"+"'>Click to go to seesion</a>"
+
+var startSession = function(apptObject){
+  var html = "<a href='http://192.168.1.174:3000/#!/session/"+"5338ae556ea2b600005f68ec"+"'>Click to go to session</a>"
   mailer.sendEmail(html, 'jihokoo@gmail.com, wainetam@gmail.com', 'Your unique link for upcoming githelp session');
 };
-// Appointment.findById('5337a57d876c5027bdc5c00c', function(err, appt) {
-//   appt.confirmed = true;
-//   appt.save();
-//    // Once confirmed, send out confirmation
-//   scheduler.sendEventInvite(appt);
-// });
+
+exports.endSession = function(req, res) { // untested as of 3/30 bc no new sessions created w new model
+  console.log('endsession func');
+  Appointment.findById(req.body.appointmentId, function(err, appt) {
+    if(err) {console.log(err);}
+    console.log('APPT edited', appt);
+    appt.completionTime = req.body.duration; // in minutes
+    appt.totalCost = req.body.amount; // in cents
+    appt.save();
+    res.send(200);
+  });
+};
 

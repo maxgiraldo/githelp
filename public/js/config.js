@@ -45,7 +45,7 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'views/profile.repos.html'
           })
           .state('profile.confirm', {
-            url: '/confirm/:appointmentId',
+            url: '/confirm/:sessionId',
             templateUrl: 'views/confirm.html'
           });
     }

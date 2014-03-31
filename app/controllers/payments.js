@@ -48,11 +48,20 @@ exports.debitCard = function(req, res) {
         var cardToken = customer.balancedUser; // fetch card obj with customer token;
         payments.debitCard(amount, description, cardToken); // callbacks in payments.debitCard
 
-        var htmlBody = "Your call with " + merchant.userName +
+        // email to customer completed tx
+        var htmlBodyCust = "Your call with " + merchant.userName +
         " lasted " + duration + " minutes " +
-        "and you will be charged $" + (amount/100).toFixed(2) +
+        "and you will be charged $" + (amount / 100.0).toFixed(2) +
         ". Thank you for using githelp!";
-        mailer.sendEmail(htmlBody, customer.email, 'Cost of completed githelp session');
+        mailer.sendEmail(htmlBodyCust, customer.email, 'Cost of completed githelp session');
+
+        // email to merchant of completed tx
+        var htmlBodyMerch = "Your call with " + customer.userName +
+        " lasted " + duration + " minutes " +
+        "and you will earn $" + (amount * 0.9 / 100.0).toFixed(2) +
+        ". Thank you for using githelp!";
+        mailer.sendEmail(htmlBodyMerch, merchant.email, 'Earnings from your completed githelp session');
+        res.send(200);
       });
     });
   });
