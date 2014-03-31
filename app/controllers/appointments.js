@@ -156,7 +156,7 @@ exports.confirm = function(req, res) {
 
 var startSession = function(apptObject){
   var html = "<a href='http://192.168.1.174:3000/#!/session/"+"5338ae556ea2b600005f68ec"+"'>Click to go to session</a>"
-  mailer.sendEmail(html, 'jihokoo@gmail.com, wainetam@gmail.com', 'Your unique link for upcoming githelp session');
+  mailer.sendConfirmEmail(html, 'jihokoo@gmail.com, wainetam@gmail.com', 'Your unique link for upcoming githelp session');
 };
 
 exports.endSession = function(req, res) { // untested as of 3/30 bc no new sessions created w new model

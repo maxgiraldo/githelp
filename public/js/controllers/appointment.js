@@ -76,7 +76,7 @@ angular.module('githelp.controllers.appointment', [])
       appointmentSock.close();
 
       console.log('amt to charge', $scope.totalAmount);
-      alert('inserting' + $scope.totalAmount + 'into your bank account.');
+      // alert('inserting' + $scope.totalAmount + 'into your bank account.');
 
       var transactionObj = {
         amount: ($scope.totalAmount * 100).toFixed(0), // amount needs to be in cents and no decimals

@@ -2,16 +2,40 @@ var googleapis = require('googleapis'),
     request = require('request'),
     moment = require('moment'),
     mailer = require('./mailer'),
-    Q = require('q');
+    Q = require('q'),
+    googleAuth = require('google-oauth-jwt');
+
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
-var auth = new googleapis.OAuth2Client();
 
-auth.setCredentials({
-  access_token: 'ya29.1.AADtN_V5k2GoxjVseHRoHzEzeVMJf8lv9FRVSnhUG9T2sciYYlmzPXdUFJyNv6DhZp6XLZQ',
-  refresh_token: '1/avW6alyUFB41zUsFCabHcg1dAzQWzozEPmPHqbH_gz4'
+var TokenCache = googleAuth.TokenCache,
+    tokens = new TokenCache();
+
+//server side auth
+// googleAuth.authenticate({
+tokens.get({
+  // use the email address of the service account, as seen in the API console
+  email: '1062441697172-btqgv7qv73qi7pa4mscn26rih20oc1e9@developer.gserviceaccount.com',
+  // use the PEM file we generated from the downloaded key
+  keyFile: 'google_secret.pem',
+  // specify the scopes you wish to access
+  scopes: ['https://www.googleapis.com/auth/calendar']
+}, function (err, token) {
+  if(err) {console.log(err);}
+  console.log('token?', token);
+
 });
+
+//clientside auth
+
+// var auth = new googleapis.OAuth2Client();
+
+// auth.setCredentials({
+//   access_token: 'ya29.1.AADtN_V5k2GoxjVseHRoHzEzeVMJf8lv9FRVSnhUG9T2sciYYlmzPXdUFJyNv6DhZp6XLZQ',
+//   refresh_token: '1/avW6alyUFB41zUsFCabHcg1dAzQWzozEPmPHqbH_gz4'
+// });
+
 
 // console.log('AUTH', auth);
 
@@ -28,9 +52,6 @@ var attendeesObj = function(apptObj) {
   });
   return deferred.promise;
 };
-
-
-
 
 exports.sendEventInvite = function(apptObj, done){
   var startTime = moment.utc(apptObj.time).toISOString();
@@ -50,47 +71,90 @@ exports.sendEventInvite = function(apptObj, done){
     ];
     // console.log('attendees', attendees);
 
-    googleapis
-    .discover('calendar', 'v3')
-    .execute(function(err, client) {
-      console.log('CLIENT', client);
-      var params = {
-        calendarId: 'wainetam@gmail.com',
-        maxAttendees: attendees.length,
+    var urlObj = {
+      uri: 'https://www.googleapis.com/calendar/v3/calendars/gitsomehelp@gmail.com/events',
+      body: {
+        "end": {
+          // "date": endDate, //yyyy-mm-dd
+          "dateTime": endTime,
+          "timeZone": "America/New_York" // optional
+        },
+        "start": {
+          // "date": startDate, //yyyy-mm-dd date optional if have dateTime
+          "dateTime": startTime,
+          "timeZone": "America/New_York" // optional
+        },
+        "attendees": attendees, // array of objects with email as key
+        "creator": {
+          email: 'wainetam@gmail.com',
+          displayName: 'githelp.co'
+        },
+        "source": {
+          title: 'Event details on githelp.co',
+          url: 'http://www.google.com' // add link to githelp session_id; needs to be live link
+        },
+        "summary": topic || "", // TITLE
+        "description": "" // description body in event
+      },
+      headers: {
         sendNotifications: true
-      };
-      var body = {
-          "end": {
-            // "date": endDate, //yyyy-mm-dd
-            "dateTime": endTime,
-            "timeZone": "America/New_York" // optional
-          },
-          "start": {
-            // "date": startDate, //yyyy-mm-dd date optional if have dateTime
-            "dateTime": startTime,
-            "timeZone": "America/New_York" // optional
-          },
-          "attendees": attendees, // array of objects with email as key
-          "creator": {
-            email: 'wainetam@gmail.com',
-            displayName: 'githelp.co'
-          },
-          "source": {
-            title: 'Event details on githelp.co',
-            url: 'http://www.google.com' // add link to githelp session_id; needs to be live link
-          },
-          "summary": topic || "", // TITLE
-          "description": "" // description body in event
-        };
-      var req = client.calendar.events.insert(params, body).withAuthClient(auth);
-      console.log("REQ", req);
-      req.execute(function (err, response) {
-        if(err) {console.log(err);}
-        console.log('RESPONSE', response);
-        // done(response);
-      });
+      }
+    };
+
+    request(urlObj, function(err, response, body) { // request takes an object w parameters: method, uri
+
+      if(err && response.statusCode !== 200) {
+        console.log('Request error.');
+      }
+      console.log('BODY?', body);
     });
   });
+
+
+
+
+
+  //   googleapis
+  //   .discover('calendar', 'v3')
+  //   .execute(function(err, client) {
+  //     console.log('CLIENT', client);
+  //     var params = {
+  //       calendarId: 'wainetam@gmail.com',
+  //       maxAttendees: attendees.length,
+  //       sendNotifications: true
+  //     };
+  //     var body = {
+  //         "end": {
+  //           // "date": endDate, //yyyy-mm-dd
+  //           "dateTime": endTime,
+  //           "timeZone": "America/New_York" // optional
+  //         },
+  //         "start": {
+  //           // "date": startDate, //yyyy-mm-dd date optional if have dateTime
+  //           "dateTime": startTime,
+  //           "timeZone": "America/New_York" // optional
+  //         },
+  //         "attendees": attendees, // array of objects with email as key
+  //         "creator": {
+  //           email: 'wainetam@gmail.com',
+  //           displayName: 'githelp.co'
+  //         },
+  //         "source": {
+  //           title: 'Event details on githelp.co',
+  //           url: 'http://www.google.com' // add link to githelp session_id; needs to be live link
+  //         },
+  //         "summary": topic || "", // TITLE
+  //         "description": "" // description body in event
+  //       };
+  //     var req = client.calendar.events.insert(params, body).withAuthClient(auth);
+  //     console.log("REQ", req);
+  //     req.execute(function (err, response) {
+  //       if(err) {console.log(err);}
+  //       console.log('RESPONSE', response);
+  //       // done(response);
+  //     });
+  //   });
+  // });
 
 };
 
