@@ -128,13 +128,20 @@ exports.userStats = function(username) {
 var topContributors = function(contributorsArr, threshold) { //threshold in percent of total contributions to repo (i.e., 5)
   var totalContributions = 0; // of top 100 (param determined in repo query)
   var topContributors = [];
+
+  // var totalContributions = contributorsArr.reduce(function(a, b) {
+  //   console.log(a.contributions);
+  //   console.log(b.contributions);
+  //   return a.contributions + b.contributions;
+  // });
+
   contributorsArr.forEach(function(user) {
     totalContributions = totalContributions + user.contributions;
   });
-  // console.log('total contributions of top 100 ', totalContributions);
+  console.log('total contributions of top 100 ', totalContributions);
 
   contributorsArr.forEach(function(user) {
-    if(user.contributions/totalContributions > threshold/100 )
+    if(user.contributions/totalContributions > threshold/100.0 )
     topContributors.push(user);
   });
   // console.log('len of topContribs', topContributors.length);
@@ -234,16 +241,19 @@ exports.getContributors = function(author, repo) { // author, repo
     var coreTeam = topContributors(users, 1);
     // console.log('CORE ', coreTeam); // of top 100 users, returns those w/ at least 1% of the total contribs of top 100
 
-    var otherTop = findOtherTop(users, {followers: 500, repos: 100, gists: 100});
-    findOtherTop(users, {followers: 500, repos: 100, gists: 100}).then(function(otherTop) {
-      // console.log('OTHERTOP ', otherTop);
-      var contributorsObj = {
-        coreTeam: coreTeam,
-        otherTop: otherTop
-      };
-      // console.log('CONTRIBUTORS OBJ', contributorsObj);
+    // var otherTop = findOtherTop(users, {followers: 500, repos: 100, gists: 100});
+    var contributorsObj = {
+      coreTeam: coreTeam
+    };
+
+    // findOtherTop(users, {followers: 500, repos: 100, gists: 100}).then(function(otherTop) {
+    //   // console.log('OTHERTOP ', otherTop);
+    //   var contributorsObj = {
+    //     coreTeam: coreTeam,
+    //     otherTop: otherTop
+    //   };
       deferred.resolve(contributorsObj);
-    });
+    // });
   });
   return deferred.promise;
 };
