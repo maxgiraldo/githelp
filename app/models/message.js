@@ -5,6 +5,8 @@ var Q = require('q');
 var MessageSchema = new Schema({
   sender: {type: Schema.ObjectId,
           ref: "User"},
+  seen: {type: Boolean,
+        default: false},
   content: String,
   created: {type: Date,
     default: Date.now}
