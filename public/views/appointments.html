@@ -6,9 +6,9 @@
 
         <div class='appointment-box' data-ng-repeat="appointment in userAppointments">
           <div class='status status-pending'>
-            <h1 class='alert-type' data-ng-hide="!appointment.confirm">Status: Approved!</h1>
-            <h1 class='alert-type' data-ng-show="(appointment.merchant._id === global.user._id) && !appointment.confirm"><a href="/#!/{{global.user.userName}}/confirm/{{appointment._id}}">Status: Uncomfirmed...confirm now!</a></h1>
-            <h1 class='alert-type' data-ng-show="(appointment.merchant._id !== global.user._id) && !appointment.confirm">Status: Awaiting merchant approval...</h1>
+            <h1 class='alert-type' data-ng-hide="!appointment.confirmed">Status: Approved!</h1>
+            <h1 class='alert-type' data-ng-show="(appointment.merchant._id === global.user._id) && !appointment.confirmed"><a href="/#!/{{global.user.userName}}/confirm/{{appointment._id}}">Status: Uncomfirmed...confirm now!</a></h1>
+            <h1 class='alert-type' data-ng-show="(appointment.merchant._id !== global.user._id) && !appointment.confirmed">Status: Awaiting merchant approval...</h1>
           </div>
           <img class='avatar-lg appt' src='{{appointment.customer.github.avatar_url}}' data-ng-show="appointment.merchant._id === global.user._id">
           <img class='avatar-lg appt' src='{{appointment.merchant.github.avatar_url}}' data-ng-show="appointment.customer._id === global.user._id">
