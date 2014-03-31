@@ -7,7 +7,7 @@ var googleapis = require('googleapis'),
 var auth = new googleapis.OAuth2Client();
 
 auth.setCredentials({
-  access_token: 'ya29.1.AADtN_Ua4u91cZmk2xxMqjwwrsMy0wc53uVWCr8Vl0xBdJL8WEOnzQyCuUdzVcQ6ORMjYw',
+  access_token: 'ya29.1.AADtN_V5k2GoxjVseHRoHzEzeVMJf8lv9FRVSnhUG9T2sciYYlmzPXdUFJyNv6DhZp6XLZQ',
   refresh_token: '1/avW6alyUFB41zUsFCabHcg1dAzQWzozEPmPHqbH_gz4'
 });
 
@@ -23,7 +23,7 @@ exports.sendEventInvite = function(apptObj, done){
   console.log('endTime', endTime);
   var topic = apptObj.topic;
 
-  mailer.attendeesEmail(apptObj).then(function(users) { // add a .fail case later
+  mailer.attendeesObj(apptObj).then(function(users) { // add a .fail case later
     console.log('attendees', users[0].email, users[1].email);
     var attendees = [
       {'email': users[0].email},

@@ -50,7 +50,24 @@ angular.module('githelp.controllers.appointment', [])
     $scope.$apply();
     $scope.amountToCharge = $scope.totalAmount;
     alert('inserting' + $scope.amountToCharge + 'into your bank account.');
-  }
+
+    var txDescription = '';
+    console.log('amt to charge', $scope.amountToCharge);
+
+    var transaction = {
+      amount: $scope.amountToCharge,
+      appointmentId: req.params.appointmentId // contains merchant and customer info
+    };
+
+    $http.post('/payments/charge', transaction).success(function(response) { // run payments.debitCard
+      console.log(response);
+      $scope.txComplete = response;
+    });
+    // payments.debitCard($scope.amountToCharge, txDescription, cardObj);
+    // need to associate card with customer
+    // get card or customer token via get to user's model
+    // post to payments.debitCard
+  };
 
   // VIDEO CHAT
   $scope.initializeVideo = function(){
