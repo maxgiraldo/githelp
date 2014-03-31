@@ -27,7 +27,7 @@ passport.use(new GitHubStrategy({
   // Below are JHK's Keys
   clientID: '71778e134296a29071f4',
   clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
-  callbackURL: "http://localhost:3000/auth/github/callback"
+  callbackURL: "http://192.168.1.174:3000/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({ githubId: profile.id }, function (err, user) {
@@ -148,6 +148,7 @@ module.exports = function(app) {
   app.post('/query', index.results);
   app.post('/create/cc', payments.createCard);
   app.post('/create/appointment', appointments.create);
+  app.post('/payments/charge', payments.debitCard);
   // app.get('/email', appointments.sendEmail);
 
   app.post('/create/ba', payments.createBankAcct);

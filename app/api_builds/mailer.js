@@ -34,7 +34,7 @@ var smtpTransport = nodemailer.createTransport("SMTP",{
 //   return deferred.promise;
 // };
 
-exports.attendeesEmail = function(apptObj) {
+exports.attendeesObj = function(apptObj) {
   var deferred = Q.defer();
   // console.log('custObj', apptObj.customer);
   User.find({$or: [{_id: apptObj.customer},{_id: apptObj.merchant}]}, function(err, users) {
@@ -97,3 +97,9 @@ exports.sendEmail = function(htmlBody, toEmail) {
   });
 
 };
+
+
+
+
+
+

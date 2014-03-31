@@ -5,14 +5,16 @@ angular.module('githelp.controllers.appointment', [])
     function ($scope, $state, Global, $http, Appointment, $filter) {
       // $scope.global = Global;
 
-    $scope.confirmAppointment = function(){
-      var newAppointment = new Appointment({
-        appointmentId: $stateParams.appointmentId
-      });
-      newAppointment.$save(function(data){
-        console.log("we confirmed the appointment!")
-      });
+  $scope.confirmAppointment = function(){
+    var newAppointment = new Appointment({
+      appointmentId: $stateParams.appointmentId
+    });
+    newAppointment.$save(function(data){
+      console.log("we confirmed the appointment!")
+    });
   };
+
+  var appointmentSock = new SockJS('/echo');
 
   // TIMER
   // Initialize timer variables
@@ -31,31 +33,62 @@ angular.module('githelp.controllers.appointment', [])
   $scope.timerOn = false;
 
   $scope.startTimer = function() {
-    $scope.timerOn = true;
     $scope.timerId = setInterval(function() {
-      $scope.seconds++;
-      $scope.totalSeconds++;
-      if ($scope.seconds === 60) {
-        $scope.totalMinutes++;
-        $scope.minutes++;
-        $scope.seconds = 0;
-      } else if ($scope.minutes === 60) {
-        $scope.hours++;
-        $scope.totalHours++;
-        $scope.minutes = 0;
-      }
-      $scope.totalAmount = $scope.merchantPrice * ($scope.totalSeconds / 60.0);
-      $scope.$apply();
+      appointmentSock.send("ping");
     }, 1000);
   };
+
+  appointmentSock.onopen = function() {
+    console.log('open');
+  };
+
+  appointmentSock.onmessage = function(e) {
+    $scope.timerOn = true;
+    $scope.seconds++;
+    $scope.totalSeconds++;
+    if ($scope.seconds === 60) {
+      $scope.totalMinutes++;
+      $scope.minutes++;
+      $scope.seconds = 0;
+    } else if ($scope.minutes === 60) {
+      $scope.hours++;
+      $scope.totalHours++;
+      $scope.minutes = 0;
+    }
+    $scope.totalAmount = $scope.merchantPrice * ($scope.totalSeconds / 60.0);
+    $scope.$apply();
+  };
+
+  appointmentSock.onclose = function() {
+    console.log('sockjs close');
+  };
+
+
 
   $scope.stopTimer = function() {
     if ($scope.timerId) { clearInterval($scope.timerId)};
     $scope.totalAmount = $scope.merchantPrice * ($scope.totalSeconds / 60.0);
     $scope.amountToCharge = $filter('currency')($scope.totalAmount, '$');
     $scope.$apply();
-    alert('inserting ' + $scope.amountToCharge + ' into your bank account.');
+    alert('inserting' + $scope.amountToCharge + 'into your bank account.');
   }
+    var txDescription = '';
+    console.log('amt to charge', $scope.amountToCharge);
+
+    var transaction = {
+      amount: $scope.amountToCharge,
+      appointmentId: req.params.appointmentId // contains merchant and customer info
+    };
+
+    $http.post('/payments/charge', transaction).success(function(response) { // run payments.debitCard
+      console.log(response);
+      $scope.txComplete = response;
+    });
+    // payments.debitCard($scope.amountToCharge, txDescription, cardObj);
+    // need to associate card with customer
+    // get card or customer token via get to user's model
+    // post to payments.debitCard
+  };
 
   // VIDEO CHAT
   var sessionId = "2_MX40NDcwOTUxMn5-V2VkIE1hciAyNiAxODoxMDowNCBQRFQgMjAxNH4wLjI0Nzk5MTI2fg";
