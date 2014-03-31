@@ -82,16 +82,20 @@ var debitCard = function(amount, cardObj, customerObj) { // amount in cents
 };
 
 var cardUri = function(cardToken) {
-  return '/cards/' + cardToken;
+  var uri = '/cards/' + cardToken;
+  console.log('cardToken ', cardToken);
+  console.log('uri ', uri);
+  return uri;
 };
 
 var bankUri = function(bankToken) {
-  return '/bank_accounts/' + bankToken;
+  var uri = '/bank_accounts/' + bankToken;
+  return uri;
 };
 
 exports.debitCard = function(amount, description, cardToken) {
-  var cardUri = cardUri(cardToken);
-  balanced.get(cardUri).debit({
+  var cardUriStr = cardUri(cardToken);
+  balanced.get(cardUriStr).debit({
     'amount': amount,
     'appears_on_statement_as': 'githelp.co',
     'description': description

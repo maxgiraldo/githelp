@@ -33,16 +33,19 @@ balanced.configure('ak-test-1dsNimzLa65kRDXzRzGgLQ5Gqoi8sIwCU'); // test API key
 // sending amount, description, and appointmentId
 
 exports.debitCard = function(req, res) {
-  console.log('req', req);
+  // console.log('req', req);
   var amount = req.body.amount;
   console.log('AMOUNT ', amount); // needs to be in cents
-  var appointmentId = req.body.appointmentId;
+  var sessionId = req.body.sessionId;
+  console.log('sessionId', sessionId);
 
-  Appointment.findById(appointmentId, function(err, apptObj) {
+  Appointment.findById(sessionId, function(err, apptObj) {
     User.findById(apptObj.customer, function(err, customer) {
       User.findById(apptObj.merchant, function(err, merchant) {
+        console.log('customer', customer.email);
+        console.log('merchant', merchant.email);
         var description = "Payment for githelp from " + merchant.userName;
-        var cardToken = customer.balancedCard; // fetch card obj with customer token;
+        var cardToken = customer.balancedUser; // fetch card obj with customer token;
         payments.debitCard(amount, description, cardToken); // write callbacks
       });
     });

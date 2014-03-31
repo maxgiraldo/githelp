@@ -1,13 +1,13 @@
 // This works
 
 angular.module('githelp.controllers.appointment', [])
-  .controller('AppointmentController', ['$scope', '$state', 'Global', '$http', 'Appointment', '$filter',
-    function ($scope, $state, Global, $http, Appointment, $filter) {
+  .controller('AppointmentController', ['$scope', '$state', 'Global', '$http', 'Appointment', '$stateParams', '$filter',
+    function ($scope, $state, Global, $http, Appointment, $filter, $stateParams) {
       // $scope.global = Global;
 
   $scope.confirmAppointment = function(){
     var newAppointment = new Appointment({
-      appointmentId: $stateParams.appointmentId
+      appointmentId: $stateParams.sessionId
     });
     newAppointment.$save(function(data){
       console.log("we confirmed the appointment!")
@@ -30,6 +30,7 @@ angular.module('githelp.controllers.appointment', [])
   $scope.merchantPrice = 2.50;
 
   $scope.totalAmount = 0;
+  // $scope.amountToCharge = 0;
   $scope.timerOn = false;
 
   $scope.startTimer = function() {
@@ -60,33 +61,33 @@ angular.module('githelp.controllers.appointment', [])
   };
 
   appointmentSock.onclose = function() {
-    alert('sockjs close');
+    // alert('sockjs close');
+    if ($scope.timerId) { clearInterval($scope.timerId)};
     $scope.totalAmount = $scope.merchantPrice * ($scope.totalSeconds / 60.0);
     $scope.amountToCharge = $filter('currency')($scope.totalAmount, '$');
+    console.log($scope.amountToCharge);
     $scope.$apply();
   };
 
 
 
   $scope.stopTimer = function() {
-    if ($scope.timerId) { clearInterval($scope.timerId)};
     appointmentSock.close();
 
     alert('inserting' + $scope.amountToCharge + 'into your bank account.');
-
-    var txDescription = '';
     console.log('amt to charge', $scope.amountToCharge);
 
-    var transaction = {
-      amount: $scope.amountToCharge,
-      appointmentId: $stateParams.appointmentId // contains merchant and customer info
+    var txObj = {
+      // amount: $scope.amountToCharge,
+      amount: 15,
+      sessionId: '5338ae556ea2b600005f68ec'
+      // sessionId: $stateParams.sessionId // contains merchant and customer info
     };
 
-    $http.post('/payments/charge', transaction).success(function(response) { // run payments.debitCard
+    $http.post('/charge', txObj).success(function(response) { // run payments.debitCard
       console.log(response);
-      $scope.txComplete = response;
+      // $scope.txComplete = response;
     });
-  };
   };
   // VIDEO CHAT
   var sessionId = "2_MX40NDcwOTUxMn5-V2VkIE1hciAyNiAxODoxMDowNCBQRFQgMjAxNH4wLjI0Nzk5MTI2fg";
