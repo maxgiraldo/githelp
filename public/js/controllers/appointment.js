@@ -60,18 +60,20 @@ angular.module('githelp.controllers.appointment', [])
   };
 
   appointmentSock.onclose = function() {
-    console.log('sockjs close');
+    alert('sockjs close');
+    $scope.totalAmount = $scope.merchantPrice * ($scope.totalSeconds / 60.0);
+    $scope.amountToCharge = $filter('currency')($scope.totalAmount, '$');
+    $scope.$apply();
   };
 
 
 
   $scope.stopTimer = function() {
     if ($scope.timerId) { clearInterval($scope.timerId)};
-    $scope.totalAmount = $scope.merchantPrice * ($scope.totalSeconds / 60.0);
-    $scope.amountToCharge = $filter('currency')($scope.totalAmount, '$');
-    $scope.$apply();
+    appointmentSock.close();
+
     alert('inserting' + $scope.amountToCharge + 'into your bank account.');
-  }
+
     var txDescription = '';
     console.log('amt to charge', $scope.amountToCharge);
 
@@ -89,7 +91,7 @@ angular.module('githelp.controllers.appointment', [])
     // get card or customer token via get to user's model
     // post to payments.debitCard
   };
-
+  };
   // VIDEO CHAT
   var sessionId = "2_MX40NDcwOTUxMn5-V2VkIE1hciAyNiAxODoxMDowNCBQRFQgMjAxNH4wLjI0Nzk5MTI2fg";
   var apiKey = '44709512';
