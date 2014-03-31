@@ -40,6 +40,10 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
             url: '/booking',
             templateUrl: 'views/booking.html'
           })
+          .state('profile.settings', {
+            url: '/settings',
+            templateUrl: 'views/settings.html'
+          })
           .state('profile.repo', {
             url: '/repos/:repoName',
             templateUrl: 'views/profile.repos.html'

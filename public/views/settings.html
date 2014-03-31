@@ -1,0 +1,11 @@
+<section data-ng-controller="UserController" data-ng-init="" ui-view>
+  <div class="container">
+    <h1 class='headline'>Transaction Settings</h1>
+      <!-- <h2><a href="/#!/{{global.user.userName}}/settings/earnings">Earnings</h2> -->
+      <!-- <h2><a href="/#!/{{global.user.userName}}/settings/payments">Payments</h2> -->
+      <p class="caps-sub-header">Payments</p>
+      <section data-ng-show="global.authenticated" data-ng-include data-src="'views/partials/creditcard.html'"></section>
+      <p class="caps-sub-header">Earnings</p>
+      <section data-ng-show="global.authenticated" data-ng-include data-src="'views/partials/bankaccount.html'"></section>
+  </div>
+</section>

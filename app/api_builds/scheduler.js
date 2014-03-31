@@ -70,43 +70,53 @@ exports.sendEventInvite = function(apptObj, done){
       {'email': users[1].email}
     ];
     // console.log('attendees', attendees);
+    tokens.get({
+      // use the email address of the service account, as seen in the API console
+      email: '1062441697172-btqgv7qv73qi7pa4mscn26rih20oc1e9@developer.gserviceaccount.com',
+      // use the PEM file we generated from the downloaded key
+      keyFile: 'google_secret.pem',
+      // specify the scopes you wish to access
+      scopes: ['https://www.googleapis.com/auth/calendar']
+    }, function (err, token) {
+      if(err) {console.log(err);}
+      console.log('token?', token);
+      var urlObj = {
+        uri: 'https://www.googleapis.com/calendar/v3/calendars/gitsomehelp@gmail.com/events?access_token='+token,
+        // body: {
+        //   "end": {
+        //     // "date": endDate, //yyyy-mm-dd
+        //     "dateTime": endTime,
+        //     "timeZone": "America/New_York" // optional
+        //   },
+        //   "start": {
+        //     // "date": startDate, //yyyy-mm-dd date optional if have dateTime
+        //     "dateTime": startTime,
+        //     "timeZone": "America/New_York" // optional
+        //   },
+        //   "attendees": attendees, // array of objects with email as key
+        //   "creator": {
+        //     email: 'wainetam@gmail.com',
+        //     displayName: 'githelp.co'
+        //   },
+        //   "source": {
+        //     title: 'Event details on githelp.co',
+        //     url: 'http://www.google.com' // add link to githelp session_id; needs to be live link
+        //   },
+        //   "summary": topic || "", // TITLE
+        //   "description": "" // description body in event
+        // },
+        // headers: {
+        //   sendNotifications: true
+        // }
+      };
 
-    var urlObj = {
-      uri: 'https://www.googleapis.com/calendar/v3/calendars/gitsomehelp@gmail.com/events',
-      body: {
-        "end": {
-          // "date": endDate, //yyyy-mm-dd
-          "dateTime": endTime,
-          "timeZone": "America/New_York" // optional
-        },
-        "start": {
-          // "date": startDate, //yyyy-mm-dd date optional if have dateTime
-          "dateTime": startTime,
-          "timeZone": "America/New_York" // optional
-        },
-        "attendees": attendees, // array of objects with email as key
-        "creator": {
-          email: 'wainetam@gmail.com',
-          displayName: 'githelp.co'
-        },
-        "source": {
-          title: 'Event details on githelp.co',
-          url: 'http://www.google.com' // add link to githelp session_id; needs to be live link
-        },
-        "summary": topic || "", // TITLE
-        "description": "" // description body in event
-      },
-      headers: {
-        sendNotifications: true
-      }
-    };
+      request(urlObj, function(err, response, body) { // request takes an object w parameters: method, uri
+        if(err && response.statusCode !== 200) {
+          console.log('Request error.');
+        }
+        console.log('BODY?', body);
+      });
 
-    request(urlObj, function(err, response, body) { // request takes an object w parameters: method, uri
-
-      if(err && response.statusCode !== 200) {
-        console.log('Request error.');
-      }
-      console.log('BODY?', body);
     });
   });
 

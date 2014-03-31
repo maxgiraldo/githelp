@@ -1,56 +1,54 @@
 <section data-ng-controller="UserController" data-ng-init="findOne()" ui-view>
-  <section data-ng-show="global.authenticated">
-    <div class="container profile">
-      <div>
-        <img class='avatar-lg' src='{{user.github.avatar_url}}'>
-      </div>
-      <div class='profile-name-info'>
-        <h1 class='headline full-name'>{{user.fullName}}</h1>
-        <h2 class='username'><a href="http://www.github.com/{{user.userName}}"><i class="fa fa-github"></i> {{user.userName}}</a></h2>
-        <h2 data-ng-show = "user.github.blog" class="username"><a href="http://www.{{user.github.blog}}"><i class="fa fa-link"></i> {{user.github.blog}}</a></h2>
-        <h4 class='price'>{{user.ppm || 2.00 | currency:"$"}}/minute<span ng-hide='user._id !== global.user._id'><a class='username' href="#" ng-click='editForm()' ng-show='user'><i id='edit' class="fa fa-pencil"></i></a></span></h4>
 
-        <div data-ng-show="showForm">
-          <form ng-submit='submitEdit()'>
-            <!-- <label>$</label> -->
-            <input class='form-control' type="text" data-ng-model="user.ppm">
-            <!-- <label>Self Intro:</label>
-            <textarea type="text" data-ng-model="intro"></textarea>
-            <div data-ng-include data-src="'views/partials/creditcard.html'"></div> -->
-            <input type="submit" value='submit' ng-click='editForm()'/>
-          </form>
-        </div>
-      </div>
+  <div class="container profile">
+    <div>
+      <img class='avatar-lg' src='{{user.github.avatar_url}}'>
+    </div>
+    <div class='profile-name-info'>
+      <h1 class='headline full-name'>{{user.fullName}}</h1>
+      <h2 class='username'><a href="http://www.github.com/{{user.userName}}"><i class="fa fa-github"></i> {{user.userName}}</a></h2>
+      <h2 data-ng-show = "user.github.blog" class="username"><a href="http://www.{{user.github.blog}}"><i class="fa fa-link"></i> {{user.github.blog}}</a></h2>
+      <h4 class='price'>{{user.ppm || 2.00 | currency:"$"}}/minute<span ng-hide='user._id !== global.user._id'><a class='username' href="#" ng-click='editForm()' ng-show='user'><i id='edit' class="fa fa-pencil"></i></a></span></h4>
 
-      <div data-ng-click="setAppointment()" data-ng-show="user && user._id !== global.user._id" class='call-button headline'>
-        <p>Set up a call</p>
-      </div>
-      <div data-ng-hide="user">
-        <h1>This user does not yet have an account</h1>
-      </div>
-
-      <!-- User's public repos -->
-      <p data-ng-show="repoList.length > 0" class='caps-sub-header'>{{user.github.public_repos.length}} public repositories</p>
-      <!-- <div ng-repeat="repo in repos"> -->
-      <div>
-        <ul class='repo-links'>
-          <li data-ng-repeat="repo in repoList" data-ng-show="!repo.fork"><a href="/#!/{{userName}}/repos/{{repo.name}}">{{repo.name}}</a></li>
-        </ul>
-      </div>
-      <p data-ng-show="conList.length > 0" class='caps-sub-header'>top {{conList.length}} repositories contributed to</p>
-
-      <!-- User's top contributions -->
-      <div>
-        <ul class='repo-links'>
-          <li data-ng-repeat="repo in conList"><a href="/#!/{{repoAuthor(repo)}}/repos/{{repoName(repo)}}">{{repoName(repo)}}</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class='caps-sub-header'>Number of Gists: {{user.github.public_gists}}</p>
-        <p data-ng-show="user.email" class='caps-sub-header'>Email: {{user.email}}</p>
-        <p class='caps-sub-header'>Followers: {{user.github.followers}}</p>
+      <div data-ng-show="showForm">
+        <form ng-submit='submitEdit()'>
+          <!-- <label>$</label> -->
+          <input class='form-control' type="text" data-ng-model="user.ppm">
+          <!-- <label>Self Intro:</label>
+          <textarea type="text" data-ng-model="intro"></textarea>
+          <div data-ng-include data-src="'views/partials/creditcard.html'"></div> -->
+          <input type="submit" value='submit' ng-click='editForm()'/>
+        </form>
       </div>
     </div>
-  </section>
-  <section data-ng-hide="global.authenticated" data-ng-include data-src="'views/partials/needAuthorization.html'"></section>
+
+    <div data-ng-click="setAppointment()" data-ng-show="user && user._id !== global.user._id" class='call-button headline'>
+      <p>Set up a call</p>
+    </div>
+    <div data-ng-hide="user">
+      <h1>This user does not yet have an account</h1>
+    </div>
+
+    <!-- User's public repos -->
+    <p data-ng-show="repoList.length > 0" class='caps-sub-header'>{{user.github.public_repos.length}} public repositories</p>
+    <!-- <div ng-repeat="repo in repos"> -->
+    <div>
+      <ul class='repo-links'>
+        <li data-ng-repeat="repo in repoList" data-ng-show="!repo.fork"><a href="/#!/{{userName}}/repos/{{repo.name}}">{{repo.name}}</a></li>
+      </ul>
+    </div>
+    <p data-ng-show="conList.length > 0" class='caps-sub-header'>top {{conList.length}} repositories contributed to</p>
+
+    <!-- User's top contributions -->
+    <div>
+      <ul class='repo-links'>
+        <li data-ng-repeat="repo in conList"><a href="/#!/{{repoAuthor(repo)}}/repos/{{repoName(repo)}}">{{repoName(repo)}}</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class='caps-sub-header'>Number of Gists: {{user.github.public_gists}}</p>
+      <p data-ng-show="user.email" class='caps-sub-header'>Email: {{user.email}}</p>
+      <p class='caps-sub-header'>Followers: {{user.github.followers}}</p>
+    </div>
+  </div>
 </section>
