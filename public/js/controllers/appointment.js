@@ -14,6 +14,48 @@ angular.module('githelp.controllers.appointment', [])
       });
   };
 
+  // TIMER
+  // Initialize timer variables
+  $scope.timerId      = 0;
+  $scope.totalSeconds = 0;
+  $scope.totalMinutes = 0;
+  $scope.totalHours   = 0;
+  $scope.seconds      = 0;
+  $scope.minutes      = 0;
+  $scope.hours        = 0;
+
+  // Set Default Merchant Price
+  $scope.merchantPrice = 2.50;
+  $scope.totalAmount = 0;
+  $scope.timerOn = false;
+
+  $scope.startTimer = function() {
+    $scope.timerOn = true;
+    $scope.timerId = setInterval(function() {
+      $scope.seconds++;
+      $scope.totalSeconds++;
+      if ($scope.seconds === 60) {
+        $scope.totalMinutes++;
+        $scope.minutes++;
+        $scope.seconds = 0;
+      } else if ($scope.minutes === 60) {
+        $scope.hours++;
+        $scope.totalHours++;
+        $scope.minutes = 0;
+      }
+      $scope.totalAmount = $scope.merchantPrice * ($scope.totalSeconds / 60.0);
+      $scope.$apply();
+    }, 1000);
+  };
+
+  $scope.stopTimer = function() {
+    if ($scope.timerId) { clearInterval($scope.timerId)};
+    $scope.totalAmount = $scope.merchantPrice * ($scope.totalSeconds / 60.0);
+    $scope.$apply();
+    $scope.amountToCharge = $scope.totalAmount;
+    alert('inserting' + $scope.amountToCharge + 'into your bank account.');
+  }
+
   // VIDEO CHAT
   var sessionId = "2_MX40NDcwOTUxMn5-V2VkIE1hciAyNiAxODoxMDowNCBQRFQgMjAxNH4wLjI0Nzk5MTI2fg";
   var apiKey = '44709512';

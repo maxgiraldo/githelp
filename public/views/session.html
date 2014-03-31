@@ -13,8 +13,11 @@
         {{totalAmount | currency:"$"}}
       </span>
     </h3>
-    <div class='end-session headline'>
-      <p class='button-txt' ng-click='stopTimer()'>End session</p>
+    <div class='start-session headline' ng-click='startTimer()' ng-show='timerOn === false'>
+      <p class='button-txt'>Start session</p>
+    </div>
+    <div class='end-session headline' ng-click='stopTimer()' ng-show='timerOn === true'>
+      <p class='button-txt'>End session</p>
     </div>
   </div>
   <!-- Call info box end -->
@@ -26,8 +29,3 @@
     </ul>
   </div>
 </section>
-<!--
-<script type="text/javascript">
-var editor = ace.edit("firepad-container");
-          editor.setTheme("ace/theme/monokai");
-</script> -->
