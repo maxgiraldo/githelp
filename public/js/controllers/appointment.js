@@ -29,7 +29,7 @@ angular.module('githelp.controllers.appointment', [])
   $scope.hours        = 0;
 
   // Set Default Merchant Price
-  $scope.merchantPrice = 2.50;
+  $scope.merchantPrice = 2.00;
 
   $scope.totalAmount = 0;
 
