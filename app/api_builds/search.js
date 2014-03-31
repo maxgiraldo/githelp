@@ -105,7 +105,7 @@ exports.userStats = function(username) {
       console.log('Request error.');
       deferred.reject(err);
     }
-    console.log('repoList', repoList);
+    // console.log('repoList', repoList);
     console.log('repoList count', repoList.length);
     repoList = JSON.parse(repoList);
 
@@ -234,12 +234,12 @@ exports.repoStats = function(repoUrl) {  // rails/rails
 exports.getContributors = function(author, repo) { // author, repo
   var deferred = Q.defer();
   var repoQ = new Repo(author, repo);
-  console.log('repoObj', repoQ);
+  // console.log('repoObj', repoQ);
 
   github.repos.getContributors(repoQ, function(err, users) {
     if(err) { console.log(err); }
     // console.log('twbs contributors ', data[50]);
-    console.log('USERS ', users);
+    // console.log('USERS ', users);
     var coreTeam = topContributors(users, 1);
     // console.log('CORE ', coreTeam); // of top 100 users, returns those w/ at least 1% of the total contribs of top 100
 

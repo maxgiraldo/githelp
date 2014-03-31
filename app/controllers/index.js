@@ -18,7 +18,7 @@ exports.render = function(req, res) {
 };
 
 exports.results = function(req, res) {
-  console.log('BODY', req.body);
+  // console.log('BODY', req.body);
   // var data = search.userStats(req.body.queryInput);
   search.query(req.body.queryInput, false, false).then(function(results) {
     console.log("hey ji ho was here");

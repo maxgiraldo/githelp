@@ -59,10 +59,14 @@ passport.use(new GitHubStrategy({
   }
 ));
 
+// clientID: "1062441697172-33jpstb44qdojs5j4nvkkuqjddisbkuf.apps.googleusercontent.com",
+// clientSecret: "pMISlGf7iRg41t9Y7Nxhxk97",
+// callbackURL: "https://localhost:3000/auth/google/callback"
+
 passport.use(new GoogleStrategy({
     clientID: "700936463795-3ettb8q7r93i281rp9mrtt8qd6q3k4uv.apps.googleusercontent.com",
     clientSecret: "5TfB_7aHC6mL9SyPHQNtMPBM",
-    callbackURL: "http://localhost:3000/auth/google/callback"
+    callbackURL: "https://localhost:3000/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({ googleId: profile.id }, function (err, user) {
@@ -76,6 +80,7 @@ passport.use(new GoogleStrategy({
           google: profile._json,
           refreshToken: refreshToken
         });
+        console.log('token?', u);
         u.save(function(err){
           return done(err, u);
         });
@@ -113,10 +118,14 @@ module.exports = function(app) {
 
 
 
+  // app.get('/auth/google',
+  //   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile',
+  //                                           'https://www.googleapis.com/auth/userinfo.email',
+  //                                           'https://www.googleapis.com/auth/calendar'] }),
+  //   users.signin);
+
   app.get('/auth/google',
-    passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile',
-                                            'https://www.googleapis.com/auth/userinfo.email',
-                                            'https://www.googleapis.com/auth/calendar'] }),
+    passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/calendar'] }),
     users.signin);
 
 
@@ -124,8 +133,19 @@ module.exports = function(app) {
     passport.authenticate('google', { failureRedirect: '/login' }),
     function(req, res) {
       // Successful authentication, redirect home.
+      console.log('GOOG?', req);
       res.redirect('/');
     });
+
+  // var githelpGoog = {
+  //   username: gitsomehelp,
+  //   password: githelp123
+  // };
+
+  // req.logIn(githelpGoog, function(err) {
+  //   if(err) { return next(err); }
+  //   return res.redirect('/');
+  // });
 
   app.post('/appointment', appointments.confirm);
   app.get('/appointments/:appointmentId', appointments.toSession);
@@ -162,5 +182,5 @@ module.exports = function(app) {
 
   app.get('/session', function(req, res) {
     res.render('session');
-  })
+  });
 };
