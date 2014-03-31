@@ -72,7 +72,9 @@ exports.debitCard = function(req, res) {
 exports.createCard = function(req, res) {
   console.log('in createCard');
   var ccObj = req.body;
-  // var userName = 'req.params.userName' // need userName to find in DB; assume to be in params for now
+  var userName = ccObj.userName;
+  // var userName = req.params.userName; // need userName to find in DB; assume to be in params for now
+  console.log('userNameParams', userName);
   console.log('CC', ccObj);
   balanced.marketplace.cards.create(ccObj)
     .then(function(card) {
@@ -88,7 +90,10 @@ exports.createCard = function(req, res) {
 };
 
 exports.createBankAcct = function(req, res) {
+  console.log(req);
   var bankObj = req.body;
+  var userName = bankObj.userName;
+  console.log('userNameParams', userName);
   console.log('BA', bankObj);
   balanced.marketplace.bank_accounts.create(bankObj)
     .then(function(account) {

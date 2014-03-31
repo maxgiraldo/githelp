@@ -145,6 +145,7 @@ angular.module('githelp.controllers.user', [])
     // $scope.cc = {};
 
     $scope.cc = {
+      userName: $scope.userName,
       name: "",
       number: "",
       expiration_month: "",
@@ -153,6 +154,7 @@ angular.module('githelp.controllers.user', [])
     };
 
     $scope.ba = {
+      userName: $scope.userName,
       name: "",
       routing_number: "",
       account_type: "",
