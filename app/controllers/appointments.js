@@ -21,6 +21,33 @@ var getEmailByUser = function(username) {
   return deferred.promise;
 };
 
+var configConfirmOpt = function(apptObj, fromUserName, toUserName, ppm, merchantEmail, done) {
+  var estIncome = (apptObj.duration * ppm).toFixed(2);
+  // console.log('id', apptObj._id);
+  var appointmentId = apptObj._id;
+  var date = moment.utc(apptObj.date).format('MMMM Do YYYY'); // don't need add'l format string bc ISO format
+  // console.log('DATE in email', date);
+  var time = moment.utc(apptObj.time).local().format('h:mm A');
+  var duration = apptObj.duration + " minutes";
+  var to = merchantEmail;
+  var subject = "Githelp - "+fromUserName+" needs your help!";
+
+  var object = {
+    estIncome: estIncome,
+    appointmentId: appointmentId,
+    date: date,
+    time: time,
+    duration: duration,
+    fromUserName: fromUserName,
+    toUserName: toUserName,
+    ppm: ppm,
+    to: to,
+    subject: subject
+  };
+  done(object);
+};
+
+
 exports.create = function(req, res) {
   var duration = req.body.duration;
   var merchant = req.body.merchant; // merchant username
@@ -52,11 +79,13 @@ exports.create = function(req, res) {
     });
     var ppm = user.ppm;
     // send out email
-    var htmlBody = mailer.composeHtmlBody(newAppointment, customer.userName, merchant, ppm);
-    mailer.sendEmail(htmlBody, user.email, "githelp Request!"); //user.email
-    res.jsonp(newAppointment);
-    // res.send(200);
-
+    configConfirmOpt(newAppointment, customer.userName, merchant, ppm, user.email, function(options){
+      mailer.sendConfirmEmail(options, function(err, response){
+        console.log(response);
+        console.log(options);
+        res.jsonp(newAppointment);
+      })
+    });
   });
 };
 
