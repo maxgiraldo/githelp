@@ -3,6 +3,8 @@ var googleapis = require('googleapis'),
     moment = require('moment'),
     mailer = require('./mailer'),
     Q = require('q');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
 
 var auth = new googleapis.OAuth2Client();
 
@@ -12,6 +14,23 @@ auth.setCredentials({
 });
 
 // console.log('AUTH', auth);
+
+var attendeesObj = function(apptObj) {
+  var deferred = Q.defer();
+  // console.log('custObj', apptObj.customer);
+  User.find({$or: [{_id: apptObj.customer},{_id: apptObj.merchant}]}, function(err, users) {
+    if(err) {
+      console.log(err);
+      deferred.reject(err);
+    }
+    // console.log('users', users);
+    deferred.resolve(users);
+  });
+  return deferred.promise;
+};
+
+
+
 
 exports.sendEventInvite = function(apptObj, done){
   var startTime = moment.utc(apptObj.time).toISOString();
@@ -23,7 +42,7 @@ exports.sendEventInvite = function(apptObj, done){
   console.log('endTime', endTime);
   var topic = apptObj.topic;
 
-  mailer.attendeesObj(apptObj).then(function(users) { // add a .fail case later
+  attendeesObj(apptObj).then(function(users) { // add a .fail case later
     console.log('attendees', users[0].email, users[1].email);
     var attendees = [
       {'email': users[0].email},
