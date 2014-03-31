@@ -16,7 +16,7 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
             }
           })
         .state('session', {
-          url: '/session/sessionId',
+          url: '/session/:sessionId',
           templateUrl: 'views/session.html'
         })
         .state('inbox', {
