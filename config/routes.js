@@ -146,7 +146,7 @@ module.exports = function(app) {
   //   if(err) { return next(err); }
   //   return res.redirect('/');
   // });
-
+  app.get('/appointment', appointments.appointmentsByUser);
   app.post('/appointment', appointments.confirm);
   app.get('/appointments/:appointmentId', appointments.toSession);
   app.get('/inbox', messages.findAllChatroom);

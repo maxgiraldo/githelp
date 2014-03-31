@@ -21,33 +21,6 @@ var getEmailByUser = function(username) {
   return deferred.promise;
 };
 
-var configConfirmOpt = function(apptObj, fromUserName, toUserName, ppm, merchantEmail, done) {
-  var estIncome = (apptObj.duration * ppm).toFixed(2);
-  // console.log('id', apptObj._id);
-  var appointmentId = apptObj._id;
-  var date = moment.utc(apptObj.date).format('MMMM Do YYYY'); // don't need add'l format string bc ISO format
-  // console.log('DATE in email', date);
-  var time = moment.utc(apptObj.time).local().format('h:mm A');
-  var duration = apptObj.duration + " minutes";
-  var to = merchantEmail;
-  var subject = "Githelp - "+fromUserName+" needs your help!";
-
-  var object = {
-    estIncome: estIncome,
-    appointmentId: appointmentId,
-    date: date,
-    time: time,
-    duration: duration,
-    fromUserName: fromUserName,
-    toUserName: toUserName,
-    ppm: ppm,
-    to: to,
-    subject: subject
-  };
-  done(object);
-};
-
-
 exports.create = function(req, res) {
   var duration = req.body.duration;
   var merchant = req.body.merchant; // merchant username
@@ -104,6 +77,7 @@ var sendMessage = function(appointmentId, message, user){
           newChatroom.save();
         } else{
           chatroom.messages.push(alert._id);
+          chatroom.save();
           alert.save();
         }
         return "hello";
@@ -112,29 +86,52 @@ var sendMessage = function(appointmentId, message, user){
   });
 };
 
-
-var sendReminder = function(apptObject){
+// should queue a bunch of requests and fire them off when their time is up
+var sendReminder = function(appt, done){
   return function(){
     setTimeout(function(){
       // console.log('moment', (moment(apptObject.time).subtract(moment(Date.now)).subtract('minutes', 1)).unix());
-      startSession();
-    }, (moment(apptObject.time).subtract(moment(Date.now)).subtract('minutes', 1)).unix()*1000);
+      startSession(appt);
+    }, (moment(appt.time).subtract(moment(Date.now)).subtract('minutes', 1)).unix()*1000);
   }()
 }
 
-// (moment(apptObject.time).subtract(moment(Date.now)).subtract('minutes', 1)).unix()
-
-
-
-// should queue a bunch of requests and fire them off when their time is up
-
-
-exports.toSession = function(req, res){
-  Appointment.findOne({_id: req.params.appointmentId}).populate('merchant').populate('customer').exec(function(err, appointment){
-    res.render('session', {appointment: appointment});
-    // session.jade already created, have to design
+var startSession = function(appt){
+  configReminderOpt(appt, function(options){
+    mailer.sendReminderEmail(options, function(err, response){
+      console.log(err, response);
+    });
   });
 };
+
+var configReminderOpt = function(appt, done){
+  var estIncome = (parseInt(appt.duration) * parseInt(appt.merchant.ppm)).toFixed(2);
+  // console.log('id', appt._id);
+  var appointmentId = appt._id;
+  var date = moment.utc(appt.date).format('MMMM Do YYYY'); // don't need add'l format string bc ISO format
+  // console.log('DATE in email', date);
+  var time = moment.utc(appt.time).local().format('h:mm A');
+  var duration = appt.duration + " minutes";
+  var to = appt.merchant.email+", "+appt.customer.email;
+  var subject = "Githelp - You have an appointment in 30 minutes!";
+  var url = 'http://192.168.1.178:3000/#!/session/'+appt._id;
+
+  var options = {
+    estIncome: estIncome,
+    appointmentId: appointmentId,
+    date: date,
+    time: time,
+    duration: duration,
+    merchant: appt.merchant.userName,
+    customer: appt.customer.userName,
+    ppm: appt.merchant.ppm,
+    to: to,
+    // this should be a string of emails separated by a comma
+    subject: subject,
+    url: url
+  };
+  done(options);
+}
 
 exports.confirmPage = function(req, res){
   res.render('confirm', {appointmentId: req.params.appointmentId});
@@ -142,7 +139,7 @@ exports.confirmPage = function(req, res){
 
 exports.confirm = function(req, res) {
   // var id = "id of appointment";
-  Appointment.findById(req.body.appointmentId, function(err, appt) {
+  Appointment.findOne({_id: req.body.appointmentId}).populate('merchant').populate('customer').exec(function(err, appt) {
     appt.confirmed = true;
     scheduler.sendEventInvite(appt);
     // startSession(appt);
@@ -153,10 +150,37 @@ exports.confirm = function(req, res) {
   res.send(200);
 }
 
+var configConfirmOpt = function(apptObj, fromUserName, toUserName, ppm, merchantEmail, done) {
+  var estIncome = (apptObj.duration * ppm).toFixed(2);
+  // console.log('id', apptObj._id);
+  var appointmentId = apptObj._id;
+  var date = moment.utc(apptObj.date).format('MMMM Do YYYY'); // don't need add'l format string bc ISO format
+  // console.log('DATE in email', date);
+  var time = moment.utc(apptObj.time).local().format('h:mm A');
+  var duration = apptObj.duration + " minutes";
+  var to = merchantEmail;
+  var subject = "Githelp - "+fromUserName+" needs your help!";
 
-var startSession = function(apptObject){
-  var html = "<a href='http://192.168.1.174:3000/#!/session/"+"5338ae556ea2b600005f68ec"+"'>Click to go to session</a>"
-  mailer.sendConfirmEmail(html, 'jihokoo@gmail.com, wainetam@gmail.com', 'Your unique link for upcoming githelp session');
+  var object = {
+    estIncome: estIncome,
+    appointmentId: appointmentId,
+    date: date,
+    time: time,
+    duration: duration,
+    fromUserName: fromUserName,
+    toUserName: toUserName,
+    ppm: ppm,
+    to: to,
+    subject: subject
+  };
+  done(object);
+};
+
+exports.toSession = function(req, res){
+  Appointment.findOne({_id: req.params.appointmentId}).populate('merchant').populate('customer').exec(function(err, appointment){
+    res.render('session', {appointment: appointment});
+    // session.jade already created, have to design
+  });
 };
 
 exports.endSession = function(req, res) { // untested as of 3/30 bc no new sessions created w new model
@@ -170,4 +194,23 @@ exports.endSession = function(req, res) { // untested as of 3/30 bc no new sessi
     res.send(200);
   });
 };
+
+exports.appointmentsByUser = function(req, res){
+  Appointment.find({$or: [{merchant: req.user._id}, {customer: req.user._id}]})
+  .populate('merchant')
+  .populate('customer')
+  .exec(function(err, appointments){
+    console.log(appointments);
+    res.jsonp({appointments: appointments})
+  })
+}
+
+
+
+
+
+
+
+
+
 

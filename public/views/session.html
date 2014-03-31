@@ -1,30 +1,33 @@
 <!-- <a href="/instances/{{ instanceId }}">{{instance.name}}</a> -->
 <section data-ng-controller="AppointmentController" data-ng-init="liveSession()">
-  <div class="container jumbotron" id='session-container'>
-  </div>
-  <!-- <div id="opentokVideos" style="..."></div> -->
-  <!-- Call info box -->
-  <div id='callInfoBox'>
-    <i id='clock' class="fa fa-clock-o"></i>
-    <h2 id='timer'>{{hours}}:{{minutes}}:{{seconds}}</h2>
-    <h3 class='total-container'>Total
-      <span id='total-amount'>
-        {{totalAmount | currency:"$"}}
-      </span>
-    </h3>
-    <div class='start-session headline' ng-click='startTimer()' ng-show='timerOn === false'>
-      <p class='button-txt'>Start session</p>
+  <section data-ng-show="global.authenticated">
+    <div class="container jumbotron" id='session-container'>
     </div>
-    <div class='end-session headline' ng-click='stopTimer()' ng-show='timerOn === true'>
-      <p class='button-txt'>End session</p>
+    <!-- <div id="opentokVideos" style="..."></div> -->
+    <!-- Call info box -->
+    <div id='callInfoBox'>
+      <i id='clock' class="fa fa-clock-o"></i>
+      <h2 id='timer'>{{hours}}:{{minutes}}:{{seconds}}</h2>
+      <h3 class='total-container'>Total
+        <span id='total-amount'>
+          {{totalAmount | currency:"$"}}
+        </span>
+      </h3>
+      <div class='start-session headline' ng-click='startTimer()' ng-show='timerOn === false'>
+        <p class='button-txt'>Start session</p>
+      </div>
+      <div class='end-session headline' ng-click='stopTimer()' ng-show='timerOn === true'>
+        <p class='button-txt'>End session</p>
+      </div>
     </div>
-  </div>
-  <!-- Call info box end -->
-  <div id="firepad-container"></div>
-  <div class='video-container'>
-    <ul>
-      <li><div id='videos'></div></li>
-      <li><div id='videos2'></div></li>
-    </ul>
-  </div>
+    <!-- Call info box end -->
+    <div id="firepad-container"></div>
+    <div class='video-container'>
+      <ul>
+        <li><div id='videos'></div></li>
+        <li><div id='videos2'></div></li>
+      </ul>
+    </div>
+  </section>
+  <section data-ng-hide="global.authenticated" data-ng-include data-src="'views/partials/needAuthorization.html'"></section>
 </section>
