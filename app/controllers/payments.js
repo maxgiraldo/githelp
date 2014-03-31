@@ -1,16 +1,15 @@
-/**
- * Module dependencies.
- */
-
-var payments = require('../api_builds/payments');
-
+// Module dependencies here
 var mongoose = require('mongoose'),
-  Payment = mongoose.model('Payment'),
-  User = mongoose.model('User'),
-  async = require('async'),
-  Q = require('q'),
-  balanced = require('balanced-official'),
-  _ = require('underscore');
+    async = require('async'),
+    Q = require('q'),
+    balanced = require('balanced-official'),
+    mailer = require('../api_builds/mailer'),
+    payments = require('../api_builds/payments'),
+    _ = require('underscore');
+// Specific mongoose models defined here
+var Payment = mongoose.model('Payment'),
+    User = mongoose.model('User'),
+    Appointment = mongoose.model('Appointment');
 
 balanced.configure('ak-test-1dsNimzLa65kRDXzRzGgLQ5Gqoi8sIwCU'); // test API key for Balanced Payments
 
@@ -31,7 +30,26 @@ balanced.configure('ak-test-1dsNimzLa65kRDXzRzGgLQ5Gqoi8sIwCU'); // test API key
 //   });
 // };
 
-var userName = 'wainetam'; // placeholder for now
+// sending amount, description, and appointmentId
+
+exports.debitCard = function(req, res) {
+  console.log('req', req);
+  var amount = req.body.amount;
+  console.log('AMOUNT ', amount); // needs to be in cents
+  var appointmentId = req.body.appointmentId;
+
+  Appointment.findById(appointmentId, function(err, apptObj) {
+    User.findById(apptObj.customer, function(err, customer) {
+      User.findById(apptObj.merchant, function(err, merchant) {
+        var description = "Payment for githelp from " + merchant.userName;
+        var cardToken = customer.balancedCard; // fetch card obj with customer token;
+        payments.debitCard(amount, description, cardToken); // write callbacks
+      });
+    });
+  });
+};
+
+// var userName = 'wainetam'; // placeholder for now
 
 exports.createCard = function(req, res) {
   console.log('RES', res);

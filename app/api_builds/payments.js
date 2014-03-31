@@ -32,9 +32,9 @@ var bankFormObj = {
 exports.createCard = function(cardFormObj) {
   balanced.marketplace.cards.create(cardFormObj)
   .then(function(card) {
-    // console.log('CARD ', card.toJSON());
+    console.log('CARD ', card.toJSON());
   }, function(err) {
-    // console.log(err);
+    console.log(err);
   });
 };
 
@@ -43,13 +43,13 @@ exports.createCard(cardFormObj);
 exports.createBankAccount = function(bankFormObj) {
   balanced.marketplace.bank_accounts.create(bankFormObj)
   .then(function(account) {
-    // console.log('ACCOUNT ', account.toJSON());
+    console.log('ACCOUNT ', account.toJSON());
   }, function(err) {
-    // console.log(err);
+    console.log(err);
   });
 };
 
-// exports.createBankAccount(bankFormObj);
+exports.createBankAccount(bankFormObj);
 
 // 965 Mission St  94103 AVS street matches
 
@@ -81,15 +81,24 @@ var debitCard = function(amount, cardObj, customerObj) { // amount in cents
     });
 };
 
-exports.debitCard = function(amount, description, cardObj) {
-  balanced.get(cardObj.href).debit({
+var cardUri = function(cardToken) {
+  return '/cards/' + cardToken;
+};
+
+var bankUri = function(bankToken) {
+  return '/bank_accounts/' + bankToken;
+};
+
+exports.debitCard = function(amount, description, cardToken) {
+  var cardUri = cardUri(cardToken);
+  balanced.get(cardUri).debit({
     'amount': amount,
     'appears_on_statement_as': 'githelp.co',
     'description': description
   }).then(function(debit) {
-    // console.log('debit', debit.toJSON());
+    console.log('debit completed', debit.toJSON());
   }, function(err) {
-    // console.log(err);
+    console.log(err);
   });
 };
 
