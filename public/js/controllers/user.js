@@ -1,10 +1,16 @@
 angular.module('githelp.controllers.user', [])
-  .controller('UserController', ['$scope', '$state', '$http', '$stateParams', 'Global', 'User', 'Inbox',
-    function ($scope, $state, $http, $stateParams, Global, User, Inbox) {
+  .controller('UserController', ['$scope', '$state', '$http', '$stateParams', 'Global', 'User', 'Inbox', 'Appointment',
+    function ($scope, $state, $http, $stateParams, Global, User, Inbox, Appointment) {
     $scope.global = Global;
 
     $scope.members = [];
     $scope.userName = $stateParams.userName;
+
+    $scope.findAppointments = function(){
+      Appointment.get(function(data){
+        $scope.userAppointments = data.appointments;
+      });
+    }
 
     $scope.findOne = function(){
       User.get({
@@ -113,13 +119,14 @@ angular.module('githelp.controllers.user', [])
     };
 
     $scope.findOtherUser = function(inbox) {
-      $scope.otherUser = $scope.global.user._id;
-      if($scope.otherUser === inbox.members[0]){
-        $scope.otherUser = inbox.members[1];
+      var otherUser = $scope.global.user._id;
+      console.log(inbox.members)
+      if(otherUser === inbox.members[0]._id){
+        otherUser = inbox.members[1];
       } else{
-        $scope.otherUser = inbox.members[0];
+        otherUser = inbox.members[0];
       }
-      return $scope.otherUser;
+      return otherUser;
     };
 
     $scope.findInbox = function(){

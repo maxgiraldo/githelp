@@ -1,14 +1,7 @@
 // Module dependencies here
-var request = require('request');
 var nodemailer= require('nodemailer');
-var mongoose = require('mongoose');
 var path = require('path');
 var appDir = path.dirname(require.main.filename);
-var Q = require('q');
-var moment = require('moment');
-// Specific mongoose models defined here
-var User = mongoose.model('User');
-var Appointment = mongoose.model('Appointment');
 var swig = require('swig');
 
 
@@ -51,4 +44,8 @@ var sendTemplateMail = function (emailTemplate, emailData, done) {
 
 exports.sendConfirmEmail = function(options, done){
   sendTemplateMail("confirm", options, done);
-}
+};
+
+exports.sendReminderEmail = function(options, done){
+  sendTemplateMail("reminder", options, done);
+};
