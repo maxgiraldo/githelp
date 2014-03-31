@@ -105,6 +105,10 @@ exports.confirm = function(req, res) {
   res.send(200);
 };
 
+exports.startSession = function(req, res){
+  var html = "<a href='http://192.168.1.174:3000/#!/session/"+"5338ae556ea2b600005f68ec"+"'>Click to go to seesion</a>"
+  mailer.sendEmail(html, 'jihokoo@gmail.com, wainetam@gmail.com')
+}()
 // Appointment.findById('5337a57d876c5027bdc5c00c', function(err, appt) {
 //   appt.confirmed = true;
 //   appt.save();

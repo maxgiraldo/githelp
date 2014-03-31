@@ -21,7 +21,7 @@ angular.module('githelp.controllers.messages', [])
           chatroomId: $stateParams.inboxId
           // somehow find the chatroomId
         });
-        $scope.content = '';
+        this.content = '';
 
         newMessage.$save(function(message){
           sock.send(JSON.stringify(message));

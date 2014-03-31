@@ -1,8 +1,8 @@
 // This works
 
 angular.module('githelp.controllers.appointment', [])
-  .controller('AppointmentController', ['$scope', '$state', 'Global', '$http', 'Appointment',
-    function ($scope, $state, Global, $http, Appointment) {
+  .controller('AppointmentController', ['$scope', '$state', '$stateParams', 'Global', '$http', 'Appointment',
+    function ($scope, $state, $stateParams, Global, $http, Appointment) {
       // $scope.global = Global;
 
     $scope.confirmAppointment = function(){
