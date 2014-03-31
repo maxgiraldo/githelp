@@ -67,10 +67,6 @@ angular.module('githelp.controllers.appointment', [])
       console.log(response);
       $scope.txComplete = response;
     });
-    // payments.debitCard($scope.amountToCharge, txDescription, cardObj);
-    // need to associate card with customer
-    // get card or customer token via get to user's model
-    // post to payments.debitCard
   };
 
   // VIDEO CHAT
