@@ -389,14 +389,14 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .side-chat-bar {
   // background-color: #fffa63;
   width: 200px;
-  height: 600px;
+  height: 30000px;
   float: left;
 }
 .chat-head .side-bar {
   margin-top: 10px;
 }
 #main-chat {
-  // background-color: #feffb1;
+  background-color: #feffb1;
 }
 .headline-small {
   margin-top: 0;
@@ -414,14 +414,17 @@ h1.full-name {
 .chat-window {
   margin-left: auto;
   margin-right: auto;
+  width: 700px;
   // background-color: #b2b3ab;
   font-family: Helvetica, sans-serif;
 }
 .chat-bubble {
+  background-color: #fff4b0;
 }
 .chat-text {
   font-size: 16px;
-  margin-left: 70px;
+  // margin-left: 70px;
+  padding-top: 10px;
 }
 .chat-type-message {
   // background-color: #b2b3ab;
