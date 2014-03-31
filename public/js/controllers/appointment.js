@@ -13,6 +13,7 @@ angular.module('githelp.controllers.appointment', [])
     });
     newAppointment.$save(function(data){
       console.log("we confirmed the appointment!")
+      $location.path('/appointments');
     });
   };
 
