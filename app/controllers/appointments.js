@@ -95,10 +95,6 @@ var sendReminder = function(apptObject){
 
 // (moment(apptObject.time).subtract(moment(Date.now)).subtract('minutes', 1)).unix()
 
-var startSession = function(apptObject){
-  var html = "<a href='http://192.168.1.174:3000/#!/session/"+"5338ae556ea2b600005f68ec"+"'>Click to go to seesion</a>"
-  mailer.sendEmail(html, 'jihokoo@gmail.com, wainetam@gmail.com')
-}
 
 
 // should queue a bunch of requests and fire them off when their time is up
@@ -128,7 +124,7 @@ exports.confirm = function(req, res) {
 }
 
 
-exports.startSession = function(req, res){
+var startSession = function(apptObject){
   var html = "<a href='http://192.168.1.174:3000/#!/session/"+"5338ae556ea2b600005f68ec"+"'>Click to go to session</a>"
   mailer.sendEmail(html, 'jihokoo@gmail.com, wainetam@gmail.com', 'Your unique link for upcoming githelp session');
 };
