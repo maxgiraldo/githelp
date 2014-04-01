@@ -21,6 +21,31 @@ var getEmailByUser = function(username) {
   return deferred.promise;
 };
 
+
+// var temporary = function(){
+//   var deferred = Q.defer();
+//   var i = 0;
+//   Appointment.find(function(err, appointments){
+//     appointments.forEach(function(appointment){
+//       appointment.confirmed = false;
+//       appointment.save(function(){
+//         i++
+//         if(appointments.length === i){
+//           deferred.resolve(appointments);
+//         }
+//       });
+//     })
+//   })
+//   return deferred.promise;
+// }
+
+// var something = function(){
+//   temporary().then(function(appointments){
+//     console.log("this worked")
+//   })
+// }
+// something();
+
 exports.create = function(req, res) {
   var duration = req.body.duration;
   var merchant = req.body.merchant; // merchant username

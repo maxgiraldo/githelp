@@ -6,8 +6,10 @@ html {
 }
 
 #githelp-search-bar {
-  margin-left: 450px
+  margin-left: 450px;
+  width: 250px;
 }
+
 #githelp-search-bar-submit {
   margin-left: 615px;
   margin-top: 10px;
@@ -539,7 +541,7 @@ h1.full-name {
   width: 264px;
   height: 198px;
   float: right;
-  margin-right: 5%;
+  margin-right: 2%;
   text-align: center;
 }
 // Session Info Div
