@@ -11,12 +11,14 @@
         <option value="15">15 minutes</option>
         <option value="30">30 minutes</option>
         <option value="60">60 minutes</option>
+        <option value="30">120 minutes</option>
+        <option value="60">180 minutes</option>
       </select>
       <h2 class='headline' style='font-size: 15px;'>Suggest open times for your call</h2>
       <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="appt.dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
       <button class="btn btn-default" ng-click="open($event)"><i class="fa fa-calendar"></i></button>
       <br>
-      <div data-ng-controller="TimepickerCtrl" ng-model="appt.time" class="row col-md-5">
+      <div data-ng-controller="TimepickerCtrl" ng-model="appt.time" class="row col-md-7">
           <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
       </div>
       <br>
