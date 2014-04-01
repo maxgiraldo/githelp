@@ -17,13 +17,14 @@
         <div data-ng-hide="userInboxes" class='container'>
           <h1>You have not started any conversations!</h1>
         </div>
-        <div class="container">
-          <form class="col-md-10" data-ng-submit="createInbox()">
-            <label>Members</label>
-            <div class="col-md-8">
-              <input data-ng-model="member" typeahead="user.fullName for user in allUsers | filter:$viewValue" data-ng-show="user._id != global.user._id" typeahead-on-select="onSelect($item, $model, $label)">
+        <div class="container" id="inbox-input">
+          <legend style="margin-right: auto; margin-left: auto; text-align: center"><h1 class="contact-user"><strong>Contact Another User!</strong></h1></legend>
+          <form class="col-md-10" style="margin-top: 20px" data-ng-submit="createInbox()">
+            <div class="col-md-8 col-md-offset-1">
+              <label style="font-size: 18px; margin-right: 0px; padding-right: 0px" class="col-md-offset-4">Members:</label>
+              <input id="input-box" class="col-md-offset-6" data-ng-model="member" typeahead="user.fullName for user in allUsers | filter:$viewValue" style="margin-left: 30px; padding-left: 15px;" data-ng-show="user._id != global.user._id" typeahead-on-select="onSelect($item, $model, $label)">
             </div>
-            <button type="submit">New Chats</button>
+            <input type="submit" class="btn btn-success" value="Contact Now">
           </form>
         </div>
       </div>
