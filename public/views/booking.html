@@ -1,6 +1,33 @@
 <!-- Functions & Scope in IndexController -->
 <div data-ng-controller="DatepickerCtrl">
-  <form class="container form-group" ng-submit="createAppointment()">
+  <form ng-submit='createAppointment()'>
+    <div class='container profile'>
+      <h2 class='headline' style='font-size: 15px;'>Call Information</h2>
+      <div>
+        <input type="text" id='message' class='form-control' ng-model='appt.message' style='width:300px' autocomplete="off" placeholder="Message to merchant" />
+      </div>
+      <h2 class='headline' style='font-size: 15px;'>Set Estimated Length</h2>
+      <select name="duration" ng-model="appt.duration">
+        <option value="15">15 minutes</option>
+        <option value="30">30 minutes</option>
+        <option value="60">60 minutes</option>
+      </select>
+      <h2 class='headline' style='font-size: 15px;'>Suggest open times for your call</h2>
+      <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="appt.dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
+      <button class="btn btn-default" ng-click="open($event)"><i class="fa fa-calendar"></i></button>
+      <br>
+      <div data-ng-controller="TimepickerCtrl" ng-model="appt.time" class="row col-md-5">
+          <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+      </div>
+      <br>
+      <br>
+      <input style='margin-top:8px' type="submit" class="btn btn-success" value="Book Now" id="appt-submit">
+    </div> <!-- container profile -->
+  </form>
+</div>
+
+
+  <!-- <form class="container form-group" ng-submit="createAppointment()">
     <div class="container">
       <h2>Provide Call Information</h2>
       <div>
@@ -14,6 +41,10 @@
             <option value="30">30 minutes</option>
             <option value="60">60 minutes</option>
           </select>
+      </div>
+
+      <div data-ng-controller="TimepickerCtrl" ng-model="appt.time" class="row col-md-5">
+          <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
       </div>
     </div>
 
@@ -35,7 +66,7 @@
 
         <div data-ng-controller="TimepickerCtrl" ng-model="appt.time" class="row col-md-5">
           <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
-      </div>
+        </div>
     </div>
     <input type="submit" class="btn btn-success" value="Book Now" id="appt-submit">
      <a href="/email">send email</a>
@@ -43,3 +74,4 @@
   </form>
 </div>
 
+ -->
