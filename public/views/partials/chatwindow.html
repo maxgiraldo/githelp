@@ -4,10 +4,10 @@
     <!-- Side chat with list of all conversations -->
     <div class='side-chat-bar'>
       <h1 class='headline headline-small'>Conversations</h1>
-      <div ng-repeat='inbox in userInboxes'>
+      <div ng-repeat='inbox in userInboxes' style="margin-left: 0px; padding-left: 0px">
         <div class='chat-head side-bar' ng-click='toInbox(inbox._id)'>
-          <img class='avatar-large-chat' src="{{findOtherUser(inbox).github.avatar_url}}"/>
-          <h1 class='headline full-name full-name-sm'>{{findOtherUser(inbox).fullName}}</h1>
+          <img class='avatar-large-chat' src="{{findOtherUser(inbox).github.avatar_url}}" style="margin-left: 15px; padding-left: 0px"/>
+          <h1 class='headline full-name full-name-sm' style="width: 60px; text-align: center; margin-right: auto; margin-left: auto">{{findOtherUser(inbox).fullName}}</h1>
           <br>
         </div>
       </div>
