@@ -35,4 +35,24 @@ var AppointmentSchema = new Schema({
   editor: []
 });
 
+
+// use projections when embedded documents get too big
+// when a document gets too big beyond 16mb, then it gets
+// saved to another disk
+// so make sure embedded documents does not get out of hand
+
+// atomic transactions
+// when you can't have things happen half the time
+// like money transactions
+
+
+// make indexes on user._id
+// if you create an index it creates a b tree
+
+// b tree is a specific type of tree that is not a binary ree
+//  binary tree can only have 0 1 or 2 children
+
+// b tree can have an unlimited number of children
+// use ensureIndex
+
 mongoose.model('Appointment', AppointmentSchema);
