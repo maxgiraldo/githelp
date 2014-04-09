@@ -15,7 +15,18 @@ var AppointmentSchema = new Schema({
     ref: 'Payment'
   },
   date: {
-    type: Date
+    option1: {
+      date: Date,
+      confirmed: { type: Boolean, default: false }
+    },
+    option2: {
+      date: Date,
+      confirmed: { type: Boolean, default: false }
+    },
+    option3: {
+      date: Date,
+      confirmed: { type: Boolean, default: false }
+    }
   },
   time: { // in UTC
     type: Date

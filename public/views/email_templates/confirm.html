@@ -6,14 +6,24 @@
   <tr>
       <td valign="top" class="bodyContent" mc:edit="body_content">
           <h1>You've received a request from {{fromUserName}} for githelp!</h1>
-          <h3>Here are the details.</h3>
+          <h3>Here are the details:</h3>
           <ul>
-            <li>Date: {{date}}</li>
-            <li>Time: {{time}}</li>
             <li>Requested call length: {{duration}}</li>
             <li>Rate per minute: ${{ppm}}</li>
             <li>Estimated income: ${{estIncome}}</li>
+            <li>Message: {{message}}</li>
           </ul>
+            <li><b>First Option</b></li>
+            <li>{{date.option1.date}}</li>
+            <li>{{date.option1.time}}</li>
+            <li><b>Second Option</b></li>
+            <li>{{date.option2.date}}</li>
+            <li>{{date.option2.time}}</li>
+            <li><b>Third Option</b></li>
+            <li>{{date.option3.date}}</li>
+            <li>{{date.option3.time}}</li>
+          </ul>
+
           <a class="" href='http://192.168.1.178:3000/#!/{{toUserName}}/confirm/{{appointmentId}}'>Confirm Request></a>
       </td>
   </tr>
