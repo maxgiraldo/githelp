@@ -14,6 +14,16 @@ var AppointmentSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'Payment'
   },
+    // payment: {
+  //   giver: {type: Schema.ObjectId,
+  //           ref: "User"},
+  //   taker: {type: Schema.ObjectId,
+  //           ref: "User"},
+  //   amount: String,
+  //   balancedId: String,
+  //   createDate: String,
+  //   status: String
+  // },
   date: {
     type: Date
   },
@@ -34,7 +44,6 @@ var AppointmentSchema = new Schema({
   completionTime: Number, // in minutes
   editor: []
 });
-
 
 // use projections when embedded documents get too big
 // when a document gets too big beyond 16mb, then it gets

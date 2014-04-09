@@ -14,6 +14,25 @@ var ChatroomSchema = new Schema({
   }]
 });
 
+// var ChatroomSchema = new Schema({
+//   title: String,
+//   members: {
+//     type: [{
+//       type: Schema.ObjectId,
+//       ref: 'User'
+//     }],
+//     index: true
+//   },
+//   messages: [{
+//     sender: {type: Schema.ObjectId,
+//             ref: "User"},
+//     seen: {type: Boolean,
+//           default: false},
+//     content: String,
+//     created: {type: Date,
+//       default: Date.now}
+//   }]
+// });
 
 
 mongoose.model('Chatroom', ChatroomSchema);
