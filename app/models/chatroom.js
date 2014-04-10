@@ -9,8 +9,12 @@ var ChatroomSchema = new Schema({
     ref: 'User'
   }],
   messages: [{
-    type: Schema.ObjectId,
-    ref: 'Message'
+    sender: {},
+    seen: {type: Boolean,
+          default: false},
+    content: String,
+    created: {type: Date,
+      default: Date.now}
   }]
 });
 

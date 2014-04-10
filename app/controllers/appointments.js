@@ -213,18 +213,16 @@ var sendMessage = function(appointmentId, message, user){
   Appointment.findOne({_id: appointmentId}, function(err, appointment){
     console.log(appointment);
     User.find({ $or: [{_id: appointment.merchant},{_id: appointment.customer}]}, function(err, users){
-      var alert = new Message({sender: user._id, content: message});
+      var alert = {sender: user, content: message};
       Chatroom.findOne({ $and: [{members: users[0]._id}, {members: users[1]._id}]}, function(err, chatroom){
         if(!chatroom){
           var newChatroom = new Chatroom({title: "test"});
           newChatroom.members = [users[0]._id, users[1]._id];
-          newChatroom.messages = [alert._id];
-          alert.save();
+          newChatroom.messages = [alert];
           newChatroom.save();
         } else{
-          chatroom.messages.push(alert._id);
+          chatroom.messages.push(alert);
           chatroom.save();
-          alert.save();
         }
         return "hello";
       });
@@ -265,7 +263,7 @@ var configReminderOpt = function(appt, done){
   var duration = appt.duration + " minutes";
   var to = appt.merchant.email+", "+appt.customer.email;
   var subject = "Githelp - You have an appointment in 30 minutes!";
-  var url = 'http://172.18.74.30:3000/#!/session/'+appt._id;
+  var url = 'http://172.18.73.218:3000/#!/session/'+appt._id;
 
   var options = {
     estIncome: estIncome,

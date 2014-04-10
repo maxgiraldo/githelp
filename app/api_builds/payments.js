@@ -97,7 +97,7 @@ exports.debitCard = function(appt, done) {
   console.log(appt)
   var cardUriStr = cardUri(appt.customer.balancedCard);
   balanced.get(cardUriStr).debit({
-    'amount': appt.amount,
+    'amount': appt.payment.amount,
     'appears_on_statement_as': 'githelp.co',
     'description': appt.description
   }).then(function(debit) {
@@ -113,7 +113,7 @@ exports.creditCard = function(appt, done) {
   console.log(appt)
   var cardUriStr = cardUri(appt.merchant.balancedCard);
   balanced.get(cardUriStr).credit({
-    'amount': appt.amount,
+    'amount': appt.payment.amount,
     'appears_on_statement_as': 'githelp.co',
     'description': appt.description
   }).then(function(credit) {
