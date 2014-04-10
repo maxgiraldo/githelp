@@ -9,11 +9,38 @@ var ChatroomSchema = new Schema({
     ref: 'User'
   }],
   messages: [{
-    type: Schema.ObjectId,
-    ref: 'Message'
+    sender: {
+      fullName: String,
+      userName: String,
+      avatarUrl: String
+    },
+    seen: {type: Boolean,
+          default: false},
+    content: String,
+    created: {type: Date,
+      default: Date.now}
   }]
 });
 
+// var ChatroomSchema = new Schema({
+//   title: String,
+//   members: {
+//     type: [{
+//       type: Schema.ObjectId,
+//       ref: 'User'
+//     }],
+//     index: true
+//   },
+//   messages: [{
+//     sender: {type: Schema.ObjectId,
+//             ref: "User"},
+//     seen: {type: Boolean,
+//           default: false},
+//     content: String,
+//     created: {type: Date,
+//       default: Date.now}
+//   }]
+// });
 
 
 mongoose.model('Chatroom', ChatroomSchema);

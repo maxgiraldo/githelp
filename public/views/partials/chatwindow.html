@@ -17,7 +17,7 @@
     <div id='main-chat' >
       <div class='chat-window' >
         <div class='chat-bubble' data-ng-repeat="message in messagesByChatroom[currentChatroomId] | orderBy:'-created':true">
-          <img class='avatar-chat' style="margin-right: 10px" src="{{message.sender.github.avatar_url}}"/>
+          <img class='avatar-chat' style="margin-right: 10px" src="{{message.sender.avatarUrl}}"/>
           <div class='chat-text'>
             <p>{{message.content}}</p>
           </div>

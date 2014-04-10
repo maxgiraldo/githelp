@@ -11,11 +11,31 @@ var AppointmentSchema = new Schema({
     ref: 'User'
   },
   payment: {
-    type: Schema.ObjectId,
-    ref: 'Payment'
+    customer: {type: Schema.ObjectId,
+            ref: "User"},
+    merchant: {type: Schema.ObjectId,
+            ref: "User"},
+    amount: String,
+    balancedId: String,
+    created: {
+      type: Date,
+      default: Date.now
+    },
+    status: String
   },
   date: {
-    type: Date
+    option1: {
+      date: Date,
+      confirmed: { type: Boolean, default: false }
+    },
+    option2: {
+      date: Date,
+      confirmed: { type: Boolean, default: false }
+    },
+    option3: {
+      date: Date,
+      confirmed: { type: Boolean, default: false }
+    }
   },
   time: { // in UTC
     type: Date
@@ -34,7 +54,6 @@ var AppointmentSchema = new Schema({
   completionTime: Number, // in minutes
   editor: []
 });
-
 
 // use projections when embedded documents get too big
 // when a document gets too big beyond 16mb, then it gets

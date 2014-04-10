@@ -27,7 +27,7 @@ passport.use(new GitHubStrategy({
   // Below are JHK's Keys
   clientID: '71778e134296a29071f4',
   clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
-  callbackURL: "http://localhost:3000/auth/github/callback"
+  callbackURL: "http://172.18.73.218:3000/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({ githubId: profile.id }, function (err, user) {
@@ -39,7 +39,8 @@ passport.use(new GitHubStrategy({
           email: profile._json.email,
           githubId: profile.id,
           github: profile._json,
-          accessToken: accessToken
+          accessToken: accessToken,
+          avatarUrl: profile._json.avatar_url
         });
         u.save(function(err){
           return done(err, u);
@@ -51,6 +52,7 @@ passport.use(new GitHubStrategy({
         user.githubId = profile.id;
         user.github = profile._json;
         user.accessToken = accessToken;
+        avatarUrl = profile._json.avatar_url;
         user.save(function(err){
           return done(err, user);
         })
@@ -150,6 +152,7 @@ module.exports = function(app) {
   app.get('/appointment', appointments.appointmentsByUser);
   app.post('/appointment', appointments.confirm);
   app.get('/appointments/:appointmentId', appointments.toSession);
+  app.get('/appointments/confirm/:userName/:appointmentId/:option', appointments.confirm);
   app.get('/inbox', messages.findAllChatroom);
   app.post('/inbox', messages.createChatroom);
   app.get('/message', messages.messageByChatroom);
@@ -169,7 +172,7 @@ module.exports = function(app) {
   app.post('/query', index.results);
   app.post('/create/cc', payments.createCard);
   app.post('/create/appointment', appointments.create);
-  app.post('/charge', payments.debitCard);
+  app.post('/charge', payments.transaction);
 
   app.post('/upload', texteditor.upload);
 

@@ -23,27 +23,42 @@ exports.createChatroom = function(req, res){
   });
 };
 
+// exports.createMessage = function(req, res){
+//   var message = new Message({content: req.body.content, sender: req.user._id});
+//     message.save(function(err, message) {
+//     if (err) {
+//       return res.send('users/signup', {
+//         errors: err.errors,
+//         message: message
+//       });
+//     } else {
+//       //need to get chatroom somehow
+//       Chatroom.findOne({_id: req.body.chatroomId}, function(err, chatroom){
+//         Message.load(message._id, function(err, message){
+//           chatroom.messages.push(message);
+//           chatroom.save(function(err, chatroom){
+//             res.jsonp(message);
+//           });
+//         });
+//       });
+//     }
+//   });
+// };
+
 exports.createMessage = function(req, res){
-  var message = new Message({content: req.body.content, sender: req.user._id});
-    message.save(function(err, message) {
-    if (err) {
-      return res.send('users/signup', {
-        errors: err.errors,
-        message: message
-      });
-    } else {
-      //need to get chatroom somehow
-      Chatroom.findOne({_id: req.body.chatroomId}, function(err, chatroom){
-        Message.load(message._id, function(err, message){
-          chatroom.messages.push(message);
-          chatroom.save(function(err, chatroom){
-            res.jsonp(message);
-          });
-        });
-      });
+  Chatroom.findOne({_id: req.body.chatroomId}, function(err, chatroom){
+    var message = {sender: {fullName: req.user.fullName, userName: req.user.userName, avatarUrl: req.user.github.avatar_url}, content: req.body.content};
+    if(chatroom.messages instanceof Array){
+      chatroom.messages.push(message);
+    } else{
+      chatroom.messages = [message];
     }
+    chatroom.save(function(err, chatroom){
+      res.jsonp(message);
+    });
   });
 };
+
 
 exports.updateChatroom = function(req, res){
   var chatroom = req.chatroom;
@@ -70,11 +85,7 @@ exports.messageByChatroom = function(req, res){
           status: 500
       });
     } else {
-
-      Message.multipleLoad(chatroom.messages).then(function(messages){
-        chatroom.messages = messages;
-        res.jsonp(chatroom);
-      });
+      res.jsonp(chatroom);
     }
   });
 };

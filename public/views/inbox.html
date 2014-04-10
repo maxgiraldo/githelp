@@ -9,7 +9,7 @@
           <div class='center-elements' ng-repeat='inbox in userInboxes'>
             <div class='chat-head' ng-click='toInbox(inbox._id)'>
               <span class="label label-default">1</span>
-              <img class='avatar-large-chat'  src="{{findOtherUser(inbox).github.avatar_url}}"/>
+              <img class='avatar-large-chat'  src="{{findOtherUser(inbox).avatarUrl}}"/>
               <h1 class='headline full-name' style="font-size: 20px">{{findOtherUser(inbox).userName}}</h1>
             </div>
           </div>

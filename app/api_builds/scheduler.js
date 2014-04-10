@@ -53,10 +53,22 @@ var attendeesObj = function(apptObj) {
   return deferred.promise;
 };
 
+exports.getConfirmedDate = function(apptObj) {
+  for (var k in apptObj.date) {
+    if(apptObj.date[k].confirmed) {
+      return apptObj.date[k].date;
+    }
+  }
+};
+
 exports.sendEventInvite = function(apptObj, done){
-  var startTime = moment.utc(apptObj.time).toISOString();
+  var confirmedDate = exports.getConfirmedDate(apptObj);
+
+  var startTime = moment.utc(confirmedDate).toISOString();
+  // var startTime = moment.utc(apptObj.time).toISOString();
   console.log('startTime', startTime);
-  var endTime = moment.utc(apptObj.time).add('minutes', apptObj.duration).toISOString();
+
+  var endTime = moment.utc(confirmedDate).add('minutes', apptObj.duration).toISOString();
   // var endTime = moment(startTime).add('minutes', apptObj.duration).toDate();
   // var startDate = moment(apptObj.date).format('YYYY-MM-DD');
   // var endDate = moment(apptObj.date).format('YYYY-MM-DD');
