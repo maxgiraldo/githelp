@@ -10,8 +10,8 @@
             <h1 class='alert-type' data-ng-show="(appointment.merchant._id === global.user._id) && !appointment.confirmed"><a href="/#!/{{global.user.userName}}/confirm/{{appointment._id}}">Status: Uncomfirmed...confirm now!</a></h1>
             <h1 class='alert-type' data-ng-show="(appointment.merchant._id !== global.user._id) && !appointment.confirmed">Status: Awaiting merchant approval...</h1>
           </div>
-          <img class='avatar-lg appt' src='{{appointment.customer.github.avatar_url}}' data-ng-show="appointment.merchant._id === global.user._id">
-          <img class='avatar-lg appt' src='{{appointment.merchant.github.avatar_url}}' data-ng-show="appointment.customer._id === global.user._id">
+          <img class='avatar-lg appt' src='{{appointment.customer.avatarUrl}}' data-ng-show="appointment.merchant._id === global.user._id">
+          <img class='avatar-lg appt' src='{{appointment.merchant.avatarUrl}}' data-ng-show="appointment.customer._id === global.user._id">
           <div class='appointment-text-info'>
             <h1 class='headline full-name' data-ng-show="appointment.merchant._id === global.user._id">{{appointment.customer.fullName}}</h1>
             <h1 class='headline full-name' data-ng-show="appointment.customer._id === global.user._id">{{appointment.merchant.fullName}}</h1>

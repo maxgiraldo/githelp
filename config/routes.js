@@ -39,7 +39,8 @@ passport.use(new GitHubStrategy({
           email: profile._json.email,
           githubId: profile.id,
           github: profile._json,
-          accessToken: accessToken
+          accessToken: accessToken,
+          avatarUrl: profile._json.avatar_url
         });
         u.save(function(err){
           return done(err, u);
@@ -51,6 +52,7 @@ passport.use(new GitHubStrategy({
         user.githubId = profile.id;
         user.github = profile._json;
         user.accessToken = accessToken;
+        avatarUrl = profile._json.avatar_url;
         user.save(function(err){
           return done(err, user);
         })

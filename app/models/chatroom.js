@@ -9,7 +9,11 @@ var ChatroomSchema = new Schema({
     ref: 'User'
   }],
   messages: [{
-    sender: {},
+    sender: {
+      fullName: String,
+      userName: String,
+      avatarUrl: String
+    },
     seen: {type: Boolean,
           default: false},
     content: String,

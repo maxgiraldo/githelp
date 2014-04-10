@@ -213,7 +213,7 @@ var sendMessage = function(appointmentId, message, user){
   Appointment.findOne({_id: appointmentId}, function(err, appointment){
     console.log(appointment);
     User.find({ $or: [{_id: appointment.merchant},{_id: appointment.customer}]}, function(err, users){
-      var alert = {sender: user, content: message};
+      var alert = {sender: {fullName: user.fullName, userName: user.userName, avatarUrl: user.github.avatar_url}, content: message};
       Chatroom.findOne({ $and: [{members: users[0]._id}, {members: users[1]._id}]}, function(err, chatroom){
         if(!chatroom){
           var newChatroom = new Chatroom({title: "test"});

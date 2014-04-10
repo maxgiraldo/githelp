@@ -47,7 +47,7 @@ exports.createChatroom = function(req, res){
 
 exports.createMessage = function(req, res){
   Chatroom.findOne({_id: req.body.chatroomId}, function(err, chatroom){
-    var message = {sender: req.user, content: req.body.content};
+    var message = {sender: {fullName: req.user.fullName, userName: req.user.userName, avatarUrl: req.user.github.avatar_url}, content: req.body.content};
     if(chatroom.messages instanceof Array){
       chatroom.messages.push(message);
     } else{
