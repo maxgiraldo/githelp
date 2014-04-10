@@ -198,7 +198,7 @@ exports.create = function(req, res) {
     });
     var ppm = merchant.ppm;
     // send out email
-    configConfirmOpt(newAppointment, customer.userName, merchant, ppm, merchant.email, function(options){
+    configConfirmOpt(newAppointment, customer.userName, merchant.userName, ppm, merchant.email, function(options){
       mailer.sendConfirmEmail(options, function(err, response){
         console.log(response);
         console.log(options);
@@ -265,7 +265,7 @@ var configReminderOpt = function(appt, done){
   var duration = appt.duration + " minutes";
   var to = appt.merchant.email+", "+appt.customer.email;
   var subject = "Githelp - You have an appointment in 30 minutes!";
-  var url = 'http://192.168.1.178:3000/#!/session/'+appt._id;
+  var url = 'http://172.18.74.30:3000/#!/session/'+appt._id;
 
   var options = {
     estIncome: estIncome,
@@ -283,10 +283,6 @@ var configReminderOpt = function(appt, done){
   };
   done(options);
 }
-
-exports.confirmPage = function(req, res){
-  res.render('confirm', {appointmentId: req.params.appointmentId});
-};
 
 exports.confirm = function(req, res) {
   // var id = "id of appointment";

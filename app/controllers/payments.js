@@ -13,84 +13,63 @@ var Payment = mongoose.model('Payment'),
 
 balanced.configure('ak-test-1dsNimzLa65kRDXzRzGgLQ5Gqoi8sIwCU'); // test API key for Balanced Payments
 
-// exports.createCard = function(req, res) {
-//   var ccObj = req.body;
-//   var userName = 'wainetam'; // placeholder for now
-//   // var userName = 'req.params.userName' // need userName to find in DB; assume to be in params for now
-//   console.log('CC', ccObj);
-//   payments.createCreditCard(ccObj).then(function(card) {
-//     console.log('CARD', card.toJSON());
-//     User.findOneAndUpdate({ userName: userName }, { balancedCard: card.id }, {}, function(err, user) {
-//       if(err) { console.log(err); }
-//       console.log('Updated creditcard info to: ', user);
-//       res.jsonp(user);
-//     });
-//   }, function(err) {
-//     console.log(err);
-//   });
-// };
+var done = function(err, response){
+  if(err) return err;
+  console.log(response);
+};
 
-// sending amount, description, and appointmentId
+var debitCard = function(appt, credit){
+  var debitSubject = "You have made a payment to " + appt.merchant.userName;
+  appt.description = debitSubject;
+  payments.debitCard(appt, function(){
+    credit(); // starts the credit callback
+    var debitOptions = {
+      subject: debitSubject,
+      to: appt.customer.email,
+      merchantUserName: appt.merchant.userName,
+      duration: appt.duration,
+      amount: (appt.payment.amount / 100.0).toFixed(2)
+    };
+    mailer.sendDebitEmail(debitOptions, done);
+  }); // callbacks in payments.debitCard
+};
 
-exports.debitCard = function(req, res) {
-  // console.log('req', req);
-  var amount = req.body.amount; // cents earned
-  console.log('AMOUNT ', amount); // needs to be in cents
-  var sessionId = req.body.sessionId;
-  console.log('sessionId', sessionId);
-  var duration = req.body.duration; // length of call
-  Appointment.findById(sessionId, function(err, apptObj) {
-    User.findById(apptObj.customer, function(err, customer) {
-      User.findById(apptObj.merchant, function(err, merchant) {
-        console.log('customer', customer.email);
-        console.log('merchant', merchant.email);
-        var description = "Payment for githelp from " + merchant.userName;
-        var cardToken = customer.balancedUser; // fetch card obj with customer token;
-        payments.debitCard(amount, description, cardToken); // callbacks in payments.debitCard
+var creditCard = function(appt, done){
+  var creditSubject = "You have received a payment from " + appt.customer.userName;
+  appt.description = creditSubject;
+  payments.creditCard(appt, function(){
+    var creditOptions = {
+      subject: creditSubject,
+      to: appt.merchant.email,
+      customerUserName: appt.customer.userName,
+      duration: appt.duration,
+      amount: (appt.payment.amount * 0.9 / 100.0).toFixed(2)
+    };
 
-        // email to customer completed tx
-        var htmlBodyCust = "Your call with " + merchant.userName +
-        " lasted " + duration + " minutes " +
-        "and you will be charged $" + (amount / 100.0).toFixed(2) +
-        ". Thank you for using githelp!";
-
-        var toCustOptions = {
-          to: customer.email,
-          subject: 'Cost of completed githelp session',
-          html: htmlBodyCust
-        };
-
-        mailer.email(toCustOptions, function(){
-          console.log("hello");
-        });
-        // mailer.sendEmail(htmlBodyCust, customer.email, 'Cost of completed githelp session');
-
-        // email to merchant of completed tx
-        var htmlBodyMerch = "Your call with " + customer.userName +
-        " lasted " + duration + " minutes " +
-        "and you will earn $" + (amount * 0.9 / 100.0).toFixed(2) +
-        ". Thank you for using githelp!";
-
-        var toMerchOptions = {
-          to: merchant.email,
-          subject: 'Earnings from your completed githelp session',
-          html: htmlBodyMerch
-        };
-        mailer.email(toMerchOptions, function(){
-          console.log("hello");
-        });
-        // mailer.sendEmail(htmlBodyMerch, merchant.email, 'Earnings from your completed githelp session');
-        res.send(200);
-      });
-    });
+    mailer.sendCreditEmail(creditOptions, done);
   });
 };
 
-// to: options.to, // comma separated list of receivers
-//      subject: options.subject, // Subject line
-//      html: options.html // plaintext body
+exports.transaction = function(req, res) {
+  var amount = req.body.amount; // cents earned
+  var duration = req.body.duration; // length of call
 
-// var userName = 'wainetam'; // placeholder for now
+  Appointment.findById(req.body.sessionId).populate('customer').populate('merchant').exec(function(err, appt) {
+    appt.payment = {
+      customer: appt.customer._id,
+      merchant: appt.merchant._id,
+      amount: amount,
+      status: 'pending'
+    };
+    appt.save();
+
+    debitCard(appt, function(){
+      creditCard(appt, done);
+    });
+
+    res.send(200);
+  });
+};
 
 exports.createCard = function(req, res) {
   console.log('in createCard');

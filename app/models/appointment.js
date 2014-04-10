@@ -11,19 +11,18 @@ var AppointmentSchema = new Schema({
     ref: 'User'
   },
   payment: {
-    type: Schema.ObjectId,
-    ref: 'Payment'
+    customer: {type: Schema.ObjectId,
+            ref: "User"},
+    merchant: {type: Schema.ObjectId,
+            ref: "User"},
+    amount: String,
+    balancedId: String,
+    created: {
+      type: Date,
+      default: Date.now
+    },
+    status: String
   },
-    // payment: {
-  //   giver: {type: Schema.ObjectId,
-  //           ref: "User"},
-  //   taker: {type: Schema.ObjectId,
-  //           ref: "User"},
-  //   amount: String,
-  //   balancedId: String,
-  //   createDate: String,
-  //   status: String
-  // },
   date: {
     option1: {
       date: Date,

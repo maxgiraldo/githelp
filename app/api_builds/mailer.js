@@ -5,7 +5,7 @@ var appDir = path.dirname(require.main.filename);
 var swig = require('swig');
 
 
-exports.email = function(options, done){
+var email = function(options, done){
   var smtpTransport = nodemailer.createTransport("SMTP",{
     service: "Gmail",
     auth: {
@@ -38,7 +38,7 @@ var sendTemplateMail = function (emailTemplate, emailData, done) {
   var html;
   if (html = tpl(emailData)) {
     emailData.html = html;
-    exports.email(emailData, done);
+    email(emailData, done);
   }
 };
 
@@ -48,4 +48,13 @@ exports.sendConfirmEmail = function(options, done){
 
 exports.sendReminderEmail = function(options, done){
   sendTemplateMail("reminder", options, done);
+};
+
+exports.sendDebitEmail = function(options, done){
+  sendTemplateMail("debit", options, done);
+};
+
+
+exports.sendCreditEmail = function(options, done){
+  sendTemplateMail("credit", options, done);
 };

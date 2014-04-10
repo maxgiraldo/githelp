@@ -93,19 +93,36 @@ var bankUri = function(bankToken) {
   return uri;
 };
 
-exports.debitCard = function(amount, description, cardToken) {
-  var cardUriStr = cardUri(cardToken);
+exports.debitCard = function(appt, done) {
+  console.log(appt)
+  var cardUriStr = cardUri(appt.customer.balancedCard);
   balanced.get(cardUriStr).debit({
-    'amount': amount,
+    'amount': appt.amount,
     'appears_on_statement_as': 'githelp.co',
-    'description': description
+    'description': appt.description
   }).then(function(debit) {
     console.log('debit completed', debit.toJSON());
-
+    done();
+    // maybe over here i should take some data from the debit
   }, function(err) {
     console.log(err);
   });
 };
+
+exports.creditCard = function(appt, done) {
+  console.log(appt)
+  var cardUriStr = cardUri(appt.merchant.balancedCard);
+  balanced.get(cardUriStr).credit({
+    'amount': appt.amount,
+    'appears_on_statement_as': 'githelp.co',
+    'description': appt.description
+  }).then(function(credit) {
+    console.log('credit completed', credit.toJSON());
+    done();
+  }, function(err) {
+    console.log(err);
+  });
+}
 
 exports.updateCard = function(currentCardObj, updatedCardObj) {
   var updatedParams = ""; // dummyVar for now
