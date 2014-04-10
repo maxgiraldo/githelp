@@ -255,11 +255,11 @@ var configReminderOpt = function(appt, done){
   var estIncome = (parseInt(appt.duration) * parseInt(appt.merchant.ppm)).toFixed(2);
   // console.log('id', appt._id);
   var appointmentId = appt._id;
-
+  var confirmedDate = scheduler.getConfirmedDate(appt);
   //NEED TO CHECK WHICH APPT IS CONFIRMED
-  var date = formatDate(appt.date); // don't need add'l format string bc ISO format
+  var date = formatDate(confirmedDate); // don't need add'l format string bc ISO format
   // console.log('DATE in email', date);
-  var time = formatTime(appt.date);
+  var time = formatTime(confirmedDate);
   var duration = appt.duration + " minutes";
   var to = appt.merchant.email+", "+appt.customer.email;
   var subject = "Githelp - You have an appointment in 30 minutes!";
@@ -284,15 +284,24 @@ var configReminderOpt = function(appt, done){
 
 exports.confirm = function(req, res) {
   // var id = "id of appointment";
-  Appointment.findOne({_id: req.body.appointmentId}).populate('merchant').populate('customer').exec(function(err, appt) {
-    appt.confirmed = true;
+  var option = req.params.option; // 'option1', 'option2', 'option3'
+  // console.log('OPTION', option);
+  // console.log('PARAMS', req.params);
+
+  // var appointmentId = req.body.appointmentId; // with post
+  var appointmentId = req.params.appointmentId;
+
+  Appointment.findOne({_id: appointmentId}).populate('merchant').populate('customer').exec(function(err, appt) {
+    appt.date[option].confirmed = true;
+    // appt.confirmed = true;
     scheduler.sendEventInvite(appt);
     // startSession(appt);
     sendReminder(appt);
     appt.save();
      // Once confirmed, send out confirmation
   });
-  res.send(200);
+  // res.send(200);
+  res.redirect('/#!/appointments');
 }
 
 var formatDate = function(dateFromDb) { // apptObj.date
