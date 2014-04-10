@@ -102,6 +102,7 @@ module.exports = function(app) {
   var payments = require('../app/controllers/payments');
   var appointments = require('../app/controllers/appointments');
   var messages = require('../app/controllers/messages');
+  var texteditor = require('../app/controllers/texteditor');
 
   // passport routes
   // this requests to github login with clientId and clientSecret
@@ -169,6 +170,8 @@ module.exports = function(app) {
   app.post('/create/cc', payments.createCard);
   app.post('/create/appointment', appointments.create);
   app.post('/charge', payments.debitCard);
+
+  app.post('/upload', texteditor.upload);
 
   // app.get('/email', appointments.sendEmail);
 

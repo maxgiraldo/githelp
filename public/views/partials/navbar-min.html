@@ -1,11 +1,12 @@
-<div class="navbar navbar-default navbar-min" data-ng-controller="NavbarController">
+<div class="navbar-default navbar-min" data-ng-controller="NavbarController">
   <div class="navbar-header">
-    <a class="navbar-brand" href="#"><img class='logo' src='/images/logo.png'></a>
+    <a class="navbar-brand navbar-brand-min" href="#"><img class='logo-min' src='/images/logo-white.png'></a>
   </div>
-    <ul class="nav navbar-nav navbar-right" id="custom-navbar">
+    <ul class="nav navbar-nav-min navbar-right" id="side-nav-min">
+      <!-- <li><a href="#"><i class="fa fa-cog"></i></a></li> -->
       <li data-ng-hide="global.authenticated"><a href="/signin">Sign in</a></li>
       <li class="dropdown" data-ng-show="global.authenticated" >
-        <a href="#" class="pull-left dropdown-toggle" data-toggle="dropdown"><img class='pull-left avatar' src='{{global.user.github.avatar_url}}'>{{global.user.fullName}}<b class="caret"></b></a>
+        <a href="#" class="pull-left dropdown-toggle" data-toggle="dropdown"><img class='pull-left avatar avatar-min' src='{{global.user.github.avatar_url}}'>{{global.user.fullName}}<b class="caret"></b></a>
         <ul class="dropdown-menu">
           <li><a href="/#!/{{global.user.userName}}">Profile</a></li>
           <li><a href="/signout">Sign Out</a></li>
