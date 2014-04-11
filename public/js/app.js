@@ -6,7 +6,8 @@ window.app = angular.module('githelp',
   'ui.router',
   'ui.select2',
   'githelp.controllers',
-  'githelp.services'
+  'githelp.services',
+  'angularFileUpload'
   ]);
 
 angular.module('githelp.controllers',

@@ -7,5 +7,6 @@ var mongoose = require('mongoose'),
 exports.upload = function(req, res) {
   var fileName = req.files.file.name;
   var fileType = req.files.file.type;
+  console.log(req);
   res.send(200);
 }
