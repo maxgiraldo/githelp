@@ -28,11 +28,42 @@ angular.module('githelp.controllers.datePicker', [])
         appointmentId: appointmentId || null
       };
 
+
+
       // $scope.proposedAppt = {
       //   appointmentId: appointmentId
       // };
 
       $scope.apptInDb;
+
+      // Tom's shit
+      $scope.appt = {
+        dt: "",
+        time: ""
+      };
+      var counter = 0;
+      $scope.idArray = ["first", "second", "third"];
+      $scope.otherArray = ["first", "second", "third"];
+      $scope.addDate = function(){
+        console.log($scope.appt);
+        if(counter > 2){
+          console.log("no");
+        } else{
+          var num = $scope.otherArray.shift();
+          $scope.appts[num] = {};
+          $scope.appts[num].dt = $scope.appt.dt;
+          $scope.appts[num].time = $scope.appt.time;
+          counter++;
+        }
+      };
+
+      $scope.deleteDate = function(id){
+        counter--;
+        delete $scope.appts[id];
+        $scope.otherArray.push(id)
+        $scope.$apply();
+      };
+      // Tom's shit
 
       $scope.confirmedDate;
 
@@ -83,9 +114,10 @@ angular.module('githelp.controllers.datePicker', [])
 
       $scope.today = function() {
         // $scope.appt.dt = new Date();
-        $scope.appts.first.dt = new Date();
-        $scope.appts.second.dt = new Date();
-        $scope.appts.third.dt = new Date();
+        $scope.appt.dt = new Date();
+        // $scope.appts.first.dt = new Date();
+        // $scope.appts.second.dt = new Date();
+        // $scope.appts.third.dt = new Date();
       };
 
       $scope.today();
@@ -95,23 +127,29 @@ angular.module('githelp.controllers.datePicker', [])
       //   return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
       // };
 
-      $scope.open1 = function($event) {
+      $scope.open = function($event) {
         $event.preventDefault();
         $event.stopPropagation();
-        $scope.opened1 = true;
+        $scope.opened = true;
       };
 
-      $scope.open2 = function($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-        $scope.opened2 = true;
-      };
+      // $scope.open1 = function($event) {
+      //   $event.preventDefault();
+      //   $event.stopPropagation();
+      //   $scope.opened1 = true;
+      // };
 
-      $scope.open3 = function($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-        $scope.opened3 = true;
-      };
+      // $scope.open2 = function($event) {
+      //   $event.preventDefault();
+      //   $event.stopPropagation();
+      //   $scope.opened2 = true;
+      // };
+
+      // $scope.open3 = function($event) {
+      //   $event.preventDefault();
+      //   $event.stopPropagation();
+      //   $scope.opened3 = true;
+      // };
 
       $scope.dateOptions = {
         'year-format': "'yy'",
