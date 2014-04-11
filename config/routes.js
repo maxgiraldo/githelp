@@ -27,7 +27,7 @@ passport.use(new GitHubStrategy({
   // Below are JHK's Keys
   clientID: '71778e134296a29071f4',
   clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
-  callbackURL: "http://172.18.73.218:3000/auth/github/callback"
+  callbackURL: "http://localhost:3000/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({ githubId: profile.id }, function (err, user) {
@@ -150,8 +150,11 @@ module.exports = function(app) {
   // });
   app.get('/appointment', appointments.appointmentsByUser);
   app.post('/appointment', appointments.confirm);
+  app.post('/appointment/show', appointments.show);
   app.get('/appointments/:appointmentId', appointments.toSession);
+  // app.get('/appointments/:appointmentId', appointments.details);
   app.get('/appointments/confirm/:userName/:appointmentId/:option', appointments.confirm);
+  app.get('/appointments/reschedule/:userName/:appointmentId', appointments.reschedule);
   app.get('/inbox', messages.findAllChatroom);
   app.post('/inbox', messages.createChatroom);
   app.get('/message', messages.messageByChatroom);
@@ -159,7 +162,7 @@ module.exports = function(app) {
 
   app.post('/updatePpm', users.updatePpm);
 
-  app.post('/appointment', appointments.create);
+  app.post('/edit/appointment', appointments.edit);
 
   app.get('/', index.render);
 

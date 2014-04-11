@@ -1,0 +1,28 @@
+<div data-ng-controller="DatepickerCtrl">
+  <form ng-submit='editAppointment()' ng-init='loadAppointment()'>
+    <div class='container profile'>
+      <!-- data-ng-click="confirmAppointment()" -->
+      <h3>Display Appointment Details</h3>
+      <ul>
+        <li>Customer: {{apptInDb.customer.fullName}}</li>
+        <li>Merchant: {{apptInDb.merchant.fullName}}</li>
+        <li>Duration: {{apptInDb.duration}}</li>
+        <li>Message: {{apptInDb.message}}</li>
+      </ul>
+
+      <h3>Confirm one of the following suggested times:</h3>
+      <ul>
+        <li>Currently proposed1</li>
+        <li>Currently proposed2</li>
+        <li>Currently proposed3</li>
+        <button class='confirm-btn'>Confirm</button>
+      </ul>
+      <h3>If none work, please suggest new ones:</h3>
+
+      <section data-ng-include data-src="'views/partials/timeslots.html'"></section>
+      <br>
+      <br>
+      <input style='margin-top:8px' type="submit" class="btn btn-success" value="Submit New Times" id="appt-submit">
+    </div>
+  </form>
+</div>

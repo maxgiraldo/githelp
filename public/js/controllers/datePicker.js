@@ -1,8 +1,13 @@
 angular.module('githelp.controllers.datePicker', [])
-  .controller('DatepickerCtrl', ['$scope', '$http', '$location', '$state', 'Global',
+  .controller('DatepickerCtrl', ['$scope', '$http', '$location', '$state', '$stateParams', 'Global',
     function($scope, $http, $location, $state, $stateParams, Global) {
       $scope.global = Global;
 
+      var appointmentId = $stateParams.sessionId;
+
+
+      // on first trip, it's the merchant
+      // but if merchant's suggested times aren't accepted, window.location is then customer
       $scope.appts = {
         merchant: window.location.hash.replace(/..\//, "").replace(/\/.*$/, ""),
         message: "",
@@ -18,16 +23,29 @@ angular.module('githelp.controllers.datePicker', [])
         third: {
           dt: "",
           time: ""
-        }
+        },
+        appointmentId: appointmentId || null
       };
 
-      // $scope.appt = {
-      //   duration: "15",
-      //   dt: "",
-      //   time: "",
-      //   message: "",
-      //   merchant: window.location.hash.replace(/..\//, "").replace(/\/.*$/, "")
+      // $scope.proposedAppt = {
+      //   appointmentId: appointmentId
       // };
+
+      $scope.apptInDb;
+
+      $scope.loadAppointment = function() {
+        $http.post('/appointment/show', $scope.appts).success(function(response) {
+          console.log('LOAD', response);
+          $scope.apptInDb = response;
+        });
+      };
+
+      $scope.editAppointment = function() {
+        $http.post('/edit/appointment', $scope.appts).success(function(response) {
+          $location.path('/appointments');
+          console.log('EDIT', response);
+        });
+      };
 
       $scope.createAppointment = function() {
         $http.post('/create/appointment', $scope.appts).success(function(response) {
@@ -37,7 +55,6 @@ angular.module('githelp.controllers.datePicker', [])
           $location.path('/inbox');
         });
       };
-
 
       $scope.today = function() {
         // $scope.appt.dt = new Date();

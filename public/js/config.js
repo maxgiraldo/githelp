@@ -19,6 +19,14 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
           url: '/appointments',
           templateUrl: 'views/appointments.html'
         })
+          .state('appointments.reschedule', {
+            url: '/:sessionId/reschedule',
+            templateUrl: 'views/reschedule.html'
+          })
+          .state('appointments.confirmation', {
+            url: '/:sessionId/confirmation',
+            templateUrl: 'views/confirmation.html'
+          })
         .state('session', {
           url: '/session/:sessionId',
           templateUrl: 'views/session.html'

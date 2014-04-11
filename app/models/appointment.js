@@ -44,7 +44,7 @@ var AppointmentSchema = new Schema({
     type: Number,
     required: true
   },
-  confirmed: { // by merchant
+  confirmed: { // need this as check against someone reconfirming an already confirmed apptment
     type: Boolean,
     default: false
   },
