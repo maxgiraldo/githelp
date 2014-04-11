@@ -17,6 +17,12 @@
       <h2 class='headline' style='font-size: 15px;'>Suggest open times for your call</h2>
 
       <section data-ng-include data-src="'views/partials/timeslots.html'"></section>
+      <div data-ng-repeat="id in idArray">
+        <h3>{{id}} Date</h3>
+        <span>{{appts[id].dt}}</span>
+        <span>{{appts[id].time}}</span>
+        <button class="btn btn-alert" data-ng-click="deleteDate(id)">Remove</button>
+      </div>
 
  <!--      <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="appts.first.dt" is-open="opened1" min="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
 
@@ -44,6 +50,7 @@
       <br>
       <br>
       <input style='margin-top:8px' type="submit" class="btn btn-success" value="Book Now" id="appt-submit">
+      <button type="button" class="btn btn-default btn-lg btn-block" data-ng-click="addDate()">Add</button>
     </div>
   </form>
 </div>
