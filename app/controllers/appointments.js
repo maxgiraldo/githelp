@@ -115,84 +115,8 @@ exports.create = function(req, res) {
     // time: timeObj(firstDateTime.date, firstDateTime.time),
   });
 
-  // var second = new Appointment({
-  //   duration: duration,
-  //   customer: customer._id,
-  //   message: message,
-  //   date: timeObj(secondDateTime.date, secondDateTime.time),
-  //   time: timeObj(secondDateTime.date, secondDateTime.time)
-  // });
-
-  // var third = new Appointment({
-  //   duration: duration,
-  //   customer: customer._id,
-  //   message: message,
-  //   date: timeObj(thirdDateTime.date, thirdDateTime.time),
-  //   time: timeObj(thirdDateTime.date, thirdDateTime.time)
-  // });
-
-  // console.log('APPT TIME', time);
-  // console.log('APPT DATE', date);
-
-
-  // var timeObj = moment.utc(date + " " + time, "YYYY-MM-DD HH:mm").toDate();
-  // console.log('TIME OBJ', timeObj); // in UTC
-
-  // var newAppointment = new Appointment({
-  //   duration: duration,
-  //   date: timeObj, // utc TimeObj
-  //   message: message,
-  //   time: timeObj,
-  //   customer: customer._id
-  //   // merchant: merchant // needs objectId here
-  // });
-
-  // var first = new Appointment(duration, merchant, customer, message, req.body.first);
-  // var second = new Appointment(duration, merchant, customer, message, req.body.second);
-  // var third = new Appointment(duration, merchant, customer, message, req.body.third);
-
-
   User.findOne({userName: merchant}, function(err, merchant){
     newAppointment.merchant = merchant._id;
-    // first.merchant = merchant._id;
-    // second.merchant = merchant._id;
-    // third.merchant = merchant._id;
-
-
-
-    // async.parallel({
-    //   first: function(cb) {
-    //     first.save(function() {
-    //       cb(null, first);
-    //     });
-    //   },
-    //   second: function(cb) {
-    //     second.save(function() {
-    //       cb(null, second);
-    //     });
-    //   },
-    //   third: function(cb) {
-    //     third.save(function() {
-    //       cb(null, third);
-    //     });
-    //   }
-    // },
-    // function(err, appts) {
-    //   if(err) { console.log(err); }
-    //   console.log(appts);
-    //   // appts is now equals to: {first: <firstApptObj>, second: <secondApptObj>, third: <thirdApptObj>}
-    //   sendMessage(newAppointment._id, newAppointment.message, customer);
-
-    //   var ppm = merchant.ppm;
-    //   // send out email
-    //   configConfirmOpt(appts, customer.userName, merchant, ppm, merchant.email, function(options){
-    //     mailer.sendConfirmEmail(options, function(err, response){
-    //       console.log(response);
-    //       console.log(options);
-    //       res.jsonp(appts); // formerly newAppointments
-    //     });
-    //   });
-    // });
 
     newAppointment.save(function(err){
       sendMessage(newAppointment._id, newAppointment.message, customer);
