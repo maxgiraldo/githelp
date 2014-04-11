@@ -6,7 +6,8 @@ window.app = angular.module('githelp',
   'ui.router',
   'ui.select2',
   'githelp.controllers',
-  'githelp.services'
+  'githelp.services',
+  'angularFileUpload'
   ]);
 
 angular.module('githelp.controllers',
@@ -18,7 +19,8 @@ angular.module('githelp.controllers',
   'githelp.controllers.booking',
   'githelp.controllers.datePicker',
   'githelp.controllers.timePicker',
-  'githelp.controllers.repos'
+  'githelp.controllers.repos',
+  'githelp.controllers.texteditor'
   ]);
 
 angular.module('githelp.services',

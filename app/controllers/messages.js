@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var Message = mongoose.model('Message');
+// var Message = mongoose.model('Message');
 var Chatroom = mongoose.model('Chatroom');
 var User = mongoose.model('User');
 
@@ -47,13 +47,14 @@ exports.createChatroom = function(req, res){
 
 exports.createMessage = function(req, res){
   Chatroom.findOne({_id: req.body.chatroomId}, function(err, chatroom){
-    var message = {sender: {fullName: req.user.fullName, userName: req.user.userName, avatarUrl: req.user.github.avatar_url}, content: req.body.content};
+    var message = {sender: {fullName: req.user.fullName, userName: req.user.userName, avatarUrl: req.user.avatarUrl}, content: req.body.content};
     if(chatroom.messages instanceof Array){
       chatroom.messages.push(message);
     } else{
       chatroom.messages = [message];
     }
     chatroom.save(function(err, chatroom){
+      console.log("hello")
       res.jsonp(message);
     });
   });
@@ -79,7 +80,7 @@ exports.updateChatroom = function(req, res){
 
 exports.messageByChatroom = function(req, res){
 
-  Chatroom.findOne({_id: req.query.chatroomId}).populate('members').populate('messages').exec(function(err, chatroom){
+  Chatroom.findOne({_id: req.query.chatroomId}).populate('members').exec(function(err, chatroom){
     if (err) {
       res.render('error', {
           status: 500

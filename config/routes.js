@@ -21,7 +21,6 @@ passport.deserializeUser(function(id, done) {
   });
 });
 // this will attach user to request (req.user);
-//
 
 passport.use(new GitHubStrategy({
   // Below are JHK's Keys
@@ -52,7 +51,7 @@ passport.use(new GitHubStrategy({
         user.githubId = profile.id;
         user.github = profile._json;
         user.accessToken = accessToken;
-        avatarUrl = profile._json.avatar_url;
+        user.avatarUrl = profile._json.avatar_url;
         user.save(function(err){
           return done(err, user);
         })
@@ -104,6 +103,7 @@ module.exports = function(app) {
   var payments = require('../app/controllers/payments');
   var appointments = require('../app/controllers/appointments');
   var messages = require('../app/controllers/messages');
+  var texteditor = require('../app/controllers/texteditor');
 
   // passport routes
   // this requests to github login with clientId and clientSecret
@@ -175,6 +175,8 @@ module.exports = function(app) {
   app.post('/create/cc', payments.createCard);
   app.post('/create/appointment', appointments.create);
   app.post('/charge', payments.transaction);
+
+  app.post('/upload', texteditor.upload);
 
   // app.get('/email', appointments.sendEmail);
 

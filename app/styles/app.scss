@@ -17,11 +17,7 @@ html {
 
 body {
   background: #fff;
-  // firepad changes
-  // margin: 0;
-  // height: 100%;
-  // position: relative;
-  // end
+  overflow: hidden;
   height: 100%;
   margin: 24px 0;
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -116,6 +112,12 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   padding-top: 0px;
   padding-bottom: 0px;
 }
+#side-nav-min {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  color: #fff;
+}
 
 .avatar {
   width: 30px;
@@ -129,22 +131,41 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-left: 0px;
   padding-left: 0px;
 }
+
+.avatar-min {
+  width: 20px;
+  height: 20px;
+}
 .logo {
   cursor: pointer;
   display: inline-block;
   // height: 25px;
   margin-left: 37px;
-  padding: 20px 0 19px;
+  margin-top: 10px;
   position: relative;
   text-align: center;
   vertical-align: top;
   // width: 80px;
+}
+.logo-min {
+  padding: 0;
+  width: 80px;
+  height: 25px;
 }
 
 .navbar-nav > li > a {
   padding-top: 15px;
   padding-bottom: 15px;
   padding-left: 90px;
+}
+
+.navbar-nav-min > li > a {
+  padding: 8px 15px 0 0;
+  color: #fff;
+  font-size: 12px;
+}
+.navbar-nav-min > li > a:hover {
+  background-color: #2b2b2b;
 }
 
 .navbar-right a {
@@ -507,8 +528,15 @@ h1.full-name {
 }
 // Session
 .navbar-min {
-  height: 20px;
-  background-color: #eff6dc;
+  height: 5vh;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  background-color: #000000;
+}
+.navbar-brand-min {
+  padding: 0;
 }
 
 .session-header {
@@ -601,29 +629,73 @@ h1.full-name {
   // padding: 0;
 }
 // Firepad Editor
-#firepad-container {
-  // position: absolute; left: 0; top: 0; bottom: 0; right: 0;
-  width: 1024px;
-  height: 800px;
+.text-editor-container {
+  background-color: #282829;
+  height: 100vh;
+}
+.side-panel {
+  width: 18vw;
+  min-height: 700px;
+  float: left;
+  // background-color: #282829;
+  @media screen and (max-width: 850px) {
+    width: 140px;
+  }
+}
+.side-panel-wrap {
+
+}
+.side-panel-directories {
+  background-color: #1b1b1b;
+  width: 16%;
+}
+.file-view {
+  background-color: #1b1b1b;
   position: relative;
-  margin: auto;
-  // background-color: #fff;
-  -moz-box-shadow: 0 30px 25px 1px #333;
-  -webkit-box-shadow: 0 30px 25px 1px #333;
-  box-shadow: 0 30px 25px 1px #333;
+  height: 5vh;
+  overflow: auto;
+  width: 60vw;
+}
+.new-file {
+  width: 38px;
+  height: 5vh;
+  background-color: #77cc33;
+  color: #fff;
+  font-size: 18px;
+  padding-left: 12px;
+  padding-top: 5px;
+  cursor: pointer;
+  z-index: 0;
+}
+.new-file:hover {
+  background-color: #6ab72c;
+}
+.new-file input {
+  filter: alpha(opacity=0);
+  opacity: 0;
+  cursor: pointer;
+}
+.upload-file {
+
+}
+
+#firepad-container {
+  overflow: auto;
+  float: left;
+  width: 60vw;
+  height: 90vh;
+  position: relative;
+  // -moz-box-shadow: 0 1px 5px 1px #d0d0d0;
+  // -webkit-box-shadow: 0 1px 5px 1px #d0d0d0;
+  // box-shadow: 0 1px 5px 1px #d0d0d0;
+  // width: 60vw;
 }
 
 .firepad {
    /*Default height for a firepad.*/
-  position: absolute;
-  // height: auto;
-  height: 500px;
-  width: 1024px;
-  margin-left: 22%;
-  // left: 0;
-  // top: 0;
-  // bottom: 0;
-  // right: 0;
+  position: relative;
+  // height: 500px;
+  // width: 1024px;
 }
 
 .firepad {
