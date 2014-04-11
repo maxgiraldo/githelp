@@ -21,13 +21,12 @@ passport.deserializeUser(function(id, done) {
   });
 });
 // this will attach user to request (req.user);
-//
 
 passport.use(new GitHubStrategy({
   // Below are JHK's Keys
   clientID: '71778e134296a29071f4',
   clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
-  callbackURL: "http://172.18.73.218:3000/auth/github/callback"
+  callbackURL: "http://localhost:3000/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({ githubId: profile.id }, function (err, user) {
@@ -52,7 +51,7 @@ passport.use(new GitHubStrategy({
         user.githubId = profile.id;
         user.github = profile._json;
         user.accessToken = accessToken;
-        avatarUrl = profile._json.avatar_url;
+        user.avatarUrl = profile._json.avatar_url;
         user.save(function(err){
           return done(err, user);
         })

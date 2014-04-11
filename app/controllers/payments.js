@@ -7,8 +7,7 @@ var mongoose = require('mongoose'),
     payments = require('../api_builds/payments'),
     _ = require('underscore');
 // Specific mongoose models defined here
-var Payment = mongoose.model('Payment'),
-    User = mongoose.model('User'),
+var User = mongoose.model('User'),
     Appointment = mongoose.model('Appointment');
 
 balanced.configure('ak-test-1dsNimzLa65kRDXzRzGgLQ5Gqoi8sIwCU'); // test API key for Balanced Payments

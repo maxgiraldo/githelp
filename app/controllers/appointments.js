@@ -9,7 +9,7 @@ var async = require('async');
 // Specific mongoose models defined here
 var Appointment = mongoose.model('Appointment');
 var User = mongoose.model('User');
-var Message = mongoose.model('Message');
+// var Message = mongoose.model('Message');
 var Chatroom = mongoose.model('Chatroom');
 
 

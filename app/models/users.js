@@ -16,10 +16,10 @@ var UserSchema = new Schema({
   balancedCard: String,
   // below is the id for the tokenized acct if the customer is a merchant
   balancedBank: String,
-  paymentsMade: [{type: Schema.ObjectId,
-                ref: 'Payment'}],
-  paymentsReceived: [{type: Schema.ObjectId,
-                ref: 'Payment'}],
+  // paymentsMade: [{type: Schema.ObjectId,
+  //               ref: 'Payment'}],
+  // paymentsReceived: [{type: Schema.ObjectId,
+  //               ref: 'Payment'}],
   refreshToken: String,
   // price per minute
   ppm: { type: String, default: '2.00' },
