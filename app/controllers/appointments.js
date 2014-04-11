@@ -22,31 +22,6 @@ var getEmailByUser = function(username) {
   return deferred.promise;
 };
 
-
-// var temporary = function(){
-//   var deferred = Q.defer();
-//   var i = 0;
-//   Appointment.find(function(err, appointments){
-//     appointments.forEach(function(appointment){
-//       appointment.confirmed = false;
-//       appointment.save(function(){
-//         i++
-//         if(appointments.length === i){
-//           deferred.resolve(appointments);
-//         }
-//       });
-//     })
-//   })
-//   return deferred.promise;
-// }
-
-// var something = function(){
-//   temporary().then(function(appointments){
-//     console.log("this worked")
-//   })
-// }
-// something();
-
 var timeObj = function(date, time) {
   return moment.utc(date + " " + time, "YYYY-MM-DD HH:mm").toDate();
 };
@@ -136,9 +111,14 @@ exports.create = function(req, res) {
 exports.edit = function(req, res) {
   var appointmentId = req.body.appointmentId;
   console.log('REQ', req.body);
+  var user = req.user;
+  // console.log('user', user);
+
   // var duration = req.body.duration;
   // var merchant = req.body.merchant; // merchant username from datePicker controller
   // var customer = req.body.customer;
+
+  var toEmail, toUserName;
 
   var firstDateTime = {
     date: req.body.first.dt,
@@ -155,16 +135,25 @@ exports.edit = function(req, res) {
     time: moment.utc(req.body.third.time, 'YYYY-MM-DD HH:mm').format('HH:mm')
   };
 
-
-
   Appointment.findOne({_id: appointmentId}).populate('merchant').populate('customer').exec(function(err, appt) {
     // console.log('APPT',appt);
+    if(user.github.login === appt.customer.userName) {
+    toEmail = appt.merchant.email;
+    toUserName = appt.merchant.userName;
+    } else {
+      toEmail = appt.customer.email;
+      toUserName = appt.customer.userName;
+    }
+
+    console.log('cust email', appt.customer.email);
+    console.log('merch email', appt.merchant.email);
+
     appt.date.option1.date = timeObj(firstDateTime.date, firstDateTime.time);
     appt.date.option2.date = timeObj(secondDateTime.date, secondDateTime.time);
     appt.date.option3.date = timeObj(thirdDateTime.date, thirdDateTime.time);
     appt.save();
-    // send confirmation email back to customer (appt, from, to, ppm, from)
-    configConfirmOpt(appt, appt.merchant.userName, appt.customer.userName, appt.merchant.ppm, appt.merchant.email, function(options){
+    // send confirmation email back to customer (apptObj, fromUserName, toUserName, ppm, toEmail, done)
+    configConfirmOpt(appt, req.user.userName, toUserName, appt.merchant.ppm, toEmail, function(options){
       mailer.sendConfirmEmail(options, function(err, response){
         console.log(response);
         console.log(options);
@@ -273,9 +262,9 @@ exports.show = function(req, res) {
 exports.confirm = function(req, res) {
   // var id = "id of appointment";
   var option = req.params.option; // 'option1', 'option2', 'option3'
+  var userName = req.params.userName; // first click, userName is merchant
 
-
-  // console.log('OPTION', option);
+  console.log('OPTION', option);
   // console.log('PARAMS', req.params);
 
   // var appointmentId = req.body.appointmentId; // with post
@@ -284,27 +273,35 @@ exports.confirm = function(req, res) {
   Appointment.findOne({_id: appointmentId}).populate('merchant').populate('customer').exec(function(err, appt) {
     if(appt.confirmed) { // already confirmed; only 1 of 3 options can be confirmed true
       console.log('Appt has already been confirmed');
-      res.redirect('/#!/appointments/' + appointmentId + "/confirmation");
+      // if(req.user) {
+        res.redirect('/#!/appointments/' + appointmentId + "/confirmation");
+      // } else {
+      //   res.render('confirmation');
+      // }
     } else {
       appt.date[option].confirmed = true;
       appt.confirmed = true;
       // appt.confirmed = true;
-      scheduler.sendEventInvite(appt);
+      scheduler.sendEventInvite(appt); // or separate final Confirmation email
       // startSession(appt);
       sendReminder(appt);
       appt.save();
        // Once confirmed, send out confirmation
-      // res.redirect('/#!/confirm/' + appointmentId);
-    // res.send(200);
-      // res.redirect('/#!/appointments');
-      res.redirect('/#!/appointments/' + appointmentId + "/confirmation");
+      if(req.user) {
+        res.redirect('/#!/appointments/' + appointmentId + "/confirmation");
+      } else {
+        res.render('confirmation');
+      }
+      // res.redirect('/#!/' + userName + '/confirmation/' + appointmentId);
     }
   });
 };
 
 exports.reschedule = function(req, res) {
   var appointmentId = req.params.appointmentId;
+  var userName = req.params.userName;
   res.redirect('/#!/appointments/' + appointmentId + "/reschedule");
+  // res.redirect('/#!/' + userName + '/reschedule/' + appointmentId);
 
   // Appointment.findOne({_id: appointmentId}).populate('merchant').populate('customer').exec(function(err, appt) {
   //   res.render('reschedule', {appt: appt});
@@ -318,29 +315,9 @@ var formatTime = function(dateFromDb) { // apptObj.date
   return moment.utc(dateFromDb).local().format('h:mm A');
 };
 
-var configConfirmOpt = function(apptObj, fromUserName, toUserName, ppm, merchantEmail, done) {
+var configConfirmOpt = function(apptObj, fromUserName, toUserName, ppm, toEmail, done) {
   var estIncome = (apptObj.duration * ppm).toFixed(2);
-  var toMerchant = merchantEmail;
   var subject = "Githelp - "+fromUserName+" needs your help!";
-
-  // var object = {
-  //   first: {},
-  //   second: {},
-  //   third: {}
-  // };
-
-  // for (var k in apptsObj) {
-  //   object[k].estIncome = (apptsObj[k].duration * ppm).toFixed(2);
-  //   object[k].appointmentId = apptsObj[k]._id;
-  //   object[k].date = moment.utc(apptsObj[k].date).format('MMMM Do YYYY');
-  //   object[k].time = moment.utc(apptsObj[k].time).local().format('h:mm A');
-  //   object[k].duration = apptsObj[k].duration + " minutes";
-  //   object[k].fromUserName = fromUserName;
-  //   object[k].toUserName = toUserName;
-  //   object[k].ppm = ppm;
-  //   object[k].to = toMerchant;
-  //   object[k].subject = subject;
-  // }
 
   var estIncome = (apptObj.duration * ppm).toFixed(2);
   var appointmentId = apptObj._id;
@@ -349,7 +326,7 @@ var configConfirmOpt = function(apptObj, fromUserName, toUserName, ppm, merchant
   // var time = moment.utc(apptObj.time).local().format('h:mm A');
   var duration = apptObj.duration + " minutes";
   var message = apptObj.message;
-  var to = merchantEmail;
+  var to = toEmail;
 
   console.log('apptObj.date',apptObj.date );
 
@@ -413,13 +390,5 @@ exports.appointmentsByUser = function(req, res){
     res.jsonp({appointments: appointments})
   })
 }
-
-
-
-
-
-
-
-
 
 
