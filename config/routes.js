@@ -67,7 +67,7 @@ passport.use(new GitHubStrategy({
 passport.use(new GoogleStrategy({
     clientID: "700936463795-3ettb8q7r93i281rp9mrtt8qd6q3k4uv.apps.googleusercontent.com",
     clientSecret: "5TfB_7aHC6mL9SyPHQNtMPBM",
-    callbackURL: "https://192.168.1.178/:3000/auth/google/callback"
+    callbackURL: "https://192.168.1.178:3000/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({ googleId: profile.id }, function (err, user) {
@@ -151,6 +151,9 @@ module.exports = function(app) {
   app.get('/appointment', appointments.appointmentsByUser);
   app.post('/appointment', appointments.confirm);
   app.post('/appointment/show', appointments.show);
+  app.post('/appointment/create', appointments.create);
+  app.post('/appointment/edit', appointments.edit);
+
   app.get('/appointments/:appointmentId', appointments.toSession);
   // app.get('/appointments/:appointmentId', appointments.details);
   app.get('/appointments/confirm/:userName/:appointmentId/:option', appointments.confirm);
@@ -162,7 +165,6 @@ module.exports = function(app) {
 
   app.post('/updatePpm', users.updatePpm);
 
-  app.post('/edit/appointment', appointments.edit);
 
   app.get('/', index.render);
 
@@ -173,7 +175,6 @@ module.exports = function(app) {
 
   app.post('/query', index.results);
   app.post('/create/cc', payments.createCard);
-  app.post('/create/appointment', appointments.create);
   app.post('/charge', payments.transaction);
 
   app.post('/upload', texteditor.upload);

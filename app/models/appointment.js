@@ -55,6 +55,18 @@ var AppointmentSchema = new Schema({
   editor: []
 });
 
+AppointmentSchema.virtual('confirmedDate').get(function() {
+  console.log('in confirmed Date');
+  for (var option in this.date) {
+    if(this.date[option].confirmed) {
+      console.log('confimed Date', this.date[option].date);
+      return this.date[option].date;
+    }
+  }
+  return 'hello'; // if no confirmed date;
+});
+
+
 // use projections when embedded documents get too big
 // when a document gets too big beyond 16mb, then it gets
 // saved to another disk
