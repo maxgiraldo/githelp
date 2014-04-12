@@ -17,7 +17,6 @@ html {
 
 body {
   background: #fff;
-  overflow: hidden;
   height: 100%;
   margin: 24px 0;
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -630,6 +629,7 @@ h1.full-name {
 }
 // Firepad Editor
 .text-editor-container {
+  overflow: hidden;
   background-color: #282829;
   height: 100vh;
 }

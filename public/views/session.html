@@ -30,11 +30,8 @@
     <!-- TEXT EDITOR
          ............................................................................................-->
     <section data-ng-controller='TextEditorController'>
-      <input type="file" ng-file-select="onFileSelect($files)"/>
-      <!-- <form action='/upload', method='POST', enctype='multipart/form-data'>
-            <input type='file' name='file' />
-            <input type='submit' value='submit'/>
-          </form> -->
+        <!-- <input type='file' file-input='files' multiple />
+        <button ng-click='upload()'>Upload</button> -->
       <div class='side-panel'>
         <div class='side-panel-directories'></div>
       </div>
@@ -42,24 +39,10 @@
         <!-- UPLOAD FILE -->
         <div class='new-file'>
           <i class="fa fa-plus"></i>
-          <!-- <form action='/upload', method='POST', enctype='multipart/form-data'>
-            <input type='file' name='upload-file' />
-          </form> -->
         </div> <!-- add-file -->
         <div class='file'><p>Filename</p></div>
       </div> <!-- file-view -->
       <div id="firepad-container"></div>
     </section>
-
   </section>
 </div>
-
-
-
-<!-- archive -->
-<!-- <div class='video-container'>
-      <ul>
-        <li><div id='videos'></div></li>
-        <li><div id='videos2'></div></li>
-      </ul>
-    </div> -->
