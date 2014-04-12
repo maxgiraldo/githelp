@@ -26,7 +26,7 @@ passport.use(new GitHubStrategy({
   // Below are JHK's Keys
   clientID: '71778e134296a29071f4',
   clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
-  callbackURL: "http://172.18.74.30:3000/auth/github/callback"
+  callbackURL: "http://172.18.75.131:3000/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({ githubId: profile.id }, function (err, user) {
