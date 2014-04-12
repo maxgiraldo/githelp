@@ -22,30 +22,9 @@ var getEmailByUser = function(username) {
   return deferred.promise;
 };
 
-
-// var temporary = function(){
-//   var deferred = Q.defer();
-//   var i = 0;
-//   Appointment.find(function(err, appointments){
-//     appointments.forEach(function(appointment){
-//       appointment.confirmed = false;
-//       appointment.save(function(){
-//         i++
-//         if(appointments.length === i){
-//           deferred.resolve(appointments);
-//         }
-//       });
-//     })
-//   })
-//   return deferred.promise;
-// }
-
-// var something = function(){
-//   temporary().then(function(appointments){
-//     console.log("this worked")
-//   })
-// }
-// something();
+var timeObj = function(date, time) {
+  return moment.utc(date + " " + time, "YYYY-MM-DD HH:mm").toDate();
+};
 
 exports.create = function(req, res) {
   var duration = req.body.duration;
@@ -87,9 +66,6 @@ exports.create = function(req, res) {
   //   this.date = dateTimeObj.dt;
   //   this.time = moment.utc(dateTimeObj.time, 'YYYY-MM-DD HH:mm').format('HH:mm');
   // };
-  var timeObj = function(date, time) {
-    return moment.utc(date + " " + time, "YYYY-MM-DD HH:mm").toDate();
-  };
 
   var newAppointment = new Appointment({
     duration: duration,
@@ -114,84 +90,8 @@ exports.create = function(req, res) {
     // time: timeObj(firstDateTime.date, firstDateTime.time),
   });
 
-  // var second = new Appointment({
-  //   duration: duration,
-  //   customer: customer._id,
-  //   message: message,
-  //   date: timeObj(secondDateTime.date, secondDateTime.time),
-  //   time: timeObj(secondDateTime.date, secondDateTime.time)
-  // });
-
-  // var third = new Appointment({
-  //   duration: duration,
-  //   customer: customer._id,
-  //   message: message,
-  //   date: timeObj(thirdDateTime.date, thirdDateTime.time),
-  //   time: timeObj(thirdDateTime.date, thirdDateTime.time)
-  // });
-
-  // console.log('APPT TIME', time);
-  // console.log('APPT DATE', date);
-
-
-  // var timeObj = moment.utc(date + " " + time, "YYYY-MM-DD HH:mm").toDate();
-  // console.log('TIME OBJ', timeObj); // in UTC
-
-  // var newAppointment = new Appointment({
-  //   duration: duration,
-  //   date: timeObj, // utc TimeObj
-  //   message: message,
-  //   time: timeObj,
-  //   customer: customer._id
-  //   // merchant: merchant // needs objectId here
-  // });
-
-  // var first = new Appointment(duration, merchant, customer, message, req.body.first);
-  // var second = new Appointment(duration, merchant, customer, message, req.body.second);
-  // var third = new Appointment(duration, merchant, customer, message, req.body.third);
-
-
   User.findOne({userName: merchant}, function(err, merchant){
     newAppointment.merchant = merchant._id;
-    // first.merchant = merchant._id;
-    // second.merchant = merchant._id;
-    // third.merchant = merchant._id;
-
-
-
-    // async.parallel({
-    //   first: function(cb) {
-    //     first.save(function() {
-    //       cb(null, first);
-    //     });
-    //   },
-    //   second: function(cb) {
-    //     second.save(function() {
-    //       cb(null, second);
-    //     });
-    //   },
-    //   third: function(cb) {
-    //     third.save(function() {
-    //       cb(null, third);
-    //     });
-    //   }
-    // },
-    // function(err, appts) {
-    //   if(err) { console.log(err); }
-    //   console.log(appts);
-    //   // appts is now equals to: {first: <firstApptObj>, second: <secondApptObj>, third: <thirdApptObj>}
-    //   sendMessage(newAppointment._id, newAppointment.message, customer);
-
-    //   var ppm = merchant.ppm;
-    //   // send out email
-    //   configConfirmOpt(appts, customer.userName, merchant, ppm, merchant.email, function(options){
-    //     mailer.sendConfirmEmail(options, function(err, response){
-    //       console.log(response);
-    //       console.log(options);
-    //       res.jsonp(appts); // formerly newAppointments
-    //     });
-    //   });
-    // });
 
     newAppointment.save(function(err){
       sendMessage(newAppointment._id, newAppointment.message, customer);
@@ -203,7 +103,62 @@ exports.create = function(req, res) {
         console.log(response);
         console.log(options);
         res.jsonp(newAppointment);
-      })
+      });
+    });
+  });
+};
+
+exports.edit = function(req, res) {
+  var appointmentId = req.body.appointmentId;
+  console.log('REQ', req.body);
+  var user = req.user;
+  // console.log('user', user);
+
+  // var duration = req.body.duration;
+  // var merchant = req.body.merchant; // merchant username from datePicker controller
+  // var customer = req.body.customer;
+
+  var toEmail, toUserName;
+
+  var firstDateTime = {
+    date: req.body.first.dt,
+    time: moment.utc(req.body.first.time, 'YYYY-MM-DD HH:mm').format('HH:mm')
+  };
+
+  var secondDateTime = {
+    date: req.body.second.dt,
+    time: moment.utc(req.body.second.time, 'YYYY-MM-DD HH:mm').format('HH:mm')
+  };
+
+  var thirdDateTime = {
+    date: req.body.third.dt,
+    time: moment.utc(req.body.third.time, 'YYYY-MM-DD HH:mm').format('HH:mm')
+  };
+
+  Appointment.findOne({_id: appointmentId}).populate('merchant').populate('customer').exec(function(err, appt) {
+    // console.log('APPT',appt);
+    if(user.github.login === appt.customer.userName) {
+    toEmail = appt.merchant.email;
+    toUserName = appt.merchant.userName;
+    } else {
+      toEmail = appt.customer.email;
+      toUserName = appt.customer.userName;
+    }
+
+    console.log('cust email', appt.customer.email);
+    console.log('merch email', appt.merchant.email);
+
+    appt.date.option1.date = timeObj(firstDateTime.date, firstDateTime.time);
+    appt.date.option2.date = timeObj(secondDateTime.date, secondDateTime.time);
+    appt.date.option3.date = timeObj(thirdDateTime.date, thirdDateTime.time);
+    appt.save();
+    // send confirmation email back to customer (apptObj, fromUserName, toUserName, ppm, toEmail, done)
+    configConfirmOpt(appt, req.user.userName, toUserName, appt.merchant.ppm, toEmail, function(options){
+      mailer.sendConfirmEmail(options, function(err, response){
+        console.log(response);
+        console.log(options);
+        res.jsonp(appt);
+      });
     });
   });
 };
@@ -263,7 +218,7 @@ var configReminderOpt = function(appt, done){
   var duration = appt.duration + " minutes";
   var to = appt.merchant.email+", "+appt.customer.email;
   var subject = "Githelp - You have an appointment in 30 minutes!";
-  var url = 'http://172.18.73.218:3000/#!/session/'+appt._id;
+  var url = 'http://172.18.74.30:3000/#!/session/'+appt._id;
 
   var options = {
     estIncome: estIncome,
@@ -280,16 +235,10 @@ var configReminderOpt = function(appt, done){
     url: url
   };
   done(options);
-}
+};
 
-exports.confirm = function(req, res) {
-  // var id = "id of appointment";
-  var option = req.params.option; // 'option1', 'option2', 'option3'
-  // console.log('OPTION', option);
-  // console.log('PARAMS', req.params);
-
-  // var appointmentId = req.body.appointmentId; // with post
-  var appointmentId = req.params.appointmentId;
+exports.display = function(req, res) {
+  var appointmentId = req.body.appointmentId;
 
   Appointment.findOne({_id: appointmentId}).populate('merchant').populate('customer').exec(function(err, appt) {
     appt.date[option].confirmed = true;
@@ -299,10 +248,65 @@ exports.confirm = function(req, res) {
     sendReminder(appt);
     appt.save();
      // Once confirmed, send out confirmation
+    res.redirect('/#!/confirm/' + appointmentId);
   });
-  // res.send(200);
-  res.redirect('/#!/appointments');
-}
+};
+
+exports.show = function(req, res) {
+  var appointmentId = req.body.appointmentId;
+  Appointment.findOne({_id: appointmentId}).populate('merchant').populate('customer').exec(function(err, appt) {
+    res.jsonp(appt);
+  });
+};
+
+exports.confirm = function(req, res) {
+  // var id = "id of appointment";
+  var option = req.params.option; // 'option1', 'option2', 'option3'
+  var userName = req.params.userName; // first click, userName is merchant
+
+  console.log('OPTION', option);
+  // console.log('PARAMS', req.params);
+
+  // var appointmentId = req.body.appointmentId; // with post
+  var appointmentId = req.params.appointmentId;
+
+  Appointment.findOne({_id: appointmentId}).populate('merchant').populate('customer').exec(function(err, appt) {
+    if(appt.confirmed) { // already confirmed; only 1 of 3 options can be confirmed true
+      console.log('Appt has already been confirmed');
+      if(req.user) {
+        res.redirect('/#!/appointments/' + appointmentId + "/confirmation");
+      } else {
+        res.render('confirmation', {appt: appt});
+      }
+    } else {
+      appt.date[option].confirmed = true;
+      appt.confirmed = true;
+      // appt.confirmed = true;
+      scheduler.sendEventInvite(appt); // or separate final Confirmation email
+      // startSession(appt);
+      sendReminder(appt);
+      appt.save();
+       // Once confirmed, send out confirmation
+      if(req.user) {
+        res.redirect('/#!/appointments/' + appointmentId + "/confirmation");
+      } else {
+        res.render('confirmation', {appt: appt});
+      }
+      // res.redirect('/#!/' + userName + '/confirmation/' + appointmentId);
+    }
+  });
+};
+
+exports.reschedule = function(req, res) {
+  var appointmentId = req.params.appointmentId;
+  var userName = req.params.userName;
+  res.redirect('/#!/appointments/' + appointmentId + "/reschedule");
+  // res.redirect('/#!/' + userName + '/reschedule/' + appointmentId);
+
+  // Appointment.findOne({_id: appointmentId}).populate('merchant').populate('customer').exec(function(err, appt) {
+  //   res.render('reschedule', {appt: appt});
+  // });
+};
 
 var formatDate = function(dateFromDb) { // apptObj.date
   return moment.utc(dateFromDb).format('MMMM Do YYYY');
@@ -311,29 +315,9 @@ var formatTime = function(dateFromDb) { // apptObj.date
   return moment.utc(dateFromDb).local().format('h:mm A');
 };
 
-var configConfirmOpt = function(apptObj, fromUserName, toUserName, ppm, merchantEmail, done) {
+var configConfirmOpt = function(apptObj, fromUserName, toUserName, ppm, toEmail, done) {
   var estIncome = (apptObj.duration * ppm).toFixed(2);
-  var toMerchant = merchantEmail;
   var subject = "Githelp - "+fromUserName+" needs your help!";
-
-  // var object = {
-  //   first: {},
-  //   second: {},
-  //   third: {}
-  // };
-
-  // for (var k in apptsObj) {
-  //   object[k].estIncome = (apptsObj[k].duration * ppm).toFixed(2);
-  //   object[k].appointmentId = apptsObj[k]._id;
-  //   object[k].date = moment.utc(apptsObj[k].date).format('MMMM Do YYYY');
-  //   object[k].time = moment.utc(apptsObj[k].time).local().format('h:mm A');
-  //   object[k].duration = apptsObj[k].duration + " minutes";
-  //   object[k].fromUserName = fromUserName;
-  //   object[k].toUserName = toUserName;
-  //   object[k].ppm = ppm;
-  //   object[k].to = toMerchant;
-  //   object[k].subject = subject;
-  // }
 
   var estIncome = (apptObj.duration * ppm).toFixed(2);
   var appointmentId = apptObj._id;
@@ -342,7 +326,7 @@ var configConfirmOpt = function(apptObj, fromUserName, toUserName, ppm, merchant
   // var time = moment.utc(apptObj.time).local().format('h:mm A');
   var duration = apptObj.duration + " minutes";
   var message = apptObj.message;
-  var to = merchantEmail;
+  var to = toEmail;
 
   console.log('apptObj.date',apptObj.date );
 
@@ -385,18 +369,6 @@ exports.toSession = function(req, res){
   });
 };
 
-exports.endSession = function(req, res) { // untested as of 3/30 bc no new sessions created w new model
-  console.log('endsession func');
-  Appointment.findById(req.body.appointmentId, function(err, appt) {
-    if(err) {console.log(err);}
-    console.log('APPT edited', appt);
-    appt.completionTime = req.body.duration; // in minutes
-    appt.totalCost = req.body.amount; // in cents
-    appt.save();
-    res.send(200);
-  });
-};
-
 exports.appointmentsByUser = function(req, res){
   Appointment.find({$or: [{merchant: req.user._id}, {customer: req.user._id}]})
   .populate('merchant')
@@ -406,13 +378,5 @@ exports.appointmentsByUser = function(req, res){
     res.jsonp({appointments: appointments})
   })
 }
-
-
-
-
-
-
-
-
 
 

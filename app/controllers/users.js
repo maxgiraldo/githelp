@@ -2,11 +2,13 @@
 var request = require('request');
 var Q = require('q');
 var async = require('async');
+var mongoose = require('mongoose');
+var balanced = require('balanced-official');
+// Export Modified API functions
 var search = require('../api_builds/search');
 var scraper = require('../api_builds/scraper');
 var scheduler = require('../api_builds/scheduler');
 var payments = require('../api_builds/payments');
-var mongoose = require('mongoose');
 // Specific mongoose models defined here
 var User = mongoose.model('User');
 var Chatroom = mongoose.model('Chatroom');
@@ -26,10 +28,23 @@ exports.signin = function(req, res){
   res.render('signin');
 };
 
-exports.authCallback = function(req, res) {
-  res.redirect('/');
-};
+balanced.configure('ak-test-1P4LCuAfcv3isFlyX9mxNXvz6bI1XNril');
 
+exports.authCallback = function(req, res) {
+  // create the balanced customer here
+  if(req.user.balancedUser){
+    res.redirect('/');
+  } else{
+    var customer = balanced.marketplace.customers.create({
+      "name": req.user.displayName,
+      "email": req.user.email
+    }).then(function(data){
+      req.user.balancedUser = data.toJSON().id;
+      req.user.save();
+      res.redirect('/');
+    });
+  }
+};
 /**
  * Show sign up form
  */

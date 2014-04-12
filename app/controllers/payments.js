@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
 var User = mongoose.model('User'),
     Appointment = mongoose.model('Appointment');
 
-balanced.configure('ak-test-1dsNimzLa65kRDXzRzGgLQ5Gqoi8sIwCU'); // test API key for Balanced Payments
+balanced.configure('ak-test-1P4LCuAfcv3isFlyX9mxNXvz6bI1XNril'); // test API key for Balanced Payments
 
 var done = function(err, response){
   if(err) return err;
@@ -20,7 +20,7 @@ var done = function(err, response){
 var debitCard = function(appt, credit){
   var debitSubject = "You have made a payment to " + appt.merchant.userName;
   appt.description = debitSubject;
-  payments.debitCard(appt, function(){
+  payments.debitCustomer(appt, function(){
     credit(); // starts the credit callback
     var debitOptions = {
       subject: debitSubject,
@@ -36,13 +36,13 @@ var debitCard = function(appt, credit){
 var creditCard = function(appt, done){
   var creditSubject = "You have received a payment from " + appt.customer.userName;
   appt.description = creditSubject;
-  payments.creditCard(appt, function(){
+  payments.creditAll(appt, function(){
     var creditOptions = {
       subject: creditSubject,
       to: appt.merchant.email,
       customerUserName: appt.customer.userName,
       duration: appt.duration,
-      amount: (appt.payment.amount * 0.9 / 100.0).toFixed(2)
+      amount: (appt.payment.merchantShare / 100.0).toFixed(2)
     };
 
     mailer.sendCreditEmail(creditOptions, done);
@@ -57,7 +57,9 @@ exports.transaction = function(req, res) {
     appt.payment = {
       customer: appt.customer._id,
       merchant: appt.merchant._id,
-      amount: amount,
+      totalAmount: amount,
+      merchantShare: amount * 0.8,
+      githelpShare: amount * 0.2,
       status: 'pending'
     };
     appt.save();
@@ -79,12 +81,13 @@ exports.createCard = function(req, res) {
   console.log('CC', ccObj);
   balanced.marketplace.cards.create(ccObj)
     .then(function(card) {
-      console.log('CARD ', card.toJSON());
-      User.findOneAndUpdate({ userName: userName }, { balancedCard: card.id }, {}, function(err, user) {
-        if(err) { console.log(err); }
-        console.log('Updated creditcard info to: ', user);
-        res.jsonp(user);
-      });
+      req.user.balancedCard = card.toJSON().id;
+      balanced.get('/cards/'+req.user.balancedCard).associate_to_customer('/customers/'+req.user.balancedUser)
+      .then(function(card){
+        console.log(card);
+      })
+      req.user.save();
+      res.jsonp(req.user);
     }, function(err) {
     console.log(err);
   });
@@ -98,12 +101,15 @@ exports.createBankAcct = function(req, res) {
   console.log('BA', bankObj);
   balanced.marketplace.bank_accounts.create(bankObj)
     .then(function(account) {
-      console.log('BANK ', account.toJSON());
-      User.findOneAndUpdate({ userName: userName }, { balancedBank: account.id }, {}, function(err, user) {
-        if(err) { console.log(err); }
-        console.log('Updated bank acct info to: ', user);
-        res.jsonp(user);
-      });
+      console.log(account.toJSON());
+      req.user.balancedBank = account.toJSON().id;
+      console.log(req.user.balancedBank);
+      balanced.get('/bank_accounts/'+req.user.balancedBank).associate_to_customer('/customers/'+req.user.balancedUser)
+      .then(function(bankAccount){
+        console.log(bankAccount.toJSON());
+      })
+      req.user.save();
+      res.jsonp(req.user);
     }, function(err) {
     console.log(err);
   });
@@ -121,7 +127,12 @@ exports.updateBankAcct = function(req, res) {
 
 };
 
-
-
-
-
+/*
+https://docs.balancedpayments.com/1.0/overview/resources/#test-credit-card-numbers
+https://docs.balancedpayments.com/1.1/api/bank-accounts/#create-a-bank-account-direct
+https://dashboard.balancedpayments.com/#/marketplaces/TEST-MP1K2TEfmQCAvvy326vQ0MNE/logs/OHMb3897980c1e011e395cf06429171ffad
+https://docs.balancedpayments.com/1.0/overview/fees/#funds-flow
+https://docs.balancedpayments.com/1.0/overview/payouts/#submission-delivery-times
+https://www.balancedpayments.com/flow
+https://www.balancedpayments.com/payouts
+*/

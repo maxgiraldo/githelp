@@ -2,7 +2,7 @@
   <!-- Chat -->
   <div class='container' ui-view>
     <!-- Side chat with list of all conversations -->
-    <div class='side-chat-bar'>
+    <div class='side-chat-bar inbox-scroll-wrapper'>
       <h1 class='headline headline-small'>Conversations</h1>
       <div ng-repeat='inbox in userInboxes' style="margin-left: 0px; padding-left: 0px">
         <div class='chat-head side-bar' ng-click='toInbox(inbox._id)'>
@@ -14,8 +14,8 @@
     </div> <!-- SIDE CHAT BAR -->
 
     <!-- Main chat box -->
-    <div id='main-chat' >
-      <div class='chat-window' >
+    <div id='main-chat'>
+      <div class='chat-window inbox-scroll-wrapper' >
         <div class='chat-bubble' data-ng-repeat="message in messagesByChatroom[currentChatroomId] | orderBy:'-created':true">
           <img class='avatar-chat' style="margin-right: 10px" src="{{message.sender.avatarUrl}}"/>
           <div class='chat-text'>

@@ -9,18 +9,8 @@
       <h1 class='headline full-name'>{{user.fullName}}</h1>
       <h2 class='username'><a href="http://www.github.com/{{user.userName}}"><i class="fa fa-github"></i> {{user.userName}}</a></h2>
       <h2 data-ng-show = "user.github.blog" class="username"><a href="{{user.github.blog}}"><i class="fa fa-link"></i> {{user.github.blog}}</a></h2>
-      <h4 class='price'>{{user.ppm || 2.00 | currency:"$"}}/minute<span ng-hide='user._id !== global.user._id'><a class='username' href="#" ng-click='editForm()' ng-show='user'><i id='edit' class="fa fa-pencil"></i></a></span></h4>
-
-      <div data-ng-show="showForm">
-        <form ng-submit='submitEdit()'>
-          <!-- <label>$</label> -->
-          <input class='form-control' type="text" data-ng-model="user.ppm">
-          <!-- <label>Self Intro:</label>
-          <textarea type="text" data-ng-model="intro"></textarea>
-          <div data-ng-include data-src="'views/partials/creditcard.html'"></div> -->
-          <input type="submit" value='submit' ng-click='editForm()'/>
-        </form>
-      </div>
+      <h4 class='price'><edit-in-place value="user.ppm"></edit-in-place></h4>
+      <h4 class='price'>${{user.ppm * 60}}/hour</h4>
     </div>
 
     <div data-ng-click="setAppointment()" data-ng-show="user && user._id !== global.user._id" class='call-button headline'>

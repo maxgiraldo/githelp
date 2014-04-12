@@ -1,0 +1,20 @@
+<!-- Date and TimePicker for timeslot selection -->
+
+<div class='container profile' style='padding-top: 10px'>
+  <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="appt.dt" is-open="opened" min="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
+
+  <button class="btn btn-default" ng-click="open($event)"><i class="fa fa-calendar"></i></button>
+  <br>
+  <div data-ng-controller="TimepickerCtrl" ng-model="appt.time" class="row col-md-7">
+    <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+  </div>
+
+  <div data-ng-repeat="id in idArray">
+    <h3>{{id}} Date</h3>
+    <span>{{appts[id].dt}}</span>
+    <span>{{appts[id].time}}</span>
+    <button class="btn btn-alert" data-ng-click="deleteDate(id)">Remove</button>
+  </div>
+  <button type="button" class="btn btn-default btn-lg btn-block" data-ng-click="addDate()">Add</button>
+</div>
+

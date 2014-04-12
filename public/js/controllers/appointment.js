@@ -7,6 +7,12 @@ angular.module('githelp.controllers.appointment', [])
 
   var appointmentId = $stateParams.sessionId;
 
+
+  // $scope.displayConfirmation = function() {
+  //   $http.post('/appointments/' + appointmentId, appointmentId).success(function(response) {
+  //   })
+  // };
+
   $scope.confirmAppointment = function(){
     var newAppointment = new Appointment({
       appointmentId: appointmentId
@@ -88,12 +94,7 @@ angular.module('githelp.controllers.appointment', [])
 
       $http.post('/charge', transactionObj).success(function(response) { // run payments.debitCard
         console.log(response);
-        // $scope.txComplete = response;
         var transactionObj = transactionObj;
-        // $http.post('/session/end', transactionObj).success(function(response) { // edit appt model
-        //   console.log('completed apptment edit');
-        //   console.log(response);
-        // });
       });
     };
       };

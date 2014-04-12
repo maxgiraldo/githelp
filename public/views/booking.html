@@ -16,7 +16,10 @@
       </select>
       <h2 class='headline' style='font-size: 15px;'>Suggest open times for your call</h2>
 
-      <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="appts.first.dt" is-open="opened1" min="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
+      <section data-ng-include data-src="'views/partials/timeslots.html'"></section>
+
+
+<!--       <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="appts.first.dt" is-open="opened1" min="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
 
       <button class="btn btn-default" ng-click="open1($event)"><i class="fa fa-calendar"></i></button>
       <br>
@@ -38,60 +41,10 @@
       <br>
       <div data-ng-controller="TimepickerCtrl" ng-model="appts.third.time" class="row col-md-7">
         <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
-      </div>
+      </div> -->
       <br>
       <br>
       <input style='margin-top:8px' type="submit" class="btn btn-success" value="Book Now" id="appt-submit">
-    </div> <!-- container profile -->
+    </div>
   </form>
 </div>
-
-
-  <!-- <form class="container form-group" ng-submit="createAppointment()">
-    <div class="container">
-      <h2>Provide Call Information</h2>
-      <div>
-        <label>Message to Merchant</label>
-        <textarea id="message" ng-model="appt.message" placeholder="Message"/></textarea>
-      </div>
-      <div>
-        <label>Set Estimated Length</label>
-          <select name="duration" ng-model="appt.duration">
-            <option value="15">15 minutes</option>
-            <option value="30">30 minutes</option>
-            <option value="60">60 minutes</option>
-          </select>
-      </div>
-
-      <div data-ng-controller="TimepickerCtrl" ng-model="appt.time" class="row col-md-5">
-          <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
-      </div>
-    </div>
-
-    <div class="container">
-      <h2>Suggest Open Times For Your Call</h2>
-      <div class="row col-md-12">
-        <div class="row col-md-5" >
-          <p class="input-group">
-            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="appt.dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
-            <span class="input-group-btn">
-              <button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-
-              <span>max: find better icons?</span>
-            </span>
-          </p>
-        </div>
-
-        <div class="row col-md-1" ></div>
-
-        <div data-ng-controller="TimepickerCtrl" ng-model="appt.time" class="row col-md-5">
-          <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
-        </div>
-    </div>
-    <input type="submit" class="btn btn-success" value="Book Now" id="appt-submit">
-     <a href="/email">send email</a>
-    <p> You won't be billed until the end of your call.</p>
-  </form>
-</div>
-
- -->
