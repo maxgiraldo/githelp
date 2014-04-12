@@ -1,11 +1,12 @@
 // Module dependencies here
 var async = require('async');
-var GitHubStrategy = require('passport-github').Strategy;
 var passport = require('passport');
 var mongoose = require('mongoose');
+var ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var GitHubStrategy = require('passport-github').Strategy;
 // Specific mongoose models defined here
 var User = mongoose.model('User');
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -24,9 +25,12 @@ passport.deserializeUser(function(id, done) {
 
 passport.use(new GitHubStrategy({
   // Below are JHK's Keys
-  clientID: '71778e134296a29071f4',
-  clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
-  callbackURL: "http://localhost:3000/auth/github/callback"
+
+  // clientID: '71778e134296a29071f4',
+  // clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
+  clientID: '0934ee7ca0cdc34cc007',
+  clientSecret: 'dc0845769a5c3835bebc2a7a4772e0689b7ac1d7',
+  callbackURL: "http://172.18.73.218:3000/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({ githubId: profile.id }, function (err, user) {
@@ -100,6 +104,7 @@ module.exports = function(app) {
   //Routes to App Controllers here
   var index = require('../app/controllers/index');
   var users = require('../app/controllers/users');
+  var auth = require('../app/controllers/auth');
   var payments = require('../app/controllers/payments');
   var appointments = require('../app/controllers/appointments');
   var messages = require('../app/controllers/messages');
@@ -115,7 +120,7 @@ module.exports = function(app) {
   // get JSON user object back, this will serialize and deserialize the user
   // also attaches user to req (req.user)
   app.get('/auth/github/callback',
-    passport.authenticate('github', {failureRedirect: '/login'}),
+    passport.authenticate('github', { successReturnToOrRedirect: '/', failureRedirect: '/signin'}),
     users.authCallback);
 
 
@@ -148,23 +153,22 @@ module.exports = function(app) {
   //   if(err) { return next(err); }
   //   return res.redirect('/');
   // });
-  app.get('/appointment', appointments.appointmentsByUser);
-  app.post('/appointment', appointments.confirm);
-  app.post('/appointment/show', appointments.show);
-  app.post('/appointment/create', appointments.create);
-  app.post('/appointment/edit', appointments.edit);
+  app.get('/appointment', ensureLoggedIn('/signin'), appointments.appointmentsByUser);
+  app.post('/appointment', ensureLoggedIn('/signin'), appointments.confirm);
+  app.post('/appointment/show', ensureLoggedIn('/signin'), appointments.show);
+  app.post('/appointment/create', ensureLoggedIn('/signin'), appointments.create);
+  app.post('/appointment/edit', ensureLoggedIn('/signin'), appointments.edit);
 
-  app.get('/appointments/:appointmentId', appointments.toSession);
+  app.get('/appointments/:appointmentId', ensureLoggedIn('/signin'), appointments.toSession);
   // app.get('/appointments/:appointmentId', appointments.details);
-  app.get('/appointments/confirm/:userName/:appointmentId/:option', appointments.confirm);
-  app.get('/appointments/reschedule/:userName/:appointmentId', appointments.reschedule);
-  app.get('/inbox', messages.findAllChatroom);
-  app.post('/inbox', messages.createChatroom);
-  app.get('/message', messages.messageByChatroom);
-  app.post('/message', messages.createMessage);
+  app.get('/appointments/confirm/:userName/:appointmentId/:option', ensureLoggedIn('/signin'), appointments.confirm);
+  app.get('/appointments/reschedule/:userName/:appointmentId', ensureLoggedIn('/signin'), appointments.reschedule);
+  app.get('/inbox', ensureLoggedIn('/signin'), messages.findAllChatroom);
+  app.post('/inbox', ensureLoggedIn('/signin'), messages.createChatroom);
+  app.get('/message', ensureLoggedIn('/signin'), messages.messageByChatroom);
+  app.post('/message', ensureLoggedIn('/signin'), messages.createMessage);
 
-  app.post('/updatePpm', users.updatePpm);
-
+  app.post('/updatePpm', ensureLoggedIn('/signin'), users.updatePpm);
 
   app.get('/', index.render);
 
@@ -174,16 +178,22 @@ module.exports = function(app) {
   app.put('/user', users.edit);
 
   app.post('/query', index.results);
-  app.post('/create/cc', payments.createCard);
-  app.post('/charge', payments.transaction);
+  app.post('/create/cc', ensureLoggedIn('/signin'), payments.createCard);
+  app.post('/charge', ensureLoggedIn('/signin'), payments.transaction);
 
-  app.post('/upload', texteditor.upload);
+  app.post('/upload', ensureLoggedIn('/signin'), texteditor.upload);
 
   // app.get('/email', appointments.sendEmail);
 
-  app.post('/create/ba', payments.createBankAcct);
+  app.post('/create/ba', ensureLoggedIn('/signin'), payments.createBankAcct);
+
+  app.get('/loggedin', auth.auth); // for client-side auth
 
   app.post('/session/end', appointments.endSession);
+
+  app.get('/signedin', function(req, res) {
+    res.send(req.isAuthenticated() ? req.user : '0');
+  });
 
   app.get('/signin', users.signin);
   app.get('/signup', users.signup);
@@ -192,4 +202,5 @@ module.exports = function(app) {
   app.get('/session', function(req, res) {
     res.render('session');
   });
+
 };

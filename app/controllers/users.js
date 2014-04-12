@@ -20,10 +20,12 @@ exports.updatePpm = function(req, res) {
     user.save();
   });
   res.send(200);
-}
+};
 
 exports.signin = function(req, res){
+  console.log('SIGN IN REDIRECT?');
   res.render('signin');
+  // res.redirect('/');
 };
 
 exports.authCallback = function(req, res) {
