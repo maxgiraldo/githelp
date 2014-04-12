@@ -278,6 +278,13 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 // Appointments page
+
+.appointment-scroll-wrapper {
+  overflow: auto;
+  height: 500px;
+  display: block;
+}
+
 .appointment-box {
   // background-color: #f5ff87;
   float: left;
@@ -328,6 +335,24 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   text-align: center;
 }
 // Profile page
+
+// Edit PPM
+.edit-in-place span {
+  cursor: pointer;
+}
+
+.edit-in-place input {
+  display: none;
+}
+
+.edit-in-place.active span {
+  display: none;
+}
+
+.edit-in-place.active input {
+  display: inline-block;
+}
+
 .profile {
   padding-top: 48px;
   text-align: center;
@@ -397,6 +422,12 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 // Inbox
+
+.inbox-scroll-wrapper {
+  overflow: auto;
+  height: 500px;
+  display: block;
+}
 
 
 #inbox-input {
@@ -476,7 +507,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 .side-chat-bar {
   width: 200px;
-  height: 30000px;
   float: left;
 }
 .chat-head .side-bar {
@@ -629,6 +659,7 @@ h1.full-name {
 }
 // Firepad Editor
 .text-editor-container {
+  overflow: hidden;
   background-color: #282829;
   height: 100vh;
 }

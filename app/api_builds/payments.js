@@ -1,7 +1,8 @@
 var balanced = require('balanced-official'),
-    Q = require('q');
+    Q = require('q'),
+    async = require('async');
 
-balanced.configure('ak-test-1dsNimzLa65kRDXzRzGgLQ5Gqoi8sIwCU');
+balanced.configure('ak-test-1P4LCuAfcv3isFlyX9mxNXvz6bI1XNril');
 
 // var customer = balanced.marketplace.customers.create();
 
@@ -93,11 +94,11 @@ var bankUri = function(bankToken) {
   return uri;
 };
 
-exports.debitCard = function(appt, done) {
-  console.log(appt)
+exports.debitCustomer = function(appt, done) {
+  console.log("in the debit")
   var cardUriStr = cardUri(appt.customer.balancedCard);
   balanced.get(cardUriStr).debit({
-    'amount': appt.payment.amount,
+    'amount': parseInt(appt.payment.totalAmount),
     'appears_on_statement_as': 'githelp.co',
     'description': appt.description
   }).then(function(debit) {
@@ -109,19 +110,44 @@ exports.debitCard = function(appt, done) {
   });
 };
 
-exports.creditCard = function(appt, done) {
-  console.log(appt)
-  var cardUriStr = cardUri(appt.merchant.balancedCard);
-  balanced.get(cardUriStr).credit({
-    'amount': appt.payment.amount,
-    'appears_on_statement_as': 'githelp.co',
-    'description': appt.description
-  }).then(function(credit) {
-    console.log('credit completed', credit.toJSON());
+exports.creditAll = function(appt, done) {
+  async.parallel({
+    one: function(callback){
+      console.log("in the merchant credit")
+      var bankUriStr = bankUri(appt.merchant.balancedBank);
+      balanced.get(bankUriStr).credit({
+        'amount': parseInt(appt.payment.merchantShare),
+        'appears_on_statement_as': 'githelp.co',
+        'description': appt.description
+      }).then(function(credit) {
+        console.log('credit completed', credit.toJSON());
+        callback(null, credit.toJSON());
+      }, function(err) {
+        console.log("hello")
+        console.log(err);
+      });
+    },
+    // paying out to marketplace
+    two: function(callback){
+      console.log("in the githelp credit")
+      var bankUriStr = bankUri('BA1KizFhYIy8FZgCcHT360nQ');
+      balanced.get(bankUriStr).credit({
+        'amount': parseInt(appt.payment.githelpShare),
+        'appears_on_statement_as': 'githelp.co',
+        'description': appt.description
+      }).then(function(credit) {
+        console.log('credit completed', credit.toJSON());
+        callback(null, credit.toJSON())
+      }, function(err) {
+        console.log("goodbye")
+        console.log(err);
+      });
+    }
+  }, function(err, results){
+    if(err) console.log(err);
+    console.log("creditAll results", results);
     done();
-  }, function(err) {
-    console.log(err);
-  });
+  })
 }
 
 exports.updateCard = function(currentCardObj, updatedCardObj) {

@@ -1,31 +1,10 @@
+'use strict';
+
 angular.module('githelp.controllers.texteditor', [])
-  .controller('TextEditorController', ['$scope', '$upload', 'Global',
-    function ($scope, Global, $upload) {
-
+ .controller('TextEditorController', ['$scope', '$state', '$http', '$stateParams', 'Global',
+    function ($scope, $state, $http, $stateParams, Global) {
     $scope.global = Global;
-
-    // File Upload
-    //////////////////////////////////////////////
-    //////////////////////////////////////////////
-    //////////////////////////////////////////////
-    $scope.onFileSelect = function($files) {
-    //$files: an array of files selected, each file has name, size, and type.
-    for (var i = 0; i < $files.length; i++) {
-      var file = $files[i];
-      $scope.upload = $upload.upload({
-        url: '/upload',
-        method: 'POST',
-        // headers: {'header-key': 'header-value'},
-        data: {myObj: $scope.myModelObj},
-        file: file
-      }).success(function(data, status, headers, config) {
-        // file is uploaded successfully
-        console.log(data);
-      });
-    }
-
-  };
-
+    $scope.returnedFiles = [];
     // Text Editor
     //////////////////////////////////////////////
     //////////////////////////////////////////////
@@ -42,14 +21,47 @@ angular.module('githelp.controllers.texteditor', [])
 
     //// Create Firepad.
     var firepad = Firepad.fromACE(firepadRef, editor);
-
     //// Initialize contents.
     firepad.on('ready', function() {
       if (firepad.isHistoryEmpty()) {
-        firepad.setText('// JavaScript Editing with Firepad!\nfunction go() {\n  var message = "Hello, world.";\n  console.log(message);\n}');
+        firepad.setText('//function go() {\n  var message = "Hello, world.";\n  console.log(message);\n}');
       };
     });
 
+    // File Upload
+    //////////////////////////////////////////////
+    //////////////////////////////////////////////
+    //////////////////////////////////////////////
+    $scope.filesChanged = function(elm) {
+      $scope.files = elm.files;
+      $scope.$apply();
+    };
+    $scope.upload = function() {
+      var fd = new FormData();
+      angular.forEach($scope.files, function(file) {
+        fd.append('file', file);
+      });
+      $http({
+        method: 'POST',
+        url: 'upload',
+        data: fd,
+        headers: {'Content-Type': undefined},
+        transformRequest: angular.identity,
+        params: {numFiles: $scope.files.length}
+      })
+      // $http.post('upload', fd,
+      // {
+      //   transformRequest:angular.identity,
+      //   headers:{'Content-Type': undefined}
 
-  }
-]);
+      // })
+      .success(function(arr) {
+        $scope.returnedFiles = arr;
+        firepad.setText($scope.returnedFiles[0].data);
+      })
+    };
+
+    // $scope.storeCurrentPage = function() {
+    //   var lines = Document.get
+    // };
+  }]);

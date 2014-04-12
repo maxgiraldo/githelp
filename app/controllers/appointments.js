@@ -218,7 +218,7 @@ var configReminderOpt = function(appt, done){
   var duration = appt.duration + " minutes";
   var to = appt.merchant.email+", "+appt.customer.email;
   var subject = "Githelp - You have an appointment in 30 minutes!";
-  var url = 'http://172.18.73.218:3000/#!/session/'+appt._id;
+  var url = 'http://172.18.74.30:3000/#!/session/'+appt._id;
 
   var options = {
     estIncome: estIncome,
@@ -368,18 +368,6 @@ exports.toSession = function(req, res){
   Appointment.findOne({_id: req.params.appointmentId}).populate('merchant').populate('customer').exec(function(err, appointment){
     res.render('session', {appointment: appointment});
     // session.jade already created, have to design
-  });
-};
-
-exports.endSession = function(req, res) { // untested as of 3/30 bc no new sessions created w new model
-  console.log('endsession func');
-  Appointment.findById(req.body.appointmentId, function(err, appt) {
-    if(err) {console.log(err);}
-    console.log('APPT edited', appt);
-    appt.completionTime = req.body.duration; // in minutes
-    appt.totalCost = req.body.amount; // in cents
-    appt.save();
-    res.send(200);
   });
 };
 

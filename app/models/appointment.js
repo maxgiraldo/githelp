@@ -15,13 +15,15 @@ var AppointmentSchema = new Schema({
             ref: "User"},
     merchant: {type: Schema.ObjectId,
             ref: "User"},
-    amount: String,
+    totalAmount: String,
+    merchantShare: String,
+    githelpShare: String,
     balancedId: String,
     created: {
       type: Date,
       default: Date.now
     },
-    status: String
+    status: String,
   },
   date: {
     option1: {

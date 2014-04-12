@@ -7,6 +7,7 @@ window.app = angular.module('githelp',
   'ui.select2',
   'githelp.controllers',
   'githelp.services',
+  'githelp.directives',
   'angularFileUpload'
   ]);
 
@@ -31,3 +32,6 @@ angular.module('githelp.services',
   'githelp.services.appointments'
   ]);
 
+angular.module('githelp.directives',
+  ['githelp.directives.fileinput'
+  ]);

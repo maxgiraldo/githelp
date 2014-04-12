@@ -25,12 +25,9 @@ passport.deserializeUser(function(id, done) {
 
 passport.use(new GitHubStrategy({
   // Below are JHK's Keys
-
-  // clientID: '71778e134296a29071f4',
-  // clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
-  clientID: '0934ee7ca0cdc34cc007',
-  clientSecret: 'dc0845769a5c3835bebc2a7a4772e0689b7ac1d7',
-  callbackURL: "http://172.18.73.218:3000/auth/github/callback"
+  clientID: '71778e134296a29071f4',
+  clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
+  callbackURL: "http://172.18.74.30:3000/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({ githubId: profile.id }, function (err, user) {
@@ -189,12 +186,15 @@ module.exports = function(app) {
 
   app.get('/loggedin', auth.auth); // for client-side auth
 
+<<<<<<< HEAD
   app.post('/session/end', appointments.endSession);
 
   app.get('/signedin', function(req, res) {
     res.send(req.isAuthenticated() ? req.user : '0');
   });
 
+=======
+>>>>>>> 2938d3913ea04f2a3759bfa9157159ed1a81a727
   app.get('/signin', users.signin);
   app.get('/signup', users.signup);
   app.get('/signout', users.signout);
