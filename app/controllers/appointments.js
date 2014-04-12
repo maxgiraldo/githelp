@@ -273,11 +273,11 @@ exports.confirm = function(req, res) {
   Appointment.findOne({_id: appointmentId}).populate('merchant').populate('customer').exec(function(err, appt) {
     if(appt.confirmed) { // already confirmed; only 1 of 3 options can be confirmed true
       console.log('Appt has already been confirmed');
-      // if(req.user) {
+      if(req.user) {
         res.redirect('/#!/appointments/' + appointmentId + "/confirmation");
-      // } else {
-      //   res.render('confirmation');
-      // }
+      } else {
+        res.render('confirmation', {appt: appt});
+      }
     } else {
       appt.date[option].confirmed = true;
       appt.confirmed = true;
@@ -290,7 +290,7 @@ exports.confirm = function(req, res) {
       if(req.user) {
         res.redirect('/#!/appointments/' + appointmentId + "/confirmation");
       } else {
-        res.render('confirmation');
+        res.render('confirmation', {appt: appt});
       }
       // res.redirect('/#!/' + userName + '/confirmation/' + appointmentId);
     }
