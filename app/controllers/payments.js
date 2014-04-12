@@ -14,6 +14,7 @@ balanced.configure('ak-test-1P4LCuAfcv3isFlyX9mxNXvz6bI1XNril'); // test API key
 
 var done = function(err, response){
   if(err) return err;
+  console.log("hello")
   console.log(response);
 };
 
@@ -29,6 +30,7 @@ var debitCard = function(appt, credit){
       duration: appt.duration,
       amount: (appt.payment.amount / 100.0).toFixed(2)
     };
+    console.log(done);
     mailer.sendDebitEmail(debitOptions, done);
   }); // callbacks in payments.debitCard
 };
@@ -37,6 +39,7 @@ var creditCard = function(appt, done){
   var creditSubject = "You have received a payment from " + appt.customer.userName;
   appt.description = creditSubject;
   payments.creditAll(appt, function(){
+    console.log("yo");
     var creditOptions = {
       subject: creditSubject,
       to: appt.merchant.email,
@@ -46,6 +49,7 @@ var creditCard = function(appt, done){
     };
     appt.payment.status = 'processed';
     appt.save();
+    console.log(done);
     mailer.sendCreditEmail(creditOptions, done);
   });
 };
