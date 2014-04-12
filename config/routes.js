@@ -186,15 +186,12 @@ module.exports = function(app) {
 
   app.get('/loggedin', auth.auth); // for client-side auth
 
-<<<<<<< HEAD
-  app.post('/session/end', appointments.endSession);
+  // app.post('/session/end', appointments.endSession);
 
   app.get('/signedin', function(req, res) {
     res.send(req.isAuthenticated() ? req.user : '0');
   });
 
-=======
->>>>>>> 2938d3913ea04f2a3759bfa9157159ed1a81a727
   app.get('/signin', users.signin);
   app.get('/signup', users.signup);
   app.get('/signout', users.signout);
