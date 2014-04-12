@@ -4,17 +4,14 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 html {
   height: 100%;
 }
-
 #githelp-search-bar {
   margin-left: 450px;
   width: 250px;
 }
-
 #githelp-search-bar-submit {
   margin-left: 615px;
   margin-top: 10px;
 }
-
 body {
   background: #fff;
   height: 100%;
@@ -28,13 +25,11 @@ body {
   padding: 0;
   border: 0;
 }
-
 h1 {
   font-size: 17px;
   line-height: 1;
   color: inherit;
 }
-
 a {
   color: #008cdd;
   &:hover {
