@@ -49,7 +49,7 @@ angular.module('githelp.controllers.datePicker', [])
         if(counter > 2){
           console.log("no");
         } else{
-          var num = $scope.otherArray.shift();
+          var num = $scope.otherArray.sort().shift();
           $scope.appts[num] = {};
           $scope.appts[num].dt = $scope.appt.dt;
           $scope.appts[num].time = $scope.appt.time;

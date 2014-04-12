@@ -12,6 +12,8 @@ angular.module('githelp.controllers.user', [])
       });
     }
 
+    $scope.value = "";
+
     $scope.findOne = function(){
       User.get({
         userName: $stateParams.userName
