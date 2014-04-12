@@ -1,8 +1,20 @@
-<div data-ng-controller="AppointmentController">
+<!-- <div data-ng-controller="AppointmentController"> -->
+<div data-ng-controller="DatepickerCtrl" ng-init="loadAppointment()">
   <div class='container profile'>
-    <h3>You have confirmed the appointment<h3>
+    <h3>
+      <p>You have confirmed your appointment.</p>
+      <p>An email confirmation is on its way!</p>
+    </h3>
+      <!-- <div ng-show="apptInDb.confirmed"> -->
 
-    <h3>To suggest new times, please submit them below</h3>
-   <!--  <button class='confirm-btn'>Confirm</button> -->
+      <!--   {% raw %}<h3>Date and Time: {{appt}}</h3>{% endraw %}
+        <ul>
+          <li>Customer: {{apptInDb.customer.fullName}}</li>
+          <li>Merchant: {{apptInDb.merchant.fullName}}</li>
+          <li>Duration: {{apptInDb.duration}}</li>
+          <li>Message: {{apptInDb.message}}</li>
+        </ul> -->
+      <!-- </div> -->
+    <h3><a href="/signin">Sign in</a> to see upcoming appointments</h3>
   </div>
 </div>

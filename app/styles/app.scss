@@ -659,6 +659,7 @@ h1.full-name {
 }
 // Firepad Editor
 .text-editor-container {
+  overflow: hidden;
   background-color: #282829;
   height: 100vh;
 }

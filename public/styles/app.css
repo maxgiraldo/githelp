@@ -7944,6 +7944,9 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   color: #b3babe;
 }
 
+<<<<<<< HEAD
+/* line 281, ../../app/styles/app.scss */
+=======
 /* line 282, ../../app/styles/app.scss */
 .appointment-scroll-wrapper {
   overflow: auto;
@@ -7952,17 +7955,26 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 /* line 288, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .appointment-box {
   float: left;
   width: 700px;
 }
 
+<<<<<<< HEAD
+/* line 286, ../../app/styles/app.scss */
+=======
 /* line 293, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .appointment-box .appt {
   float: left;
 }
 
+<<<<<<< HEAD
+/* line 289, ../../app/styles/app.scss */
+=======
 /* line 296, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .appointment-box .appointment-details {
   margin-top: 0;
   text-transform: uppercase;
@@ -7970,14 +7982,22 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-size: 16px;
 }
 
+<<<<<<< HEAD
+/* line 295, ../../app/styles/app.scss */
+=======
 /* line 302, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .appointment-box .appointment-text-info {
   padding-left: 130px;
   text-align: left;
   margin-top: 30px;
 }
 
+<<<<<<< HEAD
+/* line 301, ../../app/styles/app.scss */
+=======
 /* line 308, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .status {
   width: 100%;
   height: 40px;
@@ -7986,22 +8006,38 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   border-radius: 5px;
 }
 
+<<<<<<< HEAD
+/* line 308, ../../app/styles/app.scss */
+=======
 /* line 315, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .status-confirmed {
   background-color: #77cc33;
 }
 
+<<<<<<< HEAD
+/* line 311, ../../app/styles/app.scss */
+=======
 /* line 318, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .status-denied {
   background-color: #e65b5e;
 }
 
+<<<<<<< HEAD
+/* line 314, ../../app/styles/app.scss */
+=======
 /* line 321, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .status-pending {
   background-color: #f0f4e2;
 }
 
+<<<<<<< HEAD
+/* line 317, ../../app/styles/app.scss */
+=======
 /* line 324, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .alert-type {
   padding-top: 12px;
   font-size: 16px;
@@ -8010,13 +8046,20 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   color: #86897e;
 }
 
+<<<<<<< HEAD
+/* line 325, ../../app/styles/app.scss */
+=======
 /* line 332, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .center-appointment {
   margin-left: 200px;
   margin-right: 200px;
   text-align: center;
 }
 
+<<<<<<< HEAD
+/* line 331, ../../app/styles/app.scss */
+=======
 /* line 340, ../../app/styles/app.scss */
 .edit-in-place span {
   cursor: pointer;
@@ -8038,41 +8081,66 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 /* line 356, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .profile {
   padding-top: 48px;
   text-align: center;
   width: 350px;
 }
 
+<<<<<<< HEAD
+/* line 337, ../../app/styles/app.scss */
+=======
 /* line 362, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .bold-description {
   color: #000;
 }
 
+<<<<<<< HEAD
+/* line 340, ../../app/styles/app.scss */
+=======
 /* line 365, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .price {
   margin-top: 16px;
 }
 
+<<<<<<< HEAD
+/* line 343, ../../app/styles/app.scss */
+=======
 /* line 368, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .avatar-lg {
   border-radius: 60px;
   width: 110px;
   height: 110px;
 }
 
+<<<<<<< HEAD
+/* line 348, ../../app/styles/app.scss */
+=======
 /* line 373, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .profile-name-info {
   color: #000;
 }
 
+<<<<<<< HEAD
+/* line 351, ../../app/styles/app.scss */
+=======
 /* line 376, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .full-name {
   font-size: 30px;
   margin-bottom: 5px;
 }
 
+<<<<<<< HEAD
+/* line 355, ../../app/styles/app.scss */
+=======
 /* line 380, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .username {
   font-size: 16px;
   font-weight: 400;
@@ -8081,7 +8149,11 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-top: 5px;
 }
 
+<<<<<<< HEAD
+/* line 362, ../../app/styles/app.scss */
+=======
 /* line 387, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .call-button {
   width: 100%;
   height: 45px;
@@ -8091,12 +8163,20 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-top: 25px;
 }
 
+<<<<<<< HEAD
+/* line 370, ../../app/styles/app.scss */
+=======
 /* line 395, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .call-button:hover {
   background-color: #6ab72c;
 }
 
+<<<<<<< HEAD
+/* line 373, ../../app/styles/app.scss */
+=======
 /* line 398, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .headline p {
   color: #fff;
   font-size: 15px;
@@ -8106,7 +8186,11 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   cursor: pointer;
 }
 
+<<<<<<< HEAD
+/* line 381, ../../app/styles/app.scss */
+=======
 /* line 406, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .caps-sub-header {
   color: #8e8e8e;
   font-size: 14px;
@@ -8116,7 +8200,11 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-top: 20px;
 }
 
+<<<<<<< HEAD
+/* line 389, ../../app/styles/app.scss */
+=======
 /* line 414, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .repo-links {
   font-size: 14px;
   padding: 0;
@@ -8124,11 +8212,18 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   border: 0;
 }
 
+<<<<<<< HEAD
+/* line 395, ../../app/styles/app.scss */
+=======
 /* line 420, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 #edit {
   padding-left: 6px;
 }
 
+<<<<<<< HEAD
+/* line 402, ../../app/styles/app.scss */
+=======
 /* line 426, ../../app/styles/app.scss */
 .inbox-scroll-wrapper {
   overflow: auto;
@@ -8137,11 +8232,16 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 /* line 433, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 #inbox-input {
   margin-top: 70px;
 }
 
+<<<<<<< HEAD
+/* line 406, ../../app/styles/app.scss */
+=======
 /* line 437, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 #input-box {
   width: 37%;
   font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande",sans-serif;
@@ -8159,12 +8259,20 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
+<<<<<<< HEAD
+/* line 423, ../../app/styles/app.scss */
+=======
 /* line 454, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 #input-box:hover {
   border: 1px solid #a2a2a2;
 }
 
+<<<<<<< HEAD
+/* line 427, ../../app/styles/app.scss */
+=======
 /* line 458, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 #input-box:focus {
   -webkit-box-shadow: 0px 0px 0px #77cc33;
   -moz-box-shadow: 0px 0px 0px #77cc33;
@@ -8172,17 +8280,29 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   border: 1px solid #77cc33;
 }
 
+<<<<<<< HEAD
+/* line 434, ../../app/styles/app.scss */
+=======
 /* line 465, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .contact-user {
   font-size: 20px;
 }
 
+<<<<<<< HEAD
+/* line 438, ../../app/styles/app.scss */
+=======
 /* line 469, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .profile-chat {
   background-color: #fffca6;
 }
 
+<<<<<<< HEAD
+/* line 445, ../../app/styles/app.scss */
+=======
 /* line 476, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .chat-head {
   position: relative;
   display: inline-block;
@@ -8190,7 +8310,11 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-right: 40px;
 }
 
+<<<<<<< HEAD
+/* line 451, ../../app/styles/app.scss */
+=======
 /* line 482, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .chat-head .label {
   position: absolute;
   right: 0;
@@ -8199,17 +8323,29 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   background-color: #ff383e;
 }
 
+<<<<<<< HEAD
+/* line 458, ../../app/styles/app.scss */
+=======
 /* line 489, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .center-elements {
   text-align: center;
 }
 
+<<<<<<< HEAD
+/* line 461, ../../app/styles/app.scss */
+=======
 /* line 492, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .chat-head:hover {
   cursor: pointer;
 }
 
+<<<<<<< HEAD
+/* line 464, ../../app/styles/app.scss */
+=======
 /* line 495, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .avatar-chat {
   float: left;
   width: 50px;
@@ -8217,41 +8353,69 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   border-radius: 60px;
 }
 
+<<<<<<< HEAD
+/* line 472, ../../app/styles/app.scss */
+=======
 /* line 503, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .avatar-large-chat {
   width: 80px;
   height: 80px;
   border-radius: 60px;
 }
 
+<<<<<<< HEAD
+/* line 477, ../../app/styles/app.scss */
+=======
 /* line 508, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .side-chat-bar {
   width: 200px;
   float: left;
 }
 
+<<<<<<< HEAD
+/* line 482, ../../app/styles/app.scss */
+=======
 /* line 512, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .chat-head .side-bar {
   margin-top: 10px;
 }
 
+<<<<<<< HEAD
+/* line 487, ../../app/styles/app.scss */
+=======
 /* line 517, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .headline-small {
   margin-top: 0;
   font-size: 14px;
 }
 
+<<<<<<< HEAD
+/* line 491, ../../app/styles/app.scss */
+=======
 /* line 521, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .side-chat-bar .full-name-sm {
   font-size: 12px;
 }
 
+<<<<<<< HEAD
+/* line 497, ../../app/styles/app.scss */
+=======
 /* line 527, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 h1.full-name {
   margin-top: 10px;
 }
 
+<<<<<<< HEAD
+/* line 500, ../../app/styles/app.scss */
+=======
 /* line 530, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .chat-window {
   margin-left: auto;
   margin-right: auto;
@@ -8259,30 +8423,50 @@ h1.full-name {
   font-family: Helvetica, sans-serif;
 }
 
+<<<<<<< HEAD
+/* line 508, ../../app/styles/app.scss */
+=======
 /* line 538, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .chat-text {
   font-size: 16px;
   padding-top: 10px;
 }
 
+<<<<<<< HEAD
+/* line 513, ../../app/styles/app.scss */
+=======
 /* line 543, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .chat-type-message {
   margin-left: 210px;
 }
 
+<<<<<<< HEAD
+/* line 516, ../../app/styles/app.scss */
+=======
 /* line 546, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 #chat-input {
   width: 70%;
   border-radius: 0;
   display: inline-block;
 }
 
+<<<<<<< HEAD
+/* line 525, ../../app/styles/app.scss */
+=======
 /* line 555, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .chat-box {
   width: 300px;
 }
 
+<<<<<<< HEAD
+/* line 529, ../../app/styles/app.scss */
+=======
 /* line 559, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .navbar-min {
   height: 5vh;
   border: 0;
@@ -8292,17 +8476,29 @@ h1.full-name {
   background-color: #000000;
 }
 
+<<<<<<< HEAD
+/* line 537, ../../app/styles/app.scss */
+=======
 /* line 567, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .navbar-brand-min {
   padding: 0;
 }
 
+<<<<<<< HEAD
+/* line 541, ../../app/styles/app.scss */
+=======
 /* line 571, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .session-header {
   margin-top: 0;
 }
 
+<<<<<<< HEAD
+/* line 545, ../../app/styles/app.scss */
+=======
 /* line 575, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .session-confirm {
   width: 200px;
   color: #fff;
@@ -8315,7 +8511,11 @@ h1.full-name {
   float: right;
 }
 
+<<<<<<< HEAD
+/* line 557, ../../app/styles/app.scss */
+=======
 /* line 587, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 #editor {
   position: absolute;
   top: 0;
@@ -8324,7 +8524,11 @@ h1.full-name {
   left: 0;
 }
 
+<<<<<<< HEAD
+/* line 565, ../../app/styles/app.scss */
+=======
 /* line 595, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 #callInfoBox {
   z-index: 4;
   width: 264px;
@@ -8334,7 +8538,11 @@ h1.full-name {
   text-align: center;
 }
 
+<<<<<<< HEAD
+/* line 575, ../../app/styles/app.scss */
+=======
 /* line 605, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .end-session {
   width: 100%;
   height: 45px;
@@ -8344,12 +8552,20 @@ h1.full-name {
   background-color: #e65b5e;
 }
 
+<<<<<<< HEAD
+/* line 583, ../../app/styles/app.scss */
+=======
 /* line 613, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .end-session:hover {
   background-color: #d45355;
 }
 
+<<<<<<< HEAD
+/* line 586, ../../app/styles/app.scss */
+=======
 /* line 616, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .start-session {
   width: 100%;
   height: 45px;
@@ -8359,56 +8575,97 @@ h1.full-name {
   background-color: #77cc33;
 }
 
+<<<<<<< HEAD
+/* line 594, ../../app/styles/app.scss */
+=======
 /* line 624, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .start-session:hover {
   background-color: #69b42c;
 }
 
+<<<<<<< HEAD
+/* line 597, ../../app/styles/app.scss */
+=======
 /* line 627, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .total-container {
   font-size: 16px;
 }
 
+<<<<<<< HEAD
+/* line 600, ../../app/styles/app.scss */
+=======
 /* line 630, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 #total-amount {
   font-weight: 400;
 }
 
+<<<<<<< HEAD
+/* line 603, ../../app/styles/app.scss */
+=======
 /* line 633, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .button-txt {
   text-align: center;
 }
 
+<<<<<<< HEAD
+/* line 606, ../../app/styles/app.scss */
+=======
 /* line 636, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 #timer {
   margin-top: 0;
   font-weight: 400;
 }
 
+<<<<<<< HEAD
+/* line 610, ../../app/styles/app.scss */
+=======
 /* line 640, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 #clock {
   font-size: 45px;
 }
 
+<<<<<<< HEAD
+/* line 615, ../../app/styles/app.scss */
+=======
 /* line 645, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .video-container {
   float: left;
 }
 
+<<<<<<< HEAD
+/* line 618, ../../app/styles/app.scss */
+=======
 /* line 648, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 #session-container {
   padding-top: 0;
   padding-bottom: 0;
 }
 
+<<<<<<< HEAD
+/* line 622, ../../app/styles/app.scss */
+=======
 /* line 652, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 #videos {
   width: 100px;
   height: 100px;
 }
 
+<<<<<<< HEAD
+/* line 631, ../../app/styles/app.scss */
+=======
 /* line 661, ../../app/styles/app.scss */
+>>>>>>> b1e085838e8003f55dd9624f97648be774601bda
 .text-editor-container {
+  overflow: hidden;
   background-color: #282829;
   height: 100vh;
 }

@@ -32,3 +32,6 @@ angular.module('githelp.services',
   'githelp.services.appointments'
   ]);
 
+angular.module('githelp.directives',
+  ['githelp.directives.fileinput'
+  ]);

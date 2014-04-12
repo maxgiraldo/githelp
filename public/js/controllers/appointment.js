@@ -8,6 +8,7 @@ angular.module('githelp.controllers.appointment', [])
   var appointmentId = $stateParams.sessionId;
 
 
+
   // $scope.displayConfirmation = function() {
   //   $http.post('/appointments/' + appointmentId, appointmentId).success(function(response) {
   //   })

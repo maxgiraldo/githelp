@@ -22,10 +22,12 @@ exports.updatePpm = function(req, res) {
     user.save();
   });
   res.send(200);
-}
+};
 
 exports.signin = function(req, res){
+  console.log('SIGN IN REDIRECT?');
   res.render('signin');
+  // res.redirect('/');
 };
 
 balanced.configure('ak-test-1P4LCuAfcv3isFlyX9mxNXvz6bI1XNril');

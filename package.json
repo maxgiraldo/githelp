@@ -46,7 +46,8 @@
     "nodemailer": "latest",
     "swig": "latest",
     "google-oauth-jwt": "latest",
-    "connect": "latest"
+    "connect": "latest",
+    "connect-ensure-login": "~0.1.1"
   },
   "devDependencies": {
     "supertest": "latest",
