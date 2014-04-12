@@ -44,7 +44,8 @@ var creditCard = function(appt, done){
       duration: appt.duration,
       amount: (appt.payment.merchantShare / 100.0).toFixed(2)
     };
-
+    appt.payment.status = 'processed';
+    appt.save();
     mailer.sendCreditEmail(creditOptions, done);
   });
 };
@@ -62,7 +63,6 @@ exports.transaction = function(req, res) {
       githelpShare: amount * 0.2,
       status: 'pending'
     };
-    appt.save();
 
     debitCard(appt, function(){
       creditCard(appt, done);
