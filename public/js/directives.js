@@ -14,6 +14,15 @@ angular.module('githelp.directives.fileinput', [])
   }
 ]);
 
+angular.module('githelp.directives.autoSubmit', [])
+  .directive('autoSubmit', function() {
+    return function(scope, element) {
+      element.bind('change', function() {
+        scope.upload();
+      });
+    }
+  });
+
 angular.module('githelp.directives.initFocus', [])
   .directive('initFocus', function() {
     var timer;

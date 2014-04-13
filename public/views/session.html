@@ -32,17 +32,14 @@
     <section data-ng-controller='TextEditorController'>
       <div class='side-panel'>
         <div class='side-panel-directories'>
-           <input type='file' file-input='files' multiple />
-           <button ng-click='upload()'>Upload</button>
+           <input type='file' file-input='files' multiple auto-submit />
         </div>
       </div>
       <div class='file-view'>
-        <!-- UPLOAD FILE -->
-        <div class='new-file'>
-          <i class="fa fa-plus"></i>
-        </div> <!-- add-file -->
-        <div class='file'><p>Filename</p></div>
-      </div> <!-- file-view -->
+        <ul class='files' ng-repeat='file in returnedFiles'>
+          <li class='file'><a href='/#!/{{sessionId}}/{{file.name}}'>{{file.name}}<span class='file-close'><i class="fa fa-times"></i></span></a></li>
+        </ul>
+      </div>
       <div id="firepad-container"></div>
     </section>
   </section>
