@@ -30,17 +30,20 @@
     <!-- TEXT EDITOR
          ............................................................................................-->
     <section data-ng-controller='TextEditorController'>
-        <!-- <input type='file' file-input='files' multiple />
-        <button ng-click='upload()'>Upload</button> -->
       <div class='side-panel'>
-        <div class='side-panel-directories'></div>
+        <div class='side-panel-directories'>
+          <input type='file' file-input multiple />
+          <button ng-click='upload()'>Upload</button>
+        </div>
       </div>
       <div class='file-view'>
         <!-- UPLOAD FILE -->
-        <div class='new-file'>
+        <!-- <div class='new-file'>
           <i class="fa fa-plus"></i>
-        </div> <!-- add-file -->
-        <div class='file'><p>Filename</p></div>
+        </div> -->
+        <!-- <div class='files' ng-repeat='file in files'>
+          <div class='file'><p>{{file.name}}</p></div>
+        </div> -->
       </div> <!-- file-view -->
       <div id="firepad-container"></div>
     </section>

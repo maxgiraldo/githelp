@@ -34,6 +34,7 @@ angular.module('githelp.controllers.texteditor', [])
     //////////////////////////////////////////////
     $scope.filesChanged = function(elm) {
       $scope.files = elm.files;
+      console.log($scope.files);
       $scope.$apply();
     };
     $scope.upload = function() {
@@ -49,19 +50,10 @@ angular.module('githelp.controllers.texteditor', [])
         transformRequest: angular.identity,
         params: {numFiles: $scope.files.length}
       })
-      // $http.post('upload', fd,
-      // {
-      //   transformRequest:angular.identity,
-      //   headers:{'Content-Type': undefined}
-
-      // })
       .success(function(arr) {
         $scope.returnedFiles = arr;
         firepad.setText($scope.returnedFiles[0].data);
       })
     };
 
-    // $scope.storeCurrentPage = function() {
-    //   var lines = Document.get
-    // };
   }]);
