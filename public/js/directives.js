@@ -1,11 +1,9 @@
 'use strict';
-
 angular.module('githelp.directives.fileinput', [])
   .directive('fileInput', ['$parse', function ($parse) {
     return {
       restrict: 'A',
       link: function(scope, elm, attrs) {
-        alert('hi');
         elm.bind('change', function() {
           $parse(attrs.fileInput)
           .assign(scope, elm[0].files);

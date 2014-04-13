@@ -2,8 +2,8 @@
        ............................................................................................-->
 <div class='text-editor-container'>
   <section data-ng-include="'views/partials/navbar-min.html'"></section>
-<!--   <section data-ng-controller="AppointmentController" data-ng-init="liveSession()">
-    <section data-ng-show="global.authenticated">
+  <section data-ng-controller="AppointmentController" data-ng-init="liveSession()">
+    <!--<section data-ng-show="global.authenticated">
       <div class="container jumbotron" id='session-container'>
       </div>
       <div id='callInfoBox'>
@@ -21,29 +21,27 @@
           <p class='button-txt'>End session</p>
         </div>
       </div>
-    </section> -->
+    </section>-->
 
     <!-- AUTH
          ............................................................................................-->
-    <!-- <section data-ng-hide="global.authenticated" data-ng-include data-src="'views/partials/needAuthorization.html'"></section> -->
+    <section data-ng-hide="global.authenticated" data-ng-include data-src="'views/partials/needAuthorization.html'"></section>
 
     <!-- TEXT EDITOR
          ............................................................................................-->
     <section data-ng-controller='TextEditorController'>
       <div class='side-panel'>
         <div class='side-panel-directories'>
-          <input type='file' file-input multiple />
-          <button ng-click='upload()'>Upload</button>
+           <input type='file' file-input='files' multiple />
+           <button ng-click='upload()'>Upload</button>
         </div>
       </div>
       <div class='file-view'>
         <!-- UPLOAD FILE -->
-        <!-- <div class='new-file'>
+        <div class='new-file'>
           <i class="fa fa-plus"></i>
-        </div> -->
-        <!-- <div class='files' ng-repeat='file in files'>
-          <div class='file'><p>{{file.name}}</p></div>
-        </div> -->
+        </div> <!-- add-file -->
+        <div class='file'><p>Filename</p></div>
       </div> <!-- file-view -->
       <div id="firepad-container"></div>
     </section>
