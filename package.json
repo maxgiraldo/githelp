@@ -48,7 +48,8 @@
     "swig": "latest",
     "google-oauth-jwt": "latest",
     "connect": "latest",
-    "connect-ensure-login": "~0.1.1"
+    "connect-ensure-login": "~0.1.1",
+    "bower": "~1.3.2"
   },
   "devDependencies": {
     "supertest": "latest",
