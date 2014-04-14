@@ -218,7 +218,7 @@ var configReminderOpt = function(appt, done){
   var duration = appt.duration + " minutes";
   var to = appt.merchant.email+", "+appt.customer.email;
   var subject = "Githelp - You have an appointment in 30 minutes!";
-  var url = 'http://172.18.75.131:3000/#!/session/'+appt._id;
+  var url = 'http://githelp.herokuapp.com/#!/session/'+appt._id;
 
   var options = {
     estIncome: estIncome,
