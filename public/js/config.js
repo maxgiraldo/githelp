@@ -11,7 +11,10 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
         })
         .state('main', {
           url:'/',
-          templateUrl: 'views/index.html'
+          templateUrl: 'views/index.html',
+          resolve: {
+            loggedin: checkLoggedin
+          }
         })
           .state('main.search', {
             views: {
@@ -24,7 +27,7 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
           url: '/appointments',
           templateUrl: 'views/appointments.html',
           resolve: {
-            loggedin: checkLoggedin
+            loggedin: checkLoggedin,
           }
         })
           .state('appointments.reschedule', {
@@ -81,17 +84,27 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
 ]);
 
   // for client-side authentication
-  function checkLoggedin ($q, $timeout, $http, $location, $rootScope) {
+  function checkLoggedin ($q, $timeout, $http, $location, $rootScope, redirectToUrlAfterLogin) {
     // Initialize a new promise
     var deferred = $q.defer();
     // Make an AJAX call to check if the user is logged in
-    $http.get('/loggedin').success(function(user){
+    $http.get('/loggedin').success(function(response){
       // Authenticated
-      if (user !== '0')
+      if (response !== '0') { // req.user
+        console.log(response);
+        console.log('authenticated');
         $timeout(deferred.resolve, 0);
       // Not Authenticated
+      }
       else {
-        $rootScope.message = 'You need to log in.';
+        console.log('not authenticated');
+        // $rootScope.message = 'You need to log in.';
+        if($location.path().toLowerCase() !== '/signin') {
+            redirectToUrlAfterLogin.url = $location.path().slice(1);
+            console.log(redirectToUrlAfterLogin.url);
+          } else {
+            redirectToUrlAfterLogin.url = '/';
+          }
         $timeout(function() {
           deferred.reject();
         }, 0);
@@ -113,17 +126,21 @@ window.app.config(['$locationProvider', 'datepickerConfig', 'datepickerPopupConf
 
 // Add an interceptor for AJAX errors
 window.app.config(['$httpProvider', function($httpProvider) {
+  $httpProvider.defaults.useXDomain = true;
+  delete $httpProvider.defaults.headers.common['X-Requested-With'];
+
+  console.log('in interceptor func');
   $httpProvider.interceptors.push(function($q, $location) {
       return function(promise) {
         return promise.then(
           // Success: just return the response
           function(response){
-            console.log(response);
+            console.log('success in interceptor', response);
             return response;
           },
           // Error: check the error status to get only the 401
           function(response) {
-            console.log(response);
+            console.log('401 in interceptor', response);
             if (response.status === 401) {
               $location.url('/signin');
             }

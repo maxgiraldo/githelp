@@ -25,9 +25,14 @@ passport.deserializeUser(function(id, done) {
 
 passport.use(new GitHubStrategy({
   // Below are JHK's Keys
-  clientID: '71778e134296a29071f4',
-  clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
-  callbackURL: "http://172.18.75.131:3000/auth/github/callback"
+
+  clientID: '0934ee7ca0cdc34cc007',
+  clientSecret: 'dc0845769a5c3835bebc2a7a4772e0689b7ac1d7',
+  callbackURL: "http://172.18.73.218:3000/auth/github/callback"
+
+  // clientID: '71778e134296a29071f4',
+  // clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
+  // callbackURL: "http://172.18.75.131:3000/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({ githubId: profile.id }, function (err, user) {
@@ -101,7 +106,6 @@ module.exports = function(app) {
   //Routes to App Controllers here
   var index = require('../app/controllers/index');
   var users = require('../app/controllers/users');
-  var auth = require('../app/controllers/auth');
   var payments = require('../app/controllers/payments');
   var appointments = require('../app/controllers/appointments');
   var messages = require('../app/controllers/messages');
@@ -113,33 +117,51 @@ module.exports = function(app) {
     passport.authenticate('github'),
     users.signin);
 
+  var lastUrl;
+
+  app.get('/login/:lastUrl', function(req, res){
+    res.redirect('/auth/github');
+  });
+
+  app.param('lastUrl', function(req, res, next, url){
+    console.log(url)
+    lastUrl = url;
+    next();
+  });
+
   // user gets automatically redirect to this route along with accessToken
   // get JSON user object back, this will serialize and deserialize the user
   // also attaches user to req (req.user)
   app.get('/auth/github/callback',
-    passport.authenticate('github', { successReturnToOrRedirect: '/', failureRedirect: '/signin'}),
-    users.authCallback);
+    passport.authenticate('github', {failureRedirect: '/signin'}),
+    function(req, res){
+      var url = lastUrl;
+      lastUrl = ''
+      users.authCallback(req, res, url);
+    });
 
 
 
-  app.get('/auth/google',
-    passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile',
-                                            'https://www.googleapis.com/auth/userinfo.email',
-                                            'https://www.googleapis.com/auth/calendar'] }),
-    users.signin);
+
+
+  // app.get('/auth/google',
+  //   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile',
+  //                                           'https://www.googleapis.com/auth/userinfo.email',
+  //                                           'https://www.googleapis.com/auth/calendar'] }),
+  //   users.signin);
 
   // app.get('/auth/google',
   //   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/calendar'] }),
   //   users.signin);
 
 
-  app.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/login' }),
-    function(req, res) {
-      // Successful authentication, redirect home.
-      console.log('GOOG?', req);
-      res.redirect('/');
-    });
+  // app.get('/auth/google/callback',
+  //   passport.authenticate('google', { failureRedirect: '/login' }),
+  //   function(req, res) {
+  //     // Successful authentication, redirect home.
+  //     console.log('GOOG?', req);
+  //     res.redirect('/');
+  //   });
 
   // var githelpGoog = {
   //   username: gitsomehelp,
@@ -184,7 +206,7 @@ module.exports = function(app) {
 
   app.post('/create/ba', ensureLoggedIn('/signin'), payments.createBankAcct);
 
-  app.get('/loggedin', auth.auth); // for client-side auth
+  app.get('/loggedin', users.clientSideAuth); // for client-side auth
 
   // app.post('/session/end', appointments.endSession);
 
