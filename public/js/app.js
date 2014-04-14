@@ -37,5 +37,9 @@ angular.module('githelp.services',
   ]);
 
 angular.module('githelp.directives',
-  ['githelp.directives.fileinput'
+  ['githelp.directives.fileinput',
+  'githelp.directives.editInPlace',
+  'githelp.directives.initFocus',
+  'githelp.directives.enterPress',
+  'githelp.directives.autoSubmit'
   ]);

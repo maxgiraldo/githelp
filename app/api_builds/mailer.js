@@ -13,7 +13,7 @@ var email = function(options, done){
       pass: "githelp123"
     }
   });
-
+  console.log("in the email function");
   if (!done) {
     done = function () {};
   }
@@ -34,8 +34,10 @@ var email = function(options, done){
 };
 
 var sendTemplateMail = function (emailTemplate, emailData, done) {
+  console.log("hello");
   var tpl = swig.compileFile(appDir+"/public/views/email_templates/"+emailTemplate+".html", {autoescape: false});
   var html;
+  console.log("sendTemplateMail");
   if (html = tpl(emailData)) {
     emailData.html = html;
     email(emailData, done);
@@ -56,5 +58,6 @@ exports.sendDebitEmail = function(options, done){
 
 
 exports.sendCreditEmail = function(options, done){
+  console.log('sendCreditEmail')
   sendTemplateMail("credit", options, done);
 };

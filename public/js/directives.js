@@ -1,3 +1,4 @@
+'use strict';
 angular.module('githelp.directives.fileinput', [])
   .directive('fileInput', ['$parse', function ($parse) {
     return {
@@ -12,8 +13,17 @@ angular.module('githelp.directives.fileinput', [])
     }
   }
 ]);
-'use strict';
-angular.module('githelp.directives', [])
+
+angular.module('githelp.directives.autoSubmit', [])
+  .directive('autoSubmit', function() {
+    return function(scope, element) {
+      element.bind('change', function() {
+        scope.upload();
+      });
+    }
+  });
+
+angular.module('githelp.directives.initFocus', [])
   .directive('initFocus', function() {
     var timer;
 
@@ -25,7 +35,9 @@ angular.module('githelp.directives', [])
             console.log('focus', elm);
         }, 0);
     };
-  })
+  });
+
+angular.module('githelp.directives.enterPress', [])
   .directive('enterPress', function() {
     return function(scope, element) {
       element.on('keyup', function(e) {
@@ -36,6 +48,7 @@ angular.module('githelp.directives', [])
       });
     };
   })
+angular.module('githelp.directives.editInPlace', [])
   .directive('editInPlace', function() {
     return {
       restrict: 'E',
