@@ -1,5 +1,13 @@
+// // localhost
+// {
+//     "db": "mongodb://localhost/githelp",
+//     "app": {
+//         "name": "githelp - Creating Simple Monetization Routes For Open Source Contributors - Development"
+//     }
+// }
+// Heroku deploy
 {
-    "db": "mongodb://localhost/githelp",
+    "db": "mongodb://heroku_app24112339:p0kf186kj4vtpu6jgrcgrriti6@ds053698.mongolab.com:53698/heroku_app24112339",
     "app": {
         "name": "githelp - Creating Simple Monetization Routes For Open Source Contributors - Development"
     }
