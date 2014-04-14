@@ -7,14 +7,11 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
         $stateProvider
         .state('signin', {
           url:'/signin',
-          templateUrl: 'views/signin.html'
+          templateUrl: 'views/needAuth.html'
         })
         .state('main', {
           url:'/',
-          templateUrl: 'views/index.html',
-          resolve: {
-            loggedin: checkLoggedin
-          }
+          templateUrl: 'views/index.html'
         })
           .state('main.search', {
             views: {
