@@ -7,6 +7,7 @@ angular.module('githelp.controllers.texteditor', [])
     $scope.sameNameCollection = {};
     $scope.returnedFiles = {};
 
+    var editorSock = new SockJS('/echo');
     // Text Editor
     //////////////////////////////////////////////
     //////////////////////////////////////////////
@@ -59,27 +60,44 @@ angular.module('githelp.controllers.texteditor', [])
         params: {numFiles: $scope.files.length}
       })
       .success(function(files) {
-        files.forEach(function(file) {
-          if (file.name in $scope.returnedFiles) {
-            $scope.sameNameCollection[file.name]++;
-            var newFileName = file.name + $scope.sameNameCollection[file.name];
-            $scope.returnedFiles[file.name] = newFileName;
-          } else {
-            $scope.sameNameCollection[file.name] = 0;
-            $scope.returnedFiles[file.name] = file;
-          }
-          $scope.returnedFiles[file.name].active = true;
-          $scope.session.$add($scope.returnedFiles[file.name])
-          .then(function(ref) {
-            // var textEditor = $scope.session.$child(ref.name());
-            // textEditor.$set({'_id': ref.name()});
-            $scope.returnedFiles[file.name]._id = ref.name();
-          });
-
-        }) //files.forEach
-        firepad.setText(files[0].data);
-
+        editorSock.send(JSON.stringify(files));
       }) // success
+    };
+
+    editorSock.onopen = function() {
+      console.log('open');
+    };
+
+    editorSock.onmessage = function(e) {
+      var files = JSON.parse(e.data);
+      files.forEach(function(file) {
+        if (file.name in $scope.returnedFiles) {
+          $scope.sameNameCollection[file.name]++;
+          var newFileName = file.name + $scope.sameNameCollection[file.name];
+          $scope.returnedFiles[file.name] = newFileName;
+        } else {
+          $scope.sameNameCollection[file.name] = 0;
+          $scope.returnedFiles[file.name] = file;
+        }
+        $scope.returnedFiles[file.name].active = true;
+        $scope.session.$add($scope.returnedFiles[file.name])
+        .then(function(ref) {
+          // var textEditor = $scope.session.$child(ref.name());
+          // textEditor.$set({'_id': ref.name()});
+          $scope.returnedFiles[file.name]._id = ref.name();
+        });
+
+      }) //files.forEach
+      firepad.setText(files[0].data);
+    };
+
+    editorSock.onclose = function() {
+      if ($scope.timerId) { clearInterval($scope.timerId)};
+      $scope.totalAmount = $scope.merchantPrice * ($scope.totalSeconds / 60.0);
+      console.log($scope.totalAmount, $scope.totalSeconds, $scope.merchantPrice);
+      // $scope.amountToCharge = $filter('currency')($scope.totalAmount, '$');
+      // console.log('$scopeamounttocharge', $scope.amountToCharge);
+      $scope.$apply();
     };
 
     $scope.goToFile = function(_id) {
