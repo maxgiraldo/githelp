@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('githelp.controllers.texteditor', [])
- .controller('TextEditorController', ['$scope', '$state', '$http', '$stateParams', 'Global',
-    function ($scope, $state, $http, $stateParams, Global) {
+ .controller('TextEditorController', ['$scope', '$state', '$http', '$stateParams', 'Global', '$firebase', 'FIREBASE_URL',
+    function ($scope, $state, $http, $stateParams, Global, $firebase, FIREBASE_URL) {
     $scope.global = Global;
     $scope.sameNameCollection = {};
     $scope.returnedFiles = {};
@@ -12,15 +12,13 @@ angular.module('githelp.controllers.texteditor', [])
     //////////////////////////////////////////////
     //////////////////////////////////////////////
 
-    //// Unique sessions
+    //// Create session to hold text editors in Firebase
     $scope.sessionId = $stateParams.sessionId;
-    $scope.currentFile = '';
+    // var sessionRef = new Firebase(FIREBASE_URL + $scope.sessionId);
+    var firepadRef = new Firebase(FIREBASE_URL + $scope.sessionId);
 
-    // $scope.createNewFile = function(x) {
-    //   var firepadRef = new Firebase('https://githelp.firebaseio.com/' + $scope.sessionId + $scope.returnedFiles[x].name);
-    // };
+    $scope.session = $firebase(firepadRef);
 
-    var firepadRef = new Firebase('https://githelp.firebaseio.com/' + $scope.sessionId);
     //// Create ACE
     var editor = ace.edit("firepad-container");
     editor.setTheme("ace/theme/twilight");
@@ -31,6 +29,7 @@ angular.module('githelp.controllers.texteditor', [])
 
     //// Create Firepad.
     var firepad = Firepad.fromACE(firepadRef, editor);
+
     //// Initialize contents.
     firepad.on('ready', function() {
       if (firepad.isHistoryEmpty()) {
@@ -60,8 +59,6 @@ angular.module('githelp.controllers.texteditor', [])
         params: {numFiles: $scope.files.length}
       })
       .success(function(files) {
-        // Add files to returnedFile as they come in
-        // If duplication occurs, add numbers after copies
         files.forEach(function(file) {
           if (file.name in $scope.returnedFiles) {
             $scope.sameNameCollection[file.name]++;
@@ -72,11 +69,22 @@ angular.module('githelp.controllers.texteditor', [])
             $scope.returnedFiles[file.name] = file;
           }
           $scope.returnedFiles[file.name].active = true;
-        })
-        // Return the first file in obj
+          $scope.session.$add($scope.returnedFiles[file.name])
+          .then(function(ref) {
+            // var textEditor = $scope.session.$child(ref.name());
+            // textEditor.$set({'_id': ref.name()});
+            $scope.returnedFiles[file.name]._id = ref.name();
+          });
+
+        }) //files.forEach
         firepad.setText(files[0].data);
 
       }) // success
+    };
+
+    $scope.goToFile = function(_id) {
+      var file = $scope.session.$child(_id);
+      firepad.setText(file.data);
     };
 
     // $scope.showTab = function(file){

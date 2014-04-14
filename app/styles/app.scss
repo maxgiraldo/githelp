@@ -713,11 +713,16 @@ h1.full-name {
   // margin-left: -15px;
   // margin-right: -15px;
 }
+.files a {
+  color: #606060;
+}
 .file {
   padding-right: 10px;
+  color: #606060;
+  cursor: pointer;
   padding-left: 10px;
-  padding-top: 8px;
-  background-color: #242424;
+  padding-top: 7px;
+  background-color: #1b1b1b;
   height: 5vh;
   &:hover {
     background-color: #343434;
@@ -733,7 +738,7 @@ h1.full-name {
   }
 }
 .file a {
-  cursor: default;
+  cursor: pointer;
   color: #606060;
 }
 

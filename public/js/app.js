@@ -8,8 +8,9 @@ window.app = angular.module('githelp',
   'githelp.controllers',
   'githelp.services',
   'githelp.directives',
+  'firebase',
   'angularFileUpload'
-  ]);
+  ]).constant('FIREBASE_URL', 'https://githelp.firebaseio.com/');
 
 angular.module('githelp.controllers',
   ['githelp.controllers.index',

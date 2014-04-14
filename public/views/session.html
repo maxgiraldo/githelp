@@ -37,7 +37,7 @@
       </div>
       <div class='file-view'>
         <ul class='files' ng-repeat='file in returnedFiles'>
-          <li class='file'><a href='/#!/{{sessionId}}/{{file.name}}'>{{file.name}}<span class='file-close'><i class="fa fa-times"></i></span></a></li>
+          <a href='#' ng-click='goToFile(file._id)'><li class='file'>{{file.name}}<span class='file-close'><i class="fa fa-times"></i></span></li></a>
         </ul>
       </div>
       <div id="firepad-container"></div>
