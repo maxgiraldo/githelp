@@ -26,7 +26,7 @@ passport.deserializeUser(function(id, done) {
 passport.use(new GitHubStrategy({
   // Below are JHK's Keys
 
-  clientID: '71778e134296a29071f4',
+  clientID: '',
   clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
   callbackURL: "http://githelp.herokuapp.com/auth/github/callback"
 

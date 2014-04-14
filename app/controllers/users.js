@@ -47,7 +47,7 @@ exports.authCallback = function(req, res, lastUrl) {
       }
   } else{
     balanced.marketplace.customers.create({
-      "name": req.user.displayName,
+      "name": req.user.fullName,
       "email": req.user.email
     }).then(function(data){
       req.user.balancedUser = data.toJSON().id;
