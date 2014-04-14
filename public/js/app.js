@@ -22,7 +22,8 @@ angular.module('githelp.controllers',
   'githelp.controllers.datePicker',
   'githelp.controllers.timePicker',
   'githelp.controllers.repos',
-  'githelp.controllers.texteditor'
+  'githelp.controllers.texteditor',
+  'githelp.controllers.login'
   ]);
 
 angular.module('githelp.services',
@@ -30,7 +31,10 @@ angular.module('githelp.services',
   'githelp.services.user',
   'githelp.services.messages',
   'githelp.services.inboxes',
-  'githelp.services.appointments'
+  'githelp.services.appointments',
+  'githelp.services.auth',
+  'githelp.services.url',
+  'githelp.services.login'
   ]);
 
 angular.module('githelp.directives',

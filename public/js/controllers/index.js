@@ -1,6 +1,6 @@
 angular.module('githelp.controllers.index', [])
-  .controller('IndexController', ['$scope', '$state', 'Global', '$http',
-    function ($scope, $state, Global, $http) {
+  .controller('IndexController', ['$scope', '$state', 'Global', '$http', '$location', 'redirectToUrlAfterLogin',
+    function ($scope, $state, Global, $http, $location, redirectToUrlAfterLogin) {
       $scope.global = Global;
 
       $scope.form = {

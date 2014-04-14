@@ -25,19 +25,28 @@ exports.updatePpm = function(req, res) {
 };
 
 exports.signin = function(req, res){
-  console.log('SIGN IN REDIRECT?');
+  // console.log('SIGN IN REDIRECT?');
+  // res.set('content-type', 'text/javascript');
   res.render('signin');
   // res.redirect('/');
 };
 
+exports.clientSideAuth = function(req, res) {
+  res.send(req.isAuthenticated() ? req.user : '0');
+};
+
 balanced.configure('ak-test-1P4LCuAfcv3isFlyX9mxNXvz6bI1XNril');
 
-exports.authCallback = function(req, res) {
-  // create the balanced customer here
+exports.authCallback = function(req, res, lastUrl) {
+  console.log('in authCallback');
   if(req.user.balancedUser){
-    res.redirect('/');
+      if(lastUrl){
+        res.redirect('#!/'+lastUrl);
+      }else{
+        res.redirect('/');
+      }
   } else{
-    var customer = balanced.marketplace.customers.create({
+    balanced.marketplace.customers.create({
       "name": req.user.displayName,
       "email": req.user.email
     }).then(function(data){

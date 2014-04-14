@@ -61,6 +61,19 @@ module.exports = function(app, passport) {
         app.use(passport.initialize());
         app.use(passport.session());
 
+        app.all('*', function(req, res, next){
+            console.log('in app.all');
+            // if (!req.get('Origin')) return next();
+            // use "*" here to accept any origin
+            res.set('Access-Control-Allow-Origin', 'http://172.18.73.218:3000');
+            res.set('Access-Control-Allow-Methods', 'OPTIONS, GET, POST');
+            res.set('Access-Control-Allow-Headers', 'Content-Type');
+            // res.set('Access-Control-Allow-Max-Age', 3600);
+            if ('OPTIONS' == req.method) return res.send(200);
+            next();
+          });
+
+
         //routes should be at the last
         app.use(app.router);
 
