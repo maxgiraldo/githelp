@@ -6,9 +6,10 @@
       <ul>
         <div ng-show="apptInDb.confirmed">
           <h2>Status: Confirmed</h2>
-          <h3>Date and Time: {{apptInDb.confirmedDate}}</h3>
+          <h3>Date: {{confirmedDate | date: 'MMMM d, y' }}</h3>
+          <h3>Time: {{confirmedDate | date: 'h:mm a' }}</h3>
         </div>
-        <li>Customer: {{apptInD.customer.fullName || apptInDb.customer.github.login}}</li>
+        <li>Customer: {{apptInDb.customer.fullName || apptInDb.customer.github.login}}</li>
         <li>Merchant: {{apptInDb.merchant.fullName || apptInDb.merchant.github.login}}</li>
         <li>Duration: {{apptInDb.duration}} minutes</li>
         <li ng-show="apptInDb.message">Message: {{apptInDb.message}}</li>
