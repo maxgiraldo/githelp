@@ -59,36 +59,92 @@ var server = http.createServer(app);
 
 var connections = [];
 
-// passport that has views
-// a package that used passport but included views and validations
-// devise on rails
-
-
-
-// server.addListener('request', function(req, res){
-//     sockjs_echo.on('connection', function(conn) {
-//         conn.on('data', function(message){
-//             console.log("i'm actually")
-//             conn.write(message);
-//         });
-//     });
-// });
-
 sockjs_echo.on('connection', function(conn) {
     connections.push(conn);
-
+    console.log(conn);
     conn.on('data', function(message) {
         for (var ii=0; ii < connections.length; ii++) {
             connections[ii].write(message);
         }
     });
-    conn.on('close', function() {
+    conn.on('close', function(message) {
         for (var ii=0; ii < connections.length; ii++) {
-            connections[ii].write("User has disconnected");
+            connections[ii].write(message);
         }
     });
 });
 
+/*
+
+What I need to do is separate appointments, inbox, and texteditor
+
+data emitted should find its correct sockjs instance on the server
+then, sockjs emits back and it will find its correct instance and execute the correct function
+
+each connection is different
+
+i need to store connections
+
+allocate them in the right emitter.
+i can allocate them in the right emitter by checking for the appointmentID for example
+when a user refreshes, he gets a fresh new connection, i should make sure that there are not
+two connections in appointments for the same user.
+
+so i need an object called Appointment and index it by the appointmentId
+loop through the keys of the object and write a message to each of them
+
+i should have the same data structure on the client side
+then i still need to key a $scope object using appointmentId and apply new values to variables
+then run $scope.$apply();
+
+we need batches of data
+
+*/
+
+// function SockJSEmitter (conn, sockType) {
+//     this.conn = conn;
+//     this.sockType = sockType;
+// }
+
+// var EventEmitter = require('events').EventEmitter;
+// util.inherits(SockJSEmitter, EventEmitter);
+
+// // "emit" an event over the SockJS connection
+// SockJSEmitter.prototype.emit = function (event, data) {
+//     if (event === 'newListener') return;
+//     this.conn.write(JSON.stringify({event: event, sockType: this.sockType, data: data}));
+// }
+
+// // call this when we receive an event from the remote end
+// SockJSEmitter.prototype.emit_event = function (event, data) {
+//     EventEmitter.prototype.emit.call(this, event, data);
+// }
+
+// sockjs_server.on('connection', function (conn) {
+//     connections.push(conn);
+//     var sockjs_sockType_map = {};
+//     conn.on('data', function (message) {
+//         var msg = JSON.parse(message);
+//         if (!(msg.event && msg.sockType)) throw "Invalid message format: " + message;
+
+//         // StartRobot is the first message we get from the browser
+//         // -- we use it to setup the SockJSEmitter and associate with a sockType
+//         if (msg.event === 'StartRobot') {
+//             var sockjs_emitter = new SockJSEmitter(conn, msg.sockType);
+//             var status = run_robot(msg.data, sockjs_emitter);
+//             if (status.status === "Started") {
+//                 sockjs_sockType_map[msg.sockType] = sockjs_emitter;
+//             }
+//             sockjs_emitter.emit("start_status", status);
+//         }
+//         else {
+//             // For every other message we route to the right
+//             // sockjs_emitter and emit_event on it
+//             var sockjs_emitter = sockjs_sockType_map[msg.sockType];
+//             sockjs_emitter.emit_event(msg.event, msg.data);
+//         }
+//     });
+// })
 
 
 
@@ -103,26 +159,59 @@ server.listen(port, '0.0.0.0');
 
 
 
-//Start the app by listening on <port>
+// var sockType_map = {};
+// var sockjs = null;
+// var sockjs_status = 'disconnected';
+// var pending = [];
+// Robot.prototype.init = function () {
+//   sockType_map[self.sockType] = self;
+//   if (sockjs_status === 'disconnected') {
+//     sockjs_status = 'connecting';
 
+//     sockjs = new SockJS(app.robotServer + "/_sockjs");
+//     sockjs.onmessage = function (e) {
+//       if (e.type != "message") return;
+//       var msg = JSON.parse(e.data);
+//       var self = sockType_map[msg.sockType];
+//       if (!self) throw "No such sockType";
+//       var method = self['event_' + msg.event];
+        // method will equal a function, when this runs everything that is supposed to be
+        // real time should run here (variable assignments and what not);
+        // i could use self['name of event'] like appointments, inbox, text editor
+//       if (!method) throw "No such event: " + msg.event;
+//       method.call(self, msg.data);
+//     }
+//     sockjs.onopen = function () {
+//       sockjs_status = 'connected';
+//       for (var i=0; i<pending.length; i++) {
+//         pending[i].run();
+//       }
+//       pending = [];
+//     }
+//     sockjs.onclose = function () {
+//       sockjs_status = 'disconnected';
+//     }
+//     pending.push(self);
+//   }
+//   else if (sockjs_status === 'connecting') {
+//     pending.push(self);
+//   }
+//   else if (sockjs_status === 'connected') {
+//     self.run();
+//   }
+// }
 
-// Socket.io
-// var io = require('socket.io').listen(server);
+// Robot.prototype.run = function () {
+//   this.sockjs_send("StartRobot", this.robot_data);
+// }
 
-// GLOBAL.sockets = {};
+// Robot.prototype.sockjs_send = function (event, data) {
+//   sockjs.send(JSON.stringify({event: event, sockType: this.sockType, data: data});
+// }
+// instead i can sort by the type of socket i am working with
 
-// // Socket.io Communication
-// io.sockets.on('connection', function (socket) {
-//   socket.emit('news', { hello: 'world' });
-//   socket.on('textEditorChange', function (dataAboutChangeInTextEditor) {
-//     console.log(dataAboutChangeInTextEditor);
-//   });
-// });
-
-//   socket.on('userChange', function(data) {
-//     socket.emit('userChange', { userChange: data });
-//   });
-
+// // Now implement Robot.prototype.event_* = function (data)
+// // -- these will catch your remote events specific to this instance of Robot.
 
 
 //expose app

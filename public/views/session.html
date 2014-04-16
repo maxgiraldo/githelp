@@ -3,25 +3,25 @@
 <div class='text-editor-container'>
   <section data-ng-include="'views/partials/navbar-min.html'"></section>
   <section data-ng-controller="AppointmentController" data-ng-init="liveSession()">
-    <!--<section data-ng-show="global.authenticated">
+    <section data-ng-show="global.authenticated">
       <div class="container jumbotron" id='session-container'>
       </div>
       <div id='callInfoBox'>
         <i id='clock' class="fa fa-clock-o"></i>
-        <h2 id='timer'>{{hours}}:{{minutes}}:{{seconds}}</h2>
+        <h2 id='timer'>{{timerByAppointment[appointmentId].hours}}:{{timerByAppointment[appointmentId].minutes}}:{{timerByAppointment[appointmentId].seconds}}</h2>
         <h3 class='total-container'>Total
           <span id='total-amount'>
-            {{totalAmount | currency:"$"}}
+            {{timerByAppointment[appointmentId].totalAmount | currency:"$"}}
           </span>
         </h3>
-        <div class='start-session headline' ng-click='startTimer()' ng-show='timerOn === false'>
+        <div class='start-session headline' ng-click='startTimer()' ng-show='timerByAppointment[appointmentId].timerOn === false'>
           <p class='button-txt'>Start session</p>
         </div>
-        <div class='end-session headline' ng-click='stopTimer()' ng-show='timerOn === true'>
+        <div class='end-session headline' ng-click='stopTimer()' ng-show='timerByAppointment[appointmentId].timerOn === true'>
           <p class='button-txt'>End session</p>
         </div>
       </div>
-    </section>-->
+    </section>
 
     <!-- AUTH
          ............................................................................................-->

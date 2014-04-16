@@ -23,12 +23,22 @@ passport.deserializeUser(function(id, done) {
 });
 // this will attach user to request (req.user);
 
+var githubCallbackURL;
+var googleCallbackURL;
+if (process.env.NODE_ENV === 'production'){
+  googleCallbackURL = 'http://githelp.herokuapp.com/auth/google/callback';
+  githubCallbackURL = 'http://githelp.herokuapp.com/auth/github/callback';
+} else{
+  googleCallbackURL = 'http://172.18.75.156:3000/auth/google/callback';
+  githubCallbackURL = 'http://172.18.75.156:3000/auth/github/callback';
+}
+
 passport.use(new GitHubStrategy({
   // Below are JHK's Keys
 
   clientID: '71778e134296a29071f4',
   clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
-  callbackURL: "http://githelp.herokuapp.com/auth/github/callback"
+  callbackURL: githubCallbackURL
 
   // clientID: '71778e134296a29071f4',
   // clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
@@ -73,7 +83,7 @@ passport.use(new GitHubStrategy({
 passport.use(new GoogleStrategy({
     clientID: "700936463795-3ettb8q7r93i281rp9mrtt8qd6q3k4uv.apps.googleusercontent.com",
     clientSecret: "5TfB_7aHC6mL9SyPHQNtMPBM",
-    callbackURL: "http://githelp.herokuapp.com/auth/google/callback"
+    callbackURL: googleCallbackURL
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({ googleId: profile.id }, function (err, user) {

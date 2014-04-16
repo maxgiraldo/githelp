@@ -206,6 +206,13 @@ var startSession = function(appt){
   });
 };
 
+var currentModeURL;
+if (process.env.NODE_ENV === 'production'){
+  currentModeURL = 'http://githelp.herokuapp.com/#!/session/';
+} else{
+  currentModeURL = 'http://172.18.75.156:3000/#!/session/';
+}
+
 var configReminderOpt = function(appt, done){
   var estIncome = (parseInt(appt.duration) * parseInt(appt.merchant.ppm)).toFixed(2);
   // console.log('id', appt._id);
@@ -218,7 +225,7 @@ var configReminderOpt = function(appt, done){
   var duration = appt.duration + " minutes";
   var to = appt.merchant.email+", "+appt.customer.email;
   var subject = "Githelp - You have an appointment in 30 minutes!";
-  var url = 'http://githelp.herokuapp.com/#!/session/'+appt._id;
+  var url = currentModeURL+appt._id;
 
   var options = {
     estIncome: estIncome,

@@ -5,8 +5,7 @@ angular.module('githelp.controllers.appointment', [])
     function ($scope, $state, $location, Global, $http, Appointment, $stateParams, $filter) {
       $scope.global = Global;
 
-  var appointmentId = $stateParams.sessionId;
-
+  $scope.appointmentId = $stateParams.sessionId;
 
 
   // $scope.displayConfirmation = function() {
@@ -16,7 +15,7 @@ angular.module('githelp.controllers.appointment', [])
 
   $scope.confirmAppointment = function(){
     var newAppointment = new Appointment({
-      appointmentId: appointmentId
+      appointmentId: $scope.appointmentId
     });
     newAppointment.$save(function(data){
       console.log("we confirmed the appointment!")
@@ -25,28 +24,33 @@ angular.module('githelp.controllers.appointment', [])
   };
 
   var appointmentSock = new SockJS('/echo');
+  $scope.timerByAppointment = {};
 
   $scope.liveSession = function() {
+    // Create new object key by appointmentId if it doesn't already exist
+    if( 'Object' !== typeof $scope.timerByAppointment[$scope.appointmentId]){
+      $scope.timerByAppointment[$scope.appointmentId] = {};
+    }
     // TIMER
     // Initialize timer variables
-    $scope.timerId      = 0;
-    $scope.totalSeconds = 0;
-    $scope.totalMinutes = 0;
-    $scope.totalHours   = 0;
-    $scope.seconds      = 0;
-    $scope.minutes      = 0;
-    $scope.hours        = 0;
+    $scope.timerByAppointment[$scope.appointmentId].timerId      = 0;
+    $scope.timerByAppointment[$scope.appointmentId].totalSeconds = 0;
+    $scope.timerByAppointment[$scope.appointmentId].totalMinutes = 0;
+    $scope.timerByAppointment[$scope.appointmentId].totalHours   = 0;
+    $scope.timerByAppointment[$scope.appointmentId].seconds      = 0;
+    $scope.timerByAppointment[$scope.appointmentId].minutes      = 0;
+    $scope.timerByAppointment[$scope.appointmentId].hours        = 0;
 
     // Set Default Merchant Price
-    $scope.merchantPrice = 2.50;
+    $scope.timerByAppointment[$scope.appointmentId].merchantPrice = 2.50;
 
-    $scope.totalAmount = 0;
+    $scope.timerByAppointment[$scope.appointmentId].totalAmount = 0;
 
-    $scope.timerOn = false;
+    $scope.timerByAppointment[$scope.appointmentId].timerOn = false;
 
     $scope.startTimer = function() {
-      $scope.timerId = setInterval(function() {
-        appointmentSock.send("ping");
+      $scope.timerByAppointment[$scope.appointmentId].timerId = setInterval(function() {
+        appointmentSock.send($scope.appointmentId);
       }, 1000);
     };
 
@@ -55,33 +59,34 @@ angular.module('githelp.controllers.appointment', [])
     };
 
     appointmentSock.onmessage = function(e) {
-      $scope.timerOn = true;
-      $scope.seconds++;
-      $scope.totalSeconds++;
-      if ($scope.seconds === 60) {
-        $scope.totalMinutes++;
-        $scope.minutes++;
-        $scope.seconds = 0;
-      } else if ($scope.minutes === 60) {
-        $scope.hours++;
-        $scope.totalHours++;
-        $scope.minutes = 0;
+      $scope.timerByAppointment[e.data].timerOn = true;
+      $scope.timerByAppointment[e.data].seconds++;
+      $scope.timerByAppointment[e.data].totalSeconds++;
+      if ($scope.timerByAppointment[e.data].seconds === 60) {
+        $scope.timerByAppointment[e.data].totalMinutes++;
+        $scope.timerByAppointment[e.data].minutes++;
+        $scope.timerByAppointment[e.data].seconds = 0;
+      } else if ($scope.timerByAppointment[e.data].minutes === 60) {
+        $scope.timerByAppointment[e.data].hours++;
+        $scope.timerByAppointment[e.data].totalHours++;
+        $scope.timerByAppointment[e.data].minutes = 0;
       }
-      $scope.totalAmount = $scope.merchantPrice * ($scope.totalSeconds / 60.0);
+      $scope.timerByAppointment[e.data].totalAmount = $scope.timerByAppointment[e.data].merchantPrice * ($scope.timerByAppointment[e.data].totalSeconds / 60.0);
       $scope.$apply();
     };
 
-    appointmentSock.onclose = function() {
-      if ($scope.timerId) { clearInterval($scope.timerId)};
-      $scope.totalAmount = $scope.merchantPrice * ($scope.totalSeconds / 60.0);
-      console.log($scope.totalAmount, $scope.totalSeconds, $scope.merchantPrice);
+    appointmentSock.onclose = function(e) {
+      console.log(e.data);
+      if ($scope.timerByAppointment[e.data].timerId) { clearInterval($scope.timerByAppointment[e.data].timerId)};
+      $scope.timerByAppointment[e.data].totalAmount = $scope.timerByAppointment[e.data].merchantPrice * ($scope.timerByAppointment[e.data].totalSeconds / 60.0);
+      console.log($scope.timerByAppointment[e.data].totalAmount, $scope.timerByAppointment[e.data].totalSeconds, $scope.timerByAppointment[e.data].merchantPrice);
       // $scope.amountToCharge = $filter('currency')($scope.totalAmount, '$');
       // console.log('$scopeamounttocharge', $scope.amountToCharge);
       $scope.$apply();
     };
 
     $scope.stopTimer = function() {
-      appointmentSock.close();
+      appointmentSock.close($scope.appointmentId);
 
       console.log('amt to charge', $scope.totalAmount);
       // alert('inserting' + $scope.totalAmount + 'into your bank account.');
@@ -90,7 +95,7 @@ angular.module('githelp.controllers.appointment', [])
         amount: ($scope.totalAmount * 100).toFixed(0), // amount needs to be in cents and no decimals
         duration: ($scope.totalSeconds / 60.0).toFixed(0), // duration in minutes
         // sessionId: '5338ae556ea2b600005f68ec'
-        sessionId: appointmentId // contains merchant and customer info
+        sessionId: $scope.appointmentId // contains merchant and customer info
       };
 
       $http.post('/charge', transactionObj).success(function(response) { // run payments.debitCard
