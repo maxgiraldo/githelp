@@ -260,7 +260,8 @@ exports.display = function(req, res) {
 };
 
 exports.show = function(req, res) {
-  var appointmentId = req.body.appointmentId;
+  // var appointmentId = req.body.appointmentId;
+  var appointmentId = req.params.appointmentId;
   console.log('in show apptId', appointmentId);
   Appointment.findOne({_id: appointmentId}).populate('merchant').populate('customer').exec(function(err, appt) {
     res.jsonp(appt);

@@ -188,7 +188,7 @@ module.exports = function(app) {
   // });
   app.get('/appointment', ensureLoggedIn('/signin'), appointments.appointmentsByUser);
   app.post('/appointment', ensureLoggedIn('/signin'), appointments.confirm);
-  app.post('/appointment/show', ensureLoggedIn('/signin'), appointments.show);
+  app.get('/appointment/show/:appointmentId', ensureLoggedIn('/signin'), appointments.show);
   app.post('/appointment/create', ensureLoggedIn('/signin'), appointments.create);
   app.post('/appointment/edit', ensureLoggedIn('/signin'), appointments.edit);
 

@@ -102,7 +102,7 @@ exports.sendEventInvite = function(apptObj){
       });
     });
   });
-
+};
 // http://stackoverflow.com/questions/15648644/google-calendar-api-request-not-going-through-with-node-js-express-request-l
 
 exports.convertJStoUnixTime = function(jsDateObj) {

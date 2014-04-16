@@ -68,7 +68,7 @@ angular.module('githelp.controllers.datePicker', [])
       $scope.confirmedDate;
 
       $scope.loadAppointment = function() {
-        $http.post('/appointment/show', $scope.appts).success(function(response) {
+        $http.get('/appointment/show/' + appointmentId).success(function(response) {
           console.log('LOAD', response);
           $scope.apptInDb = response;
           $scope.confirmedDate = response.confirmedDate;
