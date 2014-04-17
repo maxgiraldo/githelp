@@ -30,6 +30,7 @@ msg.data should be everything that i need.
 
         sockjs = new SockJS('/echo');
         sockjs.onmessage = function (e) {
+          console.log("received a message");
           if (e.type != "message") return;
           var msg = JSON.parse(e.data);
           var self = sockType_map[msg.id];
@@ -65,7 +66,7 @@ msg.data should be everything that i need.
         pending.push(this);
       }
       else if (sockjs_status === 'connected') {
-        this.run();
+        this.start();
       }
     }
 
@@ -74,6 +75,7 @@ msg.data should be everything that i need.
     }
 
     sockRobot.prototype.sockjs_send = function (event, data) {
+      console.log("this is the id", this.id);
       sockjs.send(JSON.stringify({id: this.id, sockType: this.sockType, event: event, data: data}));
     }
 

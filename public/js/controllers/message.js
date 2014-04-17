@@ -9,11 +9,11 @@ angular.module('githelp.controllers.messages', [])
     'Socks',
     function($scope, $location, $state, $stateParams, Global, Message, Socks){
 
-      var inboxSock = function(sockType){
-        Socks.call(this, sockType);
+      var inboxSock = function(sockType, id){
+        Socks.call(this, sockType, id);
       };
-
       inboxSock.prototype = Object.create(Socks.prototype);
+
       inboxSock.prototype.event_message = function(messageData){
         console.log("we are in the message event");
         $scope.currentChatroomId = $stateParams.inboxId;

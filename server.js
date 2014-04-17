@@ -135,6 +135,7 @@ sockjs_echo.on('connection', function (conn) {
             if (msg.sockType === "inbox") {
                 //  check if AppointmentId
                 var connections = inboxEmitter.allConnections[msg.id];
+                console.log(msg.id);
                 if(connections instanceof Array){
                     connections.push(conn);
                     conn.write(message);
