@@ -107,14 +107,11 @@ var SockJSEmitter = function (sockType) {
     this.sockType = sockType;
 };
 
-var EventEmitter = require('events').EventEmitter;
-// util.inherits(SockJSEmitter, EventEmitter);
-
 // "emit" an event over the SockJS connection
 SockJSEmitter.prototype.emit = function (connections, message) {
-    if (event === 'newListener') return;
+    if (message.event === 'newListener') return;
     for (var ii=0; ii < connections.length; ii++) {
-        connections[ii].write(message);
+        connections[ii].write(JSON.stringify(message));
     }
 };
 
@@ -127,7 +124,8 @@ sockjs_echo.on('connection', function (conn) {
 
     conn.on('data', function (message) {
         var msg = JSON.parse(message);
-
+        console.log(msg.event);
+        console.log(msg.sockType);
         // we need validations to check if appointments already exist
         // if (!(msg.event && msg.sockType)) throw "Invalid message format: " + message;
 
@@ -136,12 +134,13 @@ sockjs_echo.on('connection', function (conn) {
         if (msg.event === 'StartRobot') {
             if (msg.sockType === "inbox") {
                 //  check if AppointmentId
-                var connections = inboxEmitter.allConnections[msg.data.inboxId];
-                if(connections instanceof 'Array'){
+                var connections = inboxEmitter.allConnections[msg.id];
+                console.log(msg.id);
+                if(connections instanceof Array){
                     connections.push(conn);
                     conn.write(message);
                 } else{
-                    connections = [conn];
+                    inboxEmitter.allConnections[msg.id] = [conn];
                     conn.write(message);
                 }
             }
@@ -152,13 +151,15 @@ sockjs_echo.on('connection', function (conn) {
             // iteration should happen here.
             if (msg.sockType === "inbox") {
                 //  check if AppointmentId
-                var connections = inboxEmitter.allConnections[msg.data.inboxId];
-                inboxEmitter.emit(connections, message);
+                var connections = inboxEmitter.allConnections[msg.id];
+                console.log(connections);
+                console.log("message", msg);
+                inboxEmitter.emit(connections, msg);
             }
         }
     });
     conn.on('close', function (){
-        console.log("yo");
+        console.log("yo")
     })
 })
 

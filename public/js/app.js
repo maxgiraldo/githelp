@@ -35,7 +35,8 @@ angular.module('githelp.services',
   'githelp.services.appointments',
   'githelp.services.auth',
   'githelp.services.url',
-  'githelp.services.login'
+  'githelp.services.login',
+  'githelp.services.socks'
   ]);
 
 angular.module('githelp.directives',

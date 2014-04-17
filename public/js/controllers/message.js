@@ -8,13 +8,32 @@ angular.module('githelp.controllers.messages', [])
     'Message',
     'Socks',
     function($scope, $location, $state, $stateParams, Global, Message, Socks){
+
+      var inboxSock = function(sockType, id){
+        Socks.call(this, sockType, id);
+      };
+      inboxSock.prototype = Object.create(Socks.prototype);
+
+      inboxSock.prototype.event_message = function(messageData){
+        console.log("we are in the message event");
+        $scope.currentChatroomId = $stateParams.inboxId;
+        if($scope.messagesByChatroom[$stateParams.inboxId] instanceof Array){
+          $scope.messagesByChatroom[$stateParams.inboxId].push(messageData);
+        } else{
+          $scope.messagesByChatroom[$stateParams.inboxId] = [messageData];
+        }
+        $scope.$apply();
+      };
+
+      var inboxBot = new inboxSock('inbox', $stateParams.inboxId);
+      inboxBot.init();
+
       $scope.global = Global;
       // var sock = new SockJS('/echo');
 
       $scope.messagesByUser = {};
       $scope.messagesByChatroom = {};
       $scope.membersByChatroom = {};
-
 
       $scope.createMessage = function(){
         var newMessage = new Message({
@@ -26,11 +45,16 @@ angular.module('githelp.controllers.messages', [])
 
         newMessage.$save(function(message){
           // sock.send(JSON.stringify(message));
+          console.log("sending message now");
+          inboxBot.sockjs_send('message', message);
         })
       };
 
-      var sock = new Socks('inbox');
-      sock.init();
+
+      // need to create an inheritance chain for inboxes
+      // define function that inboxes need
+      // should only have one connection for inboxes
+      // no need to create several for one user each time he clicks through
 
       // sock.onopen = function() {
       //   console.log('open');

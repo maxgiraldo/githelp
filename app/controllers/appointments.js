@@ -210,7 +210,7 @@ var currentModeURL;
 if (process.env.NODE_ENV === 'production'){
   currentModeURL = 'http://githelp.herokuapp.com/#!/session/';
 } else{
-  currentModeURL = 'http://172.18.75.156:3000/#!/session/';
+  currentModeURL = 'http://172.18.73.62:3000/#!/session/';
 }
 
 var configReminderOpt = function(appt, done){
