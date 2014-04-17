@@ -1,20 +1,18 @@
 <div data-ng-controller="DatepickerCtrl">
   <form ng-submit='editAppointment()' ng-init='loadAppointment()'>
-    <div class='container profile'>
-      <!-- data-ng-click="confirmAppointment()" -->
-      <h3>Appointment Details</h3>
-      <ul>
-        <div ng-show="apptInDb.confirmed">
-          <h2>Status: Confirmed</h2>
-          <h3>Date: {{confirmedDate | date: 'MMMM d, y' }}</h3>
-          <h3>Time: {{confirmedDate | date: 'h:mm a' }}</h3>
-        </div>
-        <li>Customer: {{apptInDb.customer.fullName || apptInDb.customer.github.login}}</li>
-        <li>Merchant: {{apptInDb.merchant.fullName || apptInDb.merchant.github.login}}</li>
-        <li>Duration: {{apptInDb.duration}} minutes</li>
-        <li ng-show="apptInDb.message">Message: {{apptInDb.message}}</li>
-      </ul>
-
+    <div class='container'>
+          <div>
+            <h2 ng-show="apptInDb.confirmed">Appointment Status: Confirmed</h2>
+            <h2 ng-hide="apptInDb.confirmed">Appointment Status: Unconfirmed</h2>
+          </div>
+          <ul>
+            <li class='searchUl'><b>Date: {{confirmedDate | date: 'MMMM d, y' }}</b></li>
+            <li class='searchUl'><b>Time: {{confirmedDate | date: 'h:mm a' }}</b></li>
+            <li class='searchUl'>Duration: {{apptInDb.duration}} minutes</li>
+            <li class='searchUl'>Customer: {{apptInDb.customer.fullName || apptInDb.customer.github.login}}</li>
+            <li class='searchUl'>Merchant: {{apptInDb.merchant.fullName || apptInDb.merchant.github.login}}</li>
+            <li ng-show="apptInDb.message" class='searchUl'>Message: {{apptInDb.message}}</li>
+          </ul>
       <div ng-hide="apptInDb.confirmed">
         <h3>Confirm one of the following suggested times:</h3>
         <ul>
