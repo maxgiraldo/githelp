@@ -29,15 +29,19 @@ if (process.env.NODE_ENV === 'production'){
   googleCallbackURL = 'http://githelp.herokuapp.com/auth/google/callback';
   githubCallbackURL = 'http://githelp.herokuapp.com/auth/github/callback';
 } else{
-  googleCallbackURL = 'http://172.18.75.156:3000/auth/google/callback';
-  githubCallbackURL = 'http://172.18.75.156:3000/auth/github/callback';
+  googleCallbackURL = 'http://172.18.73.218:3000/auth/google/callback';
+  githubCallbackURL = 'http://172.18.73.218:3000/auth/github/callback';
 }
 
 passport.use(new GitHubStrategy({
   // Below are JHK's Keys
 
-  clientID: '71778e134296a29071f4',
-  clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
+  // clientID: '71778e134296a29071f4',
+  // clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
+  // callbackURL: githubCallbackURL
+  // WT keys:
+  clientID: '0934ee7ca0cdc34cc007',
+  clientSecret: 'dc0845769a5c3835bebc2a7a4772e0689b7ac1d7',
   callbackURL: githubCallbackURL
 
   // clientID: '71778e134296a29071f4',
@@ -184,7 +188,7 @@ module.exports = function(app) {
   // });
   app.get('/appointment', ensureLoggedIn('/signin'), appointments.appointmentsByUser);
   app.post('/appointment', ensureLoggedIn('/signin'), appointments.confirm);
-  app.post('/appointment/show', ensureLoggedIn('/signin'), appointments.show);
+  app.get('/appointment/show/:appointmentId', ensureLoggedIn('/signin'), appointments.show);
   app.post('/appointment/create', ensureLoggedIn('/signin'), appointments.create);
   app.post('/appointment/edit', ensureLoggedIn('/signin'), appointments.edit);
 

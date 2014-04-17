@@ -8,4 +8,16 @@ angular.module('githelp.services.appointments', [])
           }
         });
       }
-  ]);
+  ])
+  .factory('ConfirmedAppt', [function() {
+    return {
+      find: function(apptObj) {
+        for (var option in apptObj.date) {
+          if(apptObj.date[option].confirmed) {
+            console.log('confirmed Date', apptObj.date[option].date);
+            return apptObj.date[option].date;
+          }
+        }
+      }
+    };
+  }]);

@@ -1,6 +1,6 @@
 angular.module('githelp.controllers.datePicker', [])
-  .controller('DatepickerCtrl', ['$scope', '$http', '$location', '$state', '$stateParams', 'Global',
-    function($scope, $http, $location, $state, $stateParams, Global) {
+  .controller('DatepickerCtrl', ['$scope', '$http', '$location', '$state', '$stateParams', 'Global', 'ConfirmedAppt',
+    function($scope, $http, $location, $state, $stateParams, Global, ConfirmedAppt) {
       $scope.global = Global;
 
       var appointmentId = $stateParams.sessionId;
@@ -28,13 +28,7 @@ angular.module('githelp.controllers.datePicker', [])
         appointmentId: appointmentId || null
       };
 
-
-
-      // $scope.proposedAppt = {
-      //   appointmentId: appointmentId
-      // };
-
-      $scope.apptInDb;
+      $scope.apptInDb, $scope.confirmedDate;
 
       // Tom's shit
       $scope.appt = {
@@ -65,13 +59,11 @@ angular.module('githelp.controllers.datePicker', [])
       };
       // Tom's shit
 
-      $scope.confirmedDate;
-
       $scope.loadAppointment = function() {
-        $http.post('/appointment/show', $scope.appts).success(function(response) {
+        $http.get('/appointment/show/' + appointmentId).success(function(response) {
           console.log('LOAD', response);
           $scope.apptInDb = response;
-          $scope.confirmedDate = response.confirmedDate;
+          $scope.confirmedDate = ConfirmedAppt.find($scope.apptInDb);
         });
       };
 
