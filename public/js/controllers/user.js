@@ -1,10 +1,15 @@
 angular.module('githelp.controllers.user', [])
-  .controller('UserController', ['$scope', '$state', '$http', '$stateParams', 'Global', 'User', 'Inbox', 'Appointment',
-    function ($scope, $state, $http, $stateParams, Global, User, Inbox, Appointment) {
+  .controller('UserController', ['$scope', '$state', '$http', '$stateParams', 'Global', 'User', 'Inbox', 'Appointment', '$location',
+    function ($scope, $state, $http, $stateParams, Global, User, Inbox, Appointment, $location) {
     $scope.global = Global;
 
+    $scope.banner = "";
     $scope.members = [];
     $scope.userName = $stateParams.userName;
+    $scope.emailInfo = {
+      address: "",
+      _id: ""
+    };
 
     $scope.findAppointments = function(){
       Appointment.get(function(data){
@@ -90,11 +95,16 @@ angular.module('githelp.controllers.user', [])
 
     $scope.repoAuthor = function(url){
       return url.split('/')[1];
-    }
+    };
 
     $scope.setAppointment = function(){
-      $state.go('profile.booking', {'userName': $stateParams.userName});
-    }
+      // if($scope.global.user.email === "" || !$scope.global.user.email) {
+      //   console.log('no submitted email');
+      //   $state.go('profile.settings');
+      // } else {
+        $state.go('profile.booking', {'userName': $stateParams.userName});
+      // }
+    };
 
     $scope.submitEdit = function(){
       $http({
@@ -178,5 +188,29 @@ angular.module('githelp.controllers.user', [])
       });
     };
 
+    $scope.submittedEmail = false;
+
+    $scope.submitEmail = function() {
+      $scope.emailInfo._id = $scope.global.user._id;
+      console.log('emailInfo', $scope.emailInfo);
+      $http.post('/submitEmail', $scope.emailInfo).success(function(user) {
+        console.log('successfully submitted email');
+        $scope.tempAddress = user.contactEmail;
+        $scope.submittedEmail = true;
+        $scope.banner = "Thank you for submitting your email";
+      });
+    };
+
+  //   $scope.updateEmail = function() {
+  //     $scope.emailInfo._id = $scope.global.user._id;
+  //     console.log('emailInfo', $scope.emailInfo);
+  //     $http.post('/updateEmail', $scope.emailInfo).success(function(user) {
+  //       console.log('successfully submitted email');
+  //       $scope.showEmail = false;
+  //       $scope.tempAddress = user.submittedEmail;
+  //       $scope.submittedEmail = true;
+  //       $scope.banner = "Your contact email has been edited";
+  //     });
+  //   };
   }
 ]);

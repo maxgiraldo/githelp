@@ -55,6 +55,7 @@ passport.use(new GitHubStrategy({
         var u = new User({
           fullName: profile.displayName,
           userName: profile._json.login,
+          contactEmail: profile._json.email, // save github email as contact email when first sign up
           email: profile._json.email,
           githubId: profile.id,
           github: profile._json,
@@ -202,6 +203,8 @@ module.exports = function(app) {
   app.post('/message', ensureLoggedIn('/signin'), messages.createMessage);
 
   app.post('/updatePpm', ensureLoggedIn('/signin'), users.updatePpm);
+  app.post('/submitEmail', ensureLoggedIn('/signin'), users.updateEmail);
+  // app.post('/updateEmail', ensureLoggedIn('/signin'), users.updateEmail);
 
   app.get('/', index.render);
 

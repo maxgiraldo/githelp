@@ -5,6 +5,7 @@ var Q = require('q');
 var UserSchema = new Schema({
   fullName: String,
   userName: String,
+  contactEmail: String,
   email: String,
   githubId: String,
   googleId: String,

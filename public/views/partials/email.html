@@ -1,0 +1,10 @@
+<div class='container profile' style='padding-top: 10px'>
+  <h3 ng-show="banner">{{banner}}</h3>
+  <form ng-hide="submittedEmail" class="container form-group" ng-submit="submitEmail()">
+    <input type="email" ng-model="emailInfo.address" class='form-control' style='width:300px' id="email" autocomplete="off" placeholder="{{user.contactEmail}}" />
+    <br>
+    <input ng-hide="user.contactEmail" style='margin-right: 850px' type="submit" class="btn btn-success" value="Submit" id="email-submit">
+    <input ng-show="user.contactEmail" style='margin-right: 850px' type="submit" class="btn btn-success" value="Edit" id="email-submit">
+  </form>
+  <h5 ng-show="submittedEmail">{{tempAddress}}</h5>
+</div>
