@@ -6,9 +6,10 @@ angular.module('githelp.controllers.messages', [])
     '$stateParams',
     'Global',
     'Message',
-    function($scope, $location, $state, $stateParams, Global, Message){
+    'Socks',
+    function($scope, $location, $state, $stateParams, Global, Message, Socks){
       $scope.global = Global;
-      var sock = new SockJS('/echo');
+      // var sock = new SockJS('/echo');
 
       $scope.messagesByUser = {};
       $scope.messagesByChatroom = {};
@@ -24,39 +25,30 @@ angular.module('githelp.controllers.messages', [])
         this.content = '';
 
         newMessage.$save(function(message){
-          sock.send(JSON.stringify(message));
+          // sock.send(JSON.stringify(message));
         })
       };
 
-      sock.onopen = function() {
-        console.log('open');
-      };
+      var sock = new Socks('inbox');
+      sock.init();
 
-      sock.onmessage = function(e) {
-        $scope.currentChatroomId = $stateParams.inboxId;
-        if($scope.messagesByChatroom[$stateParams.inboxId] instanceof Array){
-          $scope.messagesByChatroom[$stateParams.inboxId].push(JSON.parse(e.data));
-        } else{
-          $scope.messagesByChatroom[$stateParams.inboxId] = [JSON.parse(e.data)];
-        }
-        $scope.$apply();
-      };
+      // sock.onopen = function() {
+      //   console.log('open');
+      // };
 
-      sock.onclose = function() {
-        console.log('sockjs close');
-      };
+      // sock.onmessage = function(e) {
+      //   $scope.currentChatroomId = $stateParams.inboxId;
+      //   if($scope.messagesByChatroom[$stateParams.inboxId] instanceof Array){
+      //     $scope.messagesByChatroom[$stateParams.inboxId].push(JSON.parse(e.data));
+      //   } else{
+      //     $scope.messagesByChatroom[$stateParams.inboxId] = [JSON.parse(e.data)];
+      //   }
+      //   $scope.$apply();
+      // };
 
-
-      // $scope.findMerchants = function(){
-
-      // }
-
-      // $scope.findCustomer = function(){
-
-      // }
-
-
-// make this real time
+      // sock.onclose = function() {
+      //   console.log('sockjs close');
+      // };
 
       $scope.findMessages = function(){
         Message.get({
