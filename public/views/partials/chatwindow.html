@@ -1,6 +1,8 @@
 <div data-ng-controller="MessageController" data-ng-init="findMessages()">
+<!-- <div data-ng-init="findMessages()"> -->
+<!-- this may allow me to have only one connection open for a user -->
   <!-- Chat -->
-  <div class='container' ui-view>
+  <div class='container'>
     <!-- Side chat with list of all conversations -->
     <div class='side-chat-bar inbox-scroll-wrapper'>
       <h1 class='headline headline-small'>Conversations</h1>
@@ -34,6 +36,7 @@
       </div>
     </div> <!-- MAIN CHAT -->
   </div>
+<!-- </div> -->
 </div>
  <!--  <h3>ChatWindow</h3>
   <div>
