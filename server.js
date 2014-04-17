@@ -108,7 +108,7 @@ var SockJSEmitter = function (sockType) {
 };
 
 var EventEmitter = require('events').EventEmitter;
-util.inherits(SockJSEmitter, EventEmitter);
+// util.inherits(SockJSEmitter, EventEmitter);
 
 // "emit" an event over the SockJS connection
 SockJSEmitter.prototype.emit = function (connections, message) {
@@ -157,9 +157,9 @@ sockjs_echo.on('connection', function (conn) {
             }
         }
     });
-    conn.on('close', function ()){
-        console.log("yo")
-    }
+    conn.on('close', function (){
+        console.log("yo");
+    })
 })
 
 
