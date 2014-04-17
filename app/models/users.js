@@ -27,7 +27,6 @@ var UserSchema = new Schema({
   avatarUrl: String
 });
 
-
 UserSchema.statics.title = function(membersArray){
   var membersName = [];
   var deferred = Q.defer();

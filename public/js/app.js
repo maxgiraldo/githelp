@@ -23,7 +23,8 @@ angular.module('githelp.controllers',
   'githelp.controllers.timePicker',
   'githelp.controllers.repos',
   'githelp.controllers.texteditor',
-  'githelp.controllers.login'
+  'githelp.controllers.login',
+  'githelp.controllers.modal'
   ]);
 
 angular.module('githelp.services',
