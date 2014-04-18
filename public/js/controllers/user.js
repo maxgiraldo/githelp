@@ -1,10 +1,17 @@
 angular.module('githelp.controllers.user', [])
-  .controller('UserController', ['$scope', '$state', '$http', '$stateParams', 'Global', 'User', 'Inbox', 'Appointment',
-    function ($scope, $state, $http, $stateParams, Global, User, Inbox, Appointment) {
+  .controller('UserController', ['$scope', '$state', '$http', '$stateParams', 'Global', 'User', 'Inbox', 'Appointment', '$location',
+    function ($scope, $state, $http, $stateParams, Global, User, Inbox, Appointment, $location) {
     $scope.global = Global;
 
+    $scope.user;
+    $scope.banner = {};
     $scope.members = [];
     $scope.userName = $stateParams.userName;
+    $scope.emailInfo = {
+      address: "",
+      _id: ""
+    };
+    $scope.submittedEmail = false;
 
     $scope.findAppointments = function(){
       Appointment.get(function(data){
@@ -13,6 +20,12 @@ angular.module('githelp.controllers.user', [])
     }
 
     $scope.value = "";
+
+    $scope.required = {
+      bank: "Bank account required to offer githelp and get paid!",
+      card: "Credit card required to request githelp sessions",
+      email: "E-mail required to request githelp sessions"
+    }
 
     $scope.findOne = function(){
       User.get({
@@ -90,11 +103,16 @@ angular.module('githelp.controllers.user', [])
 
     $scope.repoAuthor = function(url){
       return url.split('/')[1];
-    }
+    };
 
     $scope.setAppointment = function(){
-      $state.go('profile.booking', {'userName': $stateParams.userName});
-    }
+      // if($scope.global.user.email === "" || !$scope.global.user.email) {
+      //   console.log('no submitted email');
+      //   $state.go('profile.settings');
+      // } else {
+        $state.go('profile.booking', {'userName': $stateParams.userName});
+      // }
+    };
 
     $scope.submitEdit = function(){
       $http({
@@ -167,16 +185,31 @@ angular.module('githelp.controllers.user', [])
       $http.post('/create/cc', $scope.cc).success(function(response) {
         console.log('CREATE CARD SUCCESS', response);
         $scope.ccComplete = response;
+        $scope.banner.card = "Successfully submitted credit card";
+
+        // NEED TO CHECK FOR ERRORS IN CREATING CREDIT CARD ACCT
       });
     };
-
 
     $scope.createBankAcct = function() {
       $http.post('/create/ba', $scope.ba).success(function(response) {
         console.log('CREATE BANK SUCCESS', response);
         $scope.baComplete = response;
+        $scope.banner.bank = "Successfully created bank account";
+
+        // NEED TO CHECK FOR ERRORS IN BANK ACCT
       });
     };
 
+    $scope.submitEmail = function() {
+      $scope.emailInfo._id = $scope.global.user._id;
+      console.log('emailInfo', $scope.emailInfo);
+      $http.post('/submitEmail', $scope.emailInfo).success(function(user) {
+        console.log('successfully submitted email');
+        $scope.tempAddress = user.contactEmail;
+        $scope.submittedEmail = true;
+        $scope.banner.email = "Thank you for submitting your email";
+      });
+    };
   }
 ]);

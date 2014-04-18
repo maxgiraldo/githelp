@@ -24,6 +24,16 @@ exports.updatePpm = function(req, res) {
   res.send(200);
 };
 
+exports.updateEmail = function(req, res) {
+  var email = req.body.address;
+  var _id = req.body._id;
+  User.findById(_id, function(err, user) {
+    user.contactEmail = email;
+    user.save();
+    res.jsonp(user);
+  });
+};
+
 exports.signin = function(req, res){
   // console.log('SIGN IN REDIRECT?');
   // res.set('content-type', 'text/javascript');
@@ -38,14 +48,14 @@ exports.clientSideAuth = function(req, res) {
 balanced.configure('ak-test-1P4LCuAfcv3isFlyX9mxNXvz6bI1XNril');
 
 exports.authCallback = function(req, res, lastUrl) {
-  console.log('in authCallback');
+  console.log('in authCallback'); // create Balanced acct after auth
   if(req.user.balancedUser){
       if(lastUrl){
         res.redirect('#!/'+lastUrl);
       }else{
         res.redirect('/');
       }
-  } else{
+  } else if (req.user.email && req.user.fullName) {
     balanced.marketplace.customers.create({
       "name": req.user.fullName,
       "email": req.user.email
@@ -54,8 +64,35 @@ exports.authCallback = function(req, res, lastUrl) {
       req.user.save();
       res.redirect('/');
     });
-  }
+  } else {
+    if(lastUrl){
+        res.redirect('#!/'+lastUrl);
+    }else{
+      res.redirect('/');
+    }
+  };
 };
+
+//   console.log('in authCallback');
+//   if(req.user.balancedUser){
+//       if(lastUrl){
+//         res.redirect('#!/'+lastUrl);
+//       }else{
+//         res.redirect('/');
+//       }
+//   } else{
+//     balanced.marketplace.customers.create({
+//       "name": req.user.fullName,
+//       "email": req.user.email
+//     }).then(function(data){
+//       req.user.balancedUser = data.toJSON().id;
+//       req.user.save();
+//       res.redirect('/');
+//     });
+//   }
+// };
+
+
 /**
  * Show sign up form
  */

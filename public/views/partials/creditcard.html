@@ -1,25 +1,25 @@
-<!-- Functions & Scope in IndexController -->
-
 <!-- CREDIT CARD FORM -->
 <div class='container profile' style='padding-top: 10px'>
-    <form class="container form-group" ng-submit="createCard()">
-        <input class='form-control' style='width:300px' type="text" id="cc-name" autocomplete="off" ng-model="cc.name" placeholder="Full name (as seen on card)">
-        <br>
-      <div>
-        <input type="text" class='form-control' style='width:300px' id="cc-number" autocomplete="off" ng-model="cc.number" placeholder="Credit card number" maxlength="16" />
-      </div>
+  <h4 ng-show="banner">{{banner.card}}</h4>
+  <h4 ng-hide="user.balancedBank">{{required.card}}</h4>
+  <form class="container form-group" ng-submit="createCard()">
+    <input class='form-control' style='width:300px' type="text" id="cc-name" autocomplete="off" ng-model="cc.name" placeholder="Full name (as seen on card)">
+    <br>
+    <div>
+      <input type="text" class='form-control' style='width:300px' id="cc-number" autocomplete="off" ng-model="cc.number" placeholder="Credit card number" maxlength="16" />
+    </div>
+    <br>
+    <div>
+      <input type="text" class='form-control' style='width:300px' id="cc-ex-month" autocomplete="off" ng-model="cc.expiration_month" placeholder="Month of expiration e.g. 05" maxlength="2" />
       <br>
-      <div>
-        <input type="text" class='form-control' style='width:300px' id="cc-ex-month" autocomplete="off" ng-model="cc.expiration_month" placeholder="Month of expiration e.g. 05" maxlength="2" />
-        <br>
-        <input type="text" class='form-control' style='width:300px' id="cc-ex-year" autocomplete="off" ng-model="cc.expiration_year" placeholder="Year of expiration e.g. 2017" maxlength="4" />
-      </div>
-      <br>
-      <div>
-        <input type="text" class='form-control' style='width:300px' id="ex-csc" autocomplete="off" ng-model="cc.cvv" placeholder="Security Code (CVV) e.g., 453" maxlength="4" />
-      </div>
-      <br>
-      <input style='margin-right: 850px' type="submit" class="btn btn-success" value="Submit" id="cc-submit">
-    </form>
-    Updated DB data: {{ccComplete}}
+      <input type="text" class='form-control' style='width:300px' id="cc-ex-year" autocomplete="off" ng-model="cc.expiration_year" placeholder="Year of expiration e.g. 2017" maxlength="4" />
+    </div>
+    <br>
+    <div>
+      <input type="text" class='form-control' style='width:300px' id="ex-csc" autocomplete="off" ng-model="cc.cvv" placeholder="Security Code (CVV) e.g., 453" maxlength="4" />
+    </div>
+    <br>
+    <input style='margin-right: 850px' type="submit" class="btn btn-success" value="Submit" id="cc-submit">
+  </form>
+  Updated DB data: {{ccComplete}}
 </div>

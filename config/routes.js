@@ -29,20 +29,20 @@ if (process.env.NODE_ENV === 'production'){
   googleCallbackURL = 'http://githelp.herokuapp.com/auth/google/callback';
   githubCallbackURL = 'http://githelp.herokuapp.com/auth/github/callback';
 } else{
-  googleCallbackURL = 'http://172.18.73.62:3000/auth/google/callback';
-  githubCallbackURL = 'http://172.18.73.62:3000/auth/github/callback';
+  googleCallbackURL = 'http://172.18.73.218:3000/auth/google/callback';
+  githubCallbackURL = 'http://172.18.73.218:3000/auth/github/callback';
 }
 
 passport.use(new GitHubStrategy({
   // Below are JHK's Keys
 
-  clientID: '71778e134296a29071f4',
-  clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
-  callbackURL: githubCallbackURL
-  // WT keys:
-  // clientID: '0934ee7ca0cdc34cc007',
-  // clientSecret: 'dc0845769a5c3835bebc2a7a4772e0689b7ac1d7',
+  // clientID: '71778e134296a29071f4',
+  // clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
   // callbackURL: githubCallbackURL
+  // WT keys:
+  clientID: '0934ee7ca0cdc34cc007',
+  clientSecret: 'dc0845769a5c3835bebc2a7a4772e0689b7ac1d7',
+  callbackURL: githubCallbackURL
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({ githubId: profile.id }, function (err, user) {
@@ -51,6 +51,7 @@ passport.use(new GitHubStrategy({
         var u = new User({
           fullName: profile.displayName,
           userName: profile._json.login,
+          contactEmail: profile._json.email, // save github email as contact email when first sign up
           email: profile._json.email,
           githubId: profile.id,
           github: profile._json,
@@ -198,6 +199,8 @@ module.exports = function(app) {
   app.post('/message', ensureLoggedIn('/signin'), messages.createMessage);
 
   app.post('/updatePpm', ensureLoggedIn('/signin'), users.updatePpm);
+  app.post('/submitEmail', ensureLoggedIn('/signin'), users.updateEmail);
+  // app.post('/updateEmail', ensureLoggedIn('/signin'), users.updateEmail);
 
   app.get('/', index.render);
 

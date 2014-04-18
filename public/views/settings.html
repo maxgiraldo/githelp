@@ -1,12 +1,20 @@
-<section data-ng-controller="UserController" data-ng-init="" ui-view>
+<section data-ng-controller="UserController" ui-view>
   <section data-ng-include="'views/partials/navbar.html'"></section>
   <div class="container">
-    <h1 class='headline' style='text-align: center'>Transaction Settings</h1>
-      <!-- <h2><a href="/#!/{{global.user.userName}}/settings/earnings">Earnings</h2> -->
-      <!-- <h2><a href="/#!/{{global.user.userName}}/settings/payments">Payments</h2> -->
-      <p class="caps-sub-header" style='text-align: center'>Payments</p>
-      <section data-ng-show="global.authenticated" data-ng-include data-src="'views/partials/creditcard.html'"></section>
-      <p class="caps-sub-header" style='text-align: center'>Earnings</p>
-      <section data-ng-show="global.authenticated" data-ng-include data-src="'views/partials/bankaccount.html'"></section>
+    <div id="profile-settings">
+      <h1 class='headline' style='text-align: center'>Profile Settings</h1>
+       <!--  <h4 class="text-danger" style='text-align: center' ng-hide="global.user.contactEmail && user.balancedCard || submittedEmail">To request githelp sessions, you need to add 1) email address and 2) credit card</h4> -->
+        <p class="caps-sub-header" style='text-align: center'>Contact Email <i ng-show="user.contactEmail" class="fa fa-check-circle fa-lg" style='color: green'></i><i ng-show="!user.contactEmail" class="fa fa-minus-circle fa-lg" style='color: red'></i></p>
+        <section data-ng-include data-src="'views/partials/email.html'"></section>
+    </div>
+    <div id="transaction-settings">
+      <h1 class='headline' style='text-align: center'>Transaction Settings</h1>
+        <!-- <h2><a href="/#!/{{global.user.userName}}/settings/earnings">Earnings</h2> -->
+        <!-- <h2><a href="/#!/{{global.user.userName}}/settings/payments">Payments</h2> -->
+        <p class="caps-sub-header" style='text-align: center'>Payments <i ng-show="user.balancedCard" class="fa fa-check-circle fa-lg" style='color: green'></i><i ng-show="!user.balancedCard" class="fa fa-minus-circle fa-lg" style='color: red'></i></p>
+        <section data-ng-show="global.authenticated" data-ng-include data-src="'views/partials/creditcard.html'"></section>
+        <p class="caps-sub-header" style='text-align: center'>Earnings <i ng-show="user.balancedBank" class="fa fa-check-circle fa-lg" style='color: green'></i><i ng-show="!user.balancedBank" class="fa fa-minus-circle fa-lg" style='color: red'></i></p>
+        <section data-ng-show="global.authenticated" data-ng-include data-src="'views/partials/bankaccount.html'"></section>
+    </div>
   </div>
 </section>

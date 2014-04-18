@@ -60,7 +60,12 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
         })
           .state('profile.booking', {
             url: '/booking',
-            templateUrl: 'views/booking.html'
+            templateUrl: 'views/booking.html',
+            resolve: {
+              loggedin: checkLoggedin,
+              email: checkEmailExists,
+              card: checkBalancedCard
+            }
           })
           .state('profile.settings', {
             url: '/settings',
@@ -81,7 +86,7 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
 ]);
 
   // for client-side authentication
-  function checkLoggedin ($q, $timeout, $http, $location, $rootScope, redirectToUrlAfterLogin) {
+  function checkLoggedin($q, $timeout, $http, $location, $rootScope, redirectToUrlAfterLogin) {
     // Initialize a new promise
     var deferred = $q.defer();
     // Make an AJAX call to check if the user is logged in
@@ -111,6 +116,58 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
     return deferred.promise;
   };
   // end
+
+  function checkEmailExists($q, $timeout, $http, $location, $state, Global) {
+    var deferred = $q.defer();
+    console.log('in checkemailgiven');
+    var user = Global.user;
+    console.log('global user email?', user.email);
+    if(user.email) {
+      console.log('resolved');
+      deferred.resolve;
+    } else {
+      console.log('No email submitted in profile');
+      console.log('redirect to settings of:', user.userName);
+      $location.url("/" + user.userName + '/settings');
+      // $state.go('profile.settings', {'userName': user.userName});
+      deferred.reject;
+    }
+    return deferred.promise;
+  }
+
+  function checkBalancedCard($q, $timeout, $http, $location, $state, Global) {
+    var deferred = $q.defer();
+    console.log('in checkbalancedcard');
+    var user = Global.user;
+    if(user.BalancedCard) {
+      console.log('resolved');
+      deferred.resolve;
+    } else {
+      console.log('No balanced card in profile');
+      console.log('redirect to settings of:', user.userName);
+      $location.url("/" + user.userName + '/settings');
+      // $state.go('profile.settings', {'userName': user.userName});
+      deferred.reject;
+    }
+    return deferred.promise;
+  }
+
+  function checkBalancedBank($q, $timeout, $http, $location, $state, Global) {
+    var deferred = $q.defer();
+    console.log('in checkbalancedbank');
+    var user = Global.user;
+    if(user.BalancedBank) {
+      console.log('resolved');
+      deferred.resolve;
+    } else {
+      console.log('No balanced bank in profile');
+      console.log('redirect to settings of:', user.userName);
+      $location.url("/" + user.userName + '/settings');
+      // $state.go('profile.settings', {'userName': user.userName});
+      deferred.reject;
+    }
+    return deferred.promise;
+  }
 
 //Setting HTML5 Location Mode
 window.app.config(['$locationProvider', 'datepickerConfig', 'datepickerPopupConfig',

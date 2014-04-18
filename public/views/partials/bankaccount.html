@@ -1,22 +1,23 @@
-<!-- Functions & Scope in IndexController -->
 <!-- BANK ACCT FORM -->
 <div class='container profile' style='padding-top: 10px'>
-    <form class="container form-group" ng-submit="createBankAcct()">
-        <input class='form-control' style='width:300px' type="text" id="ba-name" autocomplete="off" ng-model="ba.name" placeholder="Account Holder's Name">
-        <br>
-      <div>
-        <input type="text" class='form-control' style='width:300px' id="ba.routing" autocomplete="off" ng-model="ba.routing_number" placeholder="Routing Number" />
-      </div>
+  <h4 ng-show="banner">{{banner.bank}}</h4>
+  <h4 ng-hide="user.balancedBank">{{required.bank}}</h4>
+  <form class="container form-group" ng-submit="createBankAcct()">
+    <input class='form-control' style='width:300px' type="text" id="ba-name" autocomplete="off" ng-model="ba.name" placeholder="Account Holder's Name">
+    <br>
+    <div>
+      <input type="text" class='form-control' style='width:300px' id="ba.routing" autocomplete="off" ng-model="ba.routing_number" placeholder="Routing Number" />
+    </div>
+    <br>
+    <div>
+      <input type="text" class='form-control' style='width:300px' id="ba-type" autocomplete="off" ng-model="ba.account_type" placeholder="Checking" />
       <br>
-      <div>
-        <input type="text" class='form-control' style='width:300px' id="ba-type" autocomplete="off" ng-model="ba.account_type" placeholder="Checking" />
-        <br>
-        <input type="text" class='form-control' style='width:300px' id="ba-number" autocomplete="off" ng-model="ba.account_number" placeholder="Account Number" />
-      </div>
-      <br>
-      <input style='margin-right: 850px' type="submit" class="btn btn-success" value="Submit" id="ba-submit">
-    </form>
-    Updated DB data: {{baComplete}}
+      <input type="text" class='form-control' style='width:300px' id="ba-number" autocomplete="off" ng-model="ba.account_number" placeholder="Account Number" />
+    </div>
+    <br>
+    <input ng-hide="user.balancedBank" style='margin-right: 850px' type="submit" class="btn btn-success" value="Submit" id="ba-submit">
+  </form>
+  Updated DB data: {{baComplete}}
 </div>
 
 
@@ -41,4 +42,4 @@
       <input type="submit" class="btn btn-success" value="Submit" id="ba-submit">
     </form>
       Updated DB data: {{baComplete}}
-  </div> -->
+  </div>
