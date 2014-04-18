@@ -4,10 +4,11 @@ angular.module('githelp.controllers.messages', [])
     '$location',
     '$state',
     '$stateParams',
+    '$anchorScroll',
     'Global',
     'Message',
     'Socks',
-    function($scope, $location, $state, $stateParams, Global, Message, Socks){
+    function($scope, $location, $state, $stateParams, $anchorScroll, Global, Message, Socks){
 
       var inboxSock = function(sockType, id){
         Socks.call(this, sockType, id);
@@ -23,6 +24,8 @@ angular.module('githelp.controllers.messages', [])
           $scope.messagesByChatroom[$stateParams.inboxId] = [messageData];
         }
         $scope.$apply();
+        $location.hash('bottom');
+        $anchorScroll();
       };
 
       var inboxBot = new inboxSock('inbox', $stateParams.inboxId);

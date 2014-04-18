@@ -26,11 +26,12 @@
           <br>
           <br>
         </div>
+        <div id="bottom"></div>
       </div>
 
       <div class='chat-type-message'>
         <form data-ng-submit="createMessage()">
-          <input data-ng-model="content" type="text" class="form-control" id="chat-input" placeholder="Type your message">
+          <input data-ng-model="content" type="text" class="form-control" id="chat-input" placeholder="Type your message" required>
           <input type="submit" id='submit-message' class="btn btn-success" value="Send">
         </form>
       </div>
