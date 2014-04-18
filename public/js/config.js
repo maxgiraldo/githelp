@@ -24,7 +24,8 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
           url: '/appointments',
           templateUrl: 'views/appointments.html',
           resolve: {
-            loggedin: checkLoggedin,
+            loggedin: checkLoggedin
+            // email: checkEmailExists
           }
         })
           .state('appointments.reschedule', {
@@ -47,6 +48,7 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
           templateUrl: 'views/inbox.html',
           resolve: {
             loggedin: checkLoggedin
+            // email: checkEmailExists
           }
         })
           .state('inbox.individual', {
@@ -63,15 +65,20 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'views/booking.html',
             resolve: {
               loggedin: checkLoggedin,
-              email: checkEmailExists,
-              card: checkBalancedCard
+              card: checkBalancedCard,
+              email: checkEmailExists
             }
+          })
+          .state('profile.requiredEmail', {
+            url:'/emailrequired',
+            templateUrl: 'views/needEmail.html'
           })
           .state('profile.settings', {
             url: '/settings',
             templateUrl: 'views/settings.html',
             resolve: {
-              loggedin: checkLoggedin
+              loggedin: checkLoggedin,
+              permissions: checkPermissions
             }
           })
           .state('profile.repo', {
@@ -95,7 +102,9 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
       if (response !== '0') { // req.user
         console.log(response);
         console.log('authenticated');
-        $timeout(deferred.resolve, 0);
+        $timeout(function() {
+          deferred.resolve();
+        }, 0);
       // Not Authenticated
       }
       else {
@@ -119,17 +128,18 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
 
   function checkEmailExists($q, $timeout, $http, $location, $state, Global) {
     var deferred = $q.defer();
-    console.log('in checkemailgiven');
+    console.log('in checkemailexists');
     var user = Global.user;
-    console.log('global user email?', user.email);
-    if(user.email) {
+    console.log('global user email?', user.contactEmail);
+    if(user.contactEmail) {
       console.log('resolved');
       deferred.resolve;
     } else {
       console.log('No email submitted in profile');
-      console.log('redirect to settings of:', user.userName);
-      $location.url("/" + user.userName + '/settings');
-      // $state.go('profile.settings', {'userName': user.userName});
+      // console.log('redirect to settings of:', user.userName);
+      $location.url("/" + user.userName + '/emailrequired');
+      // $location.url("/" + user.userName + '/settings');
+      // $state.go('profile.requiredEmail', {'userName': user.userName});
       deferred.reject;
     }
     return deferred.promise;
@@ -148,6 +158,23 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
       $location.url("/" + user.userName + '/settings');
       // $state.go('profile.settings', {'userName': user.userName});
       deferred.reject;
+    }
+    return deferred.promise;
+  }
+
+  function checkPermissions($q, $timeout, $http, $location, $state, $stateParams, Global) {
+    var deferred = $q.defer();
+    console.log('in checkPermissions');
+    var user = Global.user;
+    if($stateParams.userName === user.userName) {
+      console.log('permissions legit');
+      $timeout(function() {
+        deferred.resolve();
+      }, 0);
+    } else {
+      $timeout(function() {
+        deferred.reject();
+      }, 0);
     }
     return deferred.promise;
   }

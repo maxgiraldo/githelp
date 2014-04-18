@@ -49,29 +49,53 @@ balanced.configure('ak-test-1P4LCuAfcv3isFlyX9mxNXvz6bI1XNril');
 
 exports.authCallback = function(req, res, lastUrl) {
   console.log('in authCallback'); // create Balanced acct after auth
-  if(req.user.balancedUser){
-      if(lastUrl){
-        res.redirect('#!/'+lastUrl);
-      }else{
-        res.redirect('/');
-      }
-  } else if (req.user.email && req.user.fullName) {
-    balanced.marketplace.customers.create({
-      "name": req.user.fullName,
-      "email": req.user.email
-    }).then(function(data){
-      req.user.balancedUser = data.toJSON().id;
-      req.user.save();
-      res.redirect('/');
-    });
-  } else {
+  if(req.user.contactEmail) {
     if(lastUrl){
-        res.redirect('#!/'+lastUrl);
-    }else{
+      res.redirect('#!/' + lastUrl);
+    } else{
       res.redirect('/');
     }
-  };
+  } else {
+    res.redirect('#!/' + req.user.userName + '/emailrequired');
+  }
+
+  // if(req.user.contactEmail) {
+  //   payments.createBalanceUser(req.user, function() {
+  //     console.log('created Balance User');
+  //     if(lastUrl){
+  //       res.redirect('#!/' + lastUrl);
+  //     } else{
+  //       res.redirect('/');
+  //     }
+  //   });
+  // } else {
+  //   res.redirect('#!/' + req.user.userName + '/emailrequired');
+  // }
 };
+
+//   if(req.user.balancedUser){
+//       if(lastUrl){
+//         res.redirect('#!/'+lastUrl);
+//       }else{
+//         res.redirect('/');
+//       }
+//   } else if (req.user.email && req.user.fullName) {
+//     balanced.marketplace.customers.create({
+//       "name": req.user.fullName,
+//       "email": req.user.email
+//     }).then(function(data){
+//       req.user.balancedUser = data.toJSON().id; // does this actually save in DB -- need to test
+//       req.user.save();
+//       res.redirect('/');
+//     });
+//   } else {
+//     if(lastUrl){
+//         res.redirect('#!/'+lastUrl);
+//     }else{
+//       res.redirect('/');
+//     }
+//   };
+// };
 
 //   console.log('in authCallback');
 //   if(req.user.balancedUser){

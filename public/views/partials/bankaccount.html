@@ -1,7 +1,7 @@
 <!-- BANK ACCT FORM -->
 <div class='container profile' style='padding-top: 10px'>
   <h4 ng-show="banner">{{banner.bank}}</h4>
-  <h4 ng-hide="user.balancedBank">{{required.bank}}</h4>
+  <h4 ng-hide="user.balancedBank || submittedBank">{{required.bank}}</h4>
   <form class="container form-group" ng-submit="createBankAcct()">
     <input class='form-control' style='width:300px' type="text" id="ba-name" autocomplete="off" ng-model="ba.name" placeholder="Account Holder's Name">
     <br>
