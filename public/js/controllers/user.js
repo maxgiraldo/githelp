@@ -1,9 +1,17 @@
 angular.module('githelp.controllers.user', [])
-  .controller('UserController', ['$scope', '$state', '$http', '$stateParams', 'Global', 'User', 'Inbox', 'Appointment', '$location',
-    function ($scope, $state, $http, $stateParams, Global, User, Inbox, Appointment, $location) {
+  .controller('UserController', ['$scope', '$state', '$http', '$stateParams', 'Global', 'User', 'Inbox', 'Appointment', '$location', '$timeout',
+    function ($scope, $state, $http, $stateParams, Global, User, Inbox, Appointment, $location, $timeout) {
     $scope.global = Global;
 
     $scope.user;
+    $scope.placeholder = function() {
+      if(user && user.contactEmail) {
+        return user.contactEmail;
+      } else {
+        return "E-mail address";
+      }
+    }
+    // $scope.placeholder = user.contactEmail || "E-mail Address";
     $scope.banner = {};
     $scope.members = [];
     $scope.userName = $stateParams.userName;
@@ -24,7 +32,7 @@ angular.module('githelp.controllers.user', [])
     $scope.required = {
       bank: "Bank account required to offer githelp and get paid!",
       card: "Credit card required to request githelp sessions",
-      email: "E-mail required to request githelp sessions"
+      email: "This will be your contact email for githelp requests."
     }
 
     $scope.findOne = function(){
@@ -201,6 +209,10 @@ angular.module('githelp.controllers.user', [])
       });
     };
 
+    $scope.onRequiredEmail = function() {
+      return $state.is('profile.requiredEmail');
+    };
+
     $scope.submitEmail = function() {
       $scope.emailInfo._id = $scope.global.user._id;
       console.log('emailInfo', $scope.emailInfo);
@@ -209,7 +221,24 @@ angular.module('githelp.controllers.user', [])
         $scope.tempAddress = user.contactEmail;
         $scope.submittedEmail = true;
         $scope.banner.email = "Thank you for submitting your email";
+        console.log($location.path());
+        if($state.is('profile.requiredEmail')) { // redirect from omni-signup after auth
+        // if($location.path() === '/' + user.userName + '/emailrequired') { // redirect from omni-signup after auth
+          $timeout(function() {
+            $location.path('/'); }, 1000);
+        }
       });
     };
+
+    $scope.signOut = function() {
+      $http.get('/').success(function(response) {
+        console.log('logged out!');
+      });
+    };
+    $scope.redirectIfEmail = function() { // if state is profile.emailRequired && user.contactEmail
+      if($state.is('profile.requiredEmail') && user && user.contactEmail) {
+        $location.path('/');
+      }
+    }
   }
 ]);
