@@ -32,9 +32,9 @@
         </div>
       </div>
       <!-- TEXT EDITOR -->
-      <div class='file-view'>
+      <div class='file-view' data-ng-click="addTab()">
         <ul class='files' ng-repeat='file in returnedFiles'>
-          <a href='#' ng-click='goToFile(file._id)'><li class='file'>{{file.name}}<span class='file-close'><i class="fa fa-times"></i></span></li></a>
+          <a ng-click='goToFile(file._id)'><li class='file'>{{file.name}}<span data-ng-click="removeTab(file._id)" class='file-close'><i class="fa fa-times"></i></span></li></a>
         </ul>
       </div>
       <div id="firepad-container"></div>

@@ -33,6 +33,26 @@ angular.module('githelp.controllers.texteditor', [])
       $scope.$apply();
     };
 
+    fileSock.prototype.event_addTab = function(){
+      // create new files here
+      $scope.returnedFiles.push();
+      $scope.$apply();
+    }
+
+    fileSock.prototype.event_removeTab = function(messageData){
+      var ref = new Firebase(FIREBASE_URL + $scope.sessionId + '/' +messageData);
+      ref.remove();
+      for(var file in $scope.returnedFiles){
+        console.log($scope.returnedFiles[file]._id);
+        console.log(messageData);
+        if($scope.returnedFiles[file]._id === messageData){
+          console.log("hello removing tabs")
+          delete $scope.returnedFiles[file]
+        }
+      }
+      $scope.$apply();
+    }
+
     var fileBot = new fileSock('file', $stateParams.sessionId);
     fileBot.init();
 
@@ -129,6 +149,13 @@ angular.module('githelp.controllers.texteditor', [])
       firepad.setText(file.data);
     };
 
+    $scope.removeTab = function(_id){
+      fileBot.sockjs_send('removeTab', _id);
+    }
+
+    $scope.addTab = function(){
+      fileBot.sockjs_send('addTab');
+    }
     // $scope.showTab = function(file){
     //   $scope.returnedFiles[file.name].active = !$scope.returnedFiles[file.name].active;
     // };
