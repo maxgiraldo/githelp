@@ -1,13 +1,65 @@
 'use strict';
 
 angular.module('githelp.controllers.texteditor', [])
- .controller('TextEditorController', ['$scope', '$state', '$http', '$stateParams', 'Global', '$firebase', 'FIREBASE_URL',
-    function ($scope, $state, $http, $stateParams, Global, $firebase, FIREBASE_URL) {
+ .controller('TextEditorController', ['$scope', '$state', '$http', '$stateParams', 'Global', '$firebase', 'FIREBASE_URL', 'Socks',
+    function ($scope, $state, $http, $stateParams, Global, $firebase, FIREBASE_URL, Socks) {
+
+    var fileSock = function(sockType, id){
+      Socks.call(this, sockType, id);
+    };
+    fileSock.prototype = Object.create(Socks.prototype);
+
+    fileSock.prototype.event_file = function(messageData){
+      var files = messageData;
+      files.forEach(function(file) {
+        if (file.name in $scope.returnedFiles) {
+          $scope.sameNameCollection[file.name]++;
+          var newFileName = file.name + $scope.sameNameCollection[file.name];
+          $scope.returnedFiles[file.name] = newFileName;
+        } else {
+          $scope.sameNameCollection[file.name] = 0;
+          $scope.returnedFiles[file.name] = file;
+        }
+        $scope.returnedFiles[file.name].active = true;
+        $scope.session.$add($scope.returnedFiles[file.name])
+        .then(function(ref) {
+          // var textEditor = $scope.session.$child(ref.name());
+          // textEditor.$set({'_id': ref.name()});
+          $scope.returnedFiles[file.name]._id = ref.name();
+        });
+
+      }) //files.forEach
+      firepad.setText(files[0].data);
+      $scope.$apply();
+    };
+
+    fileSock.prototype.event_addTab = function(){
+      // create new files here
+      $scope.returnedFiles.push();
+      $scope.$apply();
+    }
+
+    fileSock.prototype.event_removeTab = function(messageData){
+      var ref = new Firebase(FIREBASE_URL + $scope.sessionId + '/' +messageData);
+      ref.remove();
+      for(var file in $scope.returnedFiles){
+        console.log($scope.returnedFiles[file]._id);
+        console.log(messageData);
+        if($scope.returnedFiles[file]._id === messageData){
+          console.log("hello removing tabs")
+          delete $scope.returnedFiles[file]
+        }
+      }
+      $scope.$apply();
+    }
+
+    var fileBot = new fileSock('file', $stateParams.sessionId);
+    fileBot.init();
+
     $scope.global = Global;
     $scope.sameNameCollection = {};
     $scope.returnedFiles = {};
 
-    var editorSock = new SockJS('/echo');
     // Text Editor
     //////////////////////////////////////////////
     //////////////////////////////////////////////
@@ -60,51 +112,50 @@ angular.module('githelp.controllers.texteditor', [])
         params: {numFiles: $scope.files.length}
       })
       .success(function(files) {
-        editorSock.send(JSON.stringify(files));
+        fileBot.sockjs_send('file', files);
       }) // success
     };
 
-    editorSock.onopen = function() {
-      console.log('open');
-    };
+    // editorSock.onopen = function() {
+    //   console.log('open');
+    // };
 
-    editorSock.onmessage = function(e) {
-      var files = JSON.parse(e.data);
-      files.forEach(function(file) {
-        if (file.name in $scope.returnedFiles) {
-          $scope.sameNameCollection[file.name]++;
-          var newFileName = file.name + $scope.sameNameCollection[file.name];
-          $scope.returnedFiles[file.name] = newFileName;
-        } else {
-          $scope.sameNameCollection[file.name] = 0;
-          $scope.returnedFiles[file.name] = file;
-        }
-        $scope.returnedFiles[file.name].active = true;
-        $scope.session.$add($scope.returnedFiles[file.name])
-        .then(function(ref) {
-          // var textEditor = $scope.session.$child(ref.name());
-          // textEditor.$set({'_id': ref.name()});
-          $scope.returnedFiles[file.name]._id = ref.name();
-        });
+    // editorSock.onmessage = function(e) {
+    //   var files = JSON.parse(e.data);
+    //   files.forEach(function(file) {
+    //     if (file.name in $scope.returnedFiles) {
+    //       $scope.sameNameCollection[file.name]++;
+    //       var newFileName = file.name + $scope.sameNameCollection[file.name];
+    //       $scope.returnedFiles[file.name] = newFileName;
+    //     } else {
+    //       $scope.sameNameCollection[file.name] = 0;
+    //       $scope.returnedFiles[file.name] = file;
+    //     }
+    //     $scope.returnedFiles[file.name].active = true;
+    //     $scope.session.$add($scope.returnedFiles[file.name])
+    //     .then(function(ref) {
+    //       // var textEditor = $scope.session.$child(ref.name());
+    //       // textEditor.$set({'_id': ref.name()});
+    //       $scope.returnedFiles[file.name]._id = ref.name();
+    //     });
 
-      }) //files.forEach
-      firepad.setText(files[0].data);
-    };
-
-    editorSock.onclose = function() {
-      if ($scope.timerId) { clearInterval($scope.timerId)};
-      $scope.totalAmount = $scope.merchantPrice * ($scope.totalSeconds / 60.0);
-      console.log($scope.totalAmount, $scope.totalSeconds, $scope.merchantPrice);
-      // $scope.amountToCharge = $filter('currency')($scope.totalAmount, '$');
-      // console.log('$scopeamounttocharge', $scope.amountToCharge);
-      $scope.$apply();
-    };
+    //   }) //files.forEach
+    //   firepad.setText(files[0].data);
+    //   $scope.$apply();
+    // };
 
     $scope.goToFile = function(_id) {
       var file = $scope.session.$child(_id);
       firepad.setText(file.data);
     };
 
+    $scope.removeTab = function(_id){
+      fileBot.sockjs_send('removeTab', _id);
+    }
+
+    $scope.addTab = function(){
+      fileBot.sockjs_send('addTab');
+    }
     // $scope.showTab = function(file){
     //   $scope.returnedFiles[file.name].active = !$scope.returnedFiles[file.name].active;
     // };

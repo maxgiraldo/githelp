@@ -124,8 +124,6 @@ sockjs_echo.on('connection', function (conn) {
 
     conn.on('data', function (message) {
         var msg = JSON.parse(message);
-        console.log(msg.event);
-        console.log(msg.sockType);
         // we need validations to check if appointments already exist
         // if (!(msg.event && msg.sockType)) throw "Invalid message format: " + message;
 
@@ -135,13 +133,24 @@ sockjs_echo.on('connection', function (conn) {
             if (msg.sockType === "inbox") {
                 //  check if AppointmentId
                 var connections = inboxEmitter.allConnections[msg.id];
-                console.log(msg.id);
                 if(connections instanceof Array){
                     connections.push(conn);
-                    conn.write(message);
                 } else{
                     inboxEmitter.allConnections[msg.id] = [conn];
-                    conn.write(message);
+                }
+            } else if(msg.sockType === "time"){
+                var connections = timeEmitter.allConnections[msg.id];
+                if(connections instanceof Array){
+                    connections.push(conn);
+                } else{
+                    timeEmitter.allConnections[msg.id] = [conn];
+                }
+            } else if(msg.sockType === "file"){
+                var connections = fileEmitter.allConnections[msg.id];
+                if(connections instanceof Array){
+                    connections.push(conn);
+                } else{
+                    fileEmitter.allConnections[msg.id] = [conn];
                 }
             }
         }
@@ -152,15 +161,32 @@ sockjs_echo.on('connection', function (conn) {
             if (msg.sockType === "inbox") {
                 //  check if AppointmentId
                 var connections = inboxEmitter.allConnections[msg.id];
-                console.log(connections);
-                console.log("message", msg);
                 inboxEmitter.emit(connections, msg);
+            } else if (msg.sockType === "time") {
+                //  check if AppointmentId
+                var connections = timeEmitter.allConnections[msg.id];
+                timeEmitter.emit(connections, msg);
+            } else if (msg.sockType === "file") {
+                //  check if AppointmentId
+                var connections = fileEmitter.allConnections[msg.id];
+                fileEmitter.emit(connections, msg);
             }
         }
     });
-    conn.on('close', function (){
-        console.log("yo")
-    })
+
+    conn.on('close', function (message){
+        console.log("hello");
+        console.log(message);
+        console.log('closing on the server')
+        if(message){
+            var msg = JSON.parse(message);
+            console.log(msg);
+            if(msg.sockType === "time"){
+                var connections = timeEmitter.allConnections[msg.id];
+                timeEmitter.emit(connections, msg);
+            }
+        }
+    });
 })
 
 

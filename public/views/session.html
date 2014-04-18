@@ -2,45 +2,41 @@
        ............................................................................................-->
 <div class='text-editor-container'>
   <section data-ng-include="'views/partials/navbar-min.html'"></section>
-  <section data-ng-controller="AppointmentController" data-ng-init="liveSession()">
-    <section data-ng-show="global.authenticated">
-      <div class="container jumbotron" id='session-container'>
-      </div>
-      <div id='callInfoBox'>
-        <i id='clock' class="fa fa-clock-o"></i>
-        <h2 id='timer'>{{timerByAppointment[appointmentId].hours}}:{{timerByAppointment[appointmentId].minutes}}:{{timerByAppointment[appointmentId].seconds}}</h2>
-        <h3 class='total-container'>Total
-          <span id='total-amount'>
-            {{timerByAppointment[appointmentId].totalAmount | currency:"$"}}
-          </span>
-        </h3>
-        <div class='start-session headline' ng-click='startTimer()' ng-show='timerByAppointment[appointmentId].timerOn === false'>
-          <p class='button-txt'>Start session</p>
-        </div>
-        <div class='end-session headline' ng-click='stopTimer()' ng-show='timerByAppointment[appointmentId].timerOn === true'>
-          <p class='button-txt'>End session</p>
-        </div>
-      </div>
-    </section>
-
+  <!-- <section data-ng-show="global.authenticated"> -->
+<!-- </section> -->
     <!-- AUTH
          ............................................................................................-->
-    <section data-ng-hide="global.authenticated" data-ng-include data-src="'views/partials/needAuthorization.html'"></section>
+    <!-- <section data-ng-hide="global.authenticated" data-ng-include data-src="'views/partials/needAuthorization.html'"></section> -->
 
     <!-- TEXT EDITOR
          ............................................................................................-->
     <section data-ng-controller='TextEditorController'>
       <div class='side-panel'>
+        <!-- SESSION INFO / CONTROLS -->
+        <div data-ng-controller="AppointmentController" data-ng-init="liveSession()" class='session-info'>
+          <h2 id='timer'>{{timerByAppointment[appointmentId].hours}}:{{timerByAppointment[appointmentId].minutes}}:{{timerByAppointment[appointmentId].seconds}}</h2>
+          <h3 class='total-container'>Total
+            <span id='total-amount'>
+              {{timerByAppointment[appointmentId].totalAmount | currency:"$"}}
+            </span>
+          </h3>
+          <div class='start-session headline' ng-click='startTimer()' ng-show='timerByAppointment[appointmentId].timerOn === false'>
+            <p class='button-txt'>Start session</p>
+          </div>
+          <div class='end-session headline' ng-click='stopTimer()' ng-show='timerByAppointment[appointmentId].timerOn === true'>
+            <p class='button-txt'>End session</p>
+          </div>
+        </div>
         <div class='side-panel-directories'>
            <input type='file' file-input='files' multiple auto-submit />
         </div>
       </div>
-      <div class='file-view'>
+      <!-- TEXT EDITOR -->
+      <div class='file-view' data-ng-click="addTab()">
         <ul class='files' ng-repeat='file in returnedFiles'>
-          <a href='#' ng-click='goToFile(file._id)'><li class='file'>{{file.name}}<span class='file-close'><i class="fa fa-times"></i></span></li></a>
+          <a ng-click='goToFile(file._id)'><li class='file'>{{file.name}}<span data-ng-click="removeTab(file._id)" class='file-close'><i class="fa fa-times"></i></span></li></a>
         </ul>
       </div>
       <div id="firepad-container"></div>
     </section>
-  </section>
 </div>

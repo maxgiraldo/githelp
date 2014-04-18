@@ -551,6 +551,10 @@ h1.full-name {
   width: 300px;
 }
 // Session
+.session-info {
+  margin-top:20px;
+  text-align:center;
+}
 .navbar-min {
   height: 5vh;
   border: 0;
@@ -598,37 +602,43 @@ h1.full-name {
 }
 // Session Info Div
 .end-session {
-  width: 100%;
+  width: 75%;
   height: 45px;
   border-radius: 3px;
   cursor: pointer;
   margin-top: 25px;
+  margin-left:12%;
   background-color: #e65b5e;
 }
 .end-session:hover {
   background-color: #d45355;
 }
 .start-session {
-  width: 100%;
+  width: 75%;
   height: 45px;
   border-radius: 3px;
   cursor: pointer;
   margin-top: 25px;
+  margin-left:12%;
   background-color: #77cc33;
+  margin-left:12%;
 }
 .start-session:hover {
   background-color: #69b42c;
 }
 .total-container {
+  color:gray;
   font-size: 16px;
 }
 #total-amount {
+  color:gray;
   font-weight: 400;
 }
 .button-txt {
   text-align: center;
 }
 #timer {
+  color:#fff;
   margin-top: 0;
   font-weight: 400;
 }
