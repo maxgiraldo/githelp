@@ -77,7 +77,8 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
             url: '/settings',
             templateUrl: 'views/settings.html',
             resolve: {
-              loggedin: checkLoggedin
+              loggedin: checkLoggedin,
+              permissions: checkPermissions
             }
           })
           .state('profile.repo', {
@@ -101,7 +102,9 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
       if (response !== '0') { // req.user
         console.log(response);
         console.log('authenticated');
-        $timeout(deferred.resolve, 0);
+        $timeout(function() {
+          deferred.resolve();
+        }, 0);
       // Not Authenticated
       }
       else {
@@ -155,6 +158,23 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
       $location.url("/" + user.userName + '/settings');
       // $state.go('profile.settings', {'userName': user.userName});
       deferred.reject;
+    }
+    return deferred.promise;
+  }
+
+  function checkPermissions($q, $timeout, $http, $location, $state, $stateParams, Global) {
+    var deferred = $q.defer();
+    console.log('in checkPermissions');
+    var user = Global.user;
+    if($stateParams.userName === user.userName) {
+      console.log('permissions legit');
+      $timeout(function() {
+        deferred.resolve();
+      }, 0);
+    } else {
+      $timeout(function() {
+        deferred.reject();
+      }, 0);
     }
     return deferred.promise;
   }
