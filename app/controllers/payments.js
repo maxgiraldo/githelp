@@ -48,6 +48,7 @@ var creditCard = function(appt, done){
       amount: (appt.payment.merchantShare / 100.0).toFixed(2)
     };
     appt.payment.status = 'processed';
+    appt.status = 'completed',
     appt.save();
     console.log(done);
     mailer.sendCreditEmail(creditOptions, done);
@@ -120,16 +121,16 @@ exports.createBankAcct = function(req, res) {
 };
 
 exports.createBalanceUser = function(userObj, done) {
-  if(userObj.email && userObj.fullName) {
-    balanced.marketplace.customers.create({
-      "name": userObj.fullName,
-      "email": userObj.email
-    }).then(function(data){
-      done(data);
-    });
-  } else {
-    console.log('No BalanceUser created');
-  }
+  // if(userObj.email && userObj.fullName) {
+  balanced.marketplace.customers.create({
+    "name": userObj.name,
+    "email": userObj.fullName
+  }).then(function(data){
+    userObj.balancedUser = data.toJSON().id;
+    userObj.save();
+    done();
+    // res.redirect('/')
+  });
 };
 
 // done() === function() {

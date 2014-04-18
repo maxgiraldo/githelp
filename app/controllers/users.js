@@ -51,13 +51,26 @@ exports.authCallback = function(req, res, lastUrl) {
   console.log('in authCallback'); // create Balanced acct after auth
   if(req.user.contactEmail) {
     if(lastUrl){
-        res.redirect('#!/' + lastUrl);
+      res.redirect('#!/' + lastUrl);
     } else{
       res.redirect('/');
     }
   } else {
     res.redirect('#!/' + req.user.userName + '/emailrequired');
   }
+
+  // if(req.user.contactEmail) {
+  //   payments.createBalanceUser(req.user, function() {
+  //     console.log('created Balance User');
+  //     if(lastUrl){
+  //       res.redirect('#!/' + lastUrl);
+  //     } else{
+  //       res.redirect('/');
+  //     }
+  //   });
+  // } else {
+  //   res.redirect('#!/' + req.user.userName + '/emailrequired');
+  // }
 };
 
 //   if(req.user.balancedUser){

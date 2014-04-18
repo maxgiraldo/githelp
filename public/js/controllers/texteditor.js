@@ -33,9 +33,14 @@ angular.module('githelp.controllers.texteditor', [])
       $scope.$apply();
     };
 
+    var counter = 0
     fileSock.prototype.event_addTab = function(){
       // create new files here
-      $scope.returnedFiles.push();
+      // add to existing firepad
+      var ref = new Firebase(FIREBASE_URL + $scope.sessionId);
+      ref.set({name: 'empty_'+counter, type: 'text/plain', active: true, data: ''});
+      $scope.returnedFiles[ref.name] = ref;
+      counter++;
       $scope.$apply();
     }
 

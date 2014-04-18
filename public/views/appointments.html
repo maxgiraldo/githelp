@@ -29,6 +29,90 @@
               </p>
             </div>
           </div>
+          <div>
+            <h1>Completed</h1>
+            <div data-ng-repeat="appointment in completedA">
+              <div class='status status-pending'>
+
+              </div>
+              <img class='avatar-lg appt' src='{{appointment.customer.avatarUrl}}' data-ng-show="appointment.merchant._id === global.user._id">
+              <img class='avatar-lg appt' src='{{appointment.merchant.avatarUrl}}' data-ng-show="appointment.customer._id === global.user._id">
+              <div class='appointment-text-info'>
+                <h1 class='headline full-name' data-ng-show="appointment.merchant._id === global.user._id">{{appointment.customer.fullName}}</h1>
+                <h1 class='headline full-name' data-ng-show="appointment.customer._id === global.user._id">{{appointment.merchant.fullName}}</h1>
+                <p class='appointment-details' data-ng-show="appointment.merchant._id === global.user._id">
+                  <h3>Transaction Details</h3>
+                  My Rate: <span class='bold-description'>{{global.user.ppm}}</span>
+                  Req. Call Length <span class='bold-description'>{{appointment.duration}} mins</span>
+                  Est. Total Revenue <span class='bold-description'> ${{global.user.ppm * appointment.duration}}</span>
+                  Merchant Share (80% of TR)<span class='bold-description'> ${{global.user.ppm * appointment.duration * 0.8}}</span>
+                  Githelp Revenue (20%) <span class='bold-description'> ${{grev = global.user.ppm * appointment.duration * 0.2}}</span>
+                  Balanced Payments Processing Fee (%2.9) <span class='bold-description'> ${{pfee = 0.029 * global.user.ppm * appointment.duration}}</span>
+                  ACH Deposit Fee <span class='bold-description'>{{afee = $0.25}}</span>
+                  Githelp Share <span class='bold-description'> ${{grev - pfee - afee}}</span>
+                </p>
+                <p class='appointment-details' data-ng-show="appointment.customer._id === global.user._id">
+                  <h3>Transaction Details</h3>
+                  Merchant's Rate: <span class='bold-description'>${{appointment.merchant.ppm}}</span>
+                  Req. Call Length <span class='bold-description'>{{appointment.duration}} mins</span>
+                  Est. Total Revenue <span class='bold-description'> ${{appointment.merchant.ppm * appointment.duration}}</span>
+                  Merchant Share (80% of TR)<span class='bold-description'> ${{appointment.merchant.ppm * appointment.duration * 0.8}}</span>
+                  Githelp Revenue (20%) <span class='bold-description'> ${{grev = appointment.merchant.ppm * appointment.duration * 0.2}}</span>
+                  Balanced Payments Processing Fee (%2.9) <span class='bold-description'> ${{pfee = 0.029 * appointment.merchant.ppm * appointment.duration}}</span>
+                  ACH Deposit Fee <span class='bold-description'>{{afee = $0.25}}</span>
+                  Githelp Share <span class='bold-description'> ${{grev - pfee - afee}}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h1>Confirmed</h1>
+            <div data-ng-repeat="appointment in confirmedA">
+              <div class='status status-pending'>
+                <img class='avatar-lg appt' src='{{appointment.customer.avatarUrl}}' data-ng-show="appointment.merchant._id === global.user._id">
+                <img class='avatar-lg appt' src='{{appointment.merchant.avatarUrl}}' data-ng-show="appointment.customer._id === global.user._id">
+                <div class='appointment-text-info'>
+                  <h1 class='headline full-name' data-ng-show="appointment.merchant._id === global.user._id">{{appointment.customer.fullName}}</h1>
+                  <h1 class='headline full-name' data-ng-show="appointment.customer._id === global.user._id">{{appointment.merchant.fullName}}</h1>
+                  <p class='appointment-details' data-ng-show="appointment.merchant._id === global.user._id">
+                    My Rate <span class='bold-description'>{{global.user.ppm}}</span>
+                     Req. call length <span class='bold-description'>{{appointment.duration}} mins</span>
+                     Est. total Earnings<span class='bold-description'> ${{global.user.ppm * appointment.duration}}</span>
+                  </p>
+                  <p class='appointment-details' data-ng-show="appointment.customer._id === global.user._id">
+                    Merchant's Rate<span class='bold-description'>${{appointment.merchant.ppm}}</span>
+                     Req. call length <span class='bold-description'>{{appointment.duration}} mins</span>
+                     Est. total Costs<span class='bold-description'> ${{global.user.ppm * appointment.duration}}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h1>Pending</h1>
+              <div data-ng-repeat="appointment in pendingA">
+                <div class='status status-pending'>
+                  <h1 class='alert-type' data-ng-show="(appointment.merchant._id === global.user._id) && !appointment.confirmed"><a href="/#!/{{global.user.userName}}/confirm/{{appointment._id}}">Status: Uncomfirmed...confirm now!</a></h1>
+                  <h1 class='alert-type' data-ng-show="(appointment.merchant._id !== global.user._id) && !appointment.confirmed">Status: Awaiting merchant approval...</h1>
+                </div>
+                <img class='avatar-lg appt' src='{{appointment.customer.avatarUrl}}' data-ng-show="appointment.merchant._id === global.user._id">
+                <img class='avatar-lg appt' src='{{appointment.merchant.avatarUrl}}' data-ng-show="appointment.customer._id === global.user._id">
+                <div class='appointment-text-info'>
+                  <h1 class='headline full-name' data-ng-show="appointment.merchant._id === global.user._id">{{appointment.customer.fullName}}</h1>
+                  <h1 class='headline full-name' data-ng-show="appointment.customer._id === global.user._id">{{appointment.merchant.fullName}}</h1>
+                  <p class='appointment-details' data-ng-show="appointment.merchant._id === global.user._id">
+                    My Rate <span class='bold-description'>{{global.user.ppm}}</span>
+                     Req. call length <span class='bold-description'>{{appointment.duration}} mins</span>
+                     Est. total Earnings<span class='bold-description'> ${{global.user.ppm * appointment.duration}}</span>
+                  </p>
+                  <p class='appointment-details' data-ng-show="appointment.customer._id === global.user._id">
+                    Merchant's Rate<span class='bold-description'>${{appointment.merchant.ppm}}</span>
+                     Req. call length <span class='bold-description'>{{appointment.duration}} mins</span>
+                     Est. total Costs<span class='bold-description'> ${{global.user.ppm * appointment.duration}}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 <!--       <div data-ng-hide="userAppointments">

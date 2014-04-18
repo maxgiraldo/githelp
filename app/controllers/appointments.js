@@ -71,6 +71,7 @@ exports.create = function(req, res) {
     duration: duration,
     customer: customer._id,
     message: message,
+    status: 'pending',
     date: {
       option1: {
         date: timeObj(firstDateTime.date, firstDateTime.time),
@@ -92,7 +93,7 @@ exports.create = function(req, res) {
 
   User.findOne({userName: merchant}, function(err, merchant){
     newAppointment.merchant = merchant._id;
-
+    newAppointment.apptppm = merchant.ppm;
     newAppointment.save(function(err){
       sendMessage(newAppointment._id, newAppointment.message, customer);
     });
@@ -291,6 +292,7 @@ exports.confirm = function(req, res) {
     } else {
       appt.date[option].confirmed = true;
       appt.confirmed = true;
+      appt.status = 'confirmed';
       // appt.confirmed = true;
       scheduler.sendEventInvite(appt); // or separate final Confirmation email
       // startSession(appt);
