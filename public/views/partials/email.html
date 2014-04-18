@@ -8,6 +8,8 @@
     <!-- <h5 ng-show="user.contactEmail"> -->
     <input ng-show="user.contactEmail" style='margin-right: 850px' type="submit" class="btn btn-success" value="Edit" id="email-edit">
   </form>
-  <input ng-show="onRequiredEmail()" style='margin-right: 850px' ng-click="signOut()" type="submit" class="btn btn-warning" value="Sign Out" id="email-logout">
+  <form action="/signout" class="container form-group" ng-show="onRequiredEmail()">
+    <input style='margin-right: 850px' type="submit" class="btn btn-warning" value="Sign Out" id="email-logout">
+  </form>
   <h5 ng-show="submittedEmail">{{tempAddress}}</h5>
 </div>

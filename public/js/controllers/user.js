@@ -230,11 +230,12 @@ angular.module('githelp.controllers.user', [])
       });
     };
 
-    $scope.signOut = function() {
-      $http.get('/').success(function(response) {
-        console.log('logged out!');
-      });
-    };
+    // $scope.signOut = function() {
+    //   $http.get('/signout').success(function(response) {
+    //     console.log('logged out!');
+    //     $location.url('http://172.18.73.218:3000/signout');
+    //   });
+    // };
     $scope.redirectIfEmail = function() { // if state is profile.emailRequired && user.contactEmail
       if($state.is('profile.requiredEmail') && user && user.contactEmail) {
         $location.path('/');

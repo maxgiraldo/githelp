@@ -24,8 +24,8 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
           url: '/appointments',
           templateUrl: 'views/appointments.html',
           resolve: {
-            loggedin: checkLoggedin,
-            email: checkEmailExists
+            loggedin: checkLoggedin
+            // email: checkEmailExists
           }
         })
           .state('appointments.reschedule', {
@@ -47,8 +47,8 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
           url: '/inbox',
           templateUrl: 'views/inbox.html',
           resolve: {
-            loggedin: checkLoggedin,
-            email: checkEmailExists
+            loggedin: checkLoggedin
+            // email: checkEmailExists
           }
         })
           .state('inbox.individual', {
@@ -65,8 +65,8 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'views/booking.html',
             resolve: {
               loggedin: checkLoggedin,
-              email: checkEmailExists,
-              card: checkBalancedCard
+              card: checkBalancedCard,
+              email: checkEmailExists
             }
           })
           .state('profile.requiredEmail', {
