@@ -119,6 +119,47 @@ exports.createBankAcct = function(req, res) {
   });
 };
 
+exports.createBalanceUser = function(userObj, done) {
+  if(userObj.email && userObj.fullName) {
+    balanced.marketplace.customers.create({
+      "name": userObj.fullName,
+      "email": userObj.email
+    }).then(function(data){
+      done(data);
+    });
+  } else {
+    console.log('No BalanceUser created');
+  }
+};
+
+// done() === function() {
+
+// }
+
+//   if(req.user.balancedUser){
+//       if(lastUrl){
+//         res.redirect('#!/'+lastUrl);
+//       }else{
+//         res.redirect('/');
+//       }
+//   } else if (req.user.email && req.user.fullName) {
+//     balanced.marketplace.customers.create({
+//       "name": req.user.fullName,
+//       "email": req.user.email
+//     }).then(function(data){
+//       req.user.balancedUser = data.toJSON().id;
+//       req.user.save();
+//       res.redirect('/');
+//     });
+//   } else {
+//     if(lastUrl){
+//         res.redirect('#!/'+lastUrl);
+//     }else{
+//       res.redirect('/');
+//     }
+//   };
+// }
+
 exports.deleteCard = function(req, res) {
 
 };

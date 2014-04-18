@@ -48,7 +48,7 @@ exports.clientSideAuth = function(req, res) {
 balanced.configure('ak-test-1P4LCuAfcv3isFlyX9mxNXvz6bI1XNril');
 
 exports.authCallback = function(req, res, lastUrl) {
-  console.log('in authCallback'); // why are you basing this on whether they have a balanced
+  console.log('in authCallback'); // create Balanced acct after auth
   if(req.user.balancedUser){
       if(lastUrl){
         res.redirect('#!/'+lastUrl);

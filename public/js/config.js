@@ -63,7 +63,8 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'views/booking.html',
             resolve: {
               loggedin: checkLoggedin,
-              email: checkEmailGiven
+              email: checkEmailExists,
+              card: checkBalancedCard
             }
           })
           .state('profile.settings', {
@@ -116,7 +117,7 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
   };
   // end
 
-  function checkEmailGiven($q, $timeout, $http, $location, $state, Global) {
+  function checkEmailExists($q, $timeout, $http, $location, $state, Global) {
     var deferred = $q.defer();
     console.log('in checkemailgiven');
     var user = Global.user;
@@ -129,7 +130,40 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
       console.log('redirect to settings of:', user.userName);
       $location.url("/" + user.userName + '/settings');
       // $state.go('profile.settings', {'userName': user.userName});
-      // $scope.apply();
+      deferred.reject;
+    }
+    return deferred.promise;
+  }
+
+  function checkBalancedCard($q, $timeout, $http, $location, $state, Global) {
+    var deferred = $q.defer();
+    console.log('in checkbalancedcard');
+    var user = Global.user;
+    if(user.BalancedCard) {
+      console.log('resolved');
+      deferred.resolve;
+    } else {
+      console.log('No balanced card in profile');
+      console.log('redirect to settings of:', user.userName);
+      $location.url("/" + user.userName + '/settings');
+      // $state.go('profile.settings', {'userName': user.userName});
+      deferred.reject;
+    }
+    return deferred.promise;
+  }
+
+  function checkBalancedBank($q, $timeout, $http, $location, $state, Global) {
+    var deferred = $q.defer();
+    console.log('in checkbalancedbank');
+    var user = Global.user;
+    if(user.BalancedBank) {
+      console.log('resolved');
+      deferred.resolve;
+    } else {
+      console.log('No balanced bank in profile');
+      console.log('redirect to settings of:', user.userName);
+      $location.url("/" + user.userName + '/settings');
+      // $state.go('profile.settings', {'userName': user.userName});
       deferred.reject;
     }
     return deferred.promise;

@@ -1,10 +1,14 @@
 <div class='container profile' style='padding-top: 10px'>
-  <h3 ng-show="banner">{{banner}}</h3>
+  <h4 ng-show="banner">{{banner.email}}</h4>
+  <h4 ng-hide="user.contactEmail">{{required.email}}</h4>
   <form ng-hide="submittedEmail" class="container form-group" ng-submit="submitEmail()">
     <input type="email" ng-model="emailInfo.address" class='form-control' style='width:300px' id="email" autocomplete="off" placeholder="{{user.contactEmail}}" />
     <br>
     <input ng-hide="user.contactEmail" style='margin-right: 850px' type="submit" class="btn btn-success" value="Submit" id="email-submit">
+    <!-- <h5 ng-show="user.contactEmail"> -->
     <input ng-show="user.contactEmail" style='margin-right: 850px' type="submit" class="btn btn-success" value="Edit" id="email-submit">
   </form>
   <h5 ng-show="submittedEmail">{{tempAddress}}</h5>
 </div>
+
+<!--  <h4 class="text-danger" style='text-align: center' ng-hide="global.user.contactEmail && user.balancedCard || submittedEmail">To request githelp sessions, you need to add 1) email address and 2) credit card</h4> -->
