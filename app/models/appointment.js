@@ -25,6 +25,7 @@ var AppointmentSchema = new Schema({
     },
     status: String,
   },
+  apptppm: String,
   date: {
     option1: {
       date: Date,
@@ -49,6 +50,10 @@ var AppointmentSchema = new Schema({
   confirmed: { // need this as check against someone reconfirming an already confirmed apptment
     type: Boolean,
     default: false
+  },
+  status: {
+    type: String,
+    default: 'pending'
   },
   topic: String,
   message: String,

@@ -48,6 +48,7 @@ var creditCard = function(appt, done){
       amount: (appt.payment.merchantShare / 100.0).toFixed(2)
     };
     appt.payment.status = 'processed';
+    appt.status = 'completed',
     appt.save();
     console.log(done);
     mailer.sendCreditEmail(creditOptions, done);

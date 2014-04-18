@@ -14,10 +14,17 @@ angular.module('githelp.controllers.user', [])
     $scope.submittedEmail = false;
 
     $scope.findAppointments = function(){
+      $scope.pendingA = [];
+      $scope.confirmedA = [];
+      $scope.completedA = [];
       Appointment.get(function(data){
-        $scope.userAppointments = data.appointments;
+        data.appointments.forEach(function(appointment){
+          appointment.status === 'pending' && $scope.pendingA.push(appointment);
+          appointment.status === 'confirmed' && $scope.confirmedA.push(appointment);
+          appointment.status === 'completed' && $scope.completedA.push(appointment);
+        })
       });
-    }
+    };
 
     $scope.value = "";
 
@@ -25,7 +32,7 @@ angular.module('githelp.controllers.user', [])
       bank: "Bank account required to offer githelp and get paid!",
       card: "Credit card required to request githelp sessions",
       email: "E-mail required to request githelp sessions"
-    }
+    };
 
     $scope.findOne = function(){
       User.get({
@@ -33,7 +40,6 @@ angular.module('githelp.controllers.user', [])
         // look for the github.login and then get the githubId sequence
       }, function(response){
         $scope.repoList = response.repoList;
-
         $scope.user = response.user;
         $scope.conList = response.conList;
         // console.log('user', $scope.user);
@@ -93,7 +99,7 @@ angular.module('githelp.controllers.user', [])
 
     $scope.repoName = function(url){
       return url.split('/')[2];
-    }
+    };
     $scope.showForm = false;
 
     $scope.editForm = function(url){
