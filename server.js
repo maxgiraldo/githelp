@@ -53,10 +53,6 @@ require('./config/routes')(app);
 var port = process.env.PORT || config.port;
 var server = http.createServer(app);
 
-
-
-
-
 // var connections = [];
 
 // sockjs_echo.on('connection', function(conn) {
@@ -119,8 +115,17 @@ SockJSEmitter.prototype.emit = function (connections, message) {
 var inboxEmitter = new SockJSEmitter('inbox');
 var timeEmitter = new SockJSEmitter('time');
 var fileEmitter = new SockJSEmitter('file');
+var audioEmitter = new SockJSEmitter('audio');
 // there is really no point in creating channels dynamically.
 sockjs_echo.on('connection', function (conn) {
+
+  // Audio chat
+  function log(){
+    var array = ['>>> Message from server: '];
+    arguments.forEach(function(argument){array.push(argument);});
+    conn.write('log', array);
+  }
+  // end audio chat
 
     conn.on('data', function (message) {
         var msg = JSON.parse(message);
@@ -129,6 +134,7 @@ sockjs_echo.on('connection', function (conn) {
 
         // StartRobot is the first message we get from the browser
         // -- we use it to setup the SockJSEmitter and associate with a sockType
+
         if (msg.event === 'StartRobot') {
             if (msg.sockType === "inbox") {
                 //  check if AppointmentId
@@ -152,6 +158,13 @@ sockjs_echo.on('connection', function (conn) {
                 } else{
                     fileEmitter.allConnections[msg.id] = [conn];
                 }
+            } else if(msg.sockType === 'audio'){
+              var connections = fileEmitter.allConnections[msg.id];
+                if(connections instanceof Array){
+                    connections.push(conn);
+                } else{
+                    audioEmitter.allConnections[msg.id] = [conn];
+                }
             }
         }
         else {
@@ -170,6 +183,9 @@ sockjs_echo.on('connection', function (conn) {
                 //  check if AppointmentId
                 var connections = fileEmitter.allConnections[msg.id];
                 fileEmitter.emit(connections, msg);
+            } else if(msg.sockType === 'audio') {
+              var connections = audioEmitter.allConnections[msg.id];
+                audioEmitter.emit(connections, msg);
             }
         }
     });
