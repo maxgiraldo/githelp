@@ -1,7 +1,7 @@
 <!-- CREDIT CARD FORM -->
 <div class='container profile' style='padding-top: 10px'>
   <h4 ng-show="banner">{{banner.card}}</h4>
-  <h4 ng-hide="user.balancedBank || submittedBank">{{required.card}}</h4>
+  <h4 ng-hide="user.balancedCard || submittedCard">{{required.card}}</h4>
   <form class="container form-group" ng-submit="createCard()">
     <input class='form-control' style='width:300px' type="text" id="cc-name" autocomplete="off" ng-model="cc.name" placeholder="Full name (as seen on card)">
     <br>

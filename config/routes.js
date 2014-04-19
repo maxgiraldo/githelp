@@ -29,8 +29,8 @@ if (process.env.NODE_ENV === 'production'){
   googleCallbackURL = 'http://githelp.herokuapp.com/auth/google/callback';
   githubCallbackURL = 'http://githelp.herokuapp.com/auth/github/callback';
 } else{
-  googleCallbackURL = 'http://172.18.73.218:3000/auth/google/callback';
-  githubCallbackURL = 'http://172.18.73.218:3000/auth/github/callback';
+  googleCallbackURL = 'http://192.168.1.174:3000/auth/google/callback';
+  githubCallbackURL = 'http://192.168.1.174:3000/auth/github/callback';
 }
 
 passport.use(new GitHubStrategy({
@@ -129,14 +129,22 @@ module.exports = function(app) {
     users.signin);
 
   var lastUrl;
+  var lastUrl2;
 
-  app.get('/login/:lastUrl', function(req, res){ // lasturl from LoginController in needAuth.html
+// added optional lastUrl2 in case someone is looking for 'wainetam/settings' directly
+  app.get('/login/:lastUrl/:lastUrl2?', function(req, res){ // lasturl from LoginController in needAuth.html
     res.redirect('/auth/github');
   });
 
   app.param('lastUrl', function(req, res, next, url){
-    console.log(url)
+    console.log('lastUrl', url)
     lastUrl = url;
+    next();
+  });
+
+  app.param('lastUrl2', function(req, res, next, url){
+    console.log('lastUrl2', url)
+    lastUrl2 = url;
     next();
   });
 
@@ -146,43 +154,12 @@ module.exports = function(app) {
   app.get('/auth/github/callback',
     passport.authenticate('github', {failureRedirect: '/signin'}),
     function(req, res){
-      var url = lastUrl;
+      var url = {lastUrl: lastUrl, lastUrl2: lastUrl2};
       lastUrl = ''
+      lastUrl2 = ''
       users.authCallback(req, res, url);
     });
 
-
-
-
-
-  // app.get('/auth/google',
-  //   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile',
-  //                                           'https://www.googleapis.com/auth/userinfo.email',
-  //                                           'https://www.googleapis.com/auth/calendar'] }),
-  //   users.signin);
-
-  // app.get('/auth/google',
-  //   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/calendar'] }),
-  //   users.signin);
-
-
-  // app.get('/auth/google/callback',
-  //   passport.authenticate('google', { failureRedirect: '/login' }),
-  //   function(req, res) {
-  //     // Successful authentication, redirect home.
-  //     console.log('GOOG?', req);
-  //     res.redirect('/');
-  //   });
-
-  // var githelpGoog = {
-  //   username: gitsomehelp,
-  //   password: githelp123
-  // };
-
-  // req.logIn(githelpGoog, function(err) {
-  //   if(err) { return next(err); }
-  //   return res.redirect('/');
-  // });
   app.get('/appointment', ensureLoggedIn('/signin'), appointments.appointmentsByUser);
   app.post('/appointment', ensureLoggedIn('/signin'), appointments.confirm);
   app.get('/appointment/initialize/:appointmentId', ensureLoggedIn('/signin'), appointments.initialize);

@@ -45,6 +45,32 @@ angular.module('githelp.controllers.user', [])
       email: "E-mail required to request githelp sessions"
     };
 
+    $scope.eligibleMerchant = function() {
+      if($scope.user.BalancedBank && $scope.user.contactEmail) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    $scope.eligible = {
+      merchant: "Your profile is complete and you can now offer merchant services",
+      customer: "You can now request githelp sessions"
+    }
+
+    $scope.ineligible = {
+      merchant: "You are not yet allowed to offer githelp sessions",
+      customer: "Your profile is missing necessary information"
+    }
+
+    $scope.eligibleCustomer = function() {
+      if($scope.user.BalancedCard && $scope.user.contactEmail) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
     $scope.findOne = function(){
       User.get({
         userName: $stateParams.userName

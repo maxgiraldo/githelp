@@ -65,7 +65,7 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'views/booking.html',
             resolve: {
               loggedin: checkLoggedin,
-              // card: checkBalancedCard,
+              card: checkBalancedCard,
               email: checkEmailExists
             }
           })
@@ -96,6 +96,7 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
   function checkLoggedin($q, $timeout, $http, $location, $rootScope, redirectToUrlAfterLogin) {
     // Initialize a new promise
     var deferred = $q.defer();
+    var desiredUrl = $location.path();
     // Make an AJAX call to check if the user is logged in
     $http.get('/loggedin').success(function(response){
       // Authenticated
@@ -110,9 +111,10 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
       else {
         console.log('not authenticated');
         // $rootScope.message = 'You need to log in.';
-        if($location.path().toLowerCase() !== '/signin') {
-            redirectToUrlAfterLogin.url = $location.path().slice(1);
-            console.log(redirectToUrlAfterLogin.url);
+        if(desiredUrl.toLowerCase() !== '/signin') {
+          redirectToUrlAfterLogin.url = desiredUrl.slice(1);
+          // redirectToUrlAfterLogin.url = $location.path().slice(1);
+          console.log('redirecturl', redirectToUrlAfterLogin.url);
           } else {
             redirectToUrlAfterLogin.url = '/';
           }
@@ -220,23 +222,37 @@ window.app.config(['$httpProvider', function($httpProvider) {
 
   console.log('in interceptor func');
   $httpProvider.interceptors.push(function($q, $location) {
-      return function(promise) {
-        return promise.then(
-          // Success: just return the response
-          function(response){
-            console.log('success in interceptor', response);
-            return response;
-          },
-          // Error: check the error status to get only the 401
-          function(response) {
-            console.log('401 in interceptor', response);
-            if (response.status === 401) {
-              $location.url('/signin');
-            }
-            return $q.reject(response);
-          }
-        );
-      };
+    return {
+      'response': function(response) {
+        // do something on success
+        console.log(response);
+        if(response.status === 401){
+          $location.path('/signin');
+          console.log('401 error');
+          return $q.reject(response);
+        } else if(response.status === 404) {
+          $location.path('/404');
+          console.log('404 error');
+          return $q.reject(response);
+        } else {
+          console.log('successful response');
+          return response || $q.when(response);
+        }
+      }
+      // response: function(response){
+      //   return promise.then(
+      //     function success(response) {
+      //     return response;
+      //   },
+      // function(response) {
+      //   if(response.status === 401){
+      //     $location.path('/signin');
+      //     return $q.reject(response);
+      //   }else{
+      //     return $q.reject(response);
+      //   }
+      // });
+    };
   });
 }]);
 
