@@ -224,6 +224,8 @@ angular.module('githelp.controllers.user', [])
       console.log('emailInfo', $scope.emailInfo);
       $http.post('/submitEmail', $scope.emailInfo).success(function(user) {
         console.log('successfully submitted email');
+        console.log(user);
+        $scope.global.user = user; // refreshes the global user for submitted email
         $scope.tempAddress = user.contactEmail;
         $scope.submittedEmail = true;
         $scope.banner.email = "Thank you for submitting your email";

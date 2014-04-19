@@ -29,8 +29,9 @@ exports.updateEmail = function(req, res) {
   var _id = req.body._id;
   User.findById(_id, function(err, user) {
     user.contactEmail = email;
-    user.save();
-    res.jsonp(user);
+    user.save(function(err, user) {
+      res.jsonp(user);
+    });
   });
 };
 

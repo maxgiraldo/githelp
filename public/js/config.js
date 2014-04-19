@@ -24,8 +24,8 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
           url: '/appointments',
           templateUrl: 'views/appointments.html',
           resolve: {
-            loggedin: checkLoggedin
-            // email: checkEmailExists
+            loggedin: checkLoggedin,
+            email: checkEmailExists
           }
         })
           .state('appointments.reschedule', {
@@ -47,8 +47,8 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
           url: '/inbox',
           templateUrl: 'views/inbox.html',
           resolve: {
-            loggedin: checkLoggedin
-            // email: checkEmailExists
+            loggedin: checkLoggedin,
+            email: checkEmailExists
           }
         })
           .state('inbox.individual', {
@@ -133,14 +133,18 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
     console.log('global user email?', user.contactEmail);
     if(user.contactEmail) {
       console.log('resolved');
-      deferred.resolve;
+      $timeout(function() {
+        deferred.resolve();
+      },0);
     } else {
       console.log('No email submitted in profile');
       // console.log('redirect to settings of:', user.userName);
       $location.url("/" + user.userName + '/emailrequired');
       // $location.url("/" + user.userName + '/settings');
       // $state.go('profile.requiredEmail', {'userName': user.userName});
-      deferred.reject;
+      $timeout(function() {
+        deferred.reject();
+      }, 0);
     }
     return deferred.promise;
   }
@@ -151,13 +155,17 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
     var user = Global.user;
     if(user.BalancedCard) {
       console.log('resolved');
-      deferred.resolve;
+      $timeout(function() {
+        deferred.resolve();
+      }, 0);
     } else {
       console.log('No balanced card in profile');
       console.log('redirect to settings of:', user.userName);
       $location.url("/" + user.userName + '/settings');
       // $state.go('profile.settings', {'userName': user.userName});
-      deferred.reject;
+      $timeout(function() {
+        deferred.reject();
+      }, 0);
     }
     return deferred.promise;
   }
