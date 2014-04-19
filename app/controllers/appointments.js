@@ -376,6 +376,7 @@ var configConfirmOpt = function(apptObj, fromUserName, toUserName, ppm, toEmail,
 
 exports.toSession = function(req, res){
   Appointment.findOne({_id: req.params.appointmentId}).populate('merchant').populate('customer').exec(function(err, appointment){
+    console.log('in toSession', appointment);
     res.render('session', {appointment: appointment});
     // session.jade already created, have to design
   });
@@ -387,8 +388,14 @@ exports.appointmentsByUser = function(req, res){
   .populate('customer')
   .exec(function(err, appointments){
     console.log(appointments);
-    res.jsonp({appointments: appointments})
-  })
-}
+    res.jsonp({appointments: appointments});
+  });
+};
+
+exports.initialize = function(req, res) {
+  Appointment.findOne({_id: req.params.appointmentId}, function(err, appointment) {
+    res.jsonp(appointment);
+  });
+};
 
 

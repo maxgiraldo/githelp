@@ -19,6 +19,7 @@ var done = function(err, response){
 };
 
 var debitCard = function(appt, credit){
+  console.log('apptObj', appt);
   var debitSubject = "You have made a payment to " + appt.merchant.userName;
   appt.description = debitSubject;
   payments.debitCustomer(appt, function(){
@@ -36,6 +37,7 @@ var debitCard = function(appt, credit){
 };
 
 var creditCard = function(appt, done){
+  console.log('apptObj', appt);
   var creditSubject = "You have received a payment from " + appt.customer.userName;
   appt.description = creditSubject;
   payments.creditAll(appt, function(){
@@ -48,7 +50,7 @@ var creditCard = function(appt, done){
       amount: (appt.payment.merchantShare / 100.0).toFixed(2)
     };
     appt.payment.status = 'processed';
-    appt.status = 'completed',
+    appt.status = 'completed';
     appt.save();
     console.log(done);
     mailer.sendCreditEmail(creditOptions, done);
@@ -56,9 +58,11 @@ var creditCard = function(appt, done){
 };
 
 exports.transaction = function(req, res) {
+  console.log('reqbody in trans', req.body);
   var amount = req.body.amount; // cents earned
   var duration = req.body.duration; // length of call
 
+  console.log('req.body', req.body);
   Appointment.findById(req.body.sessionId).populate('customer').populate('merchant').exec(function(err, appt) {
     appt.payment = {
       customer: appt.customer._id,

@@ -2,11 +2,11 @@
   <section data-ng-include="'views/partials/navbar.html'"></section>
   <section data-ng-show="global.authenticated">
     <div class="container" data-ui-view>
-      <div class='center-appointment' data-ng-show="userAppointments">
+      <div class='center-appointment'>
         <h1 class='headline'>Appointments</h1>
 
         <div class="appointment-scroll-wrapper">
-          <div class='appointment-box' data-ng-repeat="appointment in userAppointments">
+          <!-- <div class='appointment-box' data-ng-repeat="appointment in userAppointments">
             <div class='status status-pending'>
               <h1 class='alert-type' data-ng-hide="!appointment.confirmed">Status: Approved!</h1>
               <h1 class='alert-type' data-ng-show="(appointment.merchant._id === global.user._id) && !appointment.confirmed"><a href="/#!/{{global.user.userName}}/confirm/{{appointment._id}}">Status: Uncomfirmed...confirm now!</a></h1>
@@ -27,11 +27,10 @@
                  Req. call length <span class='bold-description'>{{appointment.duration}} mins</span>
                  Est. total Costs<span class='bold-description'> ${{global.user.ppm * appointment.duration}}</span>
               </p>
-            </div>
-          </div>
-          <div>
-            <h1>Completed</h1>
-            <div data-ng-repeat="appointment in completedA">
+            </div> -->
+          <!-- </div> -->
+            <h1 ng-show="completedA.length > 0">Completed</h1>
+            <div data-ng-repeat="appointment in completedA" class="appointment-box">
               <div class='status status-pending'>
 
               </div>
@@ -64,10 +63,8 @@
                 </p>
               </div>
             </div>
-          </div>
-          <div>
-            <h1>Confirmed</h1>
-            <div data-ng-repeat="appointment in confirmedA">
+            <h1 ng-show="confirmedA.length > 0">Confirmed</h1>
+            <div data-ng-repeat="appointment in confirmedA" class="appointment-box">
               <div class='status status-pending'>
                 <img class='avatar-lg appt' src='{{appointment.customer.avatarUrl}}' data-ng-show="appointment.merchant._id === global.user._id">
                 <img class='avatar-lg appt' src='{{appointment.merchant.avatarUrl}}' data-ng-show="appointment.customer._id === global.user._id">
@@ -86,10 +83,8 @@
                   </p>
                 </div>
               </div>
-            </div>
-            <div>
-              <h1>Pending</h1>
-              <div data-ng-repeat="appointment in pendingA">
+              <h1 ng-show="pendingA.length > 0">Pending</h1>
+              <div data-ng-repeat="appointment in pendingA" class="appointment-box">
                 <div class='status status-pending'>
                   <h1 class='alert-type' data-ng-show="(appointment.merchant._id === global.user._id) && !appointment.confirmed"><a href="/#!/{{global.user.userName}}/confirm/{{appointment._id}}">Status: Uncomfirmed...confirm now!</a></h1>
                   <h1 class='alert-type' data-ng-show="(appointment.merchant._id !== global.user._id) && !appointment.confirmed">Status: Awaiting merchant approval...</h1>
@@ -111,7 +106,6 @@
                   </p>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </div>

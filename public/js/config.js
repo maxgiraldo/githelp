@@ -65,7 +65,7 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: 'views/booking.html',
             resolve: {
               loggedin: checkLoggedin,
-              card: checkBalancedCard,
+              // card: checkBalancedCard,
               email: checkEmailExists
             }
           })
