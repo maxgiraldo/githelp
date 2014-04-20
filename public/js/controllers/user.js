@@ -17,7 +17,7 @@ angular.module('githelp.controllers.user', [])
     $scope.userName = $stateParams.userName;
     $scope.emailInfo = {
       address: "",
-      _id: ""
+      userName: $stateParams.userName
     };
     $scope.submittedEmail = false;
 
@@ -235,14 +235,19 @@ angular.module('githelp.controllers.user', [])
       account_number: ""
     };
 
+    $scope.submittedCard = false;
     $scope.submittedDeleteCard = false;
-    $scope.submittedDeleteBank = false;
+
+    $scope.submittedCreateBank = false;
+    $scope.submittedBank = false;
 
     $scope.createCard = function() {
       $http.post('/create/cc', $scope.cc).success(function(response) {
-        console.log('CREATE CARD SUCCESS', response);
-        $scope.ccComplete = response;
+        console.log('CREATE CARD SUCCESS', response.card);
+        $scope.user = response.user;
+        $scope.ccComplete = response.card;
         $scope.banner.card = "Successfully submitted credit card";
+        $scope.submittedCard = true;
 
         // NEED TO CHECK FOR ERRORS IN CREATING CREDIT CARD ACCT
       });
@@ -251,28 +256,38 @@ angular.module('githelp.controllers.user', [])
     $scope.deleteCard = function() {
       console.log('in deleteCard');
       $http.delete('/delete/cc/' + $scope.user.balancedCard).success(function(response) {
-        console.log('DELETE CARD SUCCESS', response);
+        console.log('DELETE CARD SUCCESS', response.card);
+        $scope.user = response.user;
         $scope.submittedDeleteCard = true;
         $scope.banner.card = "Successfully deleted credit card";
-        // $scope.$apply();
       });
     };
 
     $scope.deleteBank = function() {
       console.log('in deleteBank');
       $http.delete('/delete/ba/' + $scope.user.balancedBank).success(function(response) {
-        console.log('DELETE BANK SUCCESS', response);
+        console.log('DELETE BANK SUCCESS', response.bank);
+        $scope.user = response.user;
         $scope.banner.bank = "Successfully deleted bank account";
         $scope.submittedDeleteBank = true;
-        // $scope.$apply();
+        $scope.ba.name = "";
+        $scope.ba.routing_number = "";
+        $scope.ba.account_type = "";
+        $scope.ba.account_number = "";
       });
     };
 
     $scope.createBank = function() {
       $http.post('/create/ba', $scope.ba).success(function(response) {
-        console.log('CREATE BANK SUCCESS', response);
-        $scope.baComplete = response;
+        console.log('CREATE BANK SUCCESS', response.bank);
+        $scope.user = response.user;
+        $scope.baComplete = response.bank;
         $scope.banner.bank = "Successfully created bank account";
+        $scope.submittedBank = true;
+        $scope.ba.name = "";
+        $scope.ba.routing_number = "";
+        $scope.ba.account_type = "";
+        $scope.ba.account_number = "";
 
         // NEED TO CHECK FOR ERRORS IN BANK ACCT
       });
@@ -300,12 +315,11 @@ angular.module('githelp.controllers.user', [])
     };
 
     $scope.submitEmail = function() {
-      $scope.emailInfo._id = $scope.global.user._id;
       console.log('emailInfo', $scope.emailInfo);
       $http.post('/submitEmail', $scope.emailInfo).success(function(user) {
         console.log('successfully submitted email');
         console.log(user);
-        $scope.global.user = user; // refreshes the global user for submitted email
+        $scope.user = user; // refreshes the global user for submitted email
         $scope.tempAddress = user.contactEmail;
         $scope.submittedEmail = true;
         $scope.banner.email = "Thank you for submitting your email";
@@ -313,7 +327,7 @@ angular.module('githelp.controllers.user', [])
         if($state.is('profile.requiredEmail')) { // redirect from omni-signup after auth
         // if($location.path() === '/' + user.userName + '/emailrequired') { // redirect from omni-signup after auth
           $timeout(function() {
-            $location.path('/'); }, 1000);
+            $location.path('/'); }, 750);
         }
       });
     };

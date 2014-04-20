@@ -72,10 +72,14 @@ exports.deleteCard = function(req, res) {
   var cardHref = payments.cardUri(cardId);
   payments.deleteCard(cardHref, function(response) {
     console.log('delete card response', response);
-    // req.user.balancedCard = "";
-    // req.user; // can you save user directly and kill balancedUser too?
-    // need to delete from mongoDB
-    res.jsonp(response);
+    User.findOne({_id: req.user._id}, function(err, user) {
+      user.balancedCard = "";
+      user.balancedUser = "";
+      user.save(function(err, user) {
+        console.log('user after delete card', user);
+        res.jsonp({ user: user, card: response });
+      });
+    });
   });
 };
 
@@ -94,9 +98,13 @@ exports.deleteBank = function(req, res) {
   var bankHref = payments.bankUri(bankId);
   payments.deleteBank(bankHref, function(response) {
     console.log('delete bank response', response);
-    // req.user.balancedBank = ""; save changes to DB
-    // req.user.save();
-    res.jsonp(response);
+    User.findOne({_id: req.user._id}, function(err, user) {
+      user.balancedBank = "";
+      user.save(function(err, user) {
+        console.log('user after delete bank', user);
+        res.jsonp({ user: user, bank: response });
+      });
+    });
   });
 };
 
@@ -134,13 +142,24 @@ exports.createCard = function(req, res) {
   console.log('CC', ccObj);
   balanced.marketplace.cards.create(ccObj)
     .then(function(card) {
-      req.user.balancedCard = card.toJSON().id;
-      balanced.get('/cards/'+req.user.balancedCard).associate_to_customer('/customers/'+req.user.balancedUser)
-      .then(function(card){
-        console.log(card);
-      })
-      req.user.save();
-      res.jsonp(req.user);
+      // reject card if no balancedCard token
+      User.findOne({_id: req.user._id}, function(err, user) {
+        user.balancedCard = card.toJSON().id;
+        user.save(function(err, user) {
+          balanced.get('/cards/'+user.balancedCard).associate_to_customer('/customers/'+user.balancedUser)
+          .then(function(card){
+            console.log(card);
+            res.jsonp({user: user, card: card});
+          });
+        });
+      });
+      // req.user.balancedCard = card.toJSON().id;
+      // balanced.get('/cards/'+req.user.balancedCard).associate_to_customer('/customers/'+req.user.balancedUser)
+      // .then(function(card){
+      //   console.log(card);
+      // })
+      // req.user.save();
+      // res.jsonp({user: req.user, card: card});
     }, function(err) {
     console.log(err);
   });
@@ -155,14 +174,27 @@ exports.createBank = function(req, res) {
   balanced.marketplace.bank_accounts.create(bankObj)
     .then(function(account) {
       console.log(account.toJSON());
-      req.user.balancedBank = account.toJSON().id;
-      console.log(req.user.balancedBank);
-      balanced.get('/bank_accounts/'+req.user.balancedBank).associate_to_customer('/customers/'+req.user.balancedUser)
-      .then(function(bankAccount){
-        console.log(bankAccount.toJSON());
-      })
-      req.user.save();
-      res.jsonp(req.user);
+      // reject card if no balancedBank token
+      User.findOne({_id: req.user._id}, function(err, user) {
+        user.balancedBank = account.toJSON().id;
+        user.save(function(err, user) {
+          balanced.get('/bank_accounts/'+user.balancedBank).associate_to_customer('/customers/'+user.balancedUser)
+          .then(function(account){
+            console.log(account.toJSON());
+            res.jsonp({user: user, bank: account});
+          });
+        });
+      });
+
+
+      // req.user.balancedBank = account.toJSON().id;
+      // console.log(req.user.balancedBank);
+      // balanced.get('/bank_accounts/'+req.user.balancedBank).associate_to_customer('/customers/'+req.user.balancedUser)
+      // .then(function(bankAccount){
+      //   console.log(bankAccount.toJSON());
+      // })
+      // req.user.save();
+      // res.jsonp({user: req.user, bank: account});
     }, function(err) {
     console.log(err);
   });
@@ -180,34 +212,6 @@ exports.createBalanceUser = function(userObj, done) {
     // res.redirect('/')
   });
 };
-
-// done() === function() {
-
-// }
-
-//   if(req.user.balancedUser){
-//       if(lastUrl){
-//         res.redirect('#!/'+lastUrl);
-//       }else{
-//         res.redirect('/');
-//       }
-//   } else if (req.user.email && req.user.fullName) {
-//     balanced.marketplace.customers.create({
-//       "name": req.user.fullName,
-//       "email": req.user.email
-//     }).then(function(data){
-//       req.user.balancedUser = data.toJSON().id;
-//       req.user.save();
-//       res.redirect('/');
-//     });
-//   } else {
-//     if(lastUrl){
-//         res.redirect('#!/'+lastUrl);
-//     }else{
-//       res.redirect('/');
-//     }
-//   };
-// }
 
 /*
 https://docs.balancedpayments.com/1.0/overview/resources/#test-credit-card-numbers

@@ -2,7 +2,6 @@
   <div class="container">
     <div id="profile-settings">
       <h1 class='headline' style='text-align: center'>Your email address is required to complete signup</h1>
-       <!--  <h4 class="text-danger" style='text-align: center' ng-hide="global.user.contactEmail && user.balancedCard || submittedEmail">To request githelp sessions, you need to add 1) email address and 2) credit card</h4> -->
         <p class="caps-sub-header" style='text-align: center'>Contact Email <i ng-show="user.contactEmail || submittedEmail" class="fa fa-check-circle fa-lg" style='color: green'></i><i ng-hide="user.contactEmail || submittedEmail" class="fa fa-minus-circle fa-lg" style='color: red'></i></p>
         <section data-ng-include data-src="'views/partials/email.html'"></section>
     </div>

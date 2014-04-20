@@ -4,9 +4,8 @@
   <form ng-hide="submittedEmail" class="container form-group" ng-submit="submitEmail()">
     <input type="email" ng-model="emailInfo.address" class='form-control' style='width:300px' id="email" autocomplete="off" required placeholder="{{placeholder()}}" />
     <br>
-    <input ng-hide="user.contactEmail" style='margin-right: 850px' type="submit" class="btn btn-success" value="Submit" id="email-submit">
-    <!-- <h5 ng-show="user.contactEmail"> -->
-    <input ng-show="user.contactEmail" style='margin-right: 850px' type="submit" class="btn btn-success" value="Edit" id="email-edit">
+    <input ng-hide="user.contactEmail" style='margin-right: 850px' type="submit" class="btn btn-success" value="Submit" id="email-submit" />
+    <input ng-show="user.contactEmail" style='margin-right: 850px' type="submit" class="btn btn-success" value="Edit" id="email-edit" />
   </form>
   <form action="/signout" class="container form-group" ng-show="onRequiredEmail()">
     <input style='margin-right: 850px' type="submit" class="btn btn-warning" value="Sign Out" id="email-logout">

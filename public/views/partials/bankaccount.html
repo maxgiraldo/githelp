@@ -3,25 +3,25 @@
   <h4 ng-show="banner">{{banner.bank}}</h4>
   <h4 ng-hide="user.balancedBank || submittedBank">{{required.bank}}</h4>
   <form ng-hide="user.balancedBank" class="container form-group" ng-submit="createBank()">
-    <input class='form-control' style='width:300px' type="text" id="ba-name" autocomplete="off" ng-model="ba.name" placeholder="Account Holder's Name">
+    <input class='form-control' style='width:300px' type="text" id="ba-name" autocomplete="off" ng-model="ba.name" required placeholder="Account Holder's Name">
     <br>
     <div>
-      <input type="text" class='form-control' style='width:300px' id="ba.routing" autocomplete="off" ng-model="ba.routing_number" placeholder="Routing Number" />
+      <input type="text" class='form-control' style='width:300px' id="ba.routing" autocomplete="off" ng-model="ba.routing_number" required placeholder="Routing Number" />
     </div>
     <br>
     <div>
-      <input type="text" class='form-control' style='width:300px' id="ba-type" autocomplete="off" ng-model="ba.account_type" placeholder="Checking" />
+      <input type="text" class='form-control' style='width:300px' id="ba-type" autocomplete="off" ng-model="ba.account_type" required placeholder="Checking or Savings" />
       <br>
-      <input type="text" class='form-control' style='width:300px' id="ba-number" autocomplete="off" ng-model="ba.account_number" placeholder="Account Number" />
+      <input type="text" class='form-control' style='width:300px' id="ba-number" autocomplete="off" ng-model="ba.account_number" required placeholder="Account Number" />
     </div>
     <br>
     <input ng-hide="user.balancedBank" style='margin-right: 850px' type="submit" class="btn btn-success" value="Submit" id="ba-submit">
   </form>
     <!-- Approved Bank -->
-  <div ng-show="user.balancedBank && !submittedDeleteBank">
+  <div ng-show="user.balancedBank && !submittedDeleteBank && !submittedBank">
     <h4>Your <b>{{savedBank.bank_name}} {{savedBank.lastFourDigits}}</b> is linked to this account</h4>
     <br>
-    <form class="container form-group">
+    <form ng-hode="submittedBank" class="container form-group">
       <input ng-click="deleteBank()" style='margin-right: 850px' type="submit" class="btn btn-danger" value="Delete" id="ba-delete">
     </form>
   <!-- End Approved Bank -->

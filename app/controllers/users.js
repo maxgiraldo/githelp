@@ -26,8 +26,8 @@ exports.updatePpm = function(req, res) {
 
 exports.updateEmail = function(req, res) {
   var email = req.body.address;
-  var _id = req.body._id;
-  User.findById(_id, function(err, user) {
+  var userName = req.body.userName;
+  User.findOne({userName: userName}, function(err, user) {
     user.contactEmail = email;
     user.save(function(err, user) {
       res.jsonp(user);
