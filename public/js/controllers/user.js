@@ -19,6 +19,7 @@ angular.module('githelp.controllers.user', [])
       address: "",
       _id: ""
     };
+
     $scope.submittedEmail = false;
 
     $scope.findAppointments = function(){
