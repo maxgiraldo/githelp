@@ -38,29 +38,29 @@ angular.module('githelp.controllers.texteditor', [])
     };
 
     var counter = 0
-    fileSock.prototype.event_addTab = function(){
-      // create new files here
-      // add to existing firepad
-      var ref = new Firebase(FIREBASE_URL + $scope.sessionId);
-      ref.set({name: 'empty_'+counter, type: 'text/plain', active: true, data: ''});
-      $scope.returnedFiles[ref.name] = ref;
-      counter++;
-      $scope.$apply();
-    }
+    // fileSock.prototype.event_addTab = function(){
+    //   // create new files here
+    //   // add to existing firepad
+    //   var ref = new Firebase(FIREBASE_URL + $scope.sessionId);
+    //   ref.set({name: 'empty_'+counter, type: 'text/plain', active: true, data: ''});
+    //   $scope.returnedFiles[ref.name] = ref;
+    //   counter++;
+    //   $scope.$apply();
+    // }
 
-    fileSock.prototype.event_removeTab = function(messageData){
-      var ref = new Firebase(FIREBASE_URL + $scope.sessionId + '/' +messageData);
-      ref.remove();
-      for(var file in $scope.returnedFiles){
-        console.log($scope.returnedFiles[file]._id);
-        console.log(messageData);
-        if($scope.returnedFiles[file]._id === messageData){
-          console.log("hello removing tabs")
-          delete $scope.returnedFiles[file]
-        }
-      }
-      $scope.$apply();
-    }
+    // fileSock.prototype.event_removeTab = function(messageData){
+    //   var ref = new Firebase(FIREBASE_URL + $scope.sessionId + '/' +messageData);
+    //   ref.remove();
+    //   for(var file in $scope.returnedFiles){
+    //     console.log($scope.returnedFiles[file]._id);
+    //     console.log(messageData);
+    //     if($scope.returnedFiles[file]._id === messageData){
+    //       console.log("hello removing tabs")
+    //       delete $scope.returnedFiles[file]
+    //     }
+    //   }
+    //   $scope.$apply();
+    // }
 
     var fileBot = new fileSock('file', $stateParams.sessionId);
     fileBot.init();

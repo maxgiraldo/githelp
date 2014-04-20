@@ -18,6 +18,7 @@ angular.module('githelp.directives.autoSubmit', [])
   .directive('autoSubmit', function() {
     return function(scope, element) {
       element.bind('change', function() {
+        console.log(scope)
         scope.upload();
       });
     }
