@@ -4,8 +4,10 @@ angular.module('githelp.controllers.texteditor', [])
  .controller('TextEditorController', ['$scope', '$state', '$http', '$stateParams', 'Global', '$firebase', 'FIREBASE_URL', 'Socks', 'Tokbox',
     function ($scope, $state, $http, $stateParams, Global, $firebase, FIREBASE_URL, Socks, Tokbox) {
 
+    // Service to enable TokBox library
     Tokbox();
 
+    //
     var fileSock = function(sockType, id){
       Socks.call(this, sockType, id);
     };
@@ -171,26 +173,28 @@ angular.module('githelp.controllers.texteditor', [])
     //   var lines = Document.get
     // };
 
-    // Video & Audio Chat
-     // VIDEO CHAT
-  var sessionId = "1_MX40NDcwOTUxMn5-U2F0IEFwciAxOSAxNzowNjo1NiBQRFQgMjAxNH4wLjgzMTE1OTZ-UH4";
-  var apiKey = '44709512';
-  var token = 'T1==cGFydG5lcl9pZD00NDcwOTUxMiZzZGtfdmVyc2lvbj10YnJ1YnktdGJyYi12MC45MS4yMDExLTAyLTE3JnNpZz1jODk1NTdhYWU4MGE5YTRiZWNjMzdjNTkyM2ExMWZmMGVjM2ZhYjc2OnJvbGU9c3Vic2NyaWJlciZzZXNzaW9uX2lkPTFfTVg0ME5EY3dPVFV4TW41LVUyRjBJRUZ3Y2lBeE9TQXhOem93TmpvMU5pQlFSRlFnTWpBeE5INHdMamd6TVRFMU9UWi1VSDQmY3JlYXRlX3RpbWU9MTM5Nzk1MjQyNiZub25jZT0wLjE1OTEyMDg2MjI0MjkxMjY2JmV4cGlyZV90aW1lPTEzOTc5NTYwMTImY29ubmVjdGlvbl9kYXRhPQ==';
+    // Video/Audio Calls
+    //////////////////////////////////////////////
+    //////////////////////////////////////////////
+    //////////////////////////////////////////////
+    var sessionId = "2_MX40NDcwOTUxMn5-U3VuIEFwciAyMCAxNDoyMDoyNyBQRFQgMjAxNH4wLjEzNjM0OTI2flB-";
+    var apiKey = '44709512';
+    var token = 'T1==cGFydG5lcl9pZD00NDcwOTUxMiZzZGtfdmVyc2lvbj10YnJ1YnktdGJyYi12MC45MS4yMDExLTAyLTE3JnNpZz0zNzhlYzE1YjlhYTJlMjZhNjZkMmNmNzVhMzI2YWU4Y2ExZDNlYjc1OnJvbGU9cHVibGlzaGVyJnNlc3Npb25faWQ9Ml9NWDQwTkRjd09UVXhNbjUtVTNWdUlFRndjaUF5TUNBeE5Eb3lNRG95TnlCUVJGUWdNakF4Tkg0d0xqRXpOak0wT1RJMmZsQi0mY3JlYXRlX3RpbWU9MTM5ODAyOTE5MSZub25jZT0wLjM5MDE2MDYzNDg3NDA3OTA0JmV4cGlyZV90aW1lPTE0MDA2MjA4MjQmY29ubmVjdGlvbl9kYXRhPQ==';
 
-  // var defaultWidth = 264;
-  // var defaultWidthSm = 132;
-  var defaultWidth = 214;
-  var defaultWidthSm = 132;
-  var defaultHeight = 168;
-  var defaultHeightSm = 99;
+    // var defaultWidth = 264;
+    // var defaultWidthSm = 132;
+    var defaultWidth = 214;
+    var defaultWidthSm = 132;
+    var defaultHeight = 168;
+    var defaultHeightSm = 99;
 
-  // var publisher = TB.initPublisher(apiKey, 'opentokVideos');
-  var session = TB.initSession(sessionId);
-  var publisher = TB.initPublisher(apiKey,
-                                 "videos",
-                                 {width:defaultWidth, height:defaultHeight});
+    // var publisher = TB.initPublisher(apiKey, 'opentokVideos');
+    var session = TB.initSession(sessionId);
+    var publisher = TB.initPublisher(apiKey,
+                                   "videos",
+                                   {width:defaultWidth, height:defaultHeight});
 
-  publisher.publishVideo(false);
+    publisher.publishVideo(false);
   // $scope.audioOnly = function() {
   //   $scope.videoEnabled = false;
   //   $(videos).hide();
