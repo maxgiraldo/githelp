@@ -39,6 +39,26 @@ exports.createCard = function(cardFormObj) {
   });
 };
 
+exports.fetchCard = function(cardHref, done) {
+  balanced.get(cardHref)
+  .then(function(card) {
+    console.log('CARD ', card);
+    done(card);
+  }, function(err) {
+    console.log(err);
+  });
+};
+
+exports.fetchBank = function(bankHref, done) {
+  balanced.get(bankHref)
+  .then(function(bank) {
+    console.log('BANK ', bank);
+    done(bank);
+  }, function(err) {
+    console.log(err);
+  });
+};
+
 // exports.createCard(cardFormObj);
 
 exports.createBankAccount = function(bankFormObj) {
@@ -82,21 +102,21 @@ var associateCardToCustomer = function(cardObj, customerObj) {
 //     });
 // };
 
-var cardUri = function(cardToken) {
+exports.cardUri = function(cardToken) {
   var uri = '/cards/' + cardToken;
   console.log('cardToken ', cardToken);
   console.log('uri ', uri);
   return uri;
 };
 
-var bankUri = function(bankToken) {
+exports.bankUri = function(bankToken) {
   var uri = '/bank_accounts/' + bankToken;
   return uri;
 };
 
 exports.debitCustomer = function(appt, done) {
   console.log("in the debit")
-  var cardUriStr = cardUri(appt.customer.balancedCard);
+  var cardUriStr = exports.cardUri(appt.customer.balancedCard);
   balanced.get(cardUriStr).debit({
     'amount': parseInt(appt.payment.totalAmount),
     'appears_on_statement_as': 'githelp.co',
@@ -114,7 +134,7 @@ exports.creditAll = function(appt, done) {
   async.parallel({
     one: function(callback){
       console.log("in the merchant credit")
-      var bankUriStr = bankUri(appt.merchant.balancedBank);
+      var bankUriStr = exports.bankUri(appt.merchant.balancedBank);
       balanced.get(bankUriStr).credit({
         'amount': parseInt(appt.payment.merchantShare),
         'appears_on_statement_as': 'githelp.co',
@@ -130,7 +150,7 @@ exports.creditAll = function(appt, done) {
     // paying out to marketplace
     two: function(callback){
       console.log("in the githelp credit")
-      var bankUriStr = bankUri('BA1KizFhYIy8FZgCcHT360nQ');
+      var bankUriStr = exports.bankUri('BA1KizFhYIy8FZgCcHT360nQ');
       balanced.get(bankUriStr).credit({
         'amount': parseInt(appt.payment.githelpShare),
         'appears_on_statement_as': 'githelp.co',
@@ -159,9 +179,28 @@ exports.updateCard = function(currentCardObj, updatedCardObj) {
   });
 };
 
-exports.deleteCard = function(cardObj) {
-  balanced.get(cardObj.href).unstore().then(function(card) {
-    // console.log('Deleted card:', card);
+exports.deleteCard = function(cardHref, done) {
+  console.log('in balanced func delete card');
+  balanced.get(cardHref).then(function(card) {
+    return card.unstore().then(function() {
+      return balanced.get(cardHref).then(function(card) { // returns deleted card
+        console.log('Deleted card:', card);
+        done(card);
+      });
+    });
+  });
+};
+
+exports.deleteBank = function(bankHref, done) {
+  console.log('in balanced func delete bank');
+  balanced.get(bankHref).then(function(bank) {
+    return bank.unstore().then(function() {
+      // console.log('unstored bank');
+      return balanced.get(bankHref).then(function(bank) { // returns deleted card
+        console.log('Deleted bank:', bank);
+        done(bank);
+      });
+    });
   });
 };
 
@@ -189,11 +228,11 @@ exports.confirmBankAcct = function(amt1, amt2, bankObj) {
   });
 };
 
-exports.deleteBankAcct = function(bankObj) {
-  balanced.get(bankObj.href).unstore().then(function(bankAcct) {
-    // console.log('Deleted bank acct:', bankAcct);
-  });
-};
+// exports.deleteBankAcct = function(bankObj) {
+//   balanced.get(bankObj.href).unstore().then(function(bankAcct) {
+//     // console.log('Deleted bank acct:', bankAcct);
+//   });
+// };
 
 
 var customerObj = balanced.marketplace.customers.create({

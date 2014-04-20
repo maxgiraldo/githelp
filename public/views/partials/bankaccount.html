@@ -1,8 +1,8 @@
 <!-- BANK ACCT FORM -->
-<div class='container profile' style='padding-top: 10px'>
+<div ng-init="showBank()" class='container profile' style='padding-top: 10px'>
   <h4 ng-show="banner">{{banner.bank}}</h4>
   <h4 ng-hide="user.balancedBank || submittedBank">{{required.bank}}</h4>
-  <form class="container form-group" ng-submit="createBankAcct()">
+  <form ng-hide="user.balancedBank" class="container form-group" ng-submit="createBank()">
     <input class='form-control' style='width:300px' type="text" id="ba-name" autocomplete="off" ng-model="ba.name" placeholder="Account Holder's Name">
     <br>
     <div>
@@ -17,12 +17,20 @@
     <br>
     <input ng-hide="user.balancedBank" style='margin-right: 850px' type="submit" class="btn btn-success" value="Submit" id="ba-submit">
   </form>
+    <!-- Approved Bank -->
+  <div ng-show="user.balancedBank && !submittedDeleteBank">
+    <h4>Your <b>{{savedBank.bank_name}} {{savedBank.lastFourDigits}}</b> is linked to this account</h4>
+    <br>
+    <form class="container form-group">
+      <input ng-click="deleteBank()" style='margin-right: 850px' type="submit" class="btn btn-danger" value="Delete" id="ba-delete">
+    </form>
+  <!-- End Approved Bank -->
   Updated DB data: {{baComplete}}
 </div>
 
 
   <!-- <div>
-    <form class="container form-group" ng-submit="createBankAcct()">
+    <form class="container form-group" ng-submit="createBank()">
       <div>
         <label>Account Holder's Name</label>
         <input type="text" id="ba-name" autocomplete="off" ng-model="ba.name" placeholder="John Doe" />

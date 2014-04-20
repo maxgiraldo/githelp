@@ -57,6 +57,50 @@ var creditCard = function(appt, done){
   });
 };
 
+exports.fetchCard = function(req, res) {
+  var cardId = req.params.cardId;
+  var cardHref = payments.cardUri(cardId);
+  console.log('cardHref', cardHref);
+  payments.fetchCard(cardHref, function(card) {
+    res.jsonp(card);
+  });
+};
+
+exports.deleteCard = function(req, res) {
+  console.log('in delete card server side');
+  var cardId = req.params.cardId;
+  var cardHref = payments.cardUri(cardId);
+  payments.deleteCard(cardHref, function(response) {
+    console.log('delete card response', response);
+    // req.user.balancedCard = "";
+    // req.user; // can you save user directly and kill balancedUser too?
+    // need to delete from mongoDB
+    res.jsonp(response);
+  });
+};
+
+exports.fetchBank = function(req, res) {
+  var bankId = req.params.bankId;
+  var bankHref = payments.bankUri(bankId);
+  payments.fetchBank(bankHref, function(response) {
+    console.log('fetch bank response', response);
+    res.jsonp(response);
+  });
+};
+
+exports.deleteBank = function(req, res) {
+  console.log('in delete bank server side');
+  var bankId = req.params.bankId;
+  var bankHref = payments.bankUri(bankId);
+  payments.deleteBank(bankHref, function(response) {
+    console.log('delete bank response', response);
+    // req.user.balancedBank = ""; save changes to DB
+    // req.user.save();
+    res.jsonp(response);
+  });
+};
+
+
 exports.transaction = function(req, res) {
   console.log('reqbody in trans', req.body);
   var amount = req.body.amount; // cents earned
@@ -102,7 +146,7 @@ exports.createCard = function(req, res) {
   });
 };
 
-exports.createBankAcct = function(req, res) {
+exports.createBank = function(req, res) {
   console.log(req);
   var bankObj = req.body;
   var userName = bankObj.userName;
@@ -164,18 +208,6 @@ exports.createBalanceUser = function(userObj, done) {
 //     }
 //   };
 // }
-
-exports.deleteCard = function(req, res) {
-
-};
-
-exports.updateCard = function(req, res) {
-
-};
-
-exports.updateBankAcct = function(req, res) {
-
-};
 
 /*
 https://docs.balancedpayments.com/1.0/overview/resources/#test-credit-card-numbers

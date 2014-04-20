@@ -3,7 +3,7 @@ angular.module('githelp.controllers.user', [])
     function ($scope, $state, $http, $stateParams, Global, User, Inbox, Appointment, $location, $timeout) {
     $scope.global = Global;
 
-    $scope.user;
+    $scope.user = $scope.global.user;
     $scope.placeholder = function() {
       if(user && user.contactEmail) {
         return user.contactEmail;
@@ -47,7 +47,7 @@ angular.module('githelp.controllers.user', [])
     };
 
     $scope.eligibleMerchant = function() {
-      if($scope.user.BalancedBank && $scope.user.contactEmail) {
+      if($scope.user.balancedBank && $scope.user.contactEmail) {
         return true;
       } else {
         return false;
@@ -65,14 +65,14 @@ angular.module('githelp.controllers.user', [])
     }
 
     $scope.eligibleCustomer = function() {
-      if($scope.user.BalancedCard && $scope.user.contactEmail) {
+      if($scope.user.balancedCard && $scope.user.contactEmail) {
         return true;
       } else {
         return false;
       }
     };
 
-    $scope.findOne = function(){
+    $scope.findOne = function(){ // sets $scope.user to be :userName param
       User.get({
         userName: $stateParams.userName
         // look for the github.login and then get the githubId sequence
@@ -217,6 +217,17 @@ angular.module('githelp.controllers.user', [])
       cvv: ""
     };
 
+    $scope.savedCard = {
+      brand: "",
+      expirationYear: "",
+      lastFourDigits: ""
+    };
+
+    $scope.savedBank = {
+      bank_name: "",
+      lastFourDigits: ""
+    };
+
     $scope.ba = {
       userName: $scope.userName,
       name: "",
@@ -224,6 +235,9 @@ angular.module('githelp.controllers.user', [])
       account_type: "",
       account_number: ""
     };
+
+    $scope.submittedDeleteCard = false;
+    $scope.submittedDeleteBank = false;
 
     $scope.createCard = function() {
       $http.post('/create/cc', $scope.cc).success(function(response) {
@@ -235,7 +249,27 @@ angular.module('githelp.controllers.user', [])
       });
     };
 
-    $scope.createBankAcct = function() {
+    $scope.deleteCard = function() {
+      console.log('in deleteCard');
+      $http.delete('/delete/cc/' + $scope.user.balancedCard).success(function(response) {
+        console.log('DELETE CARD SUCCESS', response);
+        $scope.submittedDeleteCard = true;
+        $scope.banner.card = "Successfully deleted credit card";
+        // $scope.$apply();
+      });
+    };
+
+    $scope.deleteBank = function() {
+      console.log('in deleteBank');
+      $http.delete('/delete/ba/' + $scope.user.balancedBank).success(function(response) {
+        console.log('DELETE BANK SUCCESS', response);
+        $scope.banner.bank = "Successfully deleted bank account";
+        $scope.submittedDeleteBank = true;
+        // $scope.$apply();
+      });
+    };
+
+    $scope.createBank = function() {
       $http.post('/create/ba', $scope.ba).success(function(response) {
         console.log('CREATE BANK SUCCESS', response);
         $scope.baComplete = response;
@@ -244,6 +278,23 @@ angular.module('githelp.controllers.user', [])
         // NEED TO CHECK FOR ERRORS IN BANK ACCT
       });
     };
+
+    $scope.showCard = function() {
+      console.log('balancedCard?', $scope.user.balancedCard);
+      $http.get('/show/cc/' + $scope.user.balancedCard).success(function(card) {
+        console.log('card', card);
+        $scope.savedCard.brand = card.brand;
+        $scope.savedCard.expiration_year = card.expiration_year;
+        $scope.savedCard.lastFourDigits = card.number.slice(-5);
+      });
+    };
+
+    $scope.showBank = function() {
+      $http.get('/show/ba/' + $scope.user.balancedBank).success(function(bank) {
+        $scope.savedBank.bank_name = bank.bank_name;
+        $scope.savedBank.lastFourDigits = bank.account_number.slice(-5);
+      });
+    }
 
     $scope.onRequiredEmail = function() {
       return $state.is('profile.requiredEmail');

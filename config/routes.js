@@ -188,14 +188,20 @@ module.exports = function(app) {
   app.put('/user', users.edit);
 
   app.post('/query', index.results);
+  app.get('/show/cc/:cardId', ensureLoggedIn('/signin'), payments.fetchCard);
+  app.get('/show/ba/:bankId', ensureLoggedIn('/signin'), payments.fetchBank);
+
   app.post('/create/cc', ensureLoggedIn('/signin'), payments.createCard);
+  app.del('/delete/cc/:cardId', ensureLoggedIn('/signin'), payments.deleteCard);
+  app.del('/delete/ba/:bankId', ensureLoggedIn('/signin'), payments.deleteBank);
   app.post('/charge', ensureLoggedIn('/signin'), payments.transaction);
 
   app.post('/upload', ensureLoggedIn('/signin'), texteditor.upload);
 
   // app.get('/email', appointments.sendEmail);
 
-  app.post('/create/ba', ensureLoggedIn('/signin'), payments.createBankAcct);
+  app.get('/show/ba/:bankId', ensureLoggedIn('/signin'), payments.fetchBank);
+  app.post('/create/ba', ensureLoggedIn('/signin'), payments.createBank);
 
   app.get('/loggedin', users.clientSideAuth); // for client-side auth
 
