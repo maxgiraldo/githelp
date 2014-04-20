@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module('githelp.controllers.texteditor', [])
- .controller('TextEditorController', ['$scope', '$state', '$http', '$stateParams', 'Global', '$firebase', 'FIREBASE_URL', 'Socks',
-    function ($scope, $state, $http, $stateParams, Global, $firebase, FIREBASE_URL, Socks) {
+ .controller('TextEditorController', ['$scope', '$state', '$http', '$stateParams', 'Global', '$firebase', 'FIREBASE_URL', 'Socks', 'Tokbox',
+    function ($scope, $state, $http, $stateParams, Global, $firebase, FIREBASE_URL, Socks, Tokbox) {
+
+    Tokbox();
 
     var fileSock = function(sockType, id){
       Socks.call(this, sockType, id);
@@ -168,5 +170,73 @@ angular.module('githelp.controllers.texteditor', [])
     // $scope.storeCurrentPage = function() {
     //   var lines = Document.get
     // };
+
+    // Video & Audio Chat
+     // VIDEO CHAT
+  var sessionId = "1_MX40NDcwOTUxMn5-U2F0IEFwciAxOSAxNzowNjo1NiBQRFQgMjAxNH4wLjgzMTE1OTZ-UH4";
+  var apiKey = '44709512';
+  var token = 'T1==cGFydG5lcl9pZD00NDcwOTUxMiZzZGtfdmVyc2lvbj10YnJ1YnktdGJyYi12MC45MS4yMDExLTAyLTE3JnNpZz1jODk1NTdhYWU4MGE5YTRiZWNjMzdjNTkyM2ExMWZmMGVjM2ZhYjc2OnJvbGU9c3Vic2NyaWJlciZzZXNzaW9uX2lkPTFfTVg0ME5EY3dPVFV4TW41LVUyRjBJRUZ3Y2lBeE9TQXhOem93TmpvMU5pQlFSRlFnTWpBeE5INHdMamd6TVRFMU9UWi1VSDQmY3JlYXRlX3RpbWU9MTM5Nzk1MjQyNiZub25jZT0wLjE1OTEyMDg2MjI0MjkxMjY2JmV4cGlyZV90aW1lPTEzOTc5NTYwMTImY29ubmVjdGlvbl9kYXRhPQ==';
+
+  // var defaultWidth = 264;
+  // var defaultWidthSm = 132;
+  var defaultWidth = 214;
+  var defaultWidthSm = 132;
+  var defaultHeight = 168;
+  var defaultHeightSm = 99;
+
+  // var publisher = TB.initPublisher(apiKey, 'opentokVideos');
+  var session = TB.initSession(sessionId);
+  var publisher = TB.initPublisher(apiKey,
+                                 "videos",
+                                 {width:defaultWidth, height:defaultHeight});
+
+  publisher.publishVideo(false);
+  // $scope.audioOnly = function() {
+  //   $scope.videoEnabled = false;
+  //   $(videos).hide();
+  //   publisher.publishVideo(false);
+  // }
+  // $scope.enableVideo = function() {
+  //   $scope.videoEnabled = true;
+  //   publisher.publishVideo(true);
+  //   $(videos).show();
+  // };
+  // var subscriber = session.subscribe(stream,
+  //                                  "videos",
+  //                                  {width:100, height:100});
+
+      // Event Listeners: enable the OpenTok controller to send events to JavaScript functions
+      var subscribeToStreams = function(streams) {
+        for (var i = 0; i < streams.length; i++) {
+          var stream = streams[i];
+          if (stream.connection.connectionId != session.connection.connectionId) {
+              session.subscribe(stream, 'videos2', {width:defaultWidth, height:defaultHeight});
+          }
+        }
+      }  // These functions rely on ^ subscribeToStreams
+          var sessionConnectedHandler = function(event) {
+            subscribeToStreams(event.streams);
+            session.publish(publisher);
+          }
+
+          var streamCreatedHandler = function(event) {
+            subscribeToStreams(event.streams);
+          }
+
+      session.addEventListener("sessionConnected", sessionConnectedHandler);
+
+      // Initialize Video Chat Session
+      // $scope.startVideoChat = function() {
+        session.connect(apiKey, token);
+      // }
+
+
+      // Watch for streams that are added to the session
+      session.addEventListener("streamCreated", streamCreatedHandler);
+
+      // a = new TBStart('44708602', 'opentokVideos');
+      // a.startVideo();
+
+
   }]);
 

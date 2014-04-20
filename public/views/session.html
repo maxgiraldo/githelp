@@ -30,7 +30,8 @@
         <div class='side-panel-directories'>
            <input type='file' file-input='files' multiple auto-submit />
         </div>
-      </div>
+
+      </div> <!-- sidepanel -->
       <!-- TEXT EDITOR -->
       <div class='file-view' data-ng-dblclick="addTab()">
         <ul class='files' ng-repeat='file in returnedFiles'>
@@ -38,5 +39,16 @@
         </ul>
       </div>
       <div id="firepad-container"></div>
+
+      <!-- VIDECHAT -->
+      <div class='video-container'>
+        <ul>
+          <li><div id='videos'></div></li>
+          <li><div id='videos2'></div></li>
+        </ul>
+      </div>
+      <!-- <button ng-click='enableVideo()' ng-show='videoEnabled'>Enable video</button>
+      <button ng-click='audioOnly()' ng-hide='videoEnabled'>Audio only</button> -->
+
     </section>
 </div>
