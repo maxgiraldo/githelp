@@ -48,12 +48,14 @@ exports.clientSideAuth = function(req, res) {
 
 balanced.configure('ak-test-1P4LCuAfcv3isFlyX9mxNXvz6bI1XNril');
 
-exports.authCallback = function(req, res, lastUrl) {
+exports.authCallback = function(req, res, url) {
   console.log('in authCallback'); // create Balanced acct after auth
   if(req.user.contactEmail) {
-    if(lastUrl){
-      res.redirect('#!/' + lastUrl);
-    } else{
+    if(url.lastUrl && url.lastUrl2) {
+      res.redirect('#!/' + url.lastUrl + '/' + url.lastUrl2);
+    } else if (url.lastUrl) {
+      res.redirect('#!/' + url.lastUrl);
+    } else {
       res.redirect('/');
     }
   } else {

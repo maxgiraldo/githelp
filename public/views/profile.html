@@ -9,6 +9,17 @@
       <h1 class='headline full-name'>{{user.fullName}}</h1>
       <h2 class='username'><a href="http://www.github.com/{{user.userName}}"><i class="fa fa-github"></i> {{user.userName}}</a></h2>
       <h2 data-ng-show = "user.github.blog" class="username"><a href="{{user.github.blog}}"><i class="fa fa-link"></i> {{user.github.blog}}</a></h2>
+
+      <!-- See this only when you visit your own profile -->
+      <div ng-show="($scope.userName === $scope.user.userName) && $scope.eligibleMerchant()"><h4><i class="fa fa-check-circle fa-lg" style='color: green'></i> Merchant account enabled!</h4></div>
+      <div ng-hide="($scope.userName === $scope.user.userName) && $scope.eligibleMerchant()">
+        <h4><i class="fa fa-minus-circle fa-lg" style='color: red'></i> Merchant account not enabled</h4>
+        <ul>
+          <li style="list-style-type:disc; text-align: left;" ng-hide="$scope.user.BalancedBank">Setup valid bank account in Settings to accept payments</li>
+          <li style="list-style-type:disc; text-align: left;" ng-hide="$scope.user.contactEmail">Submit valid e-mail address in Settings</li>
+        </ul>
+      </div>
+      <!-- See this only when you visit your own profile -->
       <h4 class='price'><edit-in-place value="user.ppm"></edit-in-place></h4>
       <h4 class='price'>${{user.ppm * 60}}/hour</h4>
     </div>
