@@ -216,29 +216,29 @@ window.app.config(['$locationProvider', 'datepickerConfig', 'datepickerPopupConf
 ]);
 
 // Add an interceptor for AJAX errors
-window.app.config(['$httpProvider', function($httpProvider) {
-  $httpProvider.defaults.useXDomain = true;
-  delete $httpProvider.defaults.headers.common['X-Requested-With'];
+// window.app.config(['$httpProvider', function($httpProvider) {
+  // $httpProvider.defaults.useXDomain = true;
+  // delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
-  console.log('in interceptor func');
-  $httpProvider.interceptors.push(function($q, $location) {
-    return {
-      'response': function(response) {
-        // do something on success
-        console.log(response);
-        if(response.status === 401){
-          $location.path('/signin');
-          console.log('401 error');
-          return $q.reject(response);
-        } else if(response.status === 404) {
-          $location.path('/404');
-          console.log('404 error');
-          return $q.reject(response);
-        } else {
-          console.log('successful response');
-          return response || $q.when(response);
-        }
-      }
+  // console.log('in interceptor func');
+  // $httpProvider.interceptors.push(function($q, $location) {
+  //   return {
+  //     'response': function(response) {
+  //       // do something on success
+  //       console.log(response);
+  //       if(response.status === 401){
+  //         $location.path('/signin');
+  //         console.log('401 error');
+  //         return $q.reject(response);
+  //       } else if(response.status === 404) {
+  //         $location.path('/404');
+  //         console.log('404 error');
+  //         return $q.reject(response);
+  //       } else {
+  //         console.log('successful response');
+  //         return response || $q.when(response);
+  //       }
+  //     }
       // response: function(response){
       //   return promise.then(
       //     function success(response) {
@@ -252,7 +252,7 @@ window.app.config(['$httpProvider', function($httpProvider) {
       //     return $q.reject(response);
       //   }
       // });
-    };
-  });
-}]);
+    // };
+  // });
+// }]);
 
