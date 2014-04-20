@@ -26,11 +26,11 @@ passport.deserializeUser(function(id, done) {
 var githubCallbackURL;
 var googleCallbackURL;
 if (process.env.NODE_ENV === 'production'){
-  googleCallbackURL = 'http://githelp.herokuapp.com/auth/google/callback';
+  googleCallbackURL = process.env.GITHUB_CALLBACK || 'http://githelp.herokuapp.com/auth/google/callback';
   githubCallbackURL = 'http://githelp.herokuapp.com/auth/github/callback';
 } else{
-  googleCallbackURL = 'http://172.18.74.10:3000/auth/google/callback';
-  githubCallbackURL = 'http://172.18.74.10:3000/auth/github/callback';
+  googleCallbackURL = 'http://127.0.0.1:3000/auth/google/callback';
+  githubCallbackURL = 'http://127.0.0.1:3000/auth/github/callback';
 }
 
 passport.use(new GitHubStrategy({
