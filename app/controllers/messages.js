@@ -53,8 +53,9 @@ exports.createMessage = function(req, res){
     } else{
       chatroom.messages = [message];
     }
-    chatroom.save();
-    res.jsonp(message);
+    chatroom.save(function(err, chatroom){
+      res.jsonp(chatroom.messages.pop());
+    });
   });
 };
 
