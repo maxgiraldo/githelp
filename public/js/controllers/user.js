@@ -13,7 +13,7 @@ angular.module('githelp.controllers.user', [])
       }
     }
     // $scope.placeholder = user.contactEmail || "E-mail Address";
-    $scope.banner = {};
+    $scope.banners = [];
     $scope.members = [];
     $scope.userName = $stateParams.userName;
     $scope.emailInfo = {
@@ -246,19 +246,62 @@ angular.module('githelp.controllers.user', [])
     $scope.submittedCreateBank = false;
     $scope.submittedBank = false;
 
-    $scope.createCard = function() {
-      $http.post('/create/cc', $scope.cc).success(function(response) {
-        console.log('CREATE CARD SUCCESS', response.card);
-        $scope.submittedValidCard = true;
-        $scope.user = response.user;
-        $scope.ccComplete = response.card;
-        $scope.banner.card = "Successfully submitted credit card";
-      }).error(function(data, status, headers, config) {
-        console.log('data', data);
-        console.log('status', status);
-        $scope.banner.card = data;
-      });
-        // NEED TO CHECK FOR ERRORS IN CREATING CREDIT CARD ACCT
+    var cardHandler = function(card){
+      console.log(card);
+      if(card.errors){
+        console.log(card.errors);
+      }
+      balancedCard = card.cards[0].id;
+      $http.post('/create/cc', {balancedCard: balancedCard})
+        .success(function(user){
+          $scope.global.user = user;
+        })
+        .error(function(err){
+          console.log(err);
+          $scope.banners.push({type: 'danger', msg: err});
+        })
+    };
+
+    $scope.closeAlert = function(index) {
+      $scope.banners.splice(index, 1);
+    };
+
+    $scope.createCard = function(){
+      var payload = {
+        name: $scope.cc.name,
+        number: $scope.cc.number,
+        expiration_month: $scope.cc.expiration_month,
+        expiration_year: $scope.cc.expiration_year,
+        cvv: $scope.cc.cvv
+      };
+      balanced.card.create(payload, cardHandler);
+    };
+
+    var bankAccountHandler = function(bankAccount){
+      console.log(bankAccount)
+      if(bankAccount.errors){
+        console.log(bankAccount.errors);
+        throw bankAccount.errors;
+      }
+      balancedBank = bankAccount.bank_accounts[0].id;
+      $http.post('/create/ba', {balancedBank: balancedBank})
+        .success(function(user){
+          $scope.global.user = user;
+        })
+        .error(function(err){
+          console.log(err);
+        })
+    };
+
+    $scope.createBankAccount = function(){
+      var payload = {
+        name: $scope.ba.name,
+        account_number: $scope.ba.account_number,
+        routing_number: $scope.ba.routing_number,
+        account_type: $scope.ba.account_type
+      };
+
+      balanced.bankAccount.create(payload, bankAccountHandler)
     };
 
     $scope.deleteCard = function() {
@@ -282,25 +325,6 @@ angular.module('githelp.controllers.user', [])
         $scope.ba.routing_number = "";
         $scope.ba.account_type = "";
         $scope.ba.account_number = "";
-      });
-    };
-
-    $scope.createBank = function() {
-      $http.post('/create/ba', $scope.ba).success(function(response) {
-        console.log('CREATE BANK SUCCESS', response.bank);
-        $scope.user = response.user;
-        $scope.baComplete = response.bank;
-        $scope.banner.bank = "Successfully created bank account";
-        $scope.submittedBank = true;
-        $scope.ba.name = "";
-        $scope.ba.routing_number = "";
-        $scope.ba.account_type = "";
-        $scope.ba.account_number = "";
-      }).error(function(data, status, headers, config) {
-        // NEED TO CHECK FOR ERRORS IN BANK ACCT
-        console.log('data', data);
-        console.log('status', status);
-        $scope.banner.bank = data;
       });
     };
 

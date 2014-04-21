@@ -134,64 +134,36 @@ exports.transaction = function(req, res) {
 };
 
 exports.createCard = function(req, res) {
-  console.log('in createCard');
-  var ccObj = req.body;
-  var userName = ccObj.userName;
-  // var userName = req.params.userName; // need userName to find in DB; assume to be in params for now
-  console.log('userNameParams', userName);
-  console.log('CC', ccObj);
-  balanced.marketplace.cards.create(ccObj)
-    .then(function(card) {
-      console.log('card response after creation', JSON.stringify(card));
-      // no balancedCard token --> goes to error
-      // reject card if no cvv match
-      if(card.cvv_match !== 'yes') {
-        console.log('no cvv match and card should be rejected');
-        res.send(400, 'Invalid CVV');
+  User.findOne({_id: req.user._id}, function(err, user) {
+    var cardHref = payments.cardUri(req.body.balancedCard);
+    payments.fetchCard(cardHref, function(card) {
+      if(card.cvv_match !== 'yes'){
+        res.send(400, "Wrong CVV Code");
+        throw "Wrong CVV";
       }
-      User.findOne({_id: req.user._id}, function(err, user) {
-        user.balancedCard = card.toJSON().id;
-        user.save(function(err, user) {
-          balanced.get('/cards/'+user.balancedCard).associate_to_customer('/customers/'+user.balancedUser)
-          .then(function(card){
-            console.log('post associate', card);
-            res.jsonp({user: user, card: card});
-          }, function(err) {
-            console.log(err);
-            console.log('Could not associate customer to balancedUser');
-          });
+      user.balancedCard = req.body.balancedCard;
+      user.save();
+      balanced.get('/cards/'+user.balancedCard).associate_to_customer('/customers/'+user.balancedUser)
+        .then(function(card){
+          console.log('post associate', card);
+          res.jsonp(user);
+        }, function(err) {
+          console.log(err);
+          console.log('Could not associate customer to balancedUser');
         });
-      });
-    }, function(err) {
-    console.log(err);
-    res.send(400, 'Invalid credit card');
+    });
   });
 };
 
 exports.createBank = function(req, res) {
-  console.log(req);
-  var bankObj = req.body;
-  var userName = bankObj.userName;
-  console.log('userNameParams', userName);
-  console.log('BA', bankObj);
-  balanced.marketplace.bank_accounts.create(bankObj)
-    .then(function(account) {
-      console.log('account response after creation', JSON.stringify(account));
-      // reject bank if no balancedBank token
-
-      User.findOne({_id: req.user._id}, function(err, user) {
-        user.balancedBank = account.toJSON().id;
-        user.save(function(err, user) {
-          balanced.get('/bank_accounts/'+user.balancedBank).associate_to_customer('/customers/'+user.balancedUser)
-          .then(function(account){
-            console.log(account.toJSON());
-            res.jsonp({user: user, bank: account});
-          });
-        });
+  User.findOne({_id: req.user._id}, function(err, user) {
+    user.balancedBank = req.body.balancedBank;
+    user.save();
+    balanced.get('/bank_accounts/'+user.balancedBank).associate_to_customer('/customers/'+user.balancedUser)
+      .then(function(account){
+        console.log(account.toJSON());
+        res.jsonp(user);
       });
-    }, function(err) {
-    console.log(err);
-    res.send(400, "Invalid routing or account number");
   });
 };
 

@@ -1,7 +1,7 @@
 <section data-ng-controller="UserController" data-ng-init="findOne()" ui-view>
   <section data-ng-include="'views/partials/navbar.html'"></section>
 
-  <div class="container profile" data-ng-controller="ModalController">
+  <div class="container profile">
     <div>
       <img class='avatar-lg' src='{{user.github.avatar_url}}'>
     </div>
@@ -24,7 +24,7 @@
     <div data-ng-show="user && !user.balancedBank && user._id !== global.user._id" class='no-account-button headline'>
       <p>Cannot accept calls yet!</p>
     </div>
-    <div data-ng-show="user && !user.balancedBank && user._id == global.user._id" class='setup-button headline' data-ng-click="openAccountModal()">
+    <div data-ng-show="user && !user.balancedBank && user._id == global.user._id" class='setup-button headline' data-ng-controller="ModalController" data-ng-click="openAccountModal()">
       <p>Start Accepting Calls!</p>
     </div>
     <!-- User's public repos -->
