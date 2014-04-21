@@ -1,0 +1,25 @@
+<div data-ng-controller="ModalController" class="modal-body clearfix">
+  <h3>Last step!</h3>
+  <form class="clearfix" data-ng-submit="createBankAccount()" style="padding-left:none; padding-right: none;">
+    <div class="center">
+      <h4>You need to be associated with a bank account to be paid for your expertise.</h4>
+    </div>
+    <!-- BANK ACCT FORM -->
+    <div class="center">
+      <h4 ng-show="banner">{{banner.bank}}</h4>
+    </div>
+    <div class="center">
+      <h4 ng-hide="user.balancedBank || submittedBank">{{required.bank}}</h4>
+    </div>
+    <input class='form-control input-setup' type="text" id="ba-name" autocomplete="off" ng-model="name" required placeholder="Account Holder's Name">
+    <br>
+    <input type="text" class='form-control input-setup' id="ba.routing" autocomplete="off" ng-model="routing_number" required placeholder="Routing Number" />
+    <br>
+    <input type="text" class='form-control input-setup' id="ba-type" autocomplete="off" ng-model="account_type" required placeholder="Checking or Savings" />
+    <!-- radio button -->
+    <br>
+    <input type="text" class='form-control input-setup' id="ba-number" autocomplete="off" ng-model="account_number" required placeholder="Account Number" />
+    <input type="submit" class="btn btn-lg btn-bank-setup clearfix" value="Submit"></input>
+  </form>
+  <h6>We use Balanced Payments' tokenization process so your sensitive data never touches our database. Githelp is run over encrypted HTTPS to provide extra security.</h6>
+</div>

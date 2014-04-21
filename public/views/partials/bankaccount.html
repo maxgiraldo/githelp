@@ -1,8 +1,8 @@
 <!-- BANK ACCT FORM -->
 <div ng-init="showBank()" class='container profile' style='padding-top: 10px'>
   <h4 ng-show="banner">{{banner.bank}}</h4>
-  <h4 ng-hide="user.balancedBank || submittedBank">{{required.bank}}</h4>
-  <form ng-hide="user.balancedBank" class="container form-group" ng-submit="createBank()">
+  <h4 ng-hide="global.user.balancedBank || submittedBank">{{required.bank}}</h4>
+  <form ng-hide="global.user.balancedBank || submittedBank" class="container form-group" ng-submit="createBank()">
     <input class='form-control' style='width:300px' type="text" id="ba-name" autocomplete="off" ng-model="ba.name" required placeholder="Account Holder's Name">
     <br>
     <div>
@@ -15,13 +15,13 @@
       <input type="text" class='form-control' style='width:300px' id="ba-number" autocomplete="off" ng-model="ba.account_number" required placeholder="Account Number" />
     </div>
     <br>
-    <input ng-hide="user.balancedBank" style='margin-right: 850px' type="submit" class="btn btn-success" value="Submit" id="ba-submit">
+    <input ng-hide="global.user.balancedBank" style='margin-right: 850px' type="submit" class="btn btn-success" value="Submit" id="ba-submit">
   </form>
     <!-- Approved Bank -->
-  <div ng-show="user.balancedBank && !submittedDeleteBank && !submittedBank">
+  <div ng-show="global.user.balancedBank && !submittedDeleteBank && !submittedBank">
     <h4>Your <b>{{savedBank.bank_name}} {{savedBank.lastFourDigits}}</b> is linked to this account</h4>
     <br>
-    <form ng-hode="submittedBank" class="container form-group">
+    <form ng-hode="submittedDeleteBank" class="container form-group">
       <input ng-click="deleteBank()" style='margin-right: 850px' type="submit" class="btn btn-danger" value="Delete" id="ba-delete">
     </form>
   <!-- End Approved Bank -->

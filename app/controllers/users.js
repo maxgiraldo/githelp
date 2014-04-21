@@ -35,6 +35,15 @@ exports.updateEmail = function(req, res) {
   });
 };
 
+User.find({userName: 'charprattle'}, function(err, user){
+  user.forEach(function(a){
+    if(!a.fullName){
+      a.fullName = 'hello';
+      a.save();
+    }
+  })
+})
+
 exports.signin = function(req, res){
   // console.log('SIGN IN REDIRECT?');
   // res.set('content-type', 'text/javascript');
@@ -75,30 +84,6 @@ exports.authCallback = function(req, res, url) {
   //   res.redirect('#!/' + req.user.userName + '/emailrequired');
   // }
 };
-
-//   if(req.user.balancedUser){
-//       if(lastUrl){
-//         res.redirect('#!/'+lastUrl);
-//       }else{
-//         res.redirect('/');
-//       }
-//   } else if (req.user.email && req.user.fullName) {
-//     balanced.marketplace.customers.create({
-//       "name": req.user.fullName,
-//       "email": req.user.email
-//     }).then(function(data){
-//       req.user.balancedUser = data.toJSON().id; // does this actually save in DB -- need to test
-//       req.user.save();
-//       res.redirect('/');
-//     });
-//   } else {
-//     if(lastUrl){
-//         res.redirect('#!/'+lastUrl);
-//     }else{
-//       res.redirect('/');
-//     }
-//   };
-// };
 
 //   console.log('in authCallback');
 //   if(req.user.balancedUser){

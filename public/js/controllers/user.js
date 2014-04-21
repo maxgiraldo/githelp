@@ -3,7 +3,8 @@ angular.module('githelp.controllers.user', [])
     function ($scope, $state, $http, $stateParams, Global, User, Inbox, Appointment, $location, $timeout) {
     $scope.global = Global;
 
-    $scope.user = $scope.global.user;
+    // $scope.user = $scope.global.user;
+    $scope.user;
     $scope.placeholder = function() {
       if(user && user.contactEmail) {
         return user.contactEmail;
@@ -47,6 +48,8 @@ angular.module('githelp.controllers.user', [])
     };
 
     $scope.eligibleMerchant = function() {
+      // console.log('scope.user in eligMerchant', $scope.user);
+      console.log('scope.user.balancedBank in eligMerchant', $scope.user.balancedBank === undefined);
       if($scope.user.balancedBank && $scope.user.contactEmail) {
         return true;
       } else {
@@ -236,7 +239,8 @@ angular.module('githelp.controllers.user', [])
       account_number: ""
     };
 
-    $scope.submittedCard = false;
+    // $scope.submittedCard = false;
+    $scope.submittedValidCard = false;
     $scope.submittedDeleteCard = false;
 
     $scope.submittedCreateBank = false;
@@ -245,18 +249,21 @@ angular.module('githelp.controllers.user', [])
     $scope.createCard = function() {
       $http.post('/create/cc', $scope.cc).success(function(response) {
         console.log('CREATE CARD SUCCESS', response.card);
+        $scope.submittedValidCard = true;
         $scope.user = response.user;
         $scope.ccComplete = response.card;
         $scope.banner.card = "Successfully submitted credit card";
-        $scope.submittedCard = true;
-
-        // NEED TO CHECK FOR ERRORS IN CREATING CREDIT CARD ACCT
+      }).error(function(data, status, headers, config) {
+        console.log('data', data);
+        console.log('status', status);
+        $scope.banner.card = data;
       });
+        // NEED TO CHECK FOR ERRORS IN CREATING CREDIT CARD ACCT
     };
 
     $scope.deleteCard = function() {
       console.log('in deleteCard');
-      $http.delete('/delete/cc/' + $scope.user.balancedCard).success(function(response) {
+      $http.delete('/delete/cc/' + $scope.global.user.balancedCard).success(function(response) {
         console.log('DELETE CARD SUCCESS', response.card);
         $scope.user = response.user;
         $scope.submittedDeleteCard = true;
@@ -266,7 +273,7 @@ angular.module('githelp.controllers.user', [])
 
     $scope.deleteBank = function() {
       console.log('in deleteBank');
-      $http.delete('/delete/ba/' + $scope.user.balancedBank).success(function(response) {
+      $http.delete('/delete/ba/' + $scope.global.user.balancedBank).success(function(response) {
         console.log('DELETE BANK SUCCESS', response.bank);
         $scope.user = response.user;
         $scope.banner.bank = "Successfully deleted bank account";
@@ -289,14 +296,17 @@ angular.module('githelp.controllers.user', [])
         $scope.ba.routing_number = "";
         $scope.ba.account_type = "";
         $scope.ba.account_number = "";
-
+      }).error(function(data, status, headers, config) {
         // NEED TO CHECK FOR ERRORS IN BANK ACCT
+        console.log('data', data);
+        console.log('status', status);
+        $scope.banner.bank = data;
       });
     };
 
     $scope.showCard = function() {
-      console.log('balancedCard?', $scope.user.balancedCard);
-      $http.get('/show/cc/' + $scope.user.balancedCard).success(function(card) {
+      console.log('balancedCard?', $scope.global.user.balancedCard);
+      $http.get('/show/cc/' + $scope.global.user.balancedCard).success(function(card) {
         console.log('card', card);
         $scope.savedCard.brand = card.brand;
         $scope.savedCard.expiration_year = card.expiration_year;
@@ -305,7 +315,7 @@ angular.module('githelp.controllers.user', [])
     };
 
     $scope.showBank = function() {
-      $http.get('/show/ba/' + $scope.user.balancedBank).success(function(bank) {
+      $http.get('/show/ba/' + $scope.global.user.balancedBank).success(function(bank) {
         $scope.savedBank.bank_name = bank.bank_name;
         $scope.savedBank.lastFourDigits = bank.account_number.slice(-5);
       });

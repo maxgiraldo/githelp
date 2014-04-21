@@ -1,8 +1,8 @@
 <!-- CREDIT CARD FORM -->
 <div ng-init="showCard()" class='container profile' style='padding-top: 10px'>
   <h4 ng-show="banner">{{banner.card}}</h4>
-  <h4 ng-hide="user.balancedCard || submittedCard">{{required.card}}</h4>
-  <form ng-hide="user.balancedCard" class="container form-group" ng-submit="createCard()">
+  <h4 ng-hide="global.user.balancedCard || submittedValidCard">{{required.card}}</h4>
+  <form ng-hide="global.user.balancedCard || submittedValidCard" class="container form-group" ng-submit="createCard()">
     <input class='form-control' style='width:300px' type="text" id="cc-name" autocomplete="off" ng-model="cc.name" required placeholder="Full name (as seen on card)">
     <br>
     <div>
@@ -22,11 +22,11 @@
     <input style='margin-right: 850px' type="submit" class="btn btn-success" value="Submit" id="cc-submit">
   </form>
   <!-- Approved Card -->
-  <div ng-show="user.balancedCard && !submittedDeleteCard && !submittedCard">
+  <div ng-show="global.user.balancedCard && !submittedDeleteCard && !submittedValidCard">
     <h4>Your <b>{{savedCard.brand}} {{savedCard.lastFourDigits}}</b> is linked to this account</h4>
     <br>
 <!--     <input style='margin-right: 850px' type="submit" class="btn btn-success" value="Edit" id="cc-edit"> -->
-    <form ng-hide="submittedCard" class="container form-group">
+    <form ng-hide="submittedDeleteCard" class="container form-group">
       <input ng-click="deleteCard()" style='margin-right: 850px' type="submit" class="btn btn-danger" value="Delete" id="cc-delete">
     </form>
   <!-- End Approved Card -->
