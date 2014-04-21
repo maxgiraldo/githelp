@@ -3,7 +3,7 @@ angular.module('githelp.controllers.user', [])
     function ($scope, $state, $http, $stateParams, Global, User, Inbox, Appointment, $location, $timeout) {
     $scope.global = Global;
 
-    $scope.user = $scope.global.user;
+    // $scope.user = $scope.global.user;
     $scope.placeholder = function() {
       if(user && user.contactEmail) {
         return user.contactEmail;
