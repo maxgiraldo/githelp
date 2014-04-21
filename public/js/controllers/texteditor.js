@@ -14,6 +14,7 @@ angular.module('githelp.controllers.texteditor', [])
     fileSock.prototype = Object.create(Socks.prototype);
 
     fileSock.prototype.event_file = function(messageData){
+      console.log(messageData);
       var files = messageData;
       files.forEach(function(file) {
         if (file.name in $scope.returnedFiles) {
@@ -121,6 +122,8 @@ angular.module('githelp.controllers.texteditor', [])
         params: {numFiles: $scope.files.length}
       })
       .success(function(files) {
+        console.log("this is the success");
+        console.log(files instanceof Array);
         fileBot.sockjs_send('file', files);
       }) // success
     };
