@@ -128,34 +128,6 @@ angular.module('githelp.controllers.texteditor', [])
       }) // success
     };
 
-    // editorSock.onopen = function() {
-    //   console.log('open');
-    // };
-
-    // editorSock.onmessage = function(e) {
-    //   var files = JSON.parse(e.data);
-    //   files.forEach(function(file) {
-    //     if (file.name in $scope.returnedFiles) {
-    //       $scope.sameNameCollection[file.name]++;
-    //       var newFileName = file.name + $scope.sameNameCollection[file.name];
-    //       $scope.returnedFiles[file.name] = newFileName;
-    //     } else {
-    //       $scope.sameNameCollection[file.name] = 0;
-    //       $scope.returnedFiles[file.name] = file;
-    //     }
-    //     $scope.returnedFiles[file.name].active = true;
-    //     $scope.session.$add($scope.returnedFiles[file.name])
-    //     .then(function(ref) {
-    //       // var textEditor = $scope.session.$child(ref.name());
-    //       // textEditor.$set({'_id': ref.name()});
-    //       $scope.returnedFiles[file.name]._id = ref.name();
-    //     });
-
-    //   }) //files.forEach
-    //   firepad.setText(files[0].data);
-    //   $scope.$apply();
-    // };
-
     $scope.goToFile = function(_id) {
       var file = $scope.session.$child(_id);
       firepad.setText(file.data);
@@ -163,11 +135,11 @@ angular.module('githelp.controllers.texteditor', [])
 
     $scope.removeTab = function(_id){
       fileBot.sockjs_send('removeTab', _id);
-    }
+    };
 
     $scope.addTab = function(){
       fileBot.sockjs_send('addTab');
-    }
+    };
     // $scope.showTab = function(file){
     //   $scope.returnedFiles[file.name].active = !$scope.returnedFiles[file.name].active;
     // };

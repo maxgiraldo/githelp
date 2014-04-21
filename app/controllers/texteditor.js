@@ -59,6 +59,7 @@ exports.upload = function(req, res) {
         type: fileType,
         data: file
       });
+      console.log(files);
       res.send(files);
     }); //readfile
   } //else
