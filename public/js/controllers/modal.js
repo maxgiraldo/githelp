@@ -6,7 +6,40 @@ angular.module('githelp.controllers.modal', [])
     'Global',
     function($scope, $location, $modal, Global) {
       $scope.global = Global;
-      $scope.user = $scope.global.user;
+
+      var cardHandler = function(card){
+        if(card.errors){
+          console.log(card.errors);
+        }
+        if(card.cvv_match !== 'yes'){
+          console.log('no cvv match and card should be rejected');
+          throw "Invalid CVV";
+        }
+        balancedCard = card.cards[0].id;
+        $http('/create/cc', {balancedCard: balancedCard})
+          .success(function(user){
+            $scope.global.user = user;
+          })
+          .error(function(err){
+            console.log(err);
+          })
+      };
+
+      var bankAccountHandler = function(bankAccount){
+        console.log(bankAccount)
+        if(bankAccount.errors){
+          console.log(bankAccount.errors);
+          throw bankAccount.errors;
+        }
+        balancedBank = bankAccount.bank_accounts[0].id;
+        $http('/create/ba', {balancedBank: balancedBank})
+          .success(function(user){
+            $scope.global.user = user;
+          })
+          .error(function(err){
+            console.log(err);
+          })
+      };
 
       var ModalInstanceController = function($scope, $modalInstance, items) {
         $scope.submit = function() {
@@ -16,12 +49,35 @@ angular.module('githelp.controllers.modal', [])
         $scope.logout = function() {
           $modalInstance.dismiss('cancel');
         };
+
+        $scope.createBankAccount = function(){
+          var payload = {
+            name: this.name,
+            account_number: this.account_number,
+            routing_number: this.routing_number,
+            account_type: this.account_type
+          };
+
+          balanced.bankAccount.create(payload, bankAccountHandler)
+        }
+
+        $scope.createCard = function(){
+          var payload = {
+            name: this.name,
+            number: this.number,
+            expiration_month: this.expiration_month,
+            expiration_year: this.expiration_year,
+            security_code: this.security_code
+          }
+
+          balanced.card.create(payload, cardHandler);
+        };
       };
 
-      $scope.open = function() {
-        if($scope.user && ($scope.user.email ==="" || !$scope.user.email)) {
+      $scope.openAccountModal = function() {
+        if(!$scope.global.user.contactEmail || !$scope.global.user.balancedAccount) {
           var modalInstance = $modal.open({
-            templateUrl: 'emailModalContent.html',
+            templateUrl: 'views/partials/accountModal.html',
             controller: ModalInstanceController,
             resolve: {
               items: function () {

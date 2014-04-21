@@ -23,7 +23,7 @@
           <form class="col-md-10" style="margin-top: 20px" data-ng-submit="createInbox()">
             <div class="col-md-8 col-md-offset-1">
               <label style="font-size: 18px; margin-right: 0px; padding-right: 0px" class="col-md-offset-4">Members:</label>
-              <input id="input-box" class="col-md-offset-6" data-ng-model="member" typeahead="user.fullName for user in allUsers | filter:$viewValue" style="margin-left: 30px; padding-left: 15px;" data-ng-show="user._id != global.user._id" typeahead-on-select="onSelect($item, $model, $label)">
+              <input id="input-box" class="col-md-offset-6" data-ng-model="member" typeahead="user.fullName for user in allUsers | filter:$viewValue" style="margin-left: 30px; padding-left: 15px;" typeahead-on-select="onSelect($item, $model, $label)">
             </div>
             <input type="submit" class="btn btn-success" value="Contact Now">
           </form>
