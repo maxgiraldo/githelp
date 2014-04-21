@@ -76,30 +76,6 @@ exports.authCallback = function(req, res, url) {
   // }
 };
 
-//   if(req.user.balancedUser){
-//       if(lastUrl){
-//         res.redirect('#!/'+lastUrl);
-//       }else{
-//         res.redirect('/');
-//       }
-//   } else if (req.user.email && req.user.fullName) {
-//     balanced.marketplace.customers.create({
-//       "name": req.user.fullName,
-//       "email": req.user.email
-//     }).then(function(data){
-//       req.user.balancedUser = data.toJSON().id; // does this actually save in DB -- need to test
-//       req.user.save();
-//       res.redirect('/');
-//     });
-//   } else {
-//     if(lastUrl){
-//         res.redirect('#!/'+lastUrl);
-//     }else{
-//       res.redirect('/');
-//     }
-//   };
-// };
-
 //   console.log('in authCallback');
 //   if(req.user.balancedUser){
 //       if(lastUrl){
