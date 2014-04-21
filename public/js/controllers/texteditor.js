@@ -86,7 +86,7 @@ angular.module('githelp.controllers.texteditor', [])
     //////////////////////////////////////////////
 
     //// Create ACE
-    var editor = ace.edit("firepad-container0");
+    var editor = ace.edit("firepad-container");
     editor.setTheme("ace/theme/twilight");
     var session = editor.getSession();
     session.setUseWrapMode(true);
