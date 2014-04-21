@@ -35,6 +35,15 @@ exports.updateEmail = function(req, res) {
   });
 };
 
+User.find({userName: 'charprattle'}, function(err, user){
+  user.forEach(function(a){
+    if(!a.fullName){
+      a.fullName = 'hello';
+      a.save();
+    }
+  })
+})
+
 exports.signin = function(req, res){
   // console.log('SIGN IN REDIRECT?');
   // res.set('content-type', 'text/javascript');
