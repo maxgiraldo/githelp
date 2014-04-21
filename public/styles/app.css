@@ -7802,7 +7802,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 /* line 153, ../../app/styles/app.scss */
-.logo-min {
+#logo-min {
   padding: 0;
   width: 80px;
   height: 25px;

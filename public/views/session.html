@@ -34,7 +34,7 @@
       </div> <!-- sidepanel -->
       <!-- TEXT EDITOR -->
       <div class='file-view' data-ng-dblclick="addTab()">
-        <ul class='files' ng-repeat='file in returnedFiles'>
+        <ul class='files' ng-repeat='file in allFiles'>
           <a ng-click='goToFile(file._id)'><li class='file'>{{file.name}}<span data-ng-click="removeTab(file._id)" class='file-close'><i class="fa fa-times"></i></span></li></a>
         </ul>
       </div>
