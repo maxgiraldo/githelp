@@ -141,12 +141,14 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   vertical-align: top;
   // width: 80px;
 }
-.logo-min {
+#logo-min {
   padding: 0;
   width: 80px;
   height: 25px;
 }
-
+.settings {
+  font-size: 16px;
+}
 .navbar-nav > li > a {
   padding-top: 15px;
   padding-bottom: 15px;
@@ -752,7 +754,7 @@ h1.full-name {
   color: #606060;
 }
 
-#firepad-container {
+#firepad-container0 {
   overflow: auto;
   float: left;
   width: 60vw;
@@ -762,6 +764,69 @@ h1.full-name {
   // -webkit-box-shadow: 0 1px 5px 1px #d0d0d0;
   // box-shadow: 0 1px 5px 1px #d0d0d0;
   // width: 60vw;
+}
+#firepad-container1 {
+  overflow: auto;
+  float: left;
+  width: 60vw;
+  height: 90vh;
+  position: relative;
+}
+#firepad-container2 {
+  overflow: auto;
+  float: left;
+  width: 60vw;
+  height: 90vh;
+  position: relative;
+}
+#firepad-container3 {
+  overflow: auto;
+  float: left;
+  width: 60vw;
+  height: 90vh;
+  position: relative;
+}
+#firepad-container4 {
+  overflow: auto;
+  float: left;
+  width: 60vw;
+  height: 90vh;
+  position: relative;
+}
+#firepad-container5 {
+  overflow: auto;
+  float: left;
+  width: 60vw;
+  height: 90vh;
+  position: relative;
+}
+#firepad-container5 {
+  overflow: auto;
+  float: left;
+  width: 60vw;
+  height: 90vh;
+  position: relative;
+}
+#firepad-container6 {
+  overflow: auto;
+  float: left;
+  width: 60vw;
+  height: 90vh;
+  position: relative;
+}
+#firepad-container7 {
+  overflow: auto;
+  float: left;
+  width: 60vw;
+  height: 90vh;
+  position: relative;
+}
+#firepad-container8 {
+  overflow: auto;
+  float: left;
+  width: 60vw;
+  height: 90vh;
+  position: relative;
 }
 
 .firepad {

@@ -4,8 +4,25 @@ angular.module('githelp.controllers.texteditor', [])
  .controller('TextEditorController', ['$scope', '$state', '$http', '$stateParams', 'Global', '$firebase', 'FIREBASE_URL', 'Socks', 'Tokbox',
     function ($scope, $state, $http, $stateParams, Global, $firebase, FIREBASE_URL, Socks, Tokbox) {
 
+
+
+    $scope.sessionId = $stateParams.sessionId;
+    var firepadRef = new Firebase(FIREBASE_URL + $scope.sessionId);
+    $scope.global = Global;
+    $scope.sameNameCollection = {};
+    $scope.allFiles = {};
+    $scope.textEditorVisible = true;
+    $scope.session = $firebase(firepadRef);
+    $scope.fileCount = 0;
+    $scope.currentSessionData;
+    $scope.currentSessionId;
+
+    var counter = 0
+
     // Service to enable TokBox library
     Tokbox();
+
+    // This will be used to keep track of which files correspond to which Firepad containers
 
     //
     var fileSock = function(sockType, id){
@@ -14,37 +31,37 @@ angular.module('githelp.controllers.texteditor', [])
     fileSock.prototype = Object.create(Socks.prototype);
 
     fileSock.prototype.event_file = function(messageData){
-      console.log(messageData);
       var files = messageData;
       files.forEach(function(file) {
-        if (file.name in $scope.returnedFiles) {
+        $scope.fileCount++;
+
+        if (file.name in $scope.allFiles) {
           $scope.sameNameCollection[file.name]++;
           var newFileName = file.name + $scope.sameNameCollection[file.name];
-          $scope.returnedFiles[file.name] = newFileName;
+          $scope.allFiles[file.name] = newFileName;
         } else {
           $scope.sameNameCollection[file.name] = 0;
-          $scope.returnedFiles[file.name] = file;
+          $scope.allFiles[file.name] = file;
         }
-        $scope.returnedFiles[file.name].active = true;
-        $scope.session.$add($scope.returnedFiles[file.name])
+        $scope.allFiles[file.name].active = true;
+        $scope.allFiles[file.name].fileCount = $scope.fileCount;
+        $scope.session.$add($scope.allFiles[file.name])
         .then(function(ref) {
-          // var textEditor = $scope.session.$child(ref.name());
-          // textEditor.$set({'_id': ref.name()});
-          $scope.returnedFiles[file.name]._id = ref.name();
+          $scope.allFiles[file.name]._id = ref.name();
         });
-
       }) //files.forEach
+      var oldFileData = firepad.getText();
+      var oldFileRef = new Firebase(FIREBASE_URL + $scope.sessionId +'/'+ $scope.currentSessionId);
+      oldFileRef.update({data: oldFileData});
+
+      $scope.currentSessionId = files[0]._id;
       firepad.setText(files[0].data);
+      editor.gotoLine(0,0,true);
       $scope.$apply();
     };
 
-    var counter = 0
     fileSock.prototype.event_addTab = function(){
-      // create new files here
-      // add to existing firepad
-      var ref = new Firebase(FIREBASE_URL + $scope.sessionId);
-      ref.set({name: 'empty_'+counter, type: 'text/plain', active: true, data: ''});
-      $scope.returnedFiles[ref.name] = ref;
+      $scope.session.$add({name: 'empty_'+counter, type: 'text/plain', active: true, data: ''});
       counter++;
       $scope.$apply();
     }
@@ -52,12 +69,9 @@ angular.module('githelp.controllers.texteditor', [])
     fileSock.prototype.event_removeTab = function(messageData){
       var ref = new Firebase(FIREBASE_URL + $scope.sessionId + '/' +messageData);
       ref.remove();
-      for(var file in $scope.returnedFiles){
-        console.log($scope.returnedFiles[file]._id);
-        console.log(messageData);
-        if($scope.returnedFiles[file]._id === messageData){
-          console.log("hello removing tabs")
-          delete $scope.returnedFiles[file]
+      for(var file in $scope.allFiles){
+        if($scope.allFiles[file]._id === messageData){
+          delete $scope.allFiles[file]
         }
       }
       $scope.$apply();
@@ -66,41 +80,39 @@ angular.module('githelp.controllers.texteditor', [])
     var fileBot = new fileSock('file', $stateParams.sessionId);
     fileBot.init();
 
-    $scope.global = Global;
-    $scope.sameNameCollection = {};
-    $scope.returnedFiles = {};
-
     // Text Editor
     //////////////////////////////////////////////
     //////////////////////////////////////////////
     //////////////////////////////////////////////
 
-    //// Create session to hold text editors in Firebase
-    $scope.sessionId = $stateParams.sessionId;
-    // var sessionRef = new Firebase(FIREBASE_URL + $scope.sessionId);
-    var firepadRef = new Firebase(FIREBASE_URL + $scope.sessionId);
-
-    $scope.session = $firebase(firepadRef);
-
     //// Create ACE
-    var editor = ace.edit("firepad-container");
+    var editor = ace.edit("firepad-container0");
     editor.setTheme("ace/theme/twilight");
     var session = editor.getSession();
     session.setUseWrapMode(true);
     session.setUseWorker(false);
     session.setMode("ace/mode/javascript");
-
     //// Create Firepad.
     var firepad = Firepad.fromACE(firepadRef, editor);
-
     //// Initialize contents.
     firepad.on('ready', function() {
       if (firepad.isHistoryEmpty()) {
-        firepad.setText('function sayHello(name) {\n  return "Hello, " + name;\n}');
+        firepad.setText('console.log("hello, world");');
+        var currentText = firepad.getText();
+        $scope.allFiles['hello_world_example'] = {
+          name: 'hello_world.js',
+          type: 'text/javascript',
+          data: currentText
+        }
+        $scope.session.$add($scope.allFiles['hello_world_example'])
+        .then(function(ref) {
+          $scope.allFiles['hello_world_example']._id = ref.name();
+          $scope.currentSessionId = ref.name();
+        });
       };
     });
 
-    // File Upload
+    // FILE FUNCTIONS
     //////////////////////////////////////////////
     //////////////////////////////////////////////
     //////////////////////////////////////////////
@@ -122,15 +134,21 @@ angular.module('githelp.controllers.texteditor', [])
         params: {numFiles: $scope.files.length}
       })
       .success(function(files) {
-        console.log("this is the success");
-        console.log(files instanceof Array);
         fileBot.sockjs_send('file', files);
       }) // success
     };
 
     $scope.goToFile = function(_id) {
       var file = $scope.session.$child(_id);
+      var oldFileData = firepad.getText();
+      var oldFileRef = new Firebase(FIREBASE_URL + $scope.sessionId +'/'+ $scope.currentSessionId);
+      oldFileRef.update({data: oldFileData});
       firepad.setText(file.data);
+
+      $scope.currentSessionId = _id;
+      // var myRe = /text[/]/g;
+      // var fileFormat = file.type.replace(myRe, '');
+      // session.setMode("ace/mode/" + fileFormat);
     };
 
     $scope.removeTab = function(_id){
@@ -141,14 +159,14 @@ angular.module('githelp.controllers.texteditor', [])
       fileBot.sockjs_send('addTab');
     };
     // $scope.showTab = function(file){
-    //   $scope.returnedFiles[file.name].active = !$scope.returnedFiles[file.name].active;
+    //   $scope.allFiles[file.name].active = !$scope.allFiles[file.name].active;
     // };
 
     // $scope.storeCurrentPage = function() {
     //   var lines = Document.get
     // };
 
-    // Video/Audio Calls
+    // VIDEO/AUDIO CALLS
     //////////////////////////////////////////////
     //////////////////////////////////////////////
     //////////////////////////////////////////////
@@ -170,19 +188,6 @@ angular.module('githelp.controllers.texteditor', [])
                                    {width:defaultWidth, height:defaultHeight});
 
     publisher.publishVideo(false);
-  // $scope.audioOnly = function() {
-  //   $scope.videoEnabled = false;
-  //   $(videos).hide();
-  //   publisher.publishVideo(false);
-  // }
-  // $scope.enableVideo = function() {
-  //   $scope.videoEnabled = true;
-  //   publisher.publishVideo(true);
-  //   $(videos).show();
-  // };
-  // var subscriber = session.subscribe(stream,
-  //                                  "videos",
-  //                                  {width:100, height:100});
 
       // Event Listeners: enable the OpenTok controller to send events to JavaScript functions
       var subscribeToStreams = function(streams) {
