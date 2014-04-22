@@ -280,8 +280,9 @@ angular.module('githelp.controllers.user', [])
     var bankAccountHandler = function(bankAccount){
       console.log(bankAccount)
       if(bankAccount.errors){
-        console.log(bankAccount.errors);
-        throw bankAccount.errors;
+        console.log(bankAccount.errors[0].description);
+        // add error message banner
+        throw bankAccount.errors[0].description;
       }
       balancedBank = bankAccount.bank_accounts[0].id;
       $http.post('/create/ba', {balancedBank: balancedBank})
@@ -319,7 +320,8 @@ angular.module('githelp.controllers.user', [])
       $http.delete('/delete/ba/' + $scope.global.user.balancedBank).success(function(response) {
         console.log('DELETE BANK SUCCESS', response.bank);
         $scope.user = response.user;
-        $scope.banner.bank = "Successfully deleted bank account";
+        // $scope.banners.push({type: 'success', msg: "Successfully deleted bank account"});
+        // $scope.banner.bank = "Successfully deleted bank account";
         $scope.submittedDeleteBank = true;
         $scope.ba.name = "";
         $scope.ba.routing_number = "";

@@ -1,17 +1,28 @@
 <!-- BANK ACCT FORM -->
 <div ng-init="showBank()" class='container profile' style='padding-top: 10px'>
-  <h4 ng-show="banner">{{banner.bank}}</h4>
+  <!-- <h4 ng-show="banner">{{banner.bank}}</h4> -->
+<!--   <alert ng-repeat="alert in banners" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert> -->
   <h4 ng-hide="global.user.balancedBank || submittedBank">{{required.bank}}</h4>
-  <form ng-hide="global.user.balancedBank || submittedBank" class="container form-group" ng-submit="createBank()">
+  <form role='form' ng-hide="global.user.balancedBank || submittedBank" class="container form-group" ng-submit="createBankAccount()">
     <input class='form-control' style='width:300px' type="text" id="ba-name" autocomplete="off" ng-model="ba.name" required placeholder="Account Holder's Name">
+    <br>
+    <div class='form-group' style='width:300px'>
+<!--       <input type="text" class='form-control' style='width:300px' id="ba-type" autocomplete="off" ng-model="ba.account_type" required placeholder="Checking or Savings" /> -->
+      <label class='radio-inline'>
+        <input type="radio" name="account_type" ng-model="ba.account_type" value="checking" checked>
+        Checking
+      </label>
+      <label class='radio-inline'>
+        <input type="radio" name="account_type" ng-model="ba.account_type" value="savings">
+        Savings
+      </label>
+    </div>
     <br>
     <div>
       <input type="text" class='form-control' style='width:300px' id="ba.routing" autocomplete="off" ng-model="ba.routing_number" required placeholder="Routing Number" />
     </div>
     <br>
     <div>
-      <input type="text" class='form-control' style='width:300px' id="ba-type" autocomplete="off" ng-model="ba.account_type" required placeholder="Checking or Savings" />
-      <br>
       <input type="text" class='form-control' style='width:300px' id="ba-number" autocomplete="off" ng-model="ba.account_number" required placeholder="Account Number" />
     </div>
     <br>
