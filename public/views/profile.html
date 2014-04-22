@@ -11,7 +11,8 @@
       <h2 data-ng-show = "user.github.blog" class="username"><a href="{{user.github.blog}}"><i class="fa fa-link"></i> {{user.github.blog}}</a></h2>
 
       <!-- See this only when you visit your own profile -->
-      <h4 class='price'><edit-in-place value="user.ppm"></edit-in-place></h4>
+      <h4 class='price' data-ng-show="user._id === global.user._id"><edit-in-place value="user.ppm"></edit-in-place></h4>
+      <h4 class='price' data-ng-hide="user._id === global.user._id">${{user.ppm}}/min</h4>
       <h4 class='price'>${{user.ppm * 60}}/hour</h4>
     </div>
 
@@ -21,7 +22,7 @@
     <div data-ng-hide="user">
       <h1>This user does not yet have an account</h1>
     </div>
-    <div data-ng-show="user && !user.balancedBank && user._id !== global.user._id" class='no-account-button headline'>
+    <div data-ng-show="user && !user.balancedBank && user._id !== global.user._id" class='no-account-button headline' data-ng-controller="ModalController" data-ng-click="openMessageModal()">
       <p>Cannot accept calls yet!</p>
     </div>
     <div data-ng-show="user && !user.balancedBank && user._id == global.user._id" class='setup-button headline' data-ng-controller="ModalController" data-ng-click="openAccountModal()">

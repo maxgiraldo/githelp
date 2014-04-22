@@ -155,7 +155,7 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
     var deferred = $q.defer();
     console.log('in checkbalancedcard');
     var user = Global.user;
-    if(user.BalancedCard) {
+    if(user.balancedCard) {
       console.log('resolved');
       $timeout(function() {
         deferred.resolve();
