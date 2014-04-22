@@ -25,7 +25,7 @@
     <div data-ng-show="user && !user.balancedBank && user._id !== global.user._id" class='no-account-button headline' data-ng-controller="ModalController" data-ng-click="openMessageModal()">
       <p>Cannot accept calls yet!</p>
     </div>
-    <div data-ng-show="user && !user.balancedBank && user._id == global.user._id" class='setup-button headline' data-ng-controller="ModalController" data-ng-click="openAccountModal()">
+    <div data-ng-show="global.user && !global.user.balancedBank && user._id === global.user._id" class='setup-button headline' data-ng-controller="ModalController" data-ng-click="openAccountModal()">
       <p>Start Accepting Calls!</p>
     </div>
     <!-- User's public repos -->

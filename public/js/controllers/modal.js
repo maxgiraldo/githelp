@@ -4,12 +4,20 @@ angular.module('githelp.controllers.modal', [])
     '$location',
     '$http',
     '$modal',
+    '$log',
     'Global',
-    function($scope, $location, $http, $modal, Global) {
+    function($scope, $location, $http, $modal, $log, Global) {
       $scope.global = Global;
+
+      $scope.alerts = {
+        bank: []
+      }
 
       var ModalInstanceController = function($scope, Global, $modalInstance) {
         $scope.global = Global;
+        $scope.alerts = {
+          bank: []
+        };
         var cardHandler = function(card){
           if(card.errors){
             console.log(card.errors);
@@ -32,13 +40,17 @@ angular.module('githelp.controllers.modal', [])
         var bankAccountHandler = function(bankAccount){
           console.log(bankAccount)
           if(bankAccount.errors){
-            console.log(bankAccount.errors);
-            throw bankAccount.errors;
+            var errorMsg = bankAccount.errors[0].description;
+            console.log(errorMsg);
+            $scope.alerts.bank.push({type: 'danger', msg: errorMsg });
+            throw errorMsg;
           }
           balancedBank = bankAccount.bank_accounts[0].id;
           $http.post('/create/ba', {balancedBank: balancedBank})
             .success(function(user){
               $scope.global.user = user;
+              // $scope.submittedValidBank = true;
+              // $scope.alerts.bank.push({type: 'success', msg: 'Successfully linked bank account'});
               $modalInstance.close(user);
             })
             .error(function(err){
@@ -61,16 +73,16 @@ angular.module('githelp.controllers.modal', [])
           balanced.bankAccount.create(payload, bankAccountHandler)
         };
 
-        $scope.createCard = function(){
-          var payload = {
-            name: this.name,
-            number: this.number,
-            expiration_month: this.expiration_month,
-            expiration_year: this.expiration_year,
-            security_code: this.security_code
-          };
-          balanced.card.create(payload, cardHandler);
-        };
+        // $scope.createCard = function(){
+        //   var payload = {
+        //     name: this.name,
+        //     number: this.number,
+        //     expiration_month: this.expiration_month,
+        //     expiration_year: this.expiration_year,
+        //     security_code: this.security_code
+        //   };
+        //   balanced.card.create(payload, cardHandler);
+        // };
       };
 
       $scope.openAccountModal = function() {
