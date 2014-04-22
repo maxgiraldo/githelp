@@ -167,22 +167,6 @@ exports.createBank = function(req, res) {
   });
 };
 
-exports.createBalanceUser = function(userObj, done) {
-  balanced.marketplace.customers.create({
-    "name": userObj.name,
-    "email": userObj.fullName
-  }).then(function(data){
-    userObj.balancedUser = data.toJSON().id;
-    userObj.save();
-    done();
-    // res.redirect('/')
-  }, function(err) {
-    console.log(err);
-    console.log('unable to create BalanceUser');
-    res.send(400, 'Unable to create BalanceUser');
-  });
-};
-
 /*
 https://docs.balancedpayments.com/1.0/overview/resources/#test-credit-card-numbers
 https://docs.balancedpayments.com/1.1/api/bank-accounts/#create-a-bank-account-direct
