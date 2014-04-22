@@ -14,6 +14,12 @@ angular.module('githelp.controllers.user', [])
     }
     // $scope.placeholder = user.contactEmail || "E-mail Address";
     $scope.banners = [];
+
+    $scope.alerts = {
+      card: [],
+      bank: []
+    };
+
     $scope.members = [];
     $scope.userName = $stateParams.userName;
     $scope.emailInfo = {
@@ -244,7 +250,7 @@ angular.module('githelp.controllers.user', [])
     $scope.submittedDeleteCard = false;
 
     $scope.submittedCreateBank = false;
-    $scope.submittedBank = false;
+    $scope.submittedValidBank = false;
 
     var cardHandler = function(card){
       console.log(card);
@@ -255,16 +261,19 @@ angular.module('githelp.controllers.user', [])
       $http.post('/create/cc', {balancedCard: balancedCard})
         .success(function(user){
           $scope.global.user = user;
+          $scope.submittedValidCard = true;
+          $scope.alerts.card.push({type: 'success', msg: 'Successfully added credit card'});
         })
         .error(function(err){
           console.log(err);
-          $scope.banners.push({type: 'danger', msg: err});
-        })
+          // $scope.banners.push({type: 'danger', msg: err});
+          $scope.alerts.card.push({type: 'danger', msg: err});
+        });
     };
 
-    $scope.closeAlert = function(index) {
-      $scope.banners.splice(index, 1);
-    };
+    // $scope.closeAlert = function(index) {
+    //   $scope.banners.splice(index, 1);
+    // };
 
     $scope.createCard = function(){
       var payload = {
@@ -280,19 +289,32 @@ angular.module('githelp.controllers.user', [])
     var bankAccountHandler = function(bankAccount){
       console.log(bankAccount)
       if(bankAccount.errors){
-        console.log(bankAccount.errors[0].description);
+        var errorMsg = bankAccount.errors[0].description;
+        console.log(errorMsg);
         // add error message banner
-        throw bankAccount.errors[0].description;
+        $scope.alerts.bank.push({type: 'danger', msg: errorMsg });
+        throw errorMsg;
       }
       balancedBank = bankAccount.bank_accounts[0].id;
       $http.post('/create/ba', {balancedBank: balancedBank})
         .success(function(user){
           $scope.global.user = user;
+          $scope.submittedValidBank = true;
+          $scope.alerts.bank.push({type: 'success', msg: 'Successfully linked bank account'});
         })
         .error(function(err){
           console.log(err);
         })
     };
+
+    $scope.closeCardAlert = function(index) {
+      $scope.alerts.card.splice(index, 1);
+    };
+
+    $scope.closeBankAlert = function(index) {
+      $scope.alerts.bank.splice(index, 1);
+    };
+
 
     $scope.createBankAccount = function(){
       var payload = {
@@ -309,9 +331,9 @@ angular.module('githelp.controllers.user', [])
       console.log('in deleteCard');
       $http.delete('/delete/cc/' + $scope.global.user.balancedCard).success(function(response) {
         console.log('DELETE CARD SUCCESS', response.card);
-        $scope.user = response.user;
+        $scope.global.user = response.user;
         $scope.submittedDeleteCard = true;
-        $scope.banner.card = "Successfully deleted credit card";
+        $scope.alerts.card.push({type: 'success', msg: 'Successfully deleted credit card'});
       });
     };
 
@@ -319,7 +341,8 @@ angular.module('githelp.controllers.user', [])
       console.log('in deleteBank');
       $http.delete('/delete/ba/' + $scope.global.user.balancedBank).success(function(response) {
         console.log('DELETE BANK SUCCESS', response.bank);
-        $scope.user = response.user;
+        $scope.global.user = response.user;
+        $scope.alerts.bank.push({type: 'success', msg: "Successfully deleted bank account"});
         // $scope.banners.push({type: 'success', msg: "Successfully deleted bank account"});
         // $scope.banner.bank = "Successfully deleted bank account";
         $scope.submittedDeleteBank = true;
@@ -356,7 +379,7 @@ angular.module('githelp.controllers.user', [])
       $http.post('/submitEmail', $scope.emailInfo).success(function(user) {
         console.log('successfully submitted email');
         console.log(user);
-        $scope.user = user; // refreshes the global user for submitted email
+        $scope.global.user = user; // refreshes the global user for submitted email
         $scope.tempAddress = user.contactEmail;
         $scope.submittedEmail = true;
         $scope.banner.email = "Thank you for submitting your email";

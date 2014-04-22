@@ -143,14 +143,14 @@ exports.createCard = function(req, res) {
       }
       user.balancedCard = req.body.balancedCard;
       user.save();
-      balanced.get('/cards/'+user.balancedCard).associate_to_customer('/customers/'+user.balancedUser)
-        .then(function(card){
-          console.log('post associate', card);
+      // balanced.get('/cards/'+user.balancedCard).associate_to_customer('/customers/'+user.balancedUser)
+      //   .then(function(card){
+      //     console.log('post associate', card);
           res.jsonp(user);
-        }, function(err) {
-          console.log(err);
-          console.log('Could not associate customer to balancedUser');
-        });
+      //   }, function(err) {
+      //     console.log(err);
+      //     console.log('Could not associate customer to balancedUser');
+      //   });
     });
   });
 };
@@ -159,11 +159,11 @@ exports.createBank = function(req, res) {
   User.findOne({_id: req.user._id}, function(err, user) {
     user.balancedBank = req.body.balancedBank;
     user.save();
-    balanced.get('/bank_accounts/'+user.balancedBank).associate_to_customer('/customers/'+user.balancedUser)
-      .then(function(account){
-        console.log(account.toJSON());
+    // balanced.get('/bank_accounts/'+user.balancedBank).associate_to_customer('/customers/'+user.balancedUser)
+    //   .then(function(account){
+    //     console.log(account.toJSON());
         res.jsonp(user);
-      });
+      // });
   });
 };
 
