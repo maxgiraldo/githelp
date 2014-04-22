@@ -71,7 +71,7 @@ angular.module('githelp.controllers.texteditor', [])
       ref.remove();
       for(var file in $scope.allFiles){
         if($scope.allFiles[file]._id === messageData){
-          delete $scope.allFiles[file]
+          delete $scope.allFiles[file];
         }
       }
       $scope.$apply();

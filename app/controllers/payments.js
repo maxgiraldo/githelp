@@ -29,7 +29,7 @@ var debitCard = function(appt, credit){
       to: appt.customer.email,
       merchantUserName: appt.merchant.userName,
       duration: appt.duration,
-      amount: (appt.payment.amount / 100.0).toFixed(2)
+      amount: (appt.payment.totalAmount / 100.0).toFixed(2)
     };
     console.log(done);
     mailer.sendDebitEmail(debitOptions, done);

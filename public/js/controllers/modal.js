@@ -87,6 +87,21 @@ angular.module('githelp.controllers.modal', [])
           });
         };
       };
+
+      // send a 'sent' alert in green
+
+      $scope.openMessageModal = function() {
+        var modalInstance = $modal.open({
+          templateUrl: 'views/partials/messageModal.html',
+          controller: ModalInstanceController
+        });
+
+        modalInstance.result.then(function(user){
+          $scope.user = user;
+        }, function(){
+          $log.info('Modal dismissed at: ' + new Date());
+        });
+      }
     }
   ]);
 // Please note that $modalInstance represents a modal window (instance) dependency.
