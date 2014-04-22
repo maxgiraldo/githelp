@@ -1,4 +1,11 @@
 /** Main styles go here **/
+// Directory:
+// HOMEPAGE
+// NAV
+// PROFILE
+// APPOINTMENTS
+// TEXT-EDITOR
+
 $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 @import 'sass-bootstrap/lib/bootstrap';
 html {
@@ -58,7 +65,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-right: auto;
 }
 
-// Homepage Main Content
+// HOMEPAGE
+///////////////////////
+///////////////////////
+///////////////////////
 .jumbotron h1 {
   font-size: 17px;
   line-height: 1;
@@ -68,9 +78,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 .jumbotron {
   background: #fff;
-  // border-radius: 0;
-  // -webkit-box-shadow: 0 1px 1px 1px #E8E8E8;
-  // box-shadow: 0 1px 1px 1px #E8E8E8;
 }
 
 .container.search-bg {
@@ -99,16 +106,19 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   cursor: pointer;
   margin-top: 25px;
 }
-//// Type
-// Main type on page, e.g. h1 tags
+
 .headline {
+  text-align: center;
   font-style: normal;
-  line-height: normal;
+  line-height: 200%;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-//// Navigation
+// NAV
+///////////////////////
+///////////////////////
+///////////////////////
 #custom-navbar {
   margin-top: 20px;
   margin-bottom: 0px;
@@ -120,6 +130,28 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   padding: 0;
   font-size: 12px;
   color: #fff;
+}
+// #77cc33
+// #67b22b
+.border-btn-confirm {
+  border: 2px solid #77cc33;
+  border-radius: 5px;
+  &:hover {
+    border: 2px solid #67b22b;
+  }
+}
+.border-btn {
+  border: 2px solid #ffffff;
+  border-radius: 5px;
+  // &:hover {
+  //   border: 2px solid #777777;
+  // }
+}
+#sign-up {
+   color: #6fbf2e;
+  &:hover {
+    color: #5da125;
+  }
 }
 
 .avatar {
@@ -159,7 +191,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .navbar-nav > li > a {
   padding-top: 15px;
   padding-bottom: 15px;
-  padding-left: 90px;
 }
 
 .navbar-nav-min > li > a {
@@ -170,6 +201,13 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .navbar-nav-min > li > a:hover {
   background-color: #2b2b2b;
 }
+
+// .navbar-default .navbar-nav > li > a {
+//   color: #77cc33;
+//   &:hover {
+//     color: #67b22b;
+//   }
+// }
 
 .navbar-right a {
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B';
@@ -205,7 +243,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   text-align: right;
   vertical-align: top;
 }
-// Nav bar
 .navbar {
   position: relative;
   min-height: 50px;
@@ -281,7 +318,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   color: #b3babe;
 }
 
-// Appointments page
+// APPOINTMENTS
+///////////////////////
+///////////////////////
+///////////////////////
 
 .appointment-scroll-wrapper {
   overflow: auto;
@@ -338,7 +378,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-right: 200px;
   text-align: center;
 }
-// Profile page
+// PROFILE
+///////////////////////
+///////////////////////
+///////////////////////
 
 // Edit PPM
 .edit-in-place span {
@@ -603,7 +646,11 @@ h1.full-name {
 .chat-box {
   width: 300px;
 }
-// Session
+
+// TEXT-EDITOR
+///////////////////////
+///////////////////////
+///////////////////////
 .session-info {
   margin-top:40px;
   text-align:center;
@@ -811,17 +858,11 @@ h1.full-name {
   width: 60vw;
   height: 90vh;
   position: relative;
-  // -moz-box-shadow: 0 1px 5px 1px #d0d0d0;
-  // -webkit-box-shadow: 0 1px 5px 1px #d0d0d0;
-  // box-shadow: 0 1px 5px 1px #d0d0d0;
-  // width: 60vw;
 }
 
 .firepad {
    /*Default height for a firepad.*/
   position: relative;
-  // height: 500px;
-  // width: 1024px;
 }
 
 .firepad {
