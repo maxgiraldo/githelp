@@ -1,7 +1,35 @@
 <section data-ng-controller="UserController" data-ng-init="findOne()" ui-view>
   <section data-ng-include="'views/partials/navbar.html'"></section>
+  <div class='container main-content-spacing'>
+    <div class='row'>
+      <div class='col-md-3 avatar-padding'>
+        <img class='avatar-lg' src='{{user.github.avatar_url}}'/>
+      </div>
+      <div class='col-md-6'>
+        <div class='profile-id'>
+          <div class='profile-name'>
+            <h1 class='headline full-name'>{{user.fullName}}</h1>
+            <h2 class='username'><a href="http://www.github.com/{{user.userName}}"><i class="fa fa-github"></i> {{user.userName}}</a></h2>
+            <div class='row supp-info'>
+              <div class='col-md-4'>
+                <p><i class="fa fa-map-marker"></i> New York, NY</p>
+              </div>
+              <div class='col-md-3'>
+                <p><i class="fa fa-clock-o"></i> 9:26AM</p>
+              </div>
+            </div>
+          </div> <!-- profile-name -->
+        </div> <!-- profile-id -->
+      </div> <!-- col-md-4 -->
+    </div> <!-- row -->
+  </div> <!-- container -->
 
-  <div class="container profile">
+</section>
+
+
+
+
+<!-- <div class="container profile">
     <div>
       <img class='avatar-lg' src='{{user.github.avatar_url}}'>
     </div>
@@ -10,7 +38,6 @@
       <h2 class='username'><a href="http://www.github.com/{{user.userName}}"><i class="fa fa-github"></i> {{user.userName}}</a></h2>
       <h2 data-ng-show = "user.github.blog" class="username"><a href="{{user.github.blog}}"><i class="fa fa-link"></i> {{user.github.blog}}</a></h2>
 
-      <!-- See this only when you visit your own profile -->
       <h4 class='price' data-ng-show="user._id === global.user._id"><edit-in-place value="user.ppm"></edit-in-place></h4>
       <h4 class='price' data-ng-hide="user._id === global.user._id">${{user.ppm}}/min</h4>
       <h4 class='price'>${{user.ppm * 60}}/hour</h4>
@@ -28,9 +55,7 @@
     <div data-ng-show="global.user && !global.user.balancedBank && user._id === global.user._id" class='setup-button headline' data-ng-controller="ModalController" data-ng-click="openAccountModal()">
       <p>Start Accepting Calls!</p>
     </div>
-    <!-- User's public repos -->
     <p data-ng-show="repoList.length > 0" class='caps-sub-header'>{{user.github.public_repos.length}} public repositories</p>
-    <!-- <div ng-repeat="repo in repos"> -->
     <div>
       <ul class='repo-links'>
         <li data-ng-repeat="repo in repoList" data-ng-show="!repo.fork"><a href="/#!/{{userName}}/repos/{{repo.name}}">{{repo.name}}</a></li>
@@ -38,7 +63,6 @@
     </div>
     <p data-ng-show="conList.length > 0" class='caps-sub-header'>top {{conList.length}} repositories contributed to</p>
 
-    <!-- User's top contributions -->
     <div>
       <ul class='repo-links'>
         <li data-ng-repeat="repo in conList"><a href="/#!/{{repoAuthor(repo)}}/repos/{{repoName(repo)}}">{{repoName(repo)}}</a></li>
@@ -49,5 +73,4 @@
       <p data-ng-show="user.email" class='caps-sub-header'>Email: {{user.email}}</p>
       <p class='caps-sub-header'>Followers: {{user.github.followers}}</p>
     </div>
-  </div>
-</section>
+  </div> -->

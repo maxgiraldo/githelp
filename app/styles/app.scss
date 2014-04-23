@@ -1,5 +1,6 @@
 /** Main styles go here **/
 // Directory:
+// SITE-WIDE
 // HOMEPAGE
 // NAV
 // PROFILE
@@ -10,14 +11,6 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 @import 'sass-bootstrap/lib/bootstrap';
 html {
   height: 100%;
-}
-#githelp-search-bar {
-  margin-left: 450px;
-  width: 250px;
-}
-#githelp-search-bar-submit {
-  margin-left: 615px;
-  margin-top: 10px;
 }
 body {
   background: #fff;
@@ -33,7 +26,7 @@ body {
   border: 0;
 }
 h1 {
-  font-size: 17px;
+  font-size: 24px;
   line-height: 1;
   color: inherit;
 }
@@ -65,10 +58,21 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-right: auto;
 }
 
+// SITE-WIDE
+///////////////////////
+///////////////////////
+///////////////////////
+.main-content-spacing {
+  margin-top: 40px;
+}
+
 // HOMEPAGE
 ///////////////////////
 ///////////////////////
 ///////////////////////
+.homepage-wrapper {
+  margin-top: 100px;
+}
 .jumbotron h1 {
   font-size: 17px;
   line-height: 1;
@@ -114,6 +118,24 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
+// SEARCHBAR
+.search-area {
+
+}
+#githelp-search-bar {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 15px;
+  width: 65%;
+  height: 50px;
+}
+#githelp-search-bar-submit {
+  width: 30%;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 15px;
+}
 
 // NAV
 ///////////////////////
@@ -134,25 +156,24 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 // #77cc33
 // #67b22b
 .border-btn-confirm {
-  border: 2px solid #77cc33;
+  border: 1px solid #77cc33;
   border-radius: 5px;
   &:hover {
-    border: 2px solid #67b22b;
+    background-color: #77cc33;
+    border: 1px solid #77cc33;
   }
-}
-.border-btn {
-  border: 2px solid #ffffff;
-  border-radius: 5px;
-  // &:hover {
-  //   border: 2px solid #777777;
-  // }
 }
 #sign-up {
    color: #6fbf2e;
   &:hover {
-    color: #5da125;
+    color: #fff;
   }
 }
+.border-btn {
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+}
+
 
 .avatar {
   width: 30px;
@@ -406,6 +427,20 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   // background-color: #d7d7d7;
   width: 350px;
 }
+.profile-id {
+  margin-left: 10px;
+}
+.profile-name {
+  padding: 0;
+  margin: 0;
+}
+.supp-info {
+  margin-top: 15px;
+  font-size: 15px;
+}
+.avatar-padding {
+  width: 20%;
+}
 .bold-description {
   color: #000;
 }
@@ -414,18 +449,20 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 .avatar-lg {
   border-radius: 60px;
-  width: 110px;
-  height: 110px;
+  width: 200px;
+  height: 200px;
 }
 .profile-name-info {
   color: #000;
 }
 .full-name {
+  text-align: left;
   font-size: 30px;
   margin-bottom: 5px;
+  line-height: 100%;
 }
 .username {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 400;
   color: #008cdd;
   letter-spacing: 0;
