@@ -30,22 +30,23 @@ var bankFormObj = {
   'account_number': '9900000001'
 };
 
-exports.createCard = function(cardFormObj) {
-  balanced.marketplace.cards.create(cardFormObj)
-  .then(function(card) {
-    console.log('CARD ', card.toJSON());
-  }, function(err) {
-    console.log(err);
-  });
-};
+// exports.createCard = function(cardFormObj) {
+//   balanced.marketplace.cards.create(cardFormObj)
+//   .then(function(card) {
+//     console.log('CARD ', card.toJSON());
+//   }, function(err) {
+//     console.log('err in create card', err);
+//   });
+// };
 
 exports.fetchCard = function(cardHref, done) {
   balanced.get(cardHref)
   .then(function(card) {
     console.log('CARD ', card);
-    done(card);
+    done(null, card);
   }, function(err) {
-    console.log(err);
+    console.log('err in fetch card', err);
+    done(err);
   });
 };
 
@@ -53,22 +54,23 @@ exports.fetchBank = function(bankHref, done) {
   balanced.get(bankHref)
   .then(function(bank) {
     console.log('BANK ', bank);
-    done(bank);
+    done(null, bank);
   }, function(err) {
-    console.log(err);
+    console.log('err in fetch bank', err);
+    done(err);
   });
 };
 
 // exports.createCard(cardFormObj);
 
-exports.createBankAccount = function(bankFormObj) {
-  balanced.marketplace.bank_accounts.create(bankFormObj)
-  .then(function(account) {
-    console.log('ACCOUNT ', account.toJSON());
-  }, function(err) {
-    console.log(err);
-  });
-};
+// exports.createBankAccount = function(bankFormObj) {
+//   balanced.marketplace.bank_accounts.create(bankFormObj)
+//   .then(function(account) {
+//     console.log('ACCOUNT ', account.toJSON());
+//   }, function(err) {
+//     console.log('err in create bank', err);
+//   });
+// };
 
 // exports.createBankAccount(bankFormObj);
 
@@ -185,7 +187,6 @@ exports.deleteCard = function(cardHref, done) {
     return card.unstore().then(function() {
       return balanced.get(cardHref).then(function(card) { // returns deleted card
         console.log('Deleted card:', card);
-        // $scope.global.user = user; // refreshes the global user for submitted email
         done(card);
       });
     });
@@ -196,7 +197,7 @@ exports.deleteBank = function(bankHref, done) {
   console.log('in balanced func delete bank');
   balanced.get(bankHref).then(function(bank) {
     return bank.unstore().then(function() {
-      return balanced.get(bankHref).then(function(bank) { // returns deleted card
+      return balanced.get(bankHref).then(function(bank) { // returns deleted bank
         console.log('Deleted bank:', bank);
         done(bank);
       });

@@ -16,6 +16,16 @@
         Savings
       </label>
     </div>
+    <div style='width:300px'>
+      <accordion>
+        <accordion-group is-open="isopen">
+          <accordion-heading>
+            Find routing/account numbers <i class="fa fa-angle-right"></i>
+          </accordion-heading>
+          <img src='/images/check_image.png' style="width: 100%"/>
+        </accordion-group>
+      </accordion>
+    </div>
     <br>
     <div>
       <input type="text" class='form-control' style='width:300px' id="ba.routing" autocomplete="off" ng-model="ba.routing_number" required placeholder="Routing Number" />
@@ -25,10 +35,12 @@
       <input type="text" class='form-control' style='width:300px' id="ba-number" autocomplete="off" ng-model="ba.account_number" required placeholder="Account Number" />
     </div>
     <br>
+    <br>
     <input ng-hide="global.user.balancedBank" style='margin-right: 850px' type="submit" class="btn btn-success" value="Submit" id="ba-submit">
   </form>
+  <h6 ng-hide="global.user.balancedBank">Payments may be delayed 3-5 business days if incorrect information is provided.</h6>
     <!-- Approved Bank -->
-  <div ng-show="global.user.balancedBank && !submittedDeleteBank || submittedValidBank">
+  <div ng-show="global.user.balancedBank || !submittedDeleteBank && submittedValidBank">
     <h4>Your <b>{{savedBank.bank_name}} {{savedBank.lastFourDigits}}</b> is linked to this account</h4>
     <br>
     <form ng-hide="submittedDeleteBank" class="container form-group">

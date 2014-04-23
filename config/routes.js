@@ -27,7 +27,7 @@ var githubCallbackURL;
 if (process.env.NODE_ENV === 'production'){
   githubCallbackURL = process.env.GITHUB_CALLBACK || 'http://githelp.herokuapp.com/auth/github/callback';
 } else{
-  githubCallbackURL = 'http://localhost:3000/auth/github/callback';
+  githubCallbackURL = 'http://172.18.74.237:3000/auth/github/callback';
 }
 
 passport.use(new GitHubStrategy({
