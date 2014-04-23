@@ -1,5 +1,5 @@
 <div class='container profile' style='padding-top: 10px'>
-  <h4 ng-show="banner">{{banner.email}}</h4>
+  <alert ng-repeat="alert in alerts.email" type="alert.type" close="closeEmailAlert($index)">{{alert.msg}}</alert>
   <h4 ng-hide="user.contactEmail || submittedEmail">{{required.email}}</h4>
   <form ng-hide="submittedEmail" class="container form-group" ng-submit="submitEmail()">
     <input type="email" ng-model="emailInfo.address" class='form-control' style='width:300px' id="email" autocomplete="off" required placeholder="{{placeholder()}}" />

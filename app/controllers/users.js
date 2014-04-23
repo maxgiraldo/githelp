@@ -14,6 +14,9 @@ var User = mongoose.model('User');
 var Chatroom = mongoose.model('Chatroom');
 var Appointment = mongoose.model('Appointment');
 
+
+balanced.configure('ak-test-1P4LCuAfcv3isFlyX9mxNXvz6bI1XNril'); // test API key for Balanced Payments
+
 exports.updatePpm = function(req, res) {
   var ppm = req.query.ppm;
   var _id = req.query._id;
@@ -24,13 +27,45 @@ exports.updatePpm = function(req, res) {
   res.send(200);
 };
 
+exports.createBalanceUser = function(userObj, done) {
+  balanced.marketplace.customers.create({
+    "name": userObj.fullName,
+    "email": userObj.contactEmail
+  }).then(function(data){
+    User.findOne({contactEmail: userObj.contactEmail}, function(err, user) {
+      console.log(user);
+      user.balancedUser = data.toJSON().id;
+      user.save(function(err, user) {
+        done();
+      });
+    })
+    // res.redirect('/')
+  }, function(err) {
+    console.log(err);
+    console.log('unable to create BalanceUser');
+    res.send(400, 'Unable to create BalanceUser');
+  });
+};
+
 exports.updateEmail = function(req, res) {
   var email = req.body.address;
   var userName = req.body.userName;
   User.findOne({userName: userName}, function(err, user) {
     user.contactEmail = email;
     user.save(function(err, user) {
-      res.jsonp(user);
+      if(user.balancedUser) {
+        res.jsonp(user);
+      } else {
+        balanced.marketplace.customers.create({
+          "name": user.fullName,
+          "email": user.contactEmail
+        }).then(function(data) {
+          user.balancedUser = data.toJSON().id;
+          user.save(function(err, user) {
+            res.jsonp(user);
+          });
+        });
+      }
     });
   });
 };
@@ -41,8 +76,8 @@ User.find({userName: 'charprattle'}, function(err, user){
       a.fullName = 'hello';
       a.save();
     }
-  })
-})
+  });
+});
 
 exports.signin = function(req, res){
   // console.log('SIGN IN REDIRECT?');
@@ -57,9 +92,10 @@ exports.clientSideAuth = function(req, res) {
 
 balanced.configure('ak-test-1P4LCuAfcv3isFlyX9mxNXvz6bI1XNril');
 
+
 exports.authCallback = function(req, res, url) {
   console.log('in authCallback'); // create Balanced acct after auth
-  if(req.user.contactEmail) {
+  if(req.user.balancedUser) {
     if(url.lastUrl && url.lastUrl2) {
       res.redirect('#!/' + url.lastUrl + '/' + url.lastUrl2);
     } else if (url.lastUrl) {
@@ -67,7 +103,17 @@ exports.authCallback = function(req, res, url) {
     } else {
       res.redirect('/');
     }
-  } else {
+  } else if(req.user.contactEmail && req.user.fullName) {
+    exports.createBalanceUser(req.user, function() {
+      if(url.lastUrl && url.lastUrl2) {
+        res.redirect('#!/' + url.lastUrl + '/' + url.lastUrl2);
+      } else if (url.lastUrl) {
+        res.redirect('#!/' + url.lastUrl);
+      } else {
+        res.redirect('/');
+      }
+    });
+  } else { // no email -- will get balancedUser token when give email
     res.redirect('#!/' + req.user.userName + '/emailrequired');
   }
 
@@ -84,6 +130,7 @@ exports.authCallback = function(req, res, url) {
   //   res.redirect('#!/' + req.user.userName + '/emailrequired');
   // }
 };
+
 
 //   console.log('in authCallback');
 //   if(req.user.balancedUser){

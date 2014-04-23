@@ -6,8 +6,8 @@ angular.module('githelp.controllers.user', [])
     // $scope.user = $scope.global.user;
     $scope.user;
     $scope.placeholder = function() {
-      if(user && user.contactEmail) {
-        return user.contactEmail;
+      if($scope.global.user && $scope.global.user.contactEmail) {
+        return $scope.global.user.contactEmail;
       } else {
         return "E-mail address";
       }
@@ -17,7 +17,8 @@ angular.module('githelp.controllers.user', [])
 
     $scope.alerts = {
       card: [],
-      bank: []
+      bank: [],
+      email: []
     };
 
     $scope.members = [];
@@ -315,6 +316,10 @@ angular.module('githelp.controllers.user', [])
       $scope.alerts.bank.splice(index, 1);
     };
 
+    $scope.closeEmailAlert = function(index) {
+      $scope.alerts.email.splice(index, 1);
+    };
+
 
     $scope.createBankAccount = function(){
       var payload = {
@@ -382,7 +387,7 @@ angular.module('githelp.controllers.user', [])
         $scope.global.user = user; // refreshes the global user for submitted email
         $scope.tempAddress = user.contactEmail;
         $scope.submittedEmail = true;
-        $scope.banner.email = "Thank you for submitting your email";
+        $scope.alerts.email.push({type: 'success', msg: "Thank you for submitting your email"});
         console.log($location.path());
         if($state.is('profile.requiredEmail')) { // redirect from omni-signup after auth
         // if($location.path() === '/' + user.userName + '/emailrequired') { // redirect from omni-signup after auth
