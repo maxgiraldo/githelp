@@ -23,7 +23,7 @@
           <div class='start-session headline' ng-click='startTimer()' ng-show='timerByAppointment[appointmentId].timerOn === false'>
             <p class='button-txt'>Start session</p>
           </div>
-          <div class='end-session headline' ng-click='stopTimer()' ng-show='timerByAppointment[appointmentId].timerOn === true'>
+          <div class='end-session headline' ng-click='endSession()' ng-show='timerByAppointment[appointmentId].timerOn === true'>
             <p class='button-txt'>End session</p>
           </div>
         </div>
@@ -35,7 +35,7 @@
       <!-- TEXT EDITOR -->
       <div class='file-view' data-ng-dblclick="addTab()">
         <ul class='files' ng-repeat='file in allFiles'>
-          <a ng-click='goToFile(file._id)'><li class='file'>{{file.name}}<span data-ng-click="removeTab(file._id)" class='file-close'><i class="fa fa-times"></i></span></li></a>
+          <a ng-click='goToFile(file)'><li class='file'>{{file.name}}<span data-ng-click="removeTab(file)" class='file-close'><i class="fa fa-times"></i></span></li></a>
         </ul>
       </div>
       <div id="firepad-container"></div>

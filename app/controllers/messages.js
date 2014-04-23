@@ -59,6 +59,21 @@ exports.createMessage = function(req, res){
   });
 };
 
+exports.directMessage = function(req, res){
+  Chatroom.findOne({ $and: [{members: req.user._id}, {members: req.body.merchant._id}]}, function(err, chatroom){
+    if(chatroom){
+      chatroom.messages.push({sender: {fullName: req.user.fullName, userName: req.user.userName, avatarUrl: req.user.avatarUrl}, content: req.body.content});
+      chatroom.save();
+      res.send(200);
+    } else{
+      var newChatroom = new Chatroom({members: [req.body.merchant._id, req.user._id]});
+      newChatroom.messages = [{sender: {fullName: req.user.fullName, userName: req.user.userName, avatarUrl: req.user.avatarUrl}, content: req.body.content}];
+      newChatroom.save();
+      res.send(200);
+    }
+  })
+}
+
 
 exports.updateChatroom = function(req, res){
   var chatroom = req.chatroom;

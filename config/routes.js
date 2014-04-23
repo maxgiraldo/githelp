@@ -121,6 +121,7 @@ module.exports = function(app) {
       lastUrl2 = ''
       users.authCallback(req, res, url);
     });
+  app.post('/directMessage', ensureLoggedIn('/signin'), messages.directMessage);
 
   app.get('/appointment', ensureLoggedIn('/signin'), appointments.appointmentsByUser);
   app.post('/appointment', ensureLoggedIn('/signin'), appointments.confirm);

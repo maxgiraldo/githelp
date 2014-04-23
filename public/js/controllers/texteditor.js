@@ -1,23 +1,25 @@
 'use strict';
 
 angular.module('githelp.controllers.texteditor', [])
- .controller('TextEditorController', ['$scope', '$state', '$http', '$stateParams', 'Global', '$firebase', 'FIREBASE_URL', 'Socks', 'Tokbox',
-    function ($scope, $state, $http, $stateParams, Global, $firebase, FIREBASE_URL, Socks, Tokbox) {
+ .controller('TextEditorController', ['$scope', '$state', '$http', '$modal', '$stateParams', 'Global', '$firebase', 'FIREBASE_URL', 'Socks', 'Tokbox',
+    function ($scope, $state, $http, $modal, $stateParams, Global, $firebase, FIREBASE_URL, Socks, Tokbox) {
 
-
+      // do array and then iterate through and check, delete if it meets
+      // the check
 
     $scope.sessionId = $stateParams.sessionId;
     var firepadRef = new Firebase(FIREBASE_URL + $scope.sessionId);
     $scope.global = Global;
     $scope.sameNameCollection = {};
-    $scope.allFiles = {};
+    $scope.allFiles = [];
     $scope.textEditorVisible = true;
     $scope.session = $firebase(firepadRef);
     $scope.fileCount = 0;
     $scope.currentSessionData;
     $scope.currentSessionId;
-
-    var counter = 0
+    $scope.currentSessionIndex;
+    $scope.fireBaseFiles = {};
+    $scope.fileIdArray = [];
 
     // Service to enable TokBox library
     Tokbox();
@@ -31,51 +33,80 @@ angular.module('githelp.controllers.texteditor', [])
     fileSock.prototype = Object.create(Socks.prototype);
 
     fileSock.prototype.event_file = function(messageData){
+      $scope.fileCount = 0;
       var files = messageData;
       files.forEach(function(file) {
-        $scope.fileCount++;
-
-        if (file.name in $scope.allFiles) {
-          $scope.sameNameCollection[file.name]++;
-          var newFileName = file.name + $scope.sameNameCollection[file.name];
-          $scope.allFiles[file.name] = newFileName;
-        } else {
-          $scope.sameNameCollection[file.name] = 0;
-          $scope.allFiles[file.name] = file;
+        file.active = true;
+        $scope.allFiles.push(file);
+        file.indexNumber = $scope.allFiles.indexOf(file);
+        if($scope.fileCount === 0){
+          $scope.currentSessionId = file._id;
+          $scope.currentSessionIndex = $scope.allFiles.indexOf(file);
         }
-        $scope.allFiles[file.name].active = true;
-        $scope.allFiles[file.name].fileCount = $scope.fileCount;
-        $scope.session.$add($scope.allFiles[file.name])
-        .then(function(ref) {
-          $scope.allFiles[file.name]._id = ref.name();
-        });
-      }) //files.forEach
-      var oldFileData = firepad.getText();
-      var oldFileRef = new Firebase(FIREBASE_URL + $scope.sessionId +'/'+ $scope.currentSessionId);
-      oldFileRef.update({data: oldFileData});
+        $scope.fileCount++;
+        $scope.fileIdArray.push(file._id);
+        $scope.fireBaseFiles[file._id] = $scope.session.$child(file._id);
 
-      $scope.currentSessionId = files[0]._id;
-      firepad.setText(files[0].data);
-      editor.gotoLine(0,0,true);
-      $scope.$apply();
+        if($scope.fileCount === files.length){
+          editor.gotoLine(0,0,true);
+        }
+      });
     };
 
-    fileSock.prototype.event_addTab = function(){
-      $scope.session.$add({name: 'empty_'+counter, type: 'text/plain', active: true, data: ''});
+    var counter = 0
+    fileSock.prototype.event_addTab = function(messageData){
+      var newTabId = messageData._id;
+      counter = messageData.counter;
+      if($scope.allFiles instanceof Array){
+        $scope.allFiles.push(messageData);
+        $scope.currentSessionIndex = $scope.allFiles.indexOf(messageData);
+      } else{
+        $scope.allFiles = [messageData];
+        $scope.currentSessionIndex = 0;
+      }
+      messageData.indexNumber = $scope.allFiles.indexOf(messageData);
+      $scope.fireBaseFiles[newTabId] = $scope.session.$child(newTabId);
+      $scope.currentSessionId = newTabId;
+      $scope.fileIdArray.push(newTabId);
+      editor.gotoLine(0,0,true);
       counter++;
-      $scope.$apply();
-    }
+    };
 
     fileSock.prototype.event_removeTab = function(messageData){
-      var ref = new Firebase(FIREBASE_URL + $scope.sessionId + '/' +messageData);
-      ref.remove();
-      for(var file in $scope.allFiles){
-        if($scope.allFiles[file]._id === messageData){
-          delete $scope.allFiles[file];
+      var counter = 0
+      $scope.allFiles.forEach(function(file){
+        console.log('event_removetab', $scope.allFiles);
+        if(file._id === messageData._id){
+          $scope.allFiles.splice(counter, 1);
+        }
+        console.log('event_removetab', $scope.allFiles);
+        counter++;
+      })
+      delete $scope.fireBaseFiles[messageData._id];
+      console.log($scope.fireBaseFiles);
+      if($scope.fileIdArray.length > 0){
+        console.log("removing tab");
+        console.log($scope.fileIdArray);
+        $scope.fileIdArray.splice($scope.fileIdArray.indexOf(messageData._id), 1);
+        console.log($scope.fileIdArray);
+        if(!$scope.fileIdArray.length){
+          $scope.currentSessionId = undefined;
+          $scope.$apply();
+        } else{
+          $scope.currentSessionId = $scope.fileIdArray[0];
+          console.log($scope.allFiles);
+          console.log($scope.fireBaseFiles);
+          $scope.allFiles.forEach(function(file){
+            if(file._id === $scope.currentSessionId){
+              $scope.currentSessionIndex = $scope.allFiles.indexOf(file);
+              console.log('seeting hte currensession index in removetab', $scope.currentSessionIndex)
+              $scope.$apply();
+            }
+          })
         }
       }
-      $scope.$apply();
-    }
+      // from here go to a different tab
+    };
 
     var fileBot = new fileSock('file', $stateParams.sessionId);
     fileBot.init();
@@ -97,7 +128,7 @@ angular.module('githelp.controllers.texteditor', [])
     //// Initialize contents.
     firepad.on('ready', function() {
       if (firepad.isHistoryEmpty()) {
-        firepad.setText('console.log("hello, world");');
+        firepad.setText('console.log("hello world!")');
         var currentText = firepad.getText();
         $scope.allFiles['hello_world_example'] = {
           name: 'hello_world.js',
@@ -120,6 +151,7 @@ angular.module('githelp.controllers.texteditor', [])
       $scope.files = elm.files;
       $scope.$apply();
     };
+
     $scope.upload = function() {
       var fd = new FormData();
       angular.forEach($scope.files, function(file) {
@@ -134,30 +166,104 @@ angular.module('githelp.controllers.texteditor', [])
         params: {numFiles: $scope.files.length}
       })
       .success(function(files) {
-        fileBot.sockjs_send('file', files);
+        $scope.fileCount = 0;
+
+
+        files.forEach(function(file){
+          file.active = true;
+          $scope.session.$add(file)
+            .then(function(ref) {
+              file._id = ref.name();
+              $scope.fileCount++;
+              $scope.fireBaseFiles[file._id] = new Firebase(FIREBASE_URL + $scope.sessionId +'/'+ file._id);
+              $scope.fireBaseFiles[file._id].update({data: file.data});
+              if($scope.fileCount === files.length){
+                firepad.setText(files[0].data);
+                fileBot.sockjs_send('file', files);
+              }
+            });
+          });
       }) // success
     };
 
-    $scope.goToFile = function(_id) {
-      var file = $scope.session.$child(_id);
-      var oldFileData = firepad.getText();
-      var oldFileRef = new Firebase(FIREBASE_URL + $scope.sessionId +'/'+ $scope.currentSessionId);
-      oldFileRef.update({data: oldFileData});
-      firepad.setText(file.data);
+    fileSock.prototype.event_toFile = function(currentFile){
+      if(currentFile._id !== $scope.currentSessionId){
+        $scope.fileIdArray.splice($scope.fileIdArray.indexOf($scope.currentSessionId), 1);
+        $scope.fileIdArray.unshift($scope.currentSessionId);
+        $scope.allFiles.forEach(function(file){
+          if(file._id === currentFile._id){
+            $scope.currentSessionIndex = $scope.allFiles.indexOf(file);
+          }
+        })
+        $scope.currentSessionId = currentFile._id;
+      }
+    }
 
-      $scope.currentSessionId = _id;
+    $scope.goToFile = function(currentFile) {
+      var file = $scope.session.$child(currentFile._id);
+      var oldFileData = firepad.getText();
+      if(currentFile._id !== $scope.currentSessionId){
+        $scope.fireBaseFiles[$scope.currentSessionId].$update({data: oldFileData});
+        firepad.setText(file.data);
+        fileBot.sockjs_send('toFile', currentFile);
+      }
       // var myRe = /text[/]/g;
       // var fileFormat = file.type.replace(myRe, '');
       // session.setMode("ace/mode/" + fileFormat);
     };
 
-    $scope.removeTab = function(_id){
-      fileBot.sockjs_send('removeTab', _id);
+    $scope.removeTab = function(file){
+      console.log('before socket', $scope.fileIdArray);
+      $scope.allFiles.forEach(function(f){
+        if(f._id === $scope.fileIdArray[0]){
+          firepad.setText(f.data);
+        }
+      })
+      fileBot.sockjs_send('removeTab', file);
     };
 
     $scope.addTab = function(){
-      fileBot.sockjs_send('addTab');
+      var newTab = {name: 'empty_'+counter, type: 'text/javascript', active: true, data: '', counter: counter}
+      if($scope.currentSessionId){
+        $scope.allFiles[$scope.currentSessionIndex].data = firepad.getText();
+        $scope.fireBaseFiles[$scope.currentSessionId].$update({data: firepad.getText()});
+      }
+      $scope.session.$add(newTab)
+        .then(function(ref){
+          newTab._id = ref.name();
+          $scope.fireBaseFiles[newTab._id] = new Firebase(FIREBASE_URL + $scope.sessionId +'/'+ newTab._id);
+          $scope.fireBaseFiles[newTab._id].update({data: " "});
+          firepad.setText(" ");
+          fileBot.sockjs_send('addTab', newTab);
+        });
     };
+
+    $scope.endSession = function() {
+      if(!$scope.global.user.contactEmail || !$scope.global.user.balancedAccount) {
+        var modalInstance = $modal.open({
+          templateUrl: 'views/partials/endSession.html',
+          controller: ModalInstanceController
+        });
+
+        modalInstance.result.then(function(message){
+          if(message){
+            $scope.stopTimer();
+          }
+        }, function(){
+          $log.info('Modal dismissed at: ' + new Date());
+        });
+      };
+    }
+
+    var ModalInstanceController = function($scope, Global, $modalInstance, Message) {
+      $scope.closeModal = function(){
+        $modalInstance.close();
+      };
+
+      $scope.stopTimer = function(){
+        $modalInstance.close('stopTimer');
+      }
+    }
     // $scope.showTab = function(file){
     //   $scope.allFiles[file.name].active = !$scope.allFiles[file.name].active;
     // };

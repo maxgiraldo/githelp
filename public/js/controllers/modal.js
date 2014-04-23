@@ -8,7 +8,7 @@ angular.module('githelp.controllers.modal', [])
     function($scope, $location, $http, $modal, Global) {
       $scope.global = Global;
 
-      var ModalInstanceController = function($scope, Global, $modalInstance) {
+      var ModalInstanceController = function($scope, Global, $modalInstance, Message) {
         $scope.global = Global;
         var cardHandler = function(card){
           if(card.errors){
@@ -71,6 +71,14 @@ angular.module('githelp.controllers.modal', [])
           };
           balanced.card.create(payload, cardHandler);
         };
+
+        $scope.sendDirectMessage = function(){
+          $http.post('/directMessage', {merchant: $scope.user, content: this.directMessage})
+            .success(function(data){
+              // chatroom
+              $modalInstance.close();
+            })
+        };
       };
 
       $scope.openAccountModal = function() {
@@ -97,7 +105,6 @@ angular.module('githelp.controllers.modal', [])
         });
 
         modalInstance.result.then(function(user){
-          $scope.user = user;
         }, function(){
           $log.info('Modal dismissed at: ' + new Date());
         });
