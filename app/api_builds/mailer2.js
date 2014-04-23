@@ -46,7 +46,7 @@ var sendTemplateMail = function (emailTemplate, emailData, done) {
 
 var sendVerifyEmail = function(user, verify_url, done) {
   sendTemplateMail("verify_email", {
-    to: user.email,
+    to: user.contactEmail,
     subject: "Coder's Bracket - Verify your email",
     user: user,
     verify_url: verify_url

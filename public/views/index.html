@@ -1,7 +1,27 @@
 <section data-ng-controller="IndexController" ng-init="redirectAfterLogin()">
   <section data-ng-include="'views/partials/navbar.html'"></section>
-  <div ui-view="search">
-  	<div class="container jumbotron">
+  <div class='container homepage-wrapper'>
+    <div ui-view="search">
+      <div class='row'>
+        <div class='md-col-12'><h1 class='headline'>Get help from open source contributors</h1></div>
+      </div>
+      <div class='row'>
+        <div class='md-col-12'>
+          <form class="form-group" ng-submit="query()">
+            <input autofocus id='githelp-search-bar' type="text" class="form-control" id="search-bar" name="query" ng-model="form.queryInput" placeholder="Search username/repo">
+            <input id='githelp-search-bar-submit' type="submit" class="confirm-btn" value="Search">
+          </form>
+        </div> <!-- md-col-12 -->
+      </div> <!-- row -->
+    </div> <!-- search -->
+  </div> <!-- ui-view -->
+
+</section>
+
+
+<!-- old -->
+<!-- <div ui-view="search">
+    <div class="container jumbotron">
       <h1 class='headline'>Get support from open source contributors</h1>
     </div>
     <div class='search-bg'>
@@ -10,6 +30,4 @@
         <input id='githelp-search-bar-submit' type="submit" class="btn btn-success" value="Git it on">
       </form>
     </div>
-  </div>
-
-</section>
+  </div> -->

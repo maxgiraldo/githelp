@@ -6,14 +6,21 @@ angular.module('githelp.controllers.user', [])
     // $scope.user = $scope.global.user;
     $scope.user;
     $scope.placeholder = function() {
-      if(user && user.contactEmail) {
-        return user.contactEmail;
+      if($scope.global.user && $scope.global.user.contactEmail) {
+        return $scope.global.user.contactEmail;
       } else {
         return "E-mail address";
       }
     }
     // $scope.placeholder = user.contactEmail || "E-mail Address";
     $scope.banners = [];
+
+    $scope.alerts = {
+      card: [],
+      bank: [],
+      email: []
+    };
+
     $scope.members = [];
     $scope.userName = $stateParams.userName;
     $scope.emailInfo = {
@@ -244,26 +251,30 @@ angular.module('githelp.controllers.user', [])
     $scope.submittedDeleteCard = false;
 
     $scope.submittedCreateBank = false;
-    $scope.submittedBank = false;
+    $scope.submittedValidBank = false;
 
     var cardHandler = function(card){
       console.log(card);
       if(card.errors){
-        console.log(card.errors);
+        var err = card.errors[0].description;
+        console.log('tokenize errors', err);
+        $scope.alerts.card.push({type: 'danger', msg: err});
+        throw err;
+        //failed to tokenize
       }
       balancedCard = card.cards[0].id;
       $http.post('/create/cc', {balancedCard: balancedCard})
         .success(function(user){
           $scope.global.user = user;
+          $scope.submittedValidCard = true;
+          $scope.alerts.card.push({type: 'success', msg: 'Successfully added credit card'});
+          $scope.showCard();
         })
         .error(function(err){
-          console.log(err);
-          $scope.banners.push({type: 'danger', msg: err});
-        })
-    };
-
-    $scope.closeAlert = function(index) {
-      $scope.banners.splice(index, 1);
+          console.log('saving err', err);
+          // $scope.banners.push({type: 'danger', msg: err});
+          $scope.alerts.card.push({type: 'danger', msg: err});
+        });
     };
 
     $scope.createCard = function(){
@@ -274,25 +285,47 @@ angular.module('githelp.controllers.user', [])
         expiration_year: $scope.cc.expiration_year,
         cvv: $scope.cc.cvv
       };
-      balanced.card.create(payload, cardHandler);
+      if(validNameField(payload.name)) { // validation for safari html5
+        balanced.card.create(payload, cardHandler);
+      } else {
+        $scope.alerts.card.push({type: 'danger', msg: 'Missing name field'});
+      }
     };
 
     var bankAccountHandler = function(bankAccount){
       console.log(bankAccount)
       if(bankAccount.errors){
-        console.log(bankAccount.errors[0].description);
-        // add error message banner
-        throw bankAccount.errors[0].description;
+        var err = bankAccount.errors[0].description;
+        console.log(err);
+        // failed to tokenize
+        $scope.alerts.bank.push({type: 'danger', msg: err });
+        throw err;
       }
       balancedBank = bankAccount.bank_accounts[0].id;
       $http.post('/create/ba', {balancedBank: balancedBank})
         .success(function(user){
           $scope.global.user = user;
+          $scope.submittedValidBank = true;
+          $scope.showBank();
+          $scope.alerts.bank.push({type: 'success', msg: 'Successfully linked bank account'});
         })
         .error(function(err){
           console.log(err);
         })
     };
+
+    $scope.closeCardAlert = function(index) {
+      $scope.alerts.card.splice(index, 1);
+    };
+
+    $scope.closeBankAlert = function(index) {
+      $scope.alerts.bank.splice(index, 1);
+    };
+
+    $scope.closeEmailAlert = function(index) {
+      $scope.alerts.email.splice(index, 1);
+    };
+
 
     $scope.createBankAccount = function(){
       var payload = {
@@ -302,16 +335,21 @@ angular.module('githelp.controllers.user', [])
         account_type: $scope.ba.account_type
       };
 
-      balanced.bankAccount.create(payload, bankAccountHandler)
+      balanced.bankAccount.create(payload, bankAccountHandler);
     };
 
     $scope.deleteCard = function() {
       console.log('in deleteCard');
       $http.delete('/delete/cc/' + $scope.global.user.balancedCard).success(function(response) {
         console.log('DELETE CARD SUCCESS', response.card);
-        $scope.user = response.user;
+        $scope.global.user = response.user;
         $scope.submittedDeleteCard = true;
-        $scope.banner.card = "Successfully deleted credit card";
+        $scope.alerts.card.push({type: 'success', msg: 'Successfully deleted credit card'});
+        $scope.cc.name = "";
+        $scope.cc.number = "";
+        $scope.cc.expiration_month = "";
+        $scope.cc.expiration_year = "";
+        $scope.cc.cvv = "";
       });
     };
 
@@ -319,9 +357,8 @@ angular.module('githelp.controllers.user', [])
       console.log('in deleteBank');
       $http.delete('/delete/ba/' + $scope.global.user.balancedBank).success(function(response) {
         console.log('DELETE BANK SUCCESS', response.bank);
-        $scope.user = response.user;
-        // $scope.banners.push({type: 'success', msg: "Successfully deleted bank account"});
-        // $scope.banner.bank = "Successfully deleted bank account";
+        $scope.global.user = response.user;
+        $scope.alerts.bank.push({type: 'success', msg: "Successfully deleted bank account"});
         $scope.submittedDeleteBank = true;
         $scope.ba.name = "";
         $scope.ba.routing_number = "";
@@ -332,41 +369,61 @@ angular.module('githelp.controllers.user', [])
 
     $scope.showCard = function() {
       console.log('balancedCard?', $scope.global.user.balancedCard);
-      $http.get('/show/cc/' + $scope.global.user.balancedCard).success(function(card) {
-        console.log('card', card);
-        $scope.savedCard.brand = card.brand;
-        $scope.savedCard.expiration_year = card.expiration_year;
-        $scope.savedCard.lastFourDigits = card.number.slice(-5);
-      });
+      if($scope.global.user.balancedCard) {
+        $http.get('/show/cc/' + $scope.global.user.balancedCard).success(function(card) {
+          console.log('card', card);
+          $scope.savedCard.brand = card.brand;
+          $scope.savedCard.expiration_year = card.expiration_year;
+          $scope.savedCard.lastFourDigits = card.number.slice(-5);
+        });
+      }
     };
 
     $scope.showBank = function() {
-      $http.get('/show/ba/' + $scope.global.user.balancedBank).success(function(bank) {
-        $scope.savedBank.bank_name = bank.bank_name;
-        $scope.savedBank.lastFourDigits = bank.account_number.slice(-5);
-      });
+      if($scope.global.user.balancedBank) {
+        $http.get('/show/ba/' + $scope.global.user.balancedBank).success(function(bank) {
+          $scope.savedBank.bank_name = bank.bank_name;
+          $scope.savedBank.lastFourDigits = bank.account_number.slice(-5);
+        });
+      }
     }
 
     $scope.onRequiredEmail = function() {
       return $state.is('profile.requiredEmail');
     };
 
-    $scope.submitEmail = function() {
+    var validEmailField = function(address) { // for safari
+      if(!address || !address.match(/.+\@.+\..+/)) {  // basic regex for email
+        return false;
+      } else {
+        return true;
+      }
+    };
+
+    var validNameField = function(name) {
+      !name? true : false;
+    };
+
+    $scope.submitEmail = function($event) {
       console.log('emailInfo', $scope.emailInfo);
-      $http.post('/submitEmail', $scope.emailInfo).success(function(user) {
-        console.log('successfully submitted email');
-        console.log(user);
-        $scope.user = user; // refreshes the global user for submitted email
-        $scope.tempAddress = user.contactEmail;
-        $scope.submittedEmail = true;
-        $scope.banner.email = "Thank you for submitting your email";
-        console.log($location.path());
-        if($state.is('profile.requiredEmail')) { // redirect from omni-signup after auth
-        // if($location.path() === '/' + user.userName + '/emailrequired') { // redirect from omni-signup after auth
-          $timeout(function() {
-            $location.path('/'); }, 750);
-        }
-      });
+      if(validEmailField($scope.emailInfo.address)) { // validation for safari html5
+        $http.post('/submitEmail', $scope.emailInfo).success(function(user) {
+          console.log('successfully submitted email');
+          console.log(user);
+          $scope.global.user = user; // refreshes the global user for submitted email
+          $scope.tempAddress = user.contactEmail;
+          $scope.submittedEmail = true;
+          $scope.alerts.email.push({type: 'success', msg: "Thank you for submitting your email"});
+          console.log($location.path());
+          if($state.is('profile.requiredEmail')) { // redirect from omni-signup after auth
+          // if($location.path() === '/' + user.userName + '/emailrequired') { // redirect from omni-signup after auth
+            $timeout(function() {
+              $location.path('/'); }, 750);
+          }
+        });
+      } else {
+        $scope.alerts.email.push({type: 'danger', msg: "Invalid email address"});
+      }
     };
 
     // $scope.signOut = function() {

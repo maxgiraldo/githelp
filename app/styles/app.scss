@@ -1,16 +1,17 @@
 /** Main styles go here **/
+// Directory:
+// SITE-WIDE
+// HOMEPAGE
+// NAV
+// PROFILE
+/// CTA-PROFILE
+// APPOINTMENTS
+// TEXT-EDITOR
+
 $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 @import 'sass-bootstrap/lib/bootstrap';
 html {
   height: 100%;
-}
-#githelp-search-bar {
-  margin-left: 450px;
-  width: 250px;
-}
-#githelp-search-bar-submit {
-  margin-left: 615px;
-  margin-top: 10px;
 }
 body {
   background: #fff;
@@ -26,7 +27,7 @@ body {
   border: 0;
 }
 h1 {
-  font-size: 17px;
+  font-size: 24px;
   line-height: 1;
   color: inherit;
 }
@@ -40,13 +41,20 @@ a {
 ul {
   list-style-type: none;
 }
-
+p {
+  font-size: 15px;
+}
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B', Helvetica, Arial, sans-serif;
   font-weight: 500;
   font-style: normal;
   line-height: 1.1;
   color: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+h4 {
+  font-size: 18px;
 }
 
 // Generic
@@ -58,7 +66,21 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-right: auto;
 }
 
-// Homepage Main Content
+// SITE-WIDE
+///////////////////////
+///////////////////////
+///////////////////////
+.main-content-spacing {
+  margin-top: 40px;
+}
+
+// HOMEPAGE
+///////////////////////
+///////////////////////
+///////////////////////
+.homepage-wrapper {
+  margin-top: 100px;
+}
 .jumbotron h1 {
   font-size: 17px;
   line-height: 1;
@@ -68,9 +90,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 .jumbotron {
   background: #fff;
-  // border-radius: 0;
-  // -webkit-box-shadow: 0 1px 1px 1px #E8E8E8;
-  // box-shadow: 0 1px 1px 1px #E8E8E8;
 }
 
 .container.search-bg {
@@ -99,16 +118,37 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   cursor: pointer;
   margin-top: 25px;
 }
-//// Type
-// Main type on page, e.g. h1 tags
+
 .headline {
+  text-align: center;
   font-style: normal;
-  line-height: normal;
+  line-height: 200%;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
+// SEARCHBAR
+.search-area {
 
-//// Navigation
+}
+#githelp-search-bar {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 15px;
+  width: 65%;
+  height: 50px;
+}
+#githelp-search-bar-submit {
+  width: 30%;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 15px;
+}
+
+// NAV
+///////////////////////
+///////////////////////
+///////////////////////
 #custom-navbar {
   margin-top: 20px;
   margin-bottom: 0px;
@@ -121,6 +161,27 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   font-size: 12px;
   color: #fff;
 }
+// #77cc33
+// #67b22b
+.border-btn-confirm {
+  border: 1px solid #77cc33;
+  border-radius: 5px;
+  &:hover {
+    background-color: #77cc33;
+    border: 1px solid #77cc33;
+  }
+}
+#sign-up {
+   color: #6fbf2e;
+  &:hover {
+    color: #fff;
+  }
+}
+.border-btn {
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+}
+
 
 .avatar {
   width: 30px;
@@ -159,7 +220,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .navbar-nav > li > a {
   padding-top: 15px;
   padding-bottom: 15px;
-  padding-left: 90px;
 }
 
 .navbar-nav-min > li > a {
@@ -170,6 +230,13 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .navbar-nav-min > li > a:hover {
   background-color: #2b2b2b;
 }
+
+// .navbar-default .navbar-nav > li > a {
+//   color: #77cc33;
+//   &:hover {
+//     color: #67b22b;
+//   }
+// }
 
 .navbar-right a {
   font-family: 'Gotham Rounded SSm A', 'Gotham Rounded SSm B';
@@ -205,7 +272,6 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   text-align: right;
   vertical-align: top;
 }
-// Nav bar
 .navbar {
   position: relative;
   min-height: 50px;
@@ -281,7 +347,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   color: #b3babe;
 }
 
-// Appointments page
+// APPOINTMENTS
+///////////////////////
+///////////////////////
+///////////////////////
 
 .appointment-scroll-wrapper {
   overflow: auto;
@@ -338,7 +407,10 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-right: 200px;
   text-align: center;
 }
-// Profile page
+// PROFILE
+///////////////////////
+///////////////////////
+///////////////////////
 
 // Edit PPM
 .edit-in-place span {
@@ -363,6 +435,52 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   // background-color: #d7d7d7;
   width: 350px;
 }
+.profile-id {
+  background: #FFF;
+  border-top: 10px solid #4bdf5e;
+  margin-bottom: 40px;
+  padding: 20px 40px;
+  display: inline-block;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.3);
+  box-shadow: 0 1px 2px rgba(0,0,0,.3);
+  text-align: center;
+}
+.profile-name {
+  text-align: center;
+  padding: 0;
+  margin-top: 30px;
+}
+.profile-data {
+  margin-left: 30px;
+}
+.profile-data-node {
+  margin-bottom: 30px;
+}
+.profile-data-node h5{
+  margin-bottom: 15px;
+}
+.profile-data h5{
+  font-size: 15px;
+}
+.profile-data p {
+  line-height: 150%;
+  font-size: 14px;
+}
+.profile-data-description {
+  line-height: 100%;
+}
+.summary {
+  font-size: 15px;
+}
+.supp-info {
+  font-size: 15px;
+}
+.supp-info-first {
+  margin-top: 15px;
+}
+.supp-info a {
+  font-size: 15px;
+}
 .bold-description {
   color: #000;
 }
@@ -370,19 +488,21 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   margin-top: 16px;
 }
 .avatar-lg {
-  border-radius: 60px;
-  width: 110px;
-  height: 110px;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
 }
 .profile-name-info {
   color: #000;
 }
 .full-name {
-  font-size: 30px;
+  font-size: 21px;
   margin-bottom: 5px;
+  line-height: 100%;
 }
 .username {
-  font-size: 16px;
+  text-transform: none;
+  font-size: 18px;
   font-weight: 400;
   color: #008cdd;
   letter-spacing: 0;
@@ -399,6 +519,54 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .call-button:hover {
   background-color: #6ab72c;
 }
+
+// CTA-PROFILE
+.contact-background {
+  // background-color: #e2eced;
+  padding: 0;
+}
+.contact-btn {
+  width: 100%;
+  height: 45px;
+  border-radius: 0;
+  cursor: pointer;
+  margin: 0;
+  border: none;
+  &:hover {
+    width: 100%;
+    height: 45px;
+    border-radius: 0;
+    cursor: pointer;
+    margin: 0;
+  }
+}
+.contact-btn p {
+  padding-top: 12px;
+  padding-bottom: 13px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  text-align: center;
+}
+.message {
+  margin-bottom: 10px;
+  background-color: #40d3ff;
+  &:hover {
+    margin-bottom: 10px;
+    background-color: #36b7dd;
+  }
+}
+.schedule {
+  background-color: #77cc33;
+  &:hover {
+    background-color: #6cba2d;
+  }
+}
+
+//END
+
 .setup-button {
   width: 100%;
   height: 45px;
@@ -603,7 +771,11 @@ h1.full-name {
 .chat-box {
   width: 300px;
 }
-// Session
+
+// TEXT-EDITOR
+///////////////////////
+///////////////////////
+///////////////////////
 .session-info {
   margin-top:40px;
   text-align:center;
@@ -811,17 +983,11 @@ h1.full-name {
   width: 60vw;
   height: 90vh;
   position: relative;
-  // -moz-box-shadow: 0 1px 5px 1px #d0d0d0;
-  // -webkit-box-shadow: 0 1px 5px 1px #d0d0d0;
-  // box-shadow: 0 1px 5px 1px #d0d0d0;
-  // width: 60vw;
 }
 
 .firepad {
    /*Default height for a firepad.*/
   position: relative;
-  // height: 500px;
-  // width: 1024px;
 }
 
 .firepad {

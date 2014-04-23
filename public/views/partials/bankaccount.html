@@ -1,13 +1,12 @@
 <!-- BANK ACCT FORM -->
 <div ng-init="showBank()" class='container profile' style='padding-top: 10px'>
   <!-- <h4 ng-show="banner">{{banner.bank}}</h4> -->
-<!--   <alert ng-repeat="alert in banners" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert> -->
-  <h4 ng-hide="global.user.balancedBank || submittedBank">{{required.bank}}</h4>
-  <form role='form' ng-hide="global.user.balancedBank || submittedBank" class="container form-group" ng-submit="createBankAccount()">
+  <alert ng-repeat="alert in alerts.bank" type="alert.type" close="closeBankAlert($index)">{{alert.msg}}</alert>
+  <h4 ng-hide="global.user.balancedBank || submittedValidBank">{{required.bank}}</h4>
+  <form role='form' ng-hide="global.user.balancedBank || submittedValidBank" class="container form-group" ng-submit="createBankAccount()">
     <input class='form-control' style='width:300px' type="text" id="ba-name" autocomplete="off" ng-model="ba.name" required placeholder="Account Holder's Name">
     <br>
     <div class='form-group' style='width:300px'>
-<!--       <input type="text" class='form-control' style='width:300px' id="ba-type" autocomplete="off" ng-model="ba.account_type" required placeholder="Checking or Savings" /> -->
       <label class='radio-inline'>
         <input type="radio" name="account_type" ng-model="ba.account_type" value="checking" checked>
         Checking
@@ -16,6 +15,16 @@
         <input type="radio" name="account_type" ng-model="ba.account_type" value="savings">
         Savings
       </label>
+    </div>
+    <div style='width:300px'>
+      <accordion>
+        <accordion-group is-open="isopen">
+          <accordion-heading>
+            Find routing/account numbers <i class="fa fa-angle-right"></i>
+          </accordion-heading>
+          <img src='/images/check_image.png' style="width: 100%"/>
+        </accordion-group>
+      </accordion>
     </div>
     <br>
     <div>
@@ -26,13 +35,15 @@
       <input type="text" class='form-control' style='width:300px' id="ba-number" autocomplete="off" ng-model="ba.account_number" required placeholder="Account Number" />
     </div>
     <br>
+    <br>
     <input ng-hide="global.user.balancedBank" style='margin-right: 850px' type="submit" class="btn btn-success" value="Submit" id="ba-submit">
   </form>
+  <h6 ng-hide="global.user.balancedBank">Payments may be delayed 3-5 business days if incorrect information is provided.</h6>
     <!-- Approved Bank -->
-  <div ng-show="global.user.balancedBank && !submittedDeleteBank && !submittedBank">
+  <div ng-show="global.user.balancedBank || !submittedDeleteBank && submittedValidBank">
     <h4>Your <b>{{savedBank.bank_name}} {{savedBank.lastFourDigits}}</b> is linked to this account</h4>
     <br>
-    <form ng-hode="submittedDeleteBank" class="container form-group">
+    <form ng-hide="submittedDeleteBank" class="container form-group">
       <input ng-click="deleteBank()" style='margin-right: 850px' type="submit" class="btn btn-danger" value="Delete" id="ba-delete">
     </form>
   <!-- End Approved Bank -->
