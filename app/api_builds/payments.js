@@ -185,7 +185,6 @@ exports.deleteCard = function(cardHref, done) {
     return card.unstore().then(function() {
       return balanced.get(cardHref).then(function(card) { // returns deleted card
         console.log('Deleted card:', card);
-        // $scope.global.user = user; // refreshes the global user for submitted email
         done(card);
       });
     });
@@ -196,7 +195,7 @@ exports.deleteBank = function(bankHref, done) {
   console.log('in balanced func delete bank');
   balanced.get(bankHref).then(function(bank) {
     return bank.unstore().then(function() {
-      return balanced.get(bankHref).then(function(bank) { // returns deleted card
+      return balanced.get(bankHref).then(function(bank) { // returns deleted bank
         console.log('Deleted bank:', bank);
         done(bank);
       });
