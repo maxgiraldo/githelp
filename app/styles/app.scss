@@ -1,5 +1,6 @@
 /** Main styles go here **/
 // Directory:
+// SITE-WIDE
 // HOMEPAGE
 // NAV
 // PROFILE
@@ -25,7 +26,7 @@ body {
   border: 0;
 }
 h1 {
-  font-size: 17px;
+  font-size: 24px;
   line-height: 1;
   color: inherit;
 }
@@ -55,6 +56,14 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   padding-right: none;
   margin-left: auto;
   margin-right: auto;
+}
+
+// SITE-WIDE
+///////////////////////
+///////////////////////
+///////////////////////
+.main-content-spacing {
+  margin-top: 40px;
 }
 
 // HOMEPAGE
@@ -418,6 +427,20 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   // background-color: #d7d7d7;
   width: 350px;
 }
+.profile-id {
+  margin-left: 10px;
+}
+.profile-name {
+  padding: 0;
+  margin: 0;
+}
+.supp-info {
+  margin-top: 15px;
+  font-size: 15px;
+}
+.avatar-padding {
+  width: 20%;
+}
 .bold-description {
   color: #000;
 }
@@ -426,18 +449,20 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 .avatar-lg {
   border-radius: 60px;
-  width: 110px;
-  height: 110px;
+  width: 200px;
+  height: 200px;
 }
 .profile-name-info {
   color: #000;
 }
 .full-name {
+  text-align: left;
   font-size: 30px;
   margin-bottom: 5px;
+  line-height: 100%;
 }
 .username {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 400;
   color: #008cdd;
   letter-spacing: 0;
