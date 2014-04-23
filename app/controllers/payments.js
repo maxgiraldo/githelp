@@ -61,7 +61,10 @@ exports.fetchCard = function(req, res) {
   var cardId = req.params.cardId;
   var cardHref = payments.cardUri(cardId);
   console.log('cardHref', cardHref);
-  payments.fetchCard(cardHref, function(card) {
+  payments.fetchCard(cardHref, function(err, card) {
+    if(err) {
+      console.log(err);
+    }
     res.jsonp(card);
   });
 };
@@ -86,7 +89,10 @@ exports.deleteCard = function(req, res) {
 exports.fetchBank = function(req, res) {
   var bankId = req.params.bankId;
   var bankHref = payments.bankUri(bankId);
-  payments.fetchBank(bankHref, function(response) {
+  payments.fetchBank(bankHref, function(err, response) {
+    if(err) {
+      console.log(err);
+    }
     console.log('fetch bank response', response);
     res.jsonp(response);
   });
@@ -136,11 +142,15 @@ exports.transaction = function(req, res) {
 exports.createCard = function(req, res) {
   User.findOne({_id: req.user._id}, function(err, user) {
     var cardHref = payments.cardUri(req.body.balancedCard);
-    payments.fetchCard(cardHref, function(card) {
+    payments.fetchCard(cardHref, function(err, card) {
+      if(err) {
+        res.send(400, "This card cannot be processed. Please try another card.");
+      }
       if(card.cvv_match !== 'yes'){
         res.send(400, "Wrong CVV Code");
         throw "Wrong CVV";
-      }
+      };
+      console.log('card in createCard', card);
       user.balancedCard = req.body.balancedCard;
       user.save();
       if(user.balancedUser) {
