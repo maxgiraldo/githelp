@@ -82,6 +82,7 @@ angular.module('githelp.controllers.texteditor', [])
         console.log('event_removetab', $scope.allFiles);
         counter++;
       })
+      $scope.fireBaseFiles[messageData._id].$remove();
       delete $scope.fireBaseFiles[messageData._id];
       console.log($scope.fireBaseFiles);
       if($scope.fileIdArray.length > 0){
@@ -99,7 +100,7 @@ angular.module('githelp.controllers.texteditor', [])
           $scope.allFiles.forEach(function(file){
             if(file._id === $scope.currentSessionId){
               $scope.currentSessionIndex = $scope.allFiles.indexOf(file);
-              console.log('seeting hte currensession index in removetab', $scope.currentSessionIndex)
+              console.log('seeing the current session index in removetab', $scope.currentSessionIndex)
               $scope.$apply();
             }
           })
@@ -200,6 +201,7 @@ angular.module('githelp.controllers.texteditor', [])
     }
 
     $scope.goToFile = function(currentFile) {
+      console.log("gotoFile")
       var file = $scope.session.$child(currentFile._id);
       var oldFileData = firepad.getText();
       if(currentFile._id !== $scope.currentSessionId){
