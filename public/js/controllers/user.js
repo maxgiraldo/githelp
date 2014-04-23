@@ -285,7 +285,11 @@ angular.module('githelp.controllers.user', [])
         expiration_year: $scope.cc.expiration_year,
         cvv: $scope.cc.cvv
       };
-      balanced.card.create(payload, cardHandler);
+      if(validNameField(payload.name)) { // validation for safari html5
+        balanced.card.create(payload, cardHandler);
+      } else {
+        $scope.alerts.card.push({type: 'danger', msg: 'Missing name field'});
+      }
     };
 
     var bankAccountHandler = function(bankAccount){
@@ -388,22 +392,38 @@ angular.module('githelp.controllers.user', [])
       return $state.is('profile.requiredEmail');
     };
 
-    $scope.submitEmail = function() {
+    var validEmailField = function(address) { // for safari
+      if(!address || !address.match(/.+\@.+\..+/)) {  // basic regex for email
+        return false;
+      } else {
+        return true;
+      }
+    };
+
+    var validNameField = function(name) {
+      !name? true : false;
+    };
+
+    $scope.submitEmail = function($event) {
       console.log('emailInfo', $scope.emailInfo);
-      $http.post('/submitEmail', $scope.emailInfo).success(function(user) {
-        console.log('successfully submitted email');
-        console.log(user);
-        $scope.global.user = user; // refreshes the global user for submitted email
-        $scope.tempAddress = user.contactEmail;
-        $scope.submittedEmail = true;
-        $scope.alerts.email.push({type: 'success', msg: "Thank you for submitting your email"});
-        console.log($location.path());
-        if($state.is('profile.requiredEmail')) { // redirect from omni-signup after auth
-        // if($location.path() === '/' + user.userName + '/emailrequired') { // redirect from omni-signup after auth
-          $timeout(function() {
-            $location.path('/'); }, 750);
-        }
-      });
+      if(validEmailField($scope.emailInfo.address)) { // validation for safari html5
+        $http.post('/submitEmail', $scope.emailInfo).success(function(user) {
+          console.log('successfully submitted email');
+          console.log(user);
+          $scope.global.user = user; // refreshes the global user for submitted email
+          $scope.tempAddress = user.contactEmail;
+          $scope.submittedEmail = true;
+          $scope.alerts.email.push({type: 'success', msg: "Thank you for submitting your email"});
+          console.log($location.path());
+          if($state.is('profile.requiredEmail')) { // redirect from omni-signup after auth
+          // if($location.path() === '/' + user.userName + '/emailrequired') { // redirect from omni-signup after auth
+            $timeout(function() {
+              $location.path('/'); }, 750);
+          }
+        });
+      } else {
+        $scope.alerts.email.push({type: 'danger', msg: "Invalid email address"});
+      }
     };
 
     // $scope.signOut = function() {
