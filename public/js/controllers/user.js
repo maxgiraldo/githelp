@@ -285,7 +285,7 @@ angular.module('githelp.controllers.user', [])
         expiration_year: $scope.cc.expiration_year,
         cvv: $scope.cc.cvv
       };
-      if(validNameField(payload.name)) { // validation for safari html5
+      if(validNameField($scope.cc.name)) { // validation for safari html5
         balanced.card.create(payload, cardHandler);
       } else {
         $scope.alerts.card.push({type: 'danger', msg: 'Missing name field'});
@@ -401,7 +401,11 @@ angular.module('githelp.controllers.user', [])
     };
 
     var validNameField = function(name) {
-      !name? true : false;
+      if(name) {
+        return true;
+      } else {
+        return false;
+      }
     };
 
     $scope.submitEmail = function($event) {
