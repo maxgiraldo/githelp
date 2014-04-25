@@ -27,19 +27,19 @@ var githubCallbackURL;
 if (process.env.NODE_ENV === 'production'){
   githubCallbackURL = process.env.GITHUB_CALLBACK || 'http://githelp.herokuapp.com/auth/github/callback';
 } else{
-  githubCallbackURL = 'http://172.18.74.237:3000/auth/github/callback';
+  githubCallbackURL = 'http://172.26.190.249:3000/auth/github/callback';
 }
 
 passport.use(new GitHubStrategy({
   // Below are JHK's Keys
 
-  // clientID: '71778e134296a29071f4',
-  // clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
-  // callbackURL: githubCallbackURL
-  // WT keys:
-  clientID: '0934ee7ca0cdc34cc007',
-  clientSecret: 'dc0845769a5c3835bebc2a7a4772e0689b7ac1d7',
+  clientID: '71778e134296a29071f4',
+  clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
   callbackURL: githubCallbackURL
+  // WT keys:
+  // clientID: '0934ee7ca0cdc34cc007',
+  // clientSecret: 'dc0845769a5c3835bebc2a7a4772e0689b7ac1d7',
+  // callbackURL: githubCallbackURL
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({ githubId: profile.id }, function (err, user) {
@@ -65,7 +65,7 @@ passport.use(new GitHubStrategy({
         user.githubId = profile.id;
         user.github = profile._json;
         user.accessToken = accessToken;
-        user.avatarUrl = profile._json.avatar_url;
+        user.avatar_url = profile._json.avatar_url;
         user.save(function(err){
           return done(err, user);
         })

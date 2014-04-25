@@ -83,13 +83,19 @@ angular.module('githelp.controllers.user', [])
     };
 
     $scope.findOne = function(){ // sets $scope.user to be :userName param
+      $http.get('https://api.github.com/users/'+$stateParams.userName)
+        .success(function(data){
+          $scope.user = data;
+        });
+
       User.get({
         userName: $stateParams.userName
         // look for the github.login and then get the githubId sequence
       }, function(response){
         $scope.repoList = response.repoList;
-        $scope.user = response.user;
+        $scope.user = response.user || $scope.user;
         $scope.conList = response.conList;
+        console.log($scope.user);
         // console.log('user', $scope.user);
       })
       // make this aynchronous
