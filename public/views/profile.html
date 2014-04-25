@@ -16,7 +16,10 @@
           </div>
         </div>
         <div class='row contact-background'>
-          <div class='contact-cta'>
+          <div data-ng-show='!user.fullName' class='confirm-btn contact-btn message'>
+            <p>I'm interested in working with {{user.name.split(' ')[0]}}</p>
+          </div>
+          <div data-ng-show="user.fullName" class='contact-cta'>
             <div class='col-md-6'>
               <div class='confirm-btn contact-btn message'>
                 <p><i class="fa fa-comment"></i> Message</p>
