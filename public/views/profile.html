@@ -4,130 +4,71 @@
     <!-- PROFILE SUMMARY -->
     <!-- .................................................... -->
     <!-- .................................................... -->
-    <div class='row'>
-      <div class='col-md-3'>
+    <div class='row profile-header'>
+      <div class='col-md-12'>
         <div class='profile-id'>
           <p><img class='avatar-lg' src='{{user.github.avatar_url}}'/></p>
           <div class='profile-name'>
             <h1 class='headline full-name'>{{user.fullName}}</h1>
-            <h2 class='username'><a href="http://www.github.com/{{user.userName}}"><i class="fa fa-github"></i> {{user.userName}}</a></h2>
+            <p class='price' data-ng-show="user._id === global.user._id"><edit-in-place value="user.ppm"></edit-in-place></p>
+            <p class='price'>$<strong>{{user.ppm * 60}}</strong>/hour</p>
           </div>
-          <p class='price' data-ng-show="user._id === global.user._id"><edit-in-place value="user.ppm"></edit-in-place></p>
-          <p class='price' data-ng-hide="user._id === global.user._id">${{user.ppm}}/min</p>
-          <p class='price'>${{user.ppm * 60}}/hour</p>
         </div>
-        <div class='contact-background'>
+        <div class='row contact-background'>
           <div class='contact-cta'>
-            <div class='call-button confirm-btn contact-btn message'>
-              <p><i class="fa fa-comment"></i> Message</p>
+            <div class='col-md-6'>
+              <div class='confirm-btn contact-btn message'>
+                <p><i class="fa fa-comment"></i> Message</p>
+              </div>
             </div>
-            <div data-ng-click="setAppointment()" class='call-button confirm-btn contact-btn schedule'>
-              <p><i class="fa fa-calendar"></i> Book Session</p>
+            <div class='col-md-6'>
+              <div data-ng-click="setAppointment()" class='button confirm-btn contact-btn'>
+                <p><i class="fa fa-calendar"></i> Book Session</p>
+              </div>
             </div>
           </div>
+        </div> <!-- message schedule row -->
+      </div>
+    </div> <!-- row -->
+    <div class='row'>
+      <div class='col-md-5'>
+        <p data-ng-show="repoList.length > 0" class='caps-sub-header'>{{user.github.public_repos.length}} public repositories</p>
+        <div class='repo-names' data-ng-repeat='repo in repoList' data-ng-show='!repo.fork'>
+          <p><a href="/#!/{{userName}}/repos/{{repo.name}}">{{repo.name}}</a></p>
         </div>
       </div>
-
-    <!-- REPO & SERVICES SUMMARY -->
-    <!-- .................................................... -->
-    <!-- .................................................... -->
-      <div class='col-md-4 profile-data'>
-        <div class='profile-data-node'>
-          <h5>About me</h5>
-          <div class='profile-data-description'>
-            <p>I'm a Full Stack Web Developer looking to teach budding programmers basic programming in JS, HTML, and CSS.</p>
-          </div> <!-- profile-data-description -->
-        </div> <!-- profile-data-node -->
-        <div class='profile-data-node'>
-          <h5>Services</h5>
-          <div class='profile-data-description'>
-            <p>Education/Training</p>
-            <p>Consulting</p>
-            <p>Live Sessions</p>
-            <p>Technical Support</p>
-          </div> <!-- profile-data-description -->
-        </div> <!-- profile-data-node -->
-        <div class='profile-data-node'>
-          <h5>Availability</h5>
-          <div class='profile-data-description'>
-            <p>6PM-10PM EST M-F</p>
-          </div> <!-- profile-data-description -->
-        </div> <!-- profile-data-node -->
-      </div> <!-- col-md-4 profile-data -->
-
-      <div class='col-md-4 profile-data'>
-        <div class='profile-data-node'>
-          <h5>Public Repositories</h5>
-          <div class='profile-data-description'>
-            <p>Ghostdrop</p>
-          </div> <!-- profile-data-description -->
-        </div> <!-- profile-data-node -->
-        <div class='profile-data-node'>
-          <h5>Top Repositories Contributed To</h5>
-          <div class='profile-data-description'>
-            <p>Web Chat</p>
-          </div> <!-- profile-data-description -->
-        </div> <!-- profile-data-node -->
-        <div class='profile-data-node'>
-          <h5>Languages used most</h5>
-          <div class='profile-data-description'>
-            <p>JavaScript, CSS</p>
-          </div> <!-- profile-data-description -->
-        </div> <!-- profile-data-node -->
-      </div> <!-- col-md-4 profile-data -->
-
-    </div> <!-- row -->
+      <div class='col-md-5'>
+        <p data-ng-show="conList.length > 0" class='caps-sub-header'>top {{conList.length}} repositories contributed to</p>
+        <div class='repo-names' data-ng-repeat='repo in conList'>
+          <p><a href="/#!/{{repoAuthor(repo)}}/repos/{{repoName(repo)}}">{{repoName(repo)}}</a></p>
+        </div>
+      </div>
+      <!-- <div class='col-md-2 supplementary-data'> -->
+      <div class='col-md-2'>
+        <p class='caps-sub-header'>Extra</p>
+        <p data-ng-show="user.email"><a href='mailto:{{user.email}}'>{{user.email}}</a></p>
+        <p>{{user.github.public_gists}} gists</p>
+        <p>{{user.github.followers}} followers</p>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-md-5'>
+        <p class='caps-sub-header'>Services</p>
+        <p>Education/Training</p>
+        <!-- <div data-ng-repeat='service in userServices'> -->
+          <!-- <p>{{service.name}}</p>
+          <p>{{service.description}}</p> -->
+        <!-- </div> -->
+      </div>
+    </div>
   </div> <!-- container -->
 
 </section>
+<!-- <h2 class='username'><a href="http://www.github.com/{{user.userName}}"><i class="fa fa-github"></i> {{user.userName}}</a></h2> -->
+<!-- <p class='price' data-ng-show="user._id === global.user._id"><edit-in-place value="user.ppm"></edit-in-place></p>
+<p class='price' data-ng-hide="user._id === global.user._id">${{user.ppm}}/min</p>
+<p class='price'>${{user.ppm * 60}}/hour</p> -->
 
-
-
-<!-- v2 -->
- <!-- <div class='row'>
-      <div class='col-md-3 avatar-padding'>
-        <img class='avatar-lg' src='{{user.github.avatar_url}}'/>
-      </div>
-      <div class='col-md-6'>
-        <div class='profile-id'>
-          <div class='profile-name'>
-            <h1 class='headline full-name'>{{user.fullName}}</h1>
-            <h2 class='username'><a href="http://www.github.com/{{user.userName}}"><i class="fa fa-github"></i> {{user.userName}}</a></h2>
-            <div class='row supp-info supp-info-first'>
-              <div class='col-md-4'>
-                <p><i class="fa fa-map-marker"></i> New York, NY</p>
-              </div>
-              <div class='col-md-4'>
-                <p><i class="fa fa-briefcase"></i> Acme Corp</p>
-              </div>
-              <div class='col-md-4'>
-                <p data-ng-show="user.github.blog"><i class="fa fa-link"></i><a href="http://{{user.github.blog}}"> Website</a></p>
-              </div>
-            </div> row supp-info supp-info-first
-            <div class='row supp-info'>
-              <div class='col-md-3'>
-                <p><i class="fa fa-clock-o"></i> 9:26AM</p>
-              </div>
-            </div>
-              <div class='row'>
-              <div class='col-md-12 summary'>
-                <p>I'm a developer who specializes in the mean stack. I like doing stuff.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class='col-md-3 contact-background'>
-        <div class='contact-cta'>
-          <div class='call-button confirm-btn contact-btn message'>
-            <p><i class="fa fa-comment"></i> Message</p>
-          </div>
-          <div class='call-button confirm-btn contact-btn schedule'>
-            <p><i class="fa fa-calendar"></i> Schedule</p>
-          </div>
-        </div>
-      </div>
-    </div>  -->
 <!-- v1 -->
 <!-- <div class="container profile">
     <div>
