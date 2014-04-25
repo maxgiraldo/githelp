@@ -40,6 +40,10 @@ passport.use(new GitHubStrategy({
   clientID: 'c0064f8cbde03d9d42b0',
   clientSecret: '1abb05032fcfd8b6fb54c2bc44c2c7b583b2ecf8',
   callbackURL: githubCallbackURL
+  // WT keys:
+  // clientID: '0934ee7ca0cdc34cc007',
+  // clientSecret: 'dc0845769a5c3835bebc2a7a4772e0689b7ac1d7',
+  // callbackURL: githubCallbackURL
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({ githubId: profile.id }, function (err, user) {
@@ -65,7 +69,7 @@ passport.use(new GitHubStrategy({
         user.githubId = profile.id;
         user.github = profile._json;
         user.accessToken = accessToken;
-        user.avatarUrl = profile._json.avatar_url;
+        user.avatar_url = profile._json.avatar_url;
         user.save(function(err){
           return done(err, user);
         })
