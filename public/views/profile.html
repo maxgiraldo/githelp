@@ -10,8 +10,9 @@
           <p><img class='avatar-lg' src='{{user.avatar_url}}'/></p>
           <div class='profile-name'>
             <h1 class='headline full-name'>{{user.fullName}}</h1>
-            <p class='price' data-ng-show="user._id === global.user._id"><edit-in-place value="user.ppm"></edit-in-place></p>
-            <p class='price'>$<strong>{{user.ppm * 60}}</strong>/hour</p>
+            <h4 data-ng-show="!user.fullName">This user does not have an account</h4>
+            <p class='price' data-ng-show="user._id === global.user._id && user.fullName"><edit-in-place value="user.ppm"></edit-in-place></p>
+            <p class='price' data-ng-show="user.fullName">$<strong>{{user.ppm * 60}}</strong>/hour</p>
           </div>
         </div>
         <div class='row contact-background'>
