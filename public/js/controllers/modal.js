@@ -38,7 +38,6 @@ angular.module('githelp.controllers.modal', [])
         };
 
         var bankAccountHandler = function(bankAccount){
-          console.log(bankAccount)
           if(bankAccount.errors){
             var errorMsg = bankAccount.errors[0].description;
             console.log(errorMsg);

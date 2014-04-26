@@ -28,6 +28,11 @@ angular.module('githelp.controllers.user', [])
       userName: $stateParams.userName
     };
 
+    $scope.alertShow = true;
+    $scope.hideAlert = function() {
+      $scope.alertShow = false;
+    };
+
     $scope.submittedEmail = false;
 
     $scope.findAppointments = function(){

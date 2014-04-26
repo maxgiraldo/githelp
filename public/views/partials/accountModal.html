@@ -1,9 +1,10 @@
 <div class="modal-body clearfix">
-  <h3>Last step!</h3>
+  <h1 class='caps-sub-header'>Set up bank account</h1>
   <form class="clearfix" data-ng-submit="createBankAccount()" style="padding-left:none; padding-right: none;">
     <div class="center">
-      <h4>You need to be associated with a bank account to be paid for your expertise.</h4>
+      <p>Once this is filled out, you may start receiving appointments.</p>
     </div>
+    <br>
     <!-- BANK ACCT FORM -->
     <div class="center">
     <alert ng-repeat="alert in alerts.bank" type="alert.type" close="closeBankAlert($index)">{{alert.msg}}</alert>
@@ -29,7 +30,9 @@
     <input type="text" class='form-control input-setup' id="ba-number" autocomplete="off" ng-model="account_number" required placeholder="Account Number" />
     <input type="submit" class="btn btn-lg btn-bank-setup clearfix" value="Submit"></input>
   </form>
-  <h6>We use Balanced Payments' tokenization process so your sensitive data never touches our database. Githelp is run over encrypted HTTPS to provide extra security.</h6>
-
-  <h6>Payments may be delayed 3-5 business days if incorrect information is provided.</h6>
+  <br>
+  <div class='end-notes'>
+    <p>We use Balanced Payments' tokenization process so your sensitive data never touches our database. Githelp is run over encrypted HTTPS to provide extra security.</p>
+    <p>Payments may be delayed 3-5 business days if incorrect information is provided.</p>
+  </div>
 </div>

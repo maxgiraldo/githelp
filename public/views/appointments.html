@@ -2,12 +2,41 @@
   <section data-ng-include="'views/partials/navbar.html'"></section>
   <section data-ng-show="global.authenticated">
     <div class="container" data-ui-view>
-      <div class='center-appointment'>
+      <!-- <div data-ng-repeat='appointment in pendingA'> -->
+      <div>
+        <h1>Appointments</h1>
+        <div class='row'>
+          <div class='col-md-4'>
+            <h2 class='caps-sub-header'>Pending</h2>
+            <p class='notify-sm' ng-show="pendingA.length === 0">You have no pending requests</p>
+            <div class='appointment-card'>
+              <div class='row'>
+                <div class='col-md-3'><p>Accepted</p></div>
+                <div class='col-md-3'><p>Accepted</p></div>
+                <div class='col-md-3'><p>Accepted</p></div>
+                <div class='col-md-3'><p>Accepted</p></div>
+              </div>
+            </div>
+          </div>
+          <div class='col-md-4'>
+            <h2 class='caps-sub-header'>Confirmed</h2>
+            <p class='notify-sm' ng-show="pendingA.length === 0">You have no confirmed appointments</p>
+          </div>
+          <div class='col-md-4'>
+            <h2 class='caps-sub-header'>Complete</h2>
+            <p class='notify-sm' ng-show="pendingA.length === 0">You have no completed appointments</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- pending design, confirmed design, completed -->
+<!--
+<div class='center-appointment'>
         <h1 class='headline'>Appointments</h1>
-
-
         <div class="appointment-scroll-wrapper">
-
           <h1 ng-show="pendingA.length > 0">Pending</h1>
           <div data-ng-repeat="appointment in pendingA" class="appointment-box">
             <div class='status status-pending'>
@@ -89,8 +118,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-</section>
+      </div> -->
+
 
