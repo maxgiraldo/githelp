@@ -348,12 +348,14 @@ h5 {
   width: 100%;
   height: 60px;
   cursor: pointer;
+  padding-left: 15px;
+  padding-top: 10px;
   &:hover {
     background-color: #e0e0e0;
   }
 }
-.appointment-card .appt {
-  float: left;
+.appointment-card p {
+  font-size: 12px;
 }
 .appointment-card .appointment-details {
   margin-top: 0;
