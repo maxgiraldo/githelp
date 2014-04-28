@@ -10,7 +10,6 @@ angular.module('githelp.controllers.appointment', [])
       timeSock.prototype = Object.create(Socks.prototype);
 
       timeSock.prototype.event_time = function(message){
-        console.log(message);
         $scope.timerByAppointment[message._id].timerOn = true;
         $scope.timerByAppointment[message._id].seconds++;
         $scope.timerByAppointment[message._id].totalSeconds++;
@@ -28,7 +27,6 @@ angular.module('githelp.controllers.appointment', [])
       };
 
       timeSock.prototype.event_close = function(message){
-        console.log('event_close', message._id);
         if ($scope.timerByAppointment[message._id].timerId) { clearInterval($scope.timerByAppointment[message._id].timerId)};
         $scope.timerByAppointment[message._id].totalAmount = $scope.timerByAppointment[message._id].merchantPrice * ($scope.timerByAppointment[message._id].totalSeconds / 60.0);
         console.log($scope.timerByAppointment[message._id].totalAmount, $scope.timerByAppointment[message._id].totalSeconds, $scope.timerByAppointment[message._id].merchantPrice);
@@ -57,7 +55,6 @@ angular.module('githelp.controllers.appointment', [])
           appointmentId: $scope.appointmentId
         });
         newAppointment.$save(function(data){
-          console.log("we confirmed the appointment!")
           $location.path('/appointments');
         });
       };
