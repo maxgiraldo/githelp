@@ -151,7 +151,7 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
     return deferred.promise;
   }
 
-  function checkBalancedCard($q, $timeout, $http, $location, $state, Global) {
+  function checkBalancedCard($q, $timeout, $http, $location, $state, $stateParams, Global, redirectToUserName) {
     var deferred = $q.defer();
     console.log('in checkbalancedcard');
     var user = Global.user;
@@ -161,6 +161,8 @@ window.app.config(['$stateProvider', '$urlRouterProvider',
         deferred.resolve();
       }, 0);
     } else {
+      redirectToUserName.url = '/' + $stateParams.userName;
+      console.log('stateParams.username', $stateParams.userName);
       console.log('No balanced card in profile');
       console.log('redirect to settings of:', user.userName);
       $location.url("/" + user.userName + '/settings');
