@@ -53,7 +53,7 @@ angular.module('githelp.controllers.user', [])
     $scope.confirmAppointment = function(appointmentId){
       var newAppointment = new Appointment({
         appointmentId: appointmentId,
-        option: $scope.optionNumber;
+        option: $scope.optionNumber
       });
       newAppointment.$save(function(data){
         $state.go('appointments');

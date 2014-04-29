@@ -15,12 +15,12 @@
                 <div class='col-md-1'><div class='sm-btn pending-status'>Pending</div></div>
                 <div class='col-md-4'><p>{{appointment.message.subject}}</p></div>
                 <div class='col-md-3'>
-                  <input type="checkbox" name="checkbox" id="date1" data-ng-model="appointment.date.option1.confirmed" data-ng-change="likeRadio(appointment, 'option1')" class="css-checkbox lrg">
-                  <label for="date1" class="css-label lrg vlad"><p class="appointment-date">{{appointment.date.option1.date | date: 'medium' }}</p></label>
-                  <input type="checkbox" name="checkbox" id="date2" data-ng-model="appointment.date.option2.confirmed" data-ng-change="likeRadio(appointment, 'option2')" class="css-checkbox lrg">
-                  <label for="date2" class="css-label lrg vlad"><p class="appointment-date">{{appointment.date.option2.date | date: 'medium' }}</p></label>
-                  <input type="checkbox" name="checkbox" id="date3" data-ng-model="appointment.date.option3.confirmed" data-ng-change="likeRadio(appointment, 'option3')" class="css-checkbox lrg">
-                  <label for="date3" class="css-label lrg vlad"><p class="appointment-date">{{appointment.date.option3.date | date: 'medium' }}</p></label>
+                  <input type="checkbox" name="checkbox" id="date1{{appointment._id}}" data-ng-model="appointment.date.option1.confirmed" data-ng-change="likeRadio(appointment, 'option1')" class="css-checkbox lrg">
+                  <label for="date1{{appointment._id}}" class="css-label lrg vlad"><p class="appointment-date">{{appointment.date.option1.date | date: 'medium' }}</p></label>
+                  <input type="checkbox" name="checkbox" id="date2{{appointment._id}}" data-ng-model="appointment.date.option2.confirmed" data-ng-change="likeRadio(appointment, 'option2')" class="css-checkbox lrg">
+                  <label for="date2{{appointment._id}}" class="css-label lrg vlad"><p class="appointment-date">{{appointment.date.option2.date | date: 'medium' }}</p></label>
+                  <input type="checkbox" name="checkbox" id="date3{{appointment._id}}" data-ng-model="appointment.date.option3.confirmed" data-ng-change="likeRadio(appointment, 'option3')" class="css-checkbox lrg">
+                  <label for="date3{{appointment._id}}" class="css-label lrg vlad"><p class="appointment-date">{{appointment.date.option3.date | date: 'medium' }}</p></label>
                 </div>
                 <div data-ng-show="(appointment.merchant._id !== global.user._id) && !appointment.confirmed" class='col-md-2'><p>{{appointment.merchant.fullName}}</p></div>
                 <div data-ng-show="(appointment.merchant._id === global.user._id) && !appointment.confirmed" class='col-md-2'><p>{{appointment.customer.fullName}}</p></div>
