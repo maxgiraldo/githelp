@@ -11,8 +11,11 @@ angular.module('githelp.controllers.datePicker', [])
       // but if merchant's suggested times aren't accepted, window.location is then customer
       $scope.appts = {
         merchant: userName,
-        message: "",
-        duration: "15",
+        message: {
+          subject: "",
+          details: ""
+        },
+        duration: "",
         first: {
           dt: "",
           time: ""

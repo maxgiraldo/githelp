@@ -70,7 +70,10 @@ exports.create = function(req, res) {
   var newAppointment = new Appointment({
     duration: duration,
     customer: customer._id,
-    message: message,
+    message: {
+      subject: message.subject,
+      details: message.details
+    },
     status: 'pending',
     date: {
       option1: {
@@ -95,7 +98,7 @@ exports.create = function(req, res) {
     newAppointment.merchant = merchant._id;
     newAppointment.apptppm = merchant.ppm;
     newAppointment.save(function(err){
-      sendMessage(newAppointment._id, newAppointment.message, customer);
+      sendMessage(newAppointment._id, newAppointment.message.details, customer);
     });
     var ppm = merchant.ppm;
     // send out email
@@ -363,7 +366,10 @@ var configConfirmOpt = function(apptObj, fromUserName, toUserName, ppm, toEmail,
       }
     },
     // time: time,
-    message: message,
+    message: {
+      subject: message.subject,
+      details: message.details
+    },
     duration: duration,
     fromUserName: fromUserName,
     toUserName: toUserName,

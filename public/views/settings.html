@@ -6,12 +6,12 @@
         <p class="caps-sub-header" style='text-align: center'>Contact Email <i ng-show="global.user.contactEmail" class="fa fa-check-circle fa-lg" style='color: green'></i><i ng-show="!global.user.contactEmail" class="fa fa-minus-circle fa-lg" style='color: red'></i></p>
         <section data-ng-include data-src="'views/partials/email.html'"></section>
     </div>
-    <hr>
+    <!-- <hr> -->
     <div id="transaction-settings">
       <h1 class='headline' style='text-align: center'>Transaction Settings</h1>
           <p class="caps-sub-header" style='text-align: center'>Payments <i ng-show="global.user.balancedCard" class="fa fa-check-circle fa-lg" style='color: green'></i><i ng-hide="global.user.balancedCard" class="fa fa-minus-circle fa-lg" style='color: red'></i></p>
         <section data-ng-show="global.authenticated" data-ng-include data-src="'views/partials/creditcard.html'"></section>
-        <hr style="width:50%">
+        <!-- <hr style="width:50%"> -->
         <p class="caps-sub-header" style='text-align: center'>Earnings <i ng-show="global.user.balancedBank" class="fa fa-check-circle fa-lg" style='color: green'></i><i ng-hide="global.user.balancedBank" class="fa fa-minus-circle fa-lg" style='color: red'></i></p>
         <section data-ng-show="global.authenticated" data-ng-include data-src="'views/partials/bankaccount.html'"></section>
     </div>

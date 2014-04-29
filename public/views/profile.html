@@ -25,9 +25,9 @@
           </div>
           <div data-ng-show="user.fullName" class='contact-cta'>
             <div class='col-md-6'>
-              <a href='/#!/inbox'><div data-ng-hide="global.user.fullName == user.fullName" class='confirm-btn contact-btn message'>
+              <div data-ng-hide="global.user.fullName == user.fullName" class='confirm-btn contact-btn message'>
                 <p><i class="fa fa-comment"></i> Message</p>
-              </div></a>
+              </div>
             </div>
             <div data-ng-show="global.user && !global.user.balancedBank && user._id === global.user._id" class='col-md-12 confirm-btn contact-btn message' data-ng-controller="ModalController" data-ng-click="openAccountModal()">
                 <p>Start accepting appointments</p>
