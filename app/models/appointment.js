@@ -56,7 +56,10 @@ var AppointmentSchema = new Schema({
     default: 'pending'
   },
   topic: String,
-  message: String,
+  message: {
+    subject: String,
+    details: String
+  },
   totalCost: Number, // to customer
   completionTime: Number, // in minutes
   editor: []

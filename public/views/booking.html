@@ -3,13 +3,18 @@
   <section data-ng-include="'views/partials/navbar.html'"></section>
   <form ng-submit='createAppointment()'>
     <div class='container profile'>
-      <h2 class='headline' style='font-size: 15px;'>Call Information</h2>
+      <h1 class='headline'>Session Request</h1>
       <div>
-        <input type="text" id='message' class='form-control' ng-model='appts.message' style='width:300px' autocomplete="off" placeholder="Message to merchant" />
+        <h2 class='headline' style='font-size: 15px;'>What do you need help with?</h2>
+
+        Subject<input type="text" id='message' class='form-control' ng-model='appts.message.subject' style='width:300px' autocomplete="off" required placeholder="Summary of request" />
+
+        Details<textarea id='message' ng-model='appts.message.details' class='form-control' style='width:300px; height:150px' autocomplete="off" required placeholder="Include details of your request, stack and repo(s) you are using, what you have already tried, and where you are blocked, etc."></textarea>
+
+<!--         <input type="textarea"  placeholder="Include: details of your request, stack and repo(s) you are using, what you have already tried, and where you are blocked, etc. " /> -->
       </div>
       <h2 class='headline' style='font-size: 15px;'>Set Estimated Length</h2>
-      <select name="duration" ng-model="appts.duration">
-        <option value="15">15 minutes</option>
+      <select required name="duration" ng-model="appts.duration">
         <option value="30">30 minutes</option>
         <option value="60">60 minutes</option>
         <option value="120">120 minutes</option>

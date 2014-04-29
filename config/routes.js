@@ -37,13 +37,13 @@ passport.use(new GitHubStrategy({
   // clientSecret: '2a6a040b9fd4a2b74763055c8f017dba964f1d99',
   // callbackURL: githubCallbackURL
   // WT keys:
-  clientID: 'c0064f8cbde03d9d42b0',
-  clientSecret: '1abb05032fcfd8b6fb54c2bc44c2c7b583b2ecf8',
-  callbackURL: githubCallbackURL
-  // WT keys:
-  // clientID: '0934ee7ca0cdc34cc007',
-  // clientSecret: 'dc0845769a5c3835bebc2a7a4772e0689b7ac1d7',
+  // clientID: 'c0064f8cbde03d9d42b0',
+  // clientSecret: '1abb05032fcfd8b6fb54c2bc44c2c7b583b2ecf8',
   // callbackURL: githubCallbackURL
+  // WT keys:
+  clientID: '0934ee7ca0cdc34cc007',
+  clientSecret: 'dc0845769a5c3835bebc2a7a4772e0689b7ac1d7',
+  callbackURL: githubCallbackURL
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({ githubId: profile.id }, function (err, user) {
