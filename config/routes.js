@@ -29,11 +29,11 @@ if (process.env.NODE_ENV === 'production'){
   clientSecret = '1abb05032fcfd8b6fb54c2bc44c2c7b583b2ecf8';
   githubCallbackURL = process.env.GITHUB_CALLBACK || 'http://githelp.herokuapp.com/auth/github/callback';
 } else{
-  clientID = '71778e134296a29071f4';
-  clientSecret = '2a6a040b9fd4a2b74763055c8f017dba964f1d99';
+  // clientID = '71778e134296a29071f4';
+  // clientSecret = '2a6a040b9fd4a2b74763055c8f017dba964f1d99';
   // WT keys:
-  // clientID: '0934ee7ca0cdc34cc007',
-  // clientSecret: 'dc0845769a5c3835bebc2a7a4772e0689b7ac1d7',
+  clientID = '0934ee7ca0cdc34cc007',
+  clientSecret = 'dc0845769a5c3835bebc2a7a4772e0689b7ac1d7',
   githubCallbackURL = 'http://127.0.0.1:3000/auth/github/callback';
 }
 

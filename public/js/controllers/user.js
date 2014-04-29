@@ -1,6 +1,6 @@
 angular.module('githelp.controllers.user', [])
-  .controller('UserController', ['$scope', '$state', '$http', '$stateParams', 'Global', 'User', 'Inbox', 'Appointment', '$location', '$timeout',
-    function ($scope, $state, $http, $stateParams, Global, User, Inbox, Appointment, $location, $timeout) {
+  .controller('UserController', ['$scope', '$state', '$http', '$stateParams', 'Global', 'User', 'Inbox', 'Appointment', '$location', '$timeout', 'redirectToUserName',
+    function ($scope, $state, $http, $stateParams, Global, User, Inbox, Appointment, $location, $timeout, redirectToUserName) {
     $scope.global = Global;
 
     // $scope.user = $scope.global.user;
@@ -276,6 +276,14 @@ angular.module('githelp.controllers.user', [])
           $scope.submittedValidCard = true;
           $scope.alerts.card.push({type: 'success', msg: 'Successfully added credit card'});
           $scope.showCard();
+          console.log('outside redirect url if', redirectToUserName.url);
+          if(redirectToUserName.url) {
+            $timeout(function() {
+              console.log('in redirect url if', redirectToUserName.url);
+              $location.path(redirectToUserName.url);
+              redirectToUserName.url = '';
+            }, 1000);
+          }
         })
         .error(function(err){
           console.log('saving err', err);
