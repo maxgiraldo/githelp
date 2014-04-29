@@ -1,4 +1,8 @@
 <section data-ng-controller="UserController" data-ng-init="findOne()" ui-view>
+  <!-- <div class="alert alert-warning alert-dismissable" ng-show='alertShow'>
+    <button type="button" ng-click='hideAlert()' class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <p><strong>Note:</strong> You are currently unable to accept appointments. Please provide your bank account information if you're interested in helping other devs.</p>
+  </div> -->
   <section data-ng-include="'views/partials/navbar.html'"></section>
   <div class='container main-content-spacing'>
     <!-- PROFILE SUMMARY -->
@@ -7,22 +11,29 @@
     <div class='row profile-header'>
       <div class='col-md-12'>
         <div class='profile-id'>
-          <p><img class='avatar-lg' src='{{user.avatar_url}}'/></p>
+          <p><img class='avatar-lg' src='{{user.avatar_url || user.github.avatar_url}}'/></p>
           <div class='profile-name'>
-            <h1 class='headline full-name'>{{user.fullName}}</h1>
-            <p class='price' data-ng-show="user._id === global.user._id"><edit-in-place value="user.ppm"></edit-in-place></p>
-            <p class='price'>$<strong>{{user.ppm * 60}}</strong>/hour</p>
+            <h1 class='headline full-name'>{{user.fullName || user.name}}</h1>
+            <h4 class='notification-header' data-ng-hide="user.fullName">This user does not have an account</h4>
+            <p class='price' data-ng-show="user._id === global.user._id && user.fullName"><edit-in-place value="user.ppm"></edit-in-place></p>
+            <p class='price' data-ng-show="user.fullName">$<strong>{{user.ppm * 60}}</strong>/hour</p>
           </div>
         </div>
         <div class='row contact-background'>
-          <div class='contact-cta'>
+          <div data-ng-show='!user.fullName' class='confirm-btn contact-btn message'>
+            <p>I'm interested in working with {{user.name.split(' ')[0]}}</p>
+          </div>
+          <div data-ng-show="user.fullName" class='contact-cta'>
             <div class='col-md-6'>
-              <div class='confirm-btn contact-btn message'>
+              <div data-ng-hide="global.user.fullName == user.fullName" class='confirm-btn contact-btn message'>
                 <p><i class="fa fa-comment"></i> Message</p>
               </div>
             </div>
+            <div data-ng-show="global.user && !global.user.balancedBank && user._id === global.user._id" class='col-md-12 confirm-btn contact-btn message' data-ng-controller="ModalController" data-ng-click="openAccountModal()">
+                <p>Start accepting appointments</p>
+              </div>
             <div class='col-md-6'>
-              <div data-ng-click="setAppointment()" class='button confirm-btn contact-btn'>
+              <div data-ng-hide="global.user.fullName == user.fullName" data-ng-click="setAppointment()" class='button confirm-btn contact-btn'>
                 <p><i class="fa fa-calendar"></i> Book Session</p>
               </div>
             </div>
@@ -31,36 +42,52 @@
       </div>
     </div> <!-- row -->
     <div class='row'>
-      <div class='col-md-5'>
-        <p data-ng-show="repoList.length > 0" class='caps-sub-header'>{{user.github.public_repos.length}} public repositories</p>
+
+      <div class='col-md-4'>
+        <p data-ng-show="repoList.length > 0" class='caps-sub-header'>Author</p>
         <div class='repo-names' data-ng-repeat='repo in repoList' data-ng-show='!repo.fork'>
           <p><a href="/#!/{{userName}}/repos/{{repo.name}}">{{repo.name}}</a></p>
         </div>
       </div>
-      <div class='col-md-5'>
+
+      <div class='col-md-4'>
         <p data-ng-show="conList.length > 0" class='caps-sub-header'>top {{conList.length}} repositories contributed to</p>
         <div class='repo-names' data-ng-repeat='repo in conList'>
           <p><a href="/#!/{{repoAuthor(repo)}}/repos/{{repoName(repo)}}">{{repoName(repo)}}</a></p>
         </div>
       </div>
-      <!-- <div class='col-md-2 supplementary-data'> -->
-      <div class='col-md-2'>
-        <p class='caps-sub-header'>Extra</p>
-        <p data-ng-show="user.email"><a href='mailto:{{user.email}}'>{{user.email}}</a></p>
-        <p>{{user.github.public_gists}} gists</p>
-        <p>{{user.github.followers}} followers</p>
-      </div>
-    </div>
-    <div class='row'>
-      <div class='col-md-5'>
+
+      <div class='col-md-4'>
         <p class='caps-sub-header'>Services</p>
         <p>Education/Training</p>
+        <p>Consulting</p>
+        <p>Technical Support</p>
         <!-- <div data-ng-repeat='service in userServices'> -->
           <!-- <p>{{service.name}}</p>
           <p>{{service.description}}</p> -->
         <!-- </div> -->
       </div>
+
     </div>
+      <!-- <div class='col-md-2 supplementary-data'> -->
+
+    <div class='row'>
+      <!-- <div class='col-md-4'>
+        <p class='caps-sub-header'>Availability</p>
+        <p>Mostly weekdays</p>
+      </div> -->
+      <!-- <div class='col-md-4'>
+        <p class='caps-sub-header'>Summary</p>
+        <p>O hai</p>
+      </div> -->
+      <div ng-show='user.fullName' class='col-md-4'>
+        <p class='caps-sub-header'>Extra</p>
+        <p><a href="{{user.github.blog}}" target='_blank'>Website/Blog</a></p>
+        <p>{{user.github.public_gists}} gists</p>
+        <p>{{user.github.followers}} followers</p>
+      </div>
+    </div>
+
   </div> <!-- container -->
 
 </section>

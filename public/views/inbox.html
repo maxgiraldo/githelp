@@ -19,10 +19,10 @@
           <h1 style="text-align: center">You have not started any conversations!</h1>
         </div> -->
         <div class="container" id="inbox-input">
-          <legend style="margin-right: auto; margin-left: auto; text-align: center"><h1 class="contact-user"><strong>Contact Another User!</strong></h1></legend>
+          <legend style="margin-right: auto; margin-left: auto; text-align: center"><h1 class="contact-user"><strong>Message user on Githelp</strong></h1></legend>
           <form class="col-md-10" style="margin-top: 20px" data-ng-submit="createInbox()">
             <div class="col-md-8 col-md-offset-1">
-              <label style="font-size: 18px; margin-right: 0px; padding-right: 0px" class="col-md-offset-4">Members:</label>
+              <label style="font-size: 14px; margin-right: 0px; padding-right: 0px" class="col-md-offset-4">Enter username:</label>
               <input id="input-box" class="col-md-offset-6" data-ng-model="member" typeahead="user.fullName for user in allUsers | filter:$viewValue" style="margin-left: 30px; padding-left: 15px;" typeahead-on-select="onSelect($item, $model, $label)">
             </div>
             <input type="submit" class="btn btn-success" value="Contact Now">

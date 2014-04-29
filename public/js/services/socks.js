@@ -6,17 +6,6 @@ angular.module('githelp.services.socks', [])
       this.id = id;
     };
 
-/*
-whatever i want to happen to everyone needs to be within onopen
-
-i need to define specific function based on events ('event_message') format
-
-this way i don't have to define everything that happens
-
-msg.data should be everything that i need.
-
-*/
-
     var sockType_map = {};
     var sockjs = null;
     var sockjs_status = 'disconnected';
