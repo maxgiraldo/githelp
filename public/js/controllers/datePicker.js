@@ -2,8 +2,8 @@ angular.module('githelp.controllers.datePicker', [])
   .controller('DatepickerCtrl', ['$scope', '$http', '$location', '$state', '$stateParams', 'Global', 'ConfirmedAppt',
     function($scope, $http, $location, $state, $stateParams, Global, ConfirmedAppt) {
       $scope.global = Global;
-
       var appointmentId = $stateParams.sessionId;
+      $scope.merchantUserName = $stateParams.userName;
 
       var userName = window.location.hash.replace(/..\//, "").replace(/\/.*$/, ""); // whatever is after hash bang
 
@@ -148,8 +148,8 @@ angular.module('githelp.controllers.datePicker', [])
         'starting-day': 1
       };
 
-      $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'];
-      $scope.format = $scope.formats[2];
+      $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate', 'mediumDate'];
+      $scope.format = $scope.formats[3];
 
 
     }

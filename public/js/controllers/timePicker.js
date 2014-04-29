@@ -7,7 +7,7 @@ angular.module('githelp.controllers.timePicker', [])
       // $scope.appts.second.time = new Date();
       // $scope.appts.third.time = new Date();
       $scope.hstep = 1;
-      $scope.mstep = 30;
+      $scope.mstep = 15;
       $scope.ismeridian = true;
     }
 

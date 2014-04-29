@@ -1,8 +1,8 @@
 <section data-ng-controller="UserController" data-ng-init="findOne()" ui-view>
-  <div class="alert alert-warning alert-dismissable" ng-show='alertShow'>
+  <!-- <div class="alert alert-warning alert-dismissable" ng-show='alertShow'>
     <button type="button" ng-click='hideAlert()' class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
     <p><strong>Note:</strong> You are currently unable to accept appointments. Please provide your bank account information if you're interested in helping other devs.</p>
-  </div>
+  </div> -->
   <section data-ng-include="'views/partials/navbar.html'"></section>
   <div class='container main-content-spacing'>
     <!-- PROFILE SUMMARY -->
@@ -25,9 +25,9 @@
           </div>
           <div data-ng-show="user.fullName" class='contact-cta'>
             <div class='col-md-6'>
-              <div data-ng-hide="global.user.fullName == user.fullName" class='confirm-btn contact-btn message'>
+              <a href='/#!/inbox'><div data-ng-hide="global.user.fullName == user.fullName" class='confirm-btn contact-btn message'>
                 <p><i class="fa fa-comment"></i> Message</p>
-              </div>
+              </div></a>
             </div>
             <div data-ng-show="global.user && !global.user.balancedBank && user._id === global.user._id" class='col-md-12 confirm-btn contact-btn message' data-ng-controller="ModalController" data-ng-click="openAccountModal()">
                 <p>Start accepting appointments</p>
@@ -60,6 +60,8 @@
       <div class='col-md-4'>
         <p class='caps-sub-header'>Services</p>
         <p>Education/Training</p>
+        <p>Consulting</p>
+        <p>Technical Support</p>
         <!-- <div data-ng-repeat='service in userServices'> -->
           <!-- <p>{{service.name}}</p>
           <p>{{service.description}}</p> -->
@@ -70,14 +72,14 @@
       <!-- <div class='col-md-2 supplementary-data'> -->
 
     <div class='row'>
-      <div class='col-md-4'>
+      <!-- <div class='col-md-4'>
         <p class='caps-sub-header'>Availability</p>
         <p>Mostly weekdays</p>
-      </div>
-      <div class='col-md-4'>
+      </div> -->
+      <!-- <div class='col-md-4'>
         <p class='caps-sub-header'>Summary</p>
         <p>O hai</p>
-      </div>
+      </div> -->
       <div ng-show='user.fullName' class='col-md-4'>
         <p class='caps-sub-header'>Extra</p>
         <p><a href="{{user.github.blog}}" target='_blank'>Website/Blog</a></p>

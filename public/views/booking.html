@@ -2,21 +2,65 @@
 <div data-ng-controller="DatepickerCtrl">
   <section data-ng-include="'views/partials/navbar.html'"></section>
   <form ng-submit='createAppointment()'>
-    <div class='container profile'>
-      <h2 class='headline' style='font-size: 15px;'>Call Information</h2>
-      <div>
-        <input type="text" id='message' class='form-control' ng-model='appts.message' style='width:300px' autocomplete="off" placeholder="Message to merchant" />
+    <div class='container form-wrapper'>
+      <div class='row booking-input'>
+        <div class='col-md-12'><h1>Set up session with {{merchantUserName}}</h1></div>
       </div>
-      <h2 class='headline' style='font-size: 15px;'>Set Estimated Length</h2>
-      <select name="duration" ng-model="appts.duration">
-        <option value="15">15 minutes</option>
-        <option value="30">30 minutes</option>
-        <option value="60">60 minutes</option>
-        <option value="120">120 minutes</option>
-      </select>
-      <h2 class='headline' style='font-size: 15px;'>Suggest open times for your call</h2>
+      <div class='row booking-input'>
+        <div class='col-md-12'>
+          <h5>1. Quick summary of your problem</h5>
+          <input type="text" id='message' class='form-control' ng-model='appts.message' style='width:300px; margin: 0 auto;' autocomplete="off" placeholder="What do you need help with?" />
+        </div>
+      </div>
+      <div class='row booking-input'>
+        <div class='col-md-12'>
+          <h5>2. Set estimated time</h5>
+          <select name="duration" ng-model="appts.duration">
+            <option value="15">15 minutes</option>
+            <option value="30">30 minutes</option>
+            <option value="60">60 minutes</option>
+            <option value="120">120 minutes</option>
+          </select>
+        </div>
+      </div>
+      <div class='row time-picker'>
+        <div class='col-md-12'>
+          <h5>3. What times work best for you?</h5>
+          <section data-ng-include data-src="'views/partials/timeslots.html'"></section>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-12'>
+          <input style='margin-bottom:60px; margin-top: 20px;' type="submit" class="btn btn-success" value="Book Now" id="appt-submit">
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<!-- <h2 class='headline' style='font-size: 15px;'>Describe your problem</h2>
+        <div>
+          <input type="text" id='message' class='form-control' ng-model='appts.message' style='width:300px' autocomplete="off" placeholder="Title of your session" />
+        </div>
+        <h2 class='headline' style='font-size: 15px;'>Set Estimated Length</h2>
+        <select name="duration" ng-model="appts.duration">
+          <option value="15">15 minutes</option>
+          <option value="30">30 minutes</option>
+          <option value="60">60 minutes</option>
+          <option value="120">120 minutes</option>
+        </select>
+        <h2 class='headline' style='font-size: 15px;'>Suggest open times for your call</h2>
+      </div>
 
       <section data-ng-include data-src="'views/partials/timeslots.html'"></section>
+      <input style='margin-top:8px' type="submit" class="btn btn-success" value="Book Now" id="appt-submit"> -->
+
+
+
+
+
+
 
 
 <!--       <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="appts.first.dt" is-open="opened1" min="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
@@ -42,9 +86,24 @@
       <div data-ng-controller="TimepickerCtrl" ng-model="appts.third.time" class="row col-md-7">
         <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
       </div> -->
-      <br>
-      <br>
-      <input style='margin-top:8px' type="submit" class="btn btn-success" value="Book Now" id="appt-submit">
-    </div>
-  </form>
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

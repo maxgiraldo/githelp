@@ -131,12 +131,11 @@ angular.module('githelp.controllers.user', [])
     // };
 
     $scope.createInbox = function(){
-      console.log($scope.$item);
       var newInbox = new Inbox({
         members: [$scope.$item._id]
       });
 
-      this.member = ''
+      this.member = '';
       newInbox.$save(function(inbox){
         $scope.userInboxes.push(inbox);
         $state.go('inbox.individual', {'inboxId': inbox._id});
