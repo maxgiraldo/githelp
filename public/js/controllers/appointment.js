@@ -50,15 +50,6 @@ angular.module('githelp.controllers.appointment', [])
       //   })
       // };
 
-      $scope.confirmAppointment = function(){
-        var newAppointment = new Appointment({
-          appointmentId: $scope.appointmentId
-        });
-        newAppointment.$save(function(data){
-          $location.path('/appointments');
-        });
-      };
-
       var appointmentSock = new SockJS('/echo');
       $scope.timerByAppointment = {};
 

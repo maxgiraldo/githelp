@@ -13,15 +13,20 @@
             <div data-ng-repeat="appointment in pendingA" class="appointment-card">
               <div class='row'>
                 <div class='col-md-1'><div class='sm-btn pending-status'>Pending</div></div>
-                <div class='col-md-5'><p>{{appointment.message}}</p></div>
-                <div class='col-md-2'>
-                  <p>{{appointment.date.option1.date | date: 'medium' }}</p>
-                  <p>{{appointment.date.option2.date | date: 'medium' }}</p>
-                  <p>{{appointment.date.option3.date | date: 'medium' }}</p></div>
+                <div class='col-md-4'><p>{{appointment.message.subject}}</p></div>
+                <div class='col-md-3'>
+                  <input type="checkbox" name="checkbox" id="date1" data-ng-model="appointment.date.option1.confirmed" data-ng-change="likeRadio(appointment, 'option1')" class="css-checkbox lrg">
+                  <label for="date1" class="css-label lrg vlad"><p class="appointment-date">{{appointment.date.option1.date | date: 'medium' }}</p></label>
+                  <input type="checkbox" name="checkbox" id="date2" data-ng-model="appointment.date.option2.confirmed" data-ng-change="likeRadio(appointment, 'option2')" class="css-checkbox lrg">
+                  <label for="date2" class="css-label lrg vlad"><p class="appointment-date">{{appointment.date.option2.date | date: 'medium' }}</p></label>
+                  <input type="checkbox" name="checkbox" id="date3" data-ng-model="appointment.date.option3.confirmed" data-ng-change="likeRadio(appointment, 'option3')" class="css-checkbox lrg">
+                  <label for="date3" class="css-label lrg vlad"><p class="appointment-date">{{appointment.date.option3.date | date: 'medium' }}</p></label>
+                </div>
                 <div data-ng-show="(appointment.merchant._id !== global.user._id) && !appointment.confirmed" class='col-md-2'><p>{{appointment.merchant.fullName}}</p></div>
                 <div data-ng-show="(appointment.merchant._id === global.user._id) && !appointment.confirmed" class='col-md-2'><p>{{appointment.customer.fullName}}</p></div>
                 <div class='col-md-2'>
-                  <a data-ng-show="(appointment.merchant._id === global.user._id) && !appointment.confirmed" href="/#!/{{global.user.userName}}/confirm/{{appointment._id}}"><div class='sm-btn confirm-apt'>Confirm</div></a>
+                  <a data-ng-show="(appointment.merchant._id === global.user._id) && !appointment.confirmed" data-ng-click="confirmAppointment(appointment._id)"><div class='sm-btn confirm-apt'>Confirm</div></a>
+                  <a data-ng-show="(appointment.merchant._id === global.user._id) && !appointment.confirmed"><div class='sm-btn confirm-apt'>Reschedule</div></a>
                 </div>
               </div>
             </div> <!-- ng-repeat appointments -->
@@ -35,16 +40,13 @@
             <div data-ng-repeat="appointment in confirmedA" class="appointment-box">
               <div class='row'>
                 <div class='col-md-1'><div class='sm-btn confirmed-status'>Confirmed</div></div>
-                <div class='col-md-5'><p>{{appointment.message}}</p></div>
-                <div class='col-md-2'>
+                <div class='col-md-4'><p>{{appointment.message.subject}}</p></div>
+                <div class='col-md-3'>
                   <p>{{appointment.date.option1.date | date: 'medium' }}</p>
                   <p>{{appointment.date.option2.date | date: 'medium' }}</p>
                   <p>{{appointment.date.option3.date | date: 'medium' }}</p></div>
                 <div data-ng-show="(appointment.merchant._id !== global.user._id) && !appointment.confirmed" class='col-md-2'><p>{{appointment.merchant.fullName}}</p></div>
                 <div data-ng-show="(appointment.merchant._id === global.user._id) && !appointment.confirmed" class='col-md-2'><p>{{appointment.customer.fullName}}</p></div>
-                <div class='col-md-2'>
-                  <a data-ng-show="(appointment.merchant._id === global.user._id) && !appointment.confirmed" href="/#!/{{global.user.userName}}/confirm/{{appointment._id}}"><div class='sm-btn confirm-apt'>Confirm</div></a>
-                </div>
               </div>
             </div> <!-- appointment in confirmed -->
           </div>
@@ -56,16 +58,13 @@
             <div data-ng-repeat="appointment in completedA" class="appointment-box">
               <div class='row'>
                 <div class='col-md-1'><div class='sm-btn completed-status'>Completed</div></div>
-                <div class='col-md-5'><p>{{appointment.message}}</p></div>
-                <div class='col-md-2'>
+                <div class='col-md-4'><p>{{appointment.message.subject}}</p></div>
+                <div class='col-md-3'>
                   <p>{{appointment.date.option1.date | date: 'medium' }}</p>
                   <p>{{appointment.date.option2.date | date: 'medium' }}</p>
                   <p>{{appointment.date.option3.date | date: 'medium' }}</p></div>
                 <div data-ng-show="(appointment.merchant._id !== global.user._id) && !appointment.confirmed" class='col-md-2'><p>{{appointment.merchant.fullName}}</p></div>
                 <div data-ng-show="(appointment.merchant._id === global.user._id) && !appointment.confirmed" class='col-md-2'><p>{{appointment.customer.fullName}}</p></div>
-                <div class='col-md-2'>
-                  <a data-ng-show="(appointment.merchant._id === global.user._id) && !appointment.confirmed" href="/#!/{{global.user.userName}}/confirm/{{appointment._id}}"><div class='sm-btn confirm-apt'>Confirm</div></a>
-                </div>
               </div>
             </div>
           </div></div>

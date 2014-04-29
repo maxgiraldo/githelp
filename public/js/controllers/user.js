@@ -34,6 +34,31 @@ angular.module('githelp.controllers.user', [])
     };
 
     $scope.submittedEmail = false;
+    $scope.optionNumber;
+
+    $scope.likeRadio = function(appointment, optionNumber){
+      for(var option in appointment.date){
+        if(option === optionNumber){
+          appointment.date[optionNumber].confirmed = true;
+          $scope.optionNumber = optionNumber;
+
+        } else{
+          appointment.date[option].confirmed = false;
+        }
+      }
+    };
+
+    $scope.selectedSessions = {};
+
+    $scope.confirmAppointment = function(appointmentId){
+      var newAppointment = new Appointment({
+        appointmentId: appointmentId,
+        option: $scope.optionNumber;
+      });
+      newAppointment.$save(function(data){
+        $state.go('appointments');
+      });
+    };
 
     $scope.findAppointments = function(){
       $scope.pendingA = [];

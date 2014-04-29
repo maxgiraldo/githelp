@@ -273,43 +273,42 @@ exports.show = function(req, res) {
   });
 };
 
-exports.confirm = function(req, res) {
-  // var id = "id of appointment";
-  var option = req.params.option; // 'option1', 'option2', 'option3'
-  var userName = req.params.userName; // first click, userName is merchant
-
-  console.log('OPTION', option);
-  // console.log('PARAMS', req.params);
-
-  // var appointmentId = req.body.appointmentId; // with post
-  var appointmentId = req.params.appointmentId;
-
-  Appointment.findOne({_id: appointmentId}).populate('merchant').populate('customer').exec(function(err, appt) {
-    if(appt.confirmed) { // already confirmed; only 1 of 3 options can be confirmed true
+var confirmation = function(appt, done){
+  Appointment.findOne({_id: appt._id}).exec(function(err, appt) {
+    if(appt.confirmed) {
       console.log('Appt has already been confirmed');
-      if(req.user) {
-        res.redirect('/#!/appointments/' + appointmentId + "/confirmation");
-      } else {
-        res.render('confirmation', {appt: appt});
-      }
     } else {
-      appt.date[option].confirmed = true;
+      appt.date[appt.option].confirmed = true;
       appt.confirmed = true;
       appt.status = 'confirmed';
-      // appt.confirmed = true;
-      scheduler.sendEventInvite(appt); // or separate final Confirmation email
-      // startSession(appt);
+      scheduler.sendEventInvite(appt);
       sendReminder(appt);
       appt.save();
-       // Once confirmed, send out confirmation
-      if(req.user) {
-        res.redirect('/#!/appointments/' + appointmentId + "/confirmation");
-      } else {
-        res.render('confirmation', {appt: appt});
-      }
-      // res.redirect('/#!/' + userName + '/confirmation/' + appointmentId);
     }
+    done()
   });
+}
+
+exports.confirm = function(req, res) {
+  var appointment;
+  if(req.body.appointmentId && req.body.option){
+    appointment = {
+      _id: req.body.appointmentId,
+      option: req.body.option
+    }
+  } else if(req.params.option && req.params.appointmentId){
+    appointment = {
+      _id: req.params.appointmentId,
+      option: req.params.option
+    };
+  }
+  confirmation(appointment, function(){
+    if(req.user) {
+      res.redirect('/#!/appointments/' + appointmentId + "/confirmation");
+    } else {
+      res.render('confirmation', {appt: appt});
+    }
+  })
 };
 
 exports.reschedule = function(req, res) {
