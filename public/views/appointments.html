@@ -42,9 +42,8 @@
                 <div class='col-md-1'><div class='sm-btn confirmed-status'>Confirmed</div></div>
                 <div class='col-md-4'><p>{{appointment.message.subject}}</p></div>
                 <div class='col-md-3'>
-                  <p>{{appointment.date.option1.date | date: 'medium' }}</p>
-                  <p>{{appointment.date.option2.date | date: 'medium' }}</p>
-                  <p>{{appointment.date.option3.date | date: 'medium' }}</p></div>
+                  <p>{{appointment.confirmedDate | date: 'medium' }}</p>
+                </div>
                 <div data-ng-show="(appointment.merchant._id !== global.user._id) && !appointment.confirmed" class='col-md-2'><p>{{appointment.merchant.fullName}}</p></div>
                 <div data-ng-show="(appointment.merchant._id === global.user._id) && !appointment.confirmed" class='col-md-2'><p>{{appointment.customer.fullName}}</p></div>
               </div>
@@ -60,9 +59,8 @@
                 <div class='col-md-1'><div class='sm-btn completed-status'>Completed</div></div>
                 <div class='col-md-4'><p>{{appointment.message.subject}}</p></div>
                 <div class='col-md-3'>
-                  <p>{{appointment.date.option1.date | date: 'medium' }}</p>
-                  <p>{{appointment.date.option2.date | date: 'medium' }}</p>
-                  <p>{{appointment.date.option3.date | date: 'medium' }}</p></div>
+                  <p>{{appointment.confirmedDate | date: 'medium' }}</p>
+                </div>
                 <div data-ng-show="(appointment.merchant._id !== global.user._id) && !appointment.confirmed" class='col-md-2'><p>{{appointment.merchant.fullName}}</p></div>
                 <div data-ng-show="(appointment.merchant._id === global.user._id) && !appointment.confirmed" class='col-md-2'><p>{{appointment.customer.fullName}}</p></div>
               </div>

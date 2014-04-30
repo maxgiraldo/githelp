@@ -283,6 +283,7 @@ var confirmation = function(inputAppt, done){
       appt.status = 'confirmed';
       scheduler.sendEventInvite(appt);
       sendReminder(appt);
+      appt.confirmedDate = appt.date[inputAppt.option].date;
       appt.save();
     }
     done(appt);

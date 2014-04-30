@@ -47,6 +47,9 @@ var AppointmentSchema = new Schema({
     type: Number,
     required: true
   },
+  confirmedDate: {
+    type: Date
+  },
   confirmed: { // need this as check against someone reconfirming an already confirmed apptment
     type: Boolean,
     default: false
@@ -65,16 +68,16 @@ var AppointmentSchema = new Schema({
   editor: []
 });
 
-AppointmentSchema.virtual('confirmedDate').get(function() {
-  console.log('in confirmed Date');
-  for (var option in this.date) {
-    if(this.date[option].confirmed) {
-      console.log('confimed Date', this.date[option].date);
-      return this.date[option].date;
-    }
-  }
-  return 'hello'; // if no confirmed date;
-});
+// AppointmentSchema.virtual('confirmedDate').get(function() {
+//   console.log('in confirmed Date');
+//   for (var option in this.date) {
+//     if(this.date[option].confirmed) {
+//       console.log('confimed Date', this.date[option].date);
+//       return this.date[option].date;
+//     }
+//   }
+//   return 'hello'; // if no confirmed date;
+// });
 
 
 // use projections when embedded documents get too big

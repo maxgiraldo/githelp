@@ -161,6 +161,25 @@ h5 {
     color: #fff;
   }
 }
+
+a#quick-button {
+  font-family: 'Permanent Marker', cursive;
+  font-weight: 300;
+  font-size: 18px;
+  background-color: #fff;
+  color: #00b6ff;
+  border-color: #babdb1;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  margin-top: 5px;
+}
+
+a#quick-button:hover {
+  color: #fff;
+  background-color: #07e0ff;
+  border-color: #babdb1;
+}
+
 .border-btn {
   border: 1px solid #ffffff;
   border-radius: 5px;
