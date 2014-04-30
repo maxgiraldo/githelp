@@ -51,12 +51,20 @@ angular.module('githelp.controllers.user', [])
     $scope.selectedSessions = {};
 
     $scope.confirmAppointment = function(appointmentId){
+      if(!$scope.optionNumber){
+        return null;
+      }
       var newAppointment = new Appointment({
         appointmentId: appointmentId,
         option: $scope.optionNumber
       });
       newAppointment.$save(function(data){
-        $state.go('appointments');
+        $scope.confirmedA.unshift(data);
+        $scope.pendingA.forEach(function(appointment){
+          if(appointment._id === data._id){
+            $scope.pendingA.splice($scope.pendingA.indexOf(appointment), 1);
+          }
+        })
       });
     };
 

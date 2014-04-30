@@ -273,19 +273,19 @@ exports.show = function(req, res) {
   });
 };
 
-var confirmation = function(appt, done){
-  Appointment.findOne({_id: appt._id}).exec(function(err, appt) {
+var confirmation = function(inputAppt, done){
+  Appointment.findOne({_id: inputAppt._id}).exec(function(err, appt) {
     if(appt.confirmed) {
       console.log('Appt has already been confirmed');
     } else {
-      appt.date[appt.option].confirmed = true;
+      appt.date[inputAppt.option].confirmed = true;
       appt.confirmed = true;
       appt.status = 'confirmed';
       scheduler.sendEventInvite(appt);
       sendReminder(appt);
       appt.save();
     }
-    done()
+    done(appt);
   });
 }
 
@@ -302,10 +302,14 @@ exports.confirm = function(req, res) {
       option: req.params.option
     };
   }
-  confirmation(appointment, function(){
-    if(req.user) {
-      res.redirect('/#!/appointments/' + appointmentId + "/confirmation");
-    } else {
+  console.log(appointment);
+  confirmation(appointment, function(appt){
+    if(req.user && req.params.appointmentId) {
+      res.redirect('/#!/appointments/' + appointment._id + "/confirmation");
+    } else if(req.user && req.body.appointmentId){
+      res.jsonp(appt);
+    }
+      else {
       res.render('confirmation', {appt: appt});
     }
   })
