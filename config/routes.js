@@ -124,7 +124,7 @@ module.exports = function(app) {
       users.authCallback(req, res, url);
     });
   app.post('/directMessage', ensureLoggedIn('/signin'), messages.directMessage);
-
+  app.get('/quickAppointment', ensureLoggedIn('/signin'), appointments.quickAppointment);
   app.get('/appointment', ensureLoggedIn('/signin'), appointments.appointmentsByUser);
   app.post('/appointment', ensureLoggedIn('/signin'), appointments.confirm);
   app.get('/appointment/initialize/:appointmentId', ensureLoggedIn('/signin'), appointments.initialize);

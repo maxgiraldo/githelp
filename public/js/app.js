@@ -45,5 +45,6 @@ angular.module('githelp.directives',
   'githelp.directives.editInPlace',
   'githelp.directives.initFocus',
   'githelp.directives.enterPress',
-  'githelp.directives.autoSubmit'
+  'githelp.directives.autoSubmit',
+  'githelp.directives.selectOnClick'
   ]);

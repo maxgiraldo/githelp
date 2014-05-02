@@ -74,8 +74,10 @@ angular.module('githelp.controllers.modal', [])
         };
 
         $scope.quickModal = function(){
-          // angular.element("#message-modal").parent().css({'width': '40%', 'margin-right': 'auto', 'margin-left': 'auto'});
-          // return false;
+          $http.get('/quickAppointment')
+            .success(function(data){
+              $scope.appointment = data;
+            })
         }
 
         $scope.createBankAccount = function(){

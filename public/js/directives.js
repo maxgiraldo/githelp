@@ -14,6 +14,18 @@ angular.module('githelp.directives.fileinput', [])
   }
 ]);
 
+angular.module('githelp.directives.selectOnClick', [])
+  .directive('selectOnClick', function () {
+    return {
+      restrict: 'A',
+      link: function (scope, element, attrs) {
+        element.on('click', function () {
+            this.select();
+        });
+      }
+    };
+  });
+
 angular.module('githelp.directives.autoSubmit', [])
   .directive('autoSubmit', function() {
     return function(scope, element) {

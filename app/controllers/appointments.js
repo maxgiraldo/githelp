@@ -11,7 +11,8 @@ var Appointment = mongoose.model('Appointment');
 var User = mongoose.model('User');
 // var Message = mongoose.model('Message');
 var Chatroom = mongoose.model('Chatroom');
-
+var Bitly = require('bitly');
+var bitly = new Bitly('o_2o779l2e6q', 'R_cfd8848261d04565b311a0e81e8d5bf9');
 
 var getEmailByUser = function(username) {
   var deferred = Q.defer();
@@ -111,6 +112,25 @@ exports.create = function(req, res) {
     });
   });
 };
+
+exports.quickAppointment = function(req, res){
+  var newAppointment = new Appointment({
+    status: 'public'
+  });
+  bitly.shorten('http://githelp.herokuapp.com/#!/session/'+newAppointment._id, function(err, response) {
+    if (err) throw err;
+    console.log('no error')
+    console.log(response);
+    newAppointment.shortUrl = response.data.url;
+    console.log('obtained short url')
+    newAppointment.save(function(err, appointment){
+      console.log(err);
+      console.log('saved appointment');
+      console.log(appointment.shortUrl);
+      res.jsonp(appointment);
+    })
+  });
+}
 
 exports.edit = function(req, res) {
   var appointmentId = req.body.appointmentId;

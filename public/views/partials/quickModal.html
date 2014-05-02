@@ -1,9 +1,5 @@
 <div class="modal-body clearfix" id="message-modal" data-ng-init="quickModal()">
-	<span>Appointment URL: {{appointment}}</span>
-  <form id="message-form" data-ng-submit="sendDirectMessage()">
-    <p id="direct-title">Send a direct message!</p>
-    <textarea id="direct-message" ng-model="directMessage" autofocus required></textarea>
-    <input class="btn btn-primary" id="direct-button" type="submit" value="Send">
-  </form>
+	<p>Here is the link for a public session.</p>
+	<span>Session URL: <input type="text" value="{{appointment.shortUrl}}" select-on-click></input></span>
   <!-- test -->
 </div>

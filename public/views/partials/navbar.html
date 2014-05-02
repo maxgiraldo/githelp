@@ -5,7 +5,7 @@
   <ul class="nav navbar-nav navbar-right" id="custom-navbar">
     <!-- <li class='border-btn' data-ng-hide="global.authenticated"><a href="/helper">Get help</a></li>
     <li class='border-btn' data-ng-hide="global.authenticated"><a href="/helper">Help someone</a></li> -->
-    <li data-ng-click="quickSession()"><a class="btn btn-primary" id="quick-button">Fast!</a></li>
+    <li data-ng-controller="ModalController" data-ng-click="openQuickModal()"><a class="btn btn-primary" id="quick-button">Fast!</a></li>
 <!--     <li data-ng-click="quickSession()"><a class="btn btn-primary" id="quick-button">Fast!&nbsp;<i class="glyphicon glyphicon-flash" id="quick-icon"></i></a></li> -->
 
     <li class='border-btn' data-ng-show="global.authenticated"><a href="/#!/appointments">Appointments</a></li>
