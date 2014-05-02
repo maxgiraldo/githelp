@@ -1,8 +1,7 @@
-<div class="modal-body clearfix">
-  <form data-ng-submit="sendDirectMessage()">
-    <h3>This user has not set up a bank account or email with githelp!</h3>
-    <h3>Let {{user.fullName}} know that you need his help!</h3>
-    <textarea ng-model="directMessage"></textarea>
-    <input type="submit" value="Send">
+<div class="modal-body" id="message-modal" data-ng-init="resize()">
+  <form id="message-form" data-ng-submit="sendDirectMessage()">
+    <p id="direct-title">Send a direct message!</p>
+    <textarea id="direct-message" ng-model="directMessage" autofocus required></textarea>
+    <input class="btn btn-primary" id="direct-button" type="submit" value="Send">
   </form>
 </div>

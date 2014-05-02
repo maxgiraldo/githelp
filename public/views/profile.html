@@ -23,9 +23,10 @@
           <div data-ng-show='!user.fullName' class='confirm-btn contact-btn message'>
             <p>I'm interested in working with {{user.name.split(' ')[0]}}</p>
           </div>
+          <!-- Here add to documents that compile, creates a file that logs the number of people that want to contact -->
           <div data-ng-show="user.fullName" class='contact-cta'>
             <div class='col-md-6'>
-              <div data-ng-hide="global.user.fullName == user.fullName" class='confirm-btn contact-btn message' data-ng-click="">
+              <div data-ng-hide="global.user.fullName == user.fullName" class='confirm-btn contact-btn message' data-ng-controller="ModalController" data-ng-click="openMessageModal()">
                 <p><i class="fa fa-comment"></i> Message</p>
               </div>
             </div>

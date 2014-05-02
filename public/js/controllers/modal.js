@@ -13,11 +13,22 @@ angular.module('githelp.controllers.modal', [])
         bank: []
       }
 
-      var ModalInstanceController = function($scope, Global, $modalInstance) {
+      var ModalInstanceController = function($scope, $stateParams, Global, $modalInstance) {
         $scope.global = Global;
+        $scope.user = $scope.$parent.user;
+        $scope.userName = $stateParams.userName;
         $scope.alerts = {
           bank: []
         };
+
+
+
+        $scope.resize = function(){
+          angular.element("#message-modal").parent().css({'width': '60%', 'margin-right': 'auto', 'margin-left': 'auto'});
+          return false;
+        }
+
+
         var cardHandler = function(card){
           if(card.errors){
             console.log(card.errors);
