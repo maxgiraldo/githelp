@@ -8,7 +8,7 @@ angular.module('githelp.controllers.modal', [])
     'Global',
     function($scope, $location, $http, $modal, $log, Global) {
       $scope.global = Global;
-
+      console.log($scope.$parent.$parent);
       $scope.alerts = {
         bank: []
       }
@@ -16,6 +16,7 @@ angular.module('githelp.controllers.modal', [])
       var ModalInstanceController = function($scope, $stateParams, Global, $modalInstance) {
         $scope.global = Global;
         $scope.user = $scope.$parent.user;
+        console.log($scope.user);
         $scope.userName = $stateParams.userName;
         $scope.alerts = {
           bank: []
@@ -24,7 +25,7 @@ angular.module('githelp.controllers.modal', [])
 
 
         $scope.resize = function(){
-          angular.element("#message-modal").parent().css({'width': '60%', 'margin-right': 'auto', 'margin-left': 'auto'});
+          angular.element("#message-modal").parent().css({'width': '40%', 'margin-right': 'auto', 'margin-left': 'auto'});
           return false;
         }
 
@@ -72,6 +73,11 @@ angular.module('githelp.controllers.modal', [])
           $modalInstance.dismiss('cancel');
         };
 
+        $scope.quickModal = function(){
+          // angular.element("#message-modal").parent().css({'width': '40%', 'margin-right': 'auto', 'margin-left': 'auto'});
+          // return false;
+        }
+
         $scope.createBankAccount = function(){
           var payload = {
             name: this.name,
@@ -95,13 +101,29 @@ angular.module('githelp.controllers.modal', [])
         };
 
         $scope.sendDirectMessage = function(){
-          $http.post('/directMessage', {merchant: $scope.user, content: this.directMessage})
+          $http.post('/directMessage', {userName: $stateParams.userName, content: this.directMessage})
             .success(function(data){
               // chatroom
               $modalInstance.close();
             })
         };
       };
+
+      $scope.openQuickModal = function() {
+        if(!$scope.global.user.contactEmail || !$scope.global.user.balancedAccount) {
+          var modalInstance = $modal.open({
+            templateUrl: 'views/partials/quickModal.html',
+            controller: ModalInstanceController
+          });
+
+          modalInstance.result.then(function(user){
+            $scope.user = user;
+          }, function(){
+            $log.info('Modal dismissed at: ' + new Date());
+          });
+        };
+      };
+
 
       $scope.openAccountModal = function() {
         if(!$scope.global.user.contactEmail || !$scope.global.user.balancedAccount) {

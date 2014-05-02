@@ -67,7 +67,7 @@ passport.use(new GitHubStrategy({
         user.githubId = profile.id;
         user.github = profile._json;
         user.accessToken = accessToken;
-        user.avatar_url = profile._json.avatar_url;
+        user.avatarUrl = profile._json.avatar_url;
         user.save(function(err){
           return done(err, user);
         })

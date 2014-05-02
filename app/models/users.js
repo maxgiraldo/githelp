@@ -25,7 +25,7 @@ var UserSchema = new Schema({
   // price per minute
   ppm: { type: String, default: '2.00' },
   intro: String,
-  avatar_url: String
+  avatarUrl: String
 });
 
 UserSchema.statics.title = function(membersArray){

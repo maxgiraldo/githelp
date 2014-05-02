@@ -1,4 +1,5 @@
-<div class="modal-body clearfix" id="message-modal" data-ng-init="resize()">
+<div class="modal-body clearfix" id="message-modal" data-ng-init="quickModal()">
+	<span>Appointment URL: {{appointment}}</span>
   <form id="message-form" data-ng-submit="sendDirectMessage()">
     <p id="direct-title">Send a direct message!</p>
     <textarea id="direct-message" ng-model="directMessage" autofocus required></textarea>
