@@ -58,60 +58,64 @@ angular.module('githelp.controllers.appointment', [])
         $http.get('/appointment/initialize/' + appointmentId).success(function(appointment) {
           // Create new object key by appointmentId if it doesn't already exist
           $scope.appointmentStatus = appointment.status;
-          console.log('appointmentObj', appointment);
-          $scope.appointmentId = appointment._id;
-          if( 'Object' !== typeof $scope.timerByAppointment[appointment._id]){
-            $scope.timerByAppointment[appointment._id] = {};
-          }
-          // TIMER
-          // Initialize timer variables
-          $scope.timerByAppointment[appointment._id].timerId      = 0;
-          $scope.timerByAppointment[appointment._id].totalSeconds = 0;
-          $scope.timerByAppointment[appointment._id].totalMinutes = 0;
-          $scope.timerByAppointment[appointment._id].totalHours   = 0;
-          $scope.timerByAppointment[appointment._id].seconds      = 0;
-          $scope.timerByAppointment[appointment._id].minutes      = 0;
-          $scope.timerByAppointment[appointment._id].hours        = 0;
+          if(appointment.status === 'public'){
+            return false;
+          } else{
+            console.log('appointmentObj', appointment);
+            $scope.appointmentId = appointment._id;
+            if( 'Object' !== typeof $scope.timerByAppointment[appointment._id]){
+              $scope.timerByAppointment[appointment._id] = {};
+            }
+            // TIMER
+            // Initialize timer variables
+            $scope.timerByAppointment[appointment._id].timerId      = 0;
+            $scope.timerByAppointment[appointment._id].totalSeconds = 0;
+            $scope.timerByAppointment[appointment._id].totalMinutes = 0;
+            $scope.timerByAppointment[appointment._id].totalHours   = 0;
+            $scope.timerByAppointment[appointment._id].seconds      = 0;
+            $scope.timerByAppointment[appointment._id].minutes      = 0;
+            $scope.timerByAppointment[appointment._id].hours        = 0;
 
-          // Set Default Merchant Price
-          $scope.timerByAppointment[appointment._id].merchantPrice = parseInt(appointment.apptppm);
-          console.log('parseInt', parseInt(appointment.apptppm));
-          console.log('merchant price', $scope.timerByAppointment[appointment._id].merchantPrice); //NaN
+            // Set Default Merchant Price
+            $scope.timerByAppointment[appointment._id].merchantPrice = parseInt(appointment.apptppm);
+            console.log('parseInt', parseInt(appointment.apptppm));
+            console.log('merchant price', $scope.timerByAppointment[appointment._id].merchantPrice); //NaN
 
-          $scope.timerByAppointment[appointment._id].totalAmount = 0;
+            $scope.timerByAppointment[appointment._id].totalAmount = 0;
 
-          $scope.timerByAppointment[appointment._id].timerOn = false;
+            $scope.timerByAppointment[appointment._id].timerOn = false;
 
-          $scope.startTimer = function() {
-            $scope.timerByAppointment[appointment._id].timerId = setInterval(function() {
-              console.log(timeBot);
-              timeBot.sockjs_send('time', appointment);
-            }, 1000);
-          };
-
-          $scope.stopTimer = function() {
-            console.log('stop timer function');
-            console.log(timeBot);
-            timeBot.sockjs_close('close', appointment);
-
-            console.log('amt to charge', $scope.timerByAppointment[appointment._id].totalAmount);
-            // alert('inserting' + $scope.totalAmount + 'into your bank account.');
-
-            var transactionObj = {
-              amount: ($scope.timerByAppointment[appointment._id].totalAmount * 100).toFixed(0), // amount needs to be in cents and no decimals
-              duration: ($scope.timerByAppointment[appointment._id].totalSeconds / 60.0).toFixed(0), // duration in minutes
-              // sessionId: '5338ae556ea2b600005f68ec'
-              sessionId: $scope.appointmentId // contains merchant and customer info
+            $scope.startTimer = function() {
+              $scope.timerByAppointment[appointment._id].timerId = setInterval(function() {
+                console.log(timeBot);
+                timeBot.sockjs_send('time', appointment);
+              }, 1000);
             };
 
-            console.log('transactionObj', transactionObj);
+            $scope.stopTimer = function() {
+              console.log('stop timer function');
+              console.log(timeBot);
+              timeBot.sockjs_close('close', appointment);
 
-            $http.post('/charge', transactionObj).success(function(response) { // run payments.debitCard
-              console.log(response);
-              var transactionObj = transactionObj;
-              $location.path('/appointments');
-            });
-          };
+              console.log('amt to charge', $scope.timerByAppointment[appointment._id].totalAmount);
+              // alert('inserting' + $scope.totalAmount + 'into your bank account.');
+
+              var transactionObj = {
+                amount: ($scope.timerByAppointment[appointment._id].totalAmount * 100).toFixed(0), // amount needs to be in cents and no decimals
+                duration: ($scope.timerByAppointment[appointment._id].totalSeconds / 60.0).toFixed(0), // duration in minutes
+                // sessionId: '5338ae556ea2b600005f68ec'
+                sessionId: $scope.appointmentId // contains merchant and customer info
+              };
+
+              console.log('transactionObj', transactionObj);
+
+              $http.post('/charge', transactionObj).success(function(response) { // run payments.debitCard
+                console.log(response);
+                var transactionObj = transactionObj;
+                $location.path('/appointments');
+              });
+            };
+          }
         })
       };
      }
