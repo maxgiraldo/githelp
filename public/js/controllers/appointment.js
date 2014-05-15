@@ -57,6 +57,7 @@ angular.module('githelp.controllers.appointment', [])
         var appointmentId = $stateParams.sessionId;
         $http.get('/appointment/initialize/' + appointmentId).success(function(appointment) {
           // Create new object key by appointmentId if it doesn't already exist
+          $scope.appointmentStatus = appointment.status;
           console.log('appointmentObj', appointment);
           $scope.appointmentId = appointment._id;
           if( 'Object' !== typeof $scope.timerByAppointment[appointment._id]){

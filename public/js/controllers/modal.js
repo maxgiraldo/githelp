@@ -112,18 +112,16 @@ angular.module('githelp.controllers.modal', [])
       };
 
       $scope.openQuickModal = function() {
-        if(!$scope.global.user.contactEmail || !$scope.global.user.balancedAccount) {
-          var modalInstance = $modal.open({
-            templateUrl: 'views/partials/quickModal.html',
-            controller: ModalInstanceController
-          });
+        var modalInstance = $modal.open({
+          templateUrl: 'views/partials/quickModal.html',
+          controller: ModalInstanceController
+        });
 
-          modalInstance.result.then(function(user){
-            $scope.user = user;
-          }, function(){
-            $log.info('Modal dismissed at: ' + new Date());
-          });
-        };
+        modalInstance.result.then(function(user){
+          $scope.user = user;
+        }, function(){
+          $log.info('Modal dismissed at: ' + new Date());
+        });
       };
 
 
