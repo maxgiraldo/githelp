@@ -58,6 +58,7 @@ angular.module('githelp.controllers.appointment', [])
         $http.get('/appointment/initialize/' + appointmentId).success(function(appointment) {
           // Create new object key by appointmentId if it doesn't already exist
           $scope.appointmentStatus = appointment.status;
+          console.log('is there an error here?', appointment);
           if(appointment.status === 'public'){
             return false;
           } else{
