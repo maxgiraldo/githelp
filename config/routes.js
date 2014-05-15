@@ -127,7 +127,7 @@ module.exports = function(app) {
   app.get('/quickAppointment', appointments.quickAppointment);
   app.get('/appointment', ensureLoggedIn('/signin'), appointments.appointmentsByUser);
   app.post('/appointment', ensureLoggedIn('/signin'), appointments.confirm);
-  app.get('/appointment/initialize/:appointmentId', ensureLoggedIn('/signin'), appointments.initialize);
+  app.get('/appointment/initialize/:appointmentId', appointments.initialize);
   app.get('/appointment/show/:appointmentId', ensureLoggedIn('/signin'), appointments.show);
   app.post('/appointment/create', ensureLoggedIn('/signin'), appointments.create);
   app.post('/appointment/edit', ensureLoggedIn('/signin'), appointments.edit);

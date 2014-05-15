@@ -13,7 +13,7 @@
     <section data-ng-controller='TextEditorController'>
       <div class='side-panel'>
         <!-- SESSION INFO / CONTROLS -->
-        <div data-ng-controller="AppointmentController" data-ng-init="liveSession()" class='session-info' data-ng-hide="appointmentStatus === public">
+        <div data-ng-controller="AppointmentController" data-ng-init="liveSession()" class='session-info' data-ng-hide="appointmentStatus === 'public'">
           <h2 id='timer'>{{timerByAppointment[appointmentId].hours}}:{{timerByAppointment[appointmentId].minutes}}:{{timerByAppointment[appointmentId].seconds}}</h2>
           <h3 class='total-container'>Total
             <span id='total-amount'>
